@@ -94,7 +94,7 @@ export default function WorkGrid({
                   className="aspect-[4/3] h-auto w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02]"
                 />
               </div>
-              <h3 className="mt-4 font-serif text-[21px] leading-[1.3] font-light text-ink group-hover:underline group-hover:underline-offset-4 md:text-[23px]">
+              <h3 className="mt-4 font-serif text-[21px] leading-[1.3] font-light text-ink group-hover:underline group-hover:decoration-[1px] group-hover:underline-offset-[5px] md:text-[23px]">
                 {item.title}
               </h3>
             </Link>

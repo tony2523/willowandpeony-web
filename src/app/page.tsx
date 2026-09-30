@@ -156,7 +156,7 @@ export default function HomePage() {
                 />
               </div>
               <div className="mt-4 flex items-baseline justify-between">
-                <h3 className="h-card text-ink group-hover:underline group-hover:underline-offset-4">
+                <h3 className="h-card text-ink group-hover:underline group-hover:decoration-[1px] group-hover:underline-offset-[5px]">
                   {s.label}
                 </h3>
                 <span className="text-[11px] tracking-[0.14em] text-muted" aria-hidden>

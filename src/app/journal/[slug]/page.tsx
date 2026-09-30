@@ -173,7 +173,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                       <span className="block text-[10.5px] tracking-[0.14em] text-muted uppercase">
                         Previous
                       </span>
-                      <span className="mt-2 block font-serif text-[19px] leading-[1.3] font-light text-ink group-hover:underline group-hover:underline-offset-4">
+                      <span className="mt-2 block font-serif text-[19px] leading-[1.3] font-light text-ink group-hover:underline group-hover:decoration-[1px] group-hover:underline-offset-[5px]">
                         {older.title}
                       </span>
                     </span>
@@ -197,7 +197,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                       <span className="block text-[10.5px] tracking-[0.14em] text-muted uppercase">
                         Next
                       </span>
-                      <span className="mt-2 block font-serif text-[19px] leading-[1.3] font-light text-ink group-hover:underline group-hover:underline-offset-4">
+                      <span className="mt-2 block font-serif text-[19px] leading-[1.3] font-light text-ink group-hover:underline group-hover:decoration-[1px] group-hover:underline-offset-[5px]">
                         {newer.title}
                       </span>
                     </span>

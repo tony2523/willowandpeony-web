@@ -223,7 +223,7 @@ export default async function VenueGuidePage({
                 href={`/venues/${v.slug}/`}
                 className="group flex items-center justify-between py-4"
               >
-                <span className="font-serif text-[19px] font-light text-ink group-hover:underline group-hover:underline-offset-4">
+                <span className="font-serif text-[19px] font-light text-ink group-hover:underline group-hover:decoration-[1px] group-hover:underline-offset-[5px]">
                   {v.name}
                 </span>
                 <span className="text-[10.5px] tracking-[0.14em] text-muted uppercase">

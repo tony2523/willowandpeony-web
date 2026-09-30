@@ -23,7 +23,7 @@ export default function PostCard({ post, priority = false }: { post: Post; prior
             className="h-auto w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02]"
           />
         </div>
-        <h3 className="h-card mt-4 text-ink group-hover:underline group-hover:underline-offset-4">
+        <h3 className="h-card mt-4 text-ink group-hover:underline group-hover:decoration-[1px] group-hover:underline-offset-[5px]">
           {post.title}
         </h3>
       </Link>

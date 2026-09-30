@@ -62,7 +62,7 @@ export default function VenuesPage() {
                 />
               </div>
               <div className="mt-4 flex items-baseline justify-between gap-4">
-                <h2 className="h-card text-ink group-hover:underline group-hover:underline-offset-4">
+                <h2 className="h-card text-ink group-hover:underline group-hover:decoration-[1px] group-hover:underline-offset-[5px]">
                   {v.name}
                 </h2>
                 <span className="t-link shrink-0 text-ink">Guide</span>
