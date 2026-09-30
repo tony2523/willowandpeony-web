@@ -11,23 +11,37 @@ from the original Shopify store in September 2026.
 3. GitHub Actions (`.github/workflows/deploy.yml`) builds and deploys to
    GitHub Pages automatically. Nothing else to do.
 
-Repo: `tony2523/willowandpeony-web`. Deployment mode is controlled by two
-repo variables (`gh variable set …`):
+Repo: `tony2523/willowandpeony-web`. TWO deploy targets run from every push
+during the transition (2026-09-30):
 
-- `PAGES_BASE_PATH` — set to `/willowandpeony-web` while previewing at
-  `https://tony2523.github.io/willowandpeony-web/` (also forces noindex).
-  Set to empty for the production custom-domain build.
-- `DEPLOY_CNAME` — set to `willowandpeony.co.nz` at go-live (writes the CNAME
-  file). Empty during preview.
+- **Cloudflare Pages (the keeper)** — `.github/workflows/deploy-cloudflare.yml`
+  deploys to project `willowandpeony` (preview: https://willowandpeony.pages.dev,
+  auto-noindexed by Cloudflare). Account: Tony's t@tonyhou.com Cloudflare
+  account, id in repo variable `CLOUDFLARE_ACCOUNT_ID`
+  (c4a3b32fddc9a1621a097c0c1a61f810). Auth: repo secret `CLOUDFLARE_API_TOKEN`
+  (Account → Cloudflare Pages → Edit). The workflow skips politely if the
+  secret is missing. Real 301s come from the generated `_redirects`; caching
+  and security headers from `_headers` (both written by scripts/postbuild.mjs).
+- **GitHub Pages (legacy, retire after Cloudflare is confirmed)** —
+  `.github/workflows/deploy.yml`, preview under tonyhou.com/willowandpeony-web/
+  via repo vars `PAGES_BASE_PATH` / `DEPLOY_CNAME`. When retiring: delete that
+  workflow, disable Pages in repo settings, then the repo can go PRIVATE
+  (Cloudflare deploys fine from a private repo).
 
-**Go-live checklist** (when Tony says to point the domain):
-1. `gh variable set PAGES_BASE_PATH -b ""` and `gh variable set DEPLOY_CNAME -b "willowandpeony.co.nz"`
-2. Set the custom domain in repo Settings → Pages (or `gh api repos/tony2523/willowandpeony-web/pages -X PUT -f cname=willowandpeony.co.nz`).
-3. DNS: `willowandpeony.co.nz` A records → GitHub Pages IPs (185.199.108.153,
-   .109., .110., .111.) or ALIAS/ANAME to `tony2523.github.io`; `www` CNAME →
-   `tony2523.github.io`. Enable "Enforce HTTPS" once the cert is issued.
-4. Re-run the deploy workflow, then submit `https://willowandpeony.co.nz/sitemap.xml`
-   in Google Search Console.
+**Image caching rule:** `_headers` gives `/images/*` a one-year immutable
+cache. Never re-use an image filename for a different photo — replacements get
+a new descriptive name.
+
+**Go-live checklist — Cloudflare** (when Tony says to point the domain):
+1. Add `willowandpeony.co.nz` as a zone in the t@tonyhou.com Cloudflare
+   account; update the nameservers at the registrar to the ones Cloudflare
+   assigns (this moves DNS off Shopify).
+2. Workers & Pages → willowandpeony → Custom domains → add
+   `willowandpeony.co.nz` and `www.willowandpeony.co.nz`.
+3. Verify the 52 legacy Shopify URLs 301 correctly on the live domain.
+4. Submit `https://willowandpeony.co.nz/sitemap.xml` in Google Search Console;
+   set up Cloudflare Web Analytics.
+5. Retire GitHub Pages (see above) and flip the repo private.
 
 ## Where content lives (edit these, not the page components, for routine updates)
 

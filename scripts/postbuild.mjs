@@ -2,9 +2,12 @@
 /**
  * Post-build step for the static export:
  *  1. Writes redirect stub pages for every legacy Shopify URL
- *     (meta refresh + canonical + JS replace — Google treats this as a redirect).
- *  2. Adds .nojekyll so GitHub Pages serves _next/* assets.
- *  3. Writes CNAME when DEPLOY_CNAME is set (production custom-domain deploys).
+ *     (meta refresh + canonical + JS replace — GitHub Pages has no server
+ *     redirects; on Cloudflare the _redirects file below takes priority).
+ *  2. Writes Cloudflare Pages _redirects (real 301s) and _headers
+ *     (immutable caching + security headers).
+ *  3. Adds .nojekyll so GitHub Pages serves _next/* assets.
+ *  4. Writes CNAME when DEPLOY_CNAME is set (GitHub Pages custom-domain builds).
  */
 import fs from "node:fs";
 import path from "node:path";
@@ -50,4 +53,37 @@ for (const [from, to] of Object.entries(redirects)) {
 fs.writeFileSync(path.join(OUT, ".nojekyll"), "");
 if (CNAME) fs.writeFileSync(path.join(OUT, "CNAME"), CNAME + "\n");
 
-console.log(`postbuild: ${count} redirect stubs, .nojekyll${CNAME ? ", CNAME=" + CNAME : ""}`);
+// Cloudflare Pages: real 301 redirects (evaluated before static assets,
+// so they win over the stub pages above).
+const redirectLines = Object.entries(redirects)
+  .map(([from, to]) => `${from} ${to} 301\n${from}/ ${to} 301`)
+  .join("\n");
+fs.writeFileSync(path.join(OUT, "_redirects"), redirectLines + "\n");
+
+// Cloudflare Pages: long-lived caching for assets + baseline security headers.
+// NOTE: /images/ files are cached for a year — never re-use a filename for a
+// different photo; give replacements a new name (see CLAUDE.md).
+fs.writeFileSync(
+  path.join(OUT, "_headers"),
+  `/_next/static/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/images/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/brand/*
+  Cache-Control: public, max-age=604800
+
+/downloads/*
+  Cache-Control: public, max-age=86400
+
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: SAMEORIGIN
+`,
+);
+
+console.log(
+  `postbuild: ${count} redirect stubs, _redirects (${Object.keys(redirects).length} rules), _headers, .nojekyll${CNAME ? ", CNAME=" + CNAME : ""}`,
+);
