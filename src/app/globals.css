@@ -1,16 +1,15 @@
 @import "tailwindcss";
 
 @theme {
-  /* Willow & Peony design tokens — matched to the original site:
-     pure white, black, greys (original scheme: bg #fff, fg #000,
-     secondary #4d4d4d, border #e1e1e1, black buttons) */
+  /* Willow & Peony design tokens — measured from the original Shopify site:
+     bg #fff, fg #000, secondary #4d4d4d, border #e1e1e1, black buttons */
   --color-ivory: #ffffff;
   --color-ivory-deep: #f7f7f7;
-  --color-ink: #0a0a0a;
+  --color-ink: #000000;
   --color-ink-soft: #4d4d4d;
   --color-muted: #757575;
   --color-hairline: #e1e1e1;
-  --color-rose: #0a0a0a;
+  --color-rose: #000000;
   --color-rose-deep: #000000;
   --color-blush: #f2f2f2;
 
@@ -21,34 +20,115 @@
 /* No smooth scrolling on <html>: page navigations must show the top of the
    new page instantly (a smooth default animates Next's scroll reset). */
 
+/* Base type measured on the original: Chivo 300, 15px/21px, black. */
 body {
   background: var(--color-ivory);
   color: var(--color-ink);
   font-family: var(--font-sans);
   font-weight: 300;
+  font-size: 15px;
+  line-height: 1.4;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
-/* Premium serif display type: light optical weight, gently tightened */
+/* Headings: Newsreader 400, letter-spacing -0.02em (measured). */
 h1,
 h2,
 h3 {
-  letter-spacing: -0.015em;
+  font-family: var(--font-serif);
+  letter-spacing: -0.02em;
   font-weight: 400;
 }
 
-.font-serif em,
-h1 em,
-h2 em {
-  font-style: italic;
+/*
+ * Original type scale (desktop === mobile on the original):
+ *  .h-page  — page/section headings   28.6px / 37.18px
+ *  .h-card  — card & sub headings     21.6px / 28.08px
+ *  .label   — small letterspaced UI   Chivo 400 12.6px, ls .08em
+ *  .link-text — underlined text links Chivo 400 11.7px, ls .08em
+ */
+.h-page {
+  font-family: var(--font-serif);
   font-weight: 400;
+  font-size: 28.6px;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+}
+.h-card {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 21.6px;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+}
+.label {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 12.6px;
+  line-height: 1.3;
+  letter-spacing: 0.08em;
+}
+.link-text {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 11.7px;
+  line-height: 1.4;
+  letter-spacing: 0.08em;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.link-text:hover {
+  text-decoration-thickness: 2px;
+}
+
+/* Form controls, measured: 15px Chivo, 41px tall inputs, hairline borders. */
+.input-wp {
+  width: 100%;
+  height: 41px;
+  border: 1px solid var(--color-hairline);
+  background: #fff;
+  padding: 0 14px;
+  font-size: 15px;
+  font-weight: 300;
+  color: var(--color-ink);
+}
+textarea.input-wp {
+  height: auto;
+  min-height: 86px;
+  padding: 10px 14px;
+}
+.input-wp::placeholder {
+  color: var(--color-muted);
+}
+.input-wp:focus {
+  outline: 1px solid var(--color-ink);
+  outline-offset: -1px;
+}
+.btn-wp {
+  display: inline-block;
+  border: 1px solid var(--color-ink);
+  background: #fff;
+  padding: 9px 28px;
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 11.7px;
+  letter-spacing: 0.08em;
+  color: var(--color-ink);
+  cursor: pointer;
+  transition:
+    background-color 0.2s,
+    color 0.2s;
+}
+.btn-wp:hover {
+  background: var(--color-ink);
+  color: #fff;
 }
 
 a,
 button,
 summary {
-  outline-color: var(--color-rose);
+  outline-color: var(--color-ink);
 }
 
 ::selection {
@@ -56,11 +136,12 @@ summary {
   color: var(--color-ink);
 }
 
-/* Editorial prose for journal articles */
+/* Journal article prose — measured: 608px column, 15px/21px body,
+   21.6px article h2s, images at column width. */
 .prose-wp {
-  font-size: 1.0625rem;
-  line-height: 1.85;
-  color: var(--color-ink-soft);
+  font-size: 15px;
+  line-height: 1.4;
+  color: var(--color-ink);
 }
 .prose-wp p {
   margin: 1.4em 0;
@@ -68,28 +149,29 @@ summary {
 .prose-wp h2 {
   font-family: var(--font-serif);
   font-weight: 400;
-  font-size: 1.75rem;
-  line-height: 1.25;
+  font-size: 21.6px;
+  line-height: 1.3;
   color: var(--color-ink);
   margin: 2.2em 0 0.8em;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
 }
 .prose-wp h3 {
   font-family: var(--font-serif);
-  font-weight: 500;
-  font-size: 1.35rem;
+  font-weight: 700;
+  font-size: 16.8px;
   line-height: 1.3;
   color: var(--color-ink);
   margin: 2em 0 0.7em;
+  letter-spacing: -0.02em;
 }
 .prose-wp a {
-  color: var(--color-rose-deep);
+  color: var(--color-ink);
   text-decoration: underline;
   text-underline-offset: 3px;
   text-decoration-thickness: 1px;
 }
 .prose-wp a:hover {
-  color: var(--color-ink);
+  text-decoration-thickness: 2px;
 }
 .prose-wp ul,
 .prose-wp ol {
@@ -114,28 +196,42 @@ summary {
   font-style: italic;
 }
 .prose-wp figure {
-  margin: 2.4em 0;
+  margin: 2.2em 0;
 }
 .prose-wp figure img {
   width: 100%;
   height: auto;
-  border-radius: 2px;
 }
 .prose-wp figcaption {
-  font-size: 0.8125rem;
+  font-size: 12.6px;
   color: var(--color-muted);
   margin-top: 0.6em;
   text-align: center;
   letter-spacing: 0.02em;
 }
 .prose-wp blockquote {
-  border-left: 2px solid var(--color-rose);
+  border-left: 1px solid var(--color-hairline);
   padding-left: 1.2em;
   font-family: var(--font-serif);
   font-style: italic;
-  font-size: 1.2rem;
+  font-size: 18px;
   color: var(--color-ink);
   margin: 2em 0;
+}
+
+/* Horizontal snap carousels (weddings/events galleries, bouquet strip). */
+.carousel {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+.carousel::-webkit-scrollbar {
+  display: none;
+}
+.carousel > * {
+  flex-shrink: 0;
+  scroll-snap-align: start;
 }
 
 /* Reduced motion */

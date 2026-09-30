@@ -2,12 +2,10 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Pic from "@/components/Pic";
-import PostCard from "@/components/PostCard";
-import Eyebrow from "@/components/Eyebrow";
-import CtaBand from "@/components/CtaBand";
 import JsonLd from "@/components/JsonLd";
 import { pageMetadata, articleJsonLd, breadcrumbJsonLd } from "@/lib/seo";
 import { getPost, getPosts } from "@/lib/journal";
+import { site } from "../../../../content/site";
 
 export function generateStaticParams() {
   return getPosts().map((p) => ({ slug: p.slug }));
@@ -39,17 +37,16 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
   if (!post) notFound();
 
   const all = getPosts();
-  const related = all
-    .filter((p) => p.slug !== post.slug && p.category === post.category)
-    .slice(0, 3);
-  // Prev/next within the same category (posts are sorted newest-first):
-  // "previous" is the older post, "next" the newer one.
   const inCategory = all.filter((p) => p.category === post.category);
   const idx = inCategory.findIndex((p) => p.slug === post.slug);
   const newer = idx > 0 ? inCategory[idx - 1] : undefined;
   const older = idx >= 0 && idx < inCategory.length - 1 ? inCategory[idx + 1] : undefined;
   const date = new Date(post.date + "T00:00:00");
-  const nice = date.toLocaleDateString("en-NZ", { day: "numeric", month: "long", year: "numeric" });
+  const nice = date.toLocaleDateString("en-NZ", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  });
   const catLabel = post.category === "weddings" ? "Weddings" : "Events";
   const catPath = `/journal/${post.category}/`;
 
@@ -75,45 +72,38 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
       />
 
       <article>
-        <header className="mx-auto max-w-3xl px-4 pt-14 text-center sm:px-6">
-          <nav aria-label="Breadcrumb" className="text-[0.72rem] tracking-[0.14em] uppercase text-muted">
-            <Link href="/journal/" className="hover:text-rose-deep">
-              Journal
-            </Link>
-            <span aria-hidden> / </span>
-            <Link href={catPath} className="hover:text-rose-deep">
-              {catLabel}
-            </Link>
-          </nav>
-          <h1 className="mt-5 font-serif text-3xl leading-[1.15] text-ink sm:text-[2.6rem]">
-            {post.title}
-          </h1>
-          <p className="mt-4 text-xs tracking-[0.1em] uppercase text-muted">
-            {post.venue && <>{post.venue} · </>}
-            <time dateTime={post.date}>{nice}</time> · By Ivy Diao
+        {/* Header, as on the original: date + author caption above a centred
+            28.6px title in a 608px column */}
+        <header className="mx-auto max-w-[640px] px-5 pt-14 text-center sm:px-6">
+          <p className="text-[15px] text-ink-soft">
+            <time dateTime={post.date}>{nice}</time>{" "}
+            <span className="ml-2">{site.founder}</span>
           </p>
+          <h1 className="h-page mt-3 text-ink">{post.title}</h1>
         </header>
 
-        <div className="mx-auto mt-10 max-w-4xl px-4 sm:px-6">
+        {/* Cover — 972px wide on the original */}
+        <div className="mx-auto mt-10 max-w-[972px] px-5 sm:px-6">
           <Pic
             name={post.cover}
             alt={post.title}
-            sizes="(max-width: 900px) 100vw, 860px"
+            sizes="(max-width: 1000px) 100vw, 972px"
             priority
             className="h-auto w-full"
           />
         </div>
 
+        {/* Body — 608px column (measured) */}
         <div
-          className="prose-wp mx-auto max-w-[760px] px-4 pt-4 sm:px-6"
+          className="prose-wp mx-auto max-w-[608px] px-5 pt-2 sm:px-6"
           dangerouslySetInnerHTML={{ __html: post.html }}
         />
 
-        <footer className="mx-auto mt-14 max-w-[760px] border-t border-hairline px-4 pt-8 sm:px-6">
-          <p className="text-sm leading-relaxed text-muted">
+        <footer className="mx-auto mt-14 max-w-[608px] px-5 sm:px-6">
+          <p className="text-[15px] leading-[1.4] text-ink-soft">
             Planning {post.category === "weddings" ? "your wedding flowers" : "an event"} in
             Auckland?{" "}
-            <Link href="/contact/" className="text-rose-deep underline underline-offset-2">
+            <Link href="/contact/" className="text-ink underline underline-offset-2">
               Get in touch
             </Link>{" "}
             — we&rsquo;d love to hear your plans.
@@ -127,10 +117,8 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
               <div className="sm:max-w-[46%]">
                 {older && (
                   <Link href={`/journal/${older.slug}/`} className="group block">
-                    <span className="text-[0.72rem] tracking-[0.14em] uppercase text-muted">
-                      ← Previous post
-                    </span>
-                    <span className="mt-1.5 block font-serif text-[1.05rem] leading-snug text-ink group-hover:underline">
+                    <span className="label text-ink-soft">← Previous post</span>
+                    <span className="h-card mt-1.5 block text-ink group-hover:underline">
                       {older.title}
                     </span>
                   </Link>
@@ -139,10 +127,8 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
               <div className="sm:max-w-[46%] sm:text-right">
                 {newer && (
                   <Link href={`/journal/${newer.slug}/`} className="group block">
-                    <span className="text-[0.72rem] tracking-[0.14em] uppercase text-muted">
-                      Next post →
-                    </span>
-                    <span className="mt-1.5 block font-serif text-[1.05rem] leading-snug text-ink group-hover:underline">
+                    <span className="label text-ink-soft">Next post →</span>
+                    <span className="h-card mt-1.5 block text-ink group-hover:underline">
                       {newer.title}
                     </span>
                   </Link>
@@ -152,34 +138,6 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
           )}
         </footer>
       </article>
-
-      {related.length > 0 && (
-        <section className="mx-auto mt-20 max-w-6xl px-4 sm:px-6">
-          <Eyebrow>Keep reading</Eyebrow>
-          <h2 className="mt-3 font-serif text-2xl text-ink sm:text-3xl">
-            More {post.category === "weddings" ? "real weddings" : "events"}
-          </h2>
-          <div className="mt-8 grid gap-x-7 gap-y-12 sm:grid-cols-3">
-            {related.map((p) => (
-              <PostCard key={p.slug} post={p} />
-            ))}
-          </div>
-        </section>
-      )}
-
-      <CtaBand
-        title={
-          post.category === "weddings"
-            ? "Dreaming up your own wedding flowers?"
-            : "Planning an event that deserves beautiful flowers?"
-        }
-        buttonLabel="Start an enquiry"
-        buttonHref="/contact/"
-        secondaryLabel={post.category === "weddings" ? "Wedding packages" : "Event flowers"}
-        secondaryHref={
-          post.category === "weddings" ? "/wedding-flower-packages/" : "/event-flowers-auckland/"
-        }
-      />
     </>
   );
 }

@@ -8,24 +8,30 @@ import { withBase } from "@/lib/images";
 import MobileNav from "./MobileNav";
 
 /**
- * Header matched to the original site: nav links left, centred logo,
- * enquire link right.
- *
- * On the home page it sits transparent over the hero (white logo). Once the
- * visitor scrolls down it hides; scrolling back up brings it in as a solid
- * white bar, so navigation is always within reach mid-page.
- * Every other page gets the plain sticky white header.
+ * Header measured from the original site:
+ *  - nav links left (Newsreader 400, 16.8px, -0.02em, normal case),
+ *    logo centred (250×30 desktop / 160×19 mobile), enquire right
+ *  - 51px total height, transparent over the hero banner on pages that have
+ *    one (home, weddings, packages, events, our story) with the white logo
+ *  - approved UX addition (invisible at rest): scrolling back up mid-page
+ *    brings the header in as a solid white bar
  */
-export default function Header() {
-  const pathname = usePathname() || "/";
-  const overlay = pathname === "/";
+const OVERLAY_PATHS = new Set([
+  "/",
+  "/wedding-flowers-auckland",
+  "/wedding-flower-packages",
+  "/event-flowers-auckland",
+  "/about",
+]);
 
-  // Home-only scroll state: "top" (transparent), "hidden", "solid" (scrolling up)
+export default function Header() {
+  const pathname = (usePathname() || "/").replace(/\/$/, "") || "/";
+  const overlay = OVERLAY_PATHS.has(pathname);
+
   const [scrollState, setScrollState] = useState<"top" | "hidden" | "solid">("top");
   const lastY = useRef(0);
 
   useEffect(() => {
-    if (!overlay) return;
     const THRESHOLD = 250;
     const update = () => {
       const y = window.scrollY;
@@ -42,16 +48,13 @@ export default function Header() {
     update();
     window.addEventListener("scroll", update, { passive: true });
     return () => window.removeEventListener("scroll", update);
-  }, [overlay]);
+  }, [pathname]);
 
   const light = overlay && scrollState === "top";
 
-  const colorCls = light
-    ? "text-white/95 transition-opacity hover:opacity-70"
-    : "text-ink transition-opacity hover:opacity-60";
-  const linkCls = `text-[0.72rem] tracking-[0.08em] uppercase ${colorCls}`;
-  // Slightly smaller on phones so logo / burger / enquire breathe.
-  const enquireCls = `py-2 text-[0.68rem] tracking-[0.05em] uppercase sm:text-[0.72rem] sm:tracking-[0.08em] ${colorCls}`;
+  const linkCls = `font-serif text-[16.8px] font-normal tracking-[-0.02em] transition-opacity hover:opacity-60 ${
+    light ? "text-white" : "text-ink"
+  }`;
 
   const headerCls = overlay
     ? `fixed inset-x-0 top-0 z-50 transition-[transform,background-color,border-color] duration-300 ${
@@ -61,11 +64,13 @@ export default function Header() {
           ? "border-b border-hairline bg-white"
           : "border-b border-transparent bg-transparent"
       }`
-    : "sticky top-0 z-50 border-b border-hairline bg-white";
+    : `sticky top-0 z-50 border-b border-hairline bg-white transition-transform duration-300 ${
+        scrollState === "hidden" ? "-translate-y-full" : "translate-y-0"
+      }`;
 
   return (
     <header className={headerCls}>
-      <div className="relative mx-auto grid max-w-[1400px] grid-cols-[1fr_auto_1fr] items-center gap-4 px-4 py-4 sm:gap-6 sm:px-8 sm:py-5">
+      <div className="relative mx-auto grid grid-cols-[1fr_auto_1fr] items-center gap-4 px-5 py-[15px] sm:px-6 sm:py-[10px]">
         {/* Left: desktop nav / mobile burger */}
         <nav aria-label="Main" className="hidden items-center gap-5 md:flex">
           {nav.map((item) => (
@@ -73,7 +78,7 @@ export default function Header() {
               key={item.href}
               href={item.href}
               className={linkCls}
-              aria-current={pathname === item.href ? "page" : undefined}
+              aria-current={pathname === item.href.replace(/\/$/, "") ? "page" : undefined}
             >
               {item.label}
             </Link>
@@ -92,13 +97,13 @@ export default function Header() {
             alt="Willow & Peony"
             width={250}
             height={30}
-            className="h-[20px] w-auto sm:h-[26px]"
+            className="h-[19px] w-auto sm:h-[30px]"
           />
         </Link>
 
-        {/* Right: enquire (all breakpoints) */}
+        {/* Right: enquire */}
         <div className="flex items-center justify-end">
-          <Link href="/contact/" className={enquireCls}>
+          <Link href="/contact/" className={`${linkCls} py-1 text-[15px] sm:text-[16.8px]`}>
             Enquire
           </Link>
         </div>

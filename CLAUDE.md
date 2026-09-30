@@ -89,7 +89,31 @@ a new descriptive name.
 
 ## Design contract (Tony's explicit instruction, 2026-09-30)
 
-The site must look like the ORIGINAL Shopify site as much as possible:
+The site must look like the ORIGINAL Shopify site as much as possible.
+MEASURED SPEC (2026-09-30, taken from the live original at 1440×900 — do not
+eyeball, these are the numbers):
+- Body: Chivo 300, 15px/21px, #000; secondary text #4d4d4d; borders #e1e1e1.
+- Headings (`globals.css` utilities): `.h-page` 28.6px, `.h-card` 21.6px —
+  Newsreader 400, ls -0.02em, same size on mobile. `.label` Chivo 400 12.6px
+  ls .08em; `.link-text` 11.7px underlined. Serif-bold body subheads 16.8px.
+- Header: 51px tall, logo 250×30 (160×19 mobile), nav links Newsreader 16.8px
+  normal case; transparent over the hero on home/weddings/packages/events/about.
+- Home: 100svh hero → 88px rhythm between all sections → intro (640/580 cols)
+  → 3 service cards (452:582, 20px gap, 12.6px grey labels) → founder (292px
+  image + 560px text, centred) → latest work (4 SQUARE cards, 24px gap).
+- Page banners: 65vh, centred white 28.6px title on the image.
+- Weddings/Events: banner → 2-up 720×922 snap carousel → centred 640px rich
+  text → latest work (3 cards) → enquiry form.
+- Packages: centred intro → alternating 321×418 image / 501px text rows.
+- Our Story: banner with intro on image → half-bleed 720×900 image+text →
+  4-up 331×425 bouquet carousel.
+- Journal: listing = 21.6px title + 4-col square grid; post = date/author
+  caption, centred 28.6px title, 972px cover, 608px body col, 21.6px h2s,
+  prev/next links.
+- Contact: 608px text left + 442px compact form (E-mail, Message, Send).
+- Forms: `.input-wp` (41px, 15px Chivo) and `.btn-wp` (11.7px outlined).
+
+Also:
 - Pure white background, black text, grey secondary (#4d4d4d), #e1e1e1 hairlines,
   black buttons. No warm/rose accent colours.
 - Header: nav links left, CENTRED logo, enquire right; transparent with the

@@ -53,12 +53,9 @@ export default function NewsletterForm() {
         required
         placeholder="Your E-mail"
         autoComplete="email"
-        className="w-full border border-hairline bg-white px-3.5 py-2.5 text-sm text-ink placeholder:text-muted focus:border-ink focus:outline-none"
+        className="input-wp"
       />
-      <button
-        type="submit"
-        className="mt-2.5 w-full border border-ink px-4 py-2.5 text-[0.72rem] tracking-[0.1em] uppercase text-ink transition-colors hover:bg-ink hover:text-white"
-      >
+      <button type="submit" className="btn-wp mt-2.5 w-full">
         Subscribe
       </button>
     </form>

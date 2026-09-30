@@ -33,27 +33,27 @@ const cols = [
 
 export default function Footer() {
   return (
-    <footer className="mt-24">
-      {/* Centred logo divider, as on the original site */}
-      <div className="border-t border-hairline py-12 text-center">
+    <footer className="mt-[88px] bg-white">
+      {/* Centred logo, as on the original (300×36) */}
+      <div className="border-t border-hairline pt-[88px] pb-12 text-center">
         <img
           src={withBase("/brand/willow-and-peony-logo.png")}
           alt="Willow & Peony"
           width={250}
           height={30}
           loading="lazy"
-          className="mx-auto h-[24px] w-auto"
+          className="mx-auto h-[36px] w-auto"
         />
       </div>
 
       <div className="border-t border-hairline">
-        <div className="mx-auto grid max-w-[1400px] gap-10 px-4 py-12 sm:px-8 md:grid-cols-[1.3fr_1fr_1fr_1fr_1.2fr]">
+        <div className="mx-auto grid gap-10 px-5 py-12 sm:px-6 md:grid-cols-[1.3fr_1fr_1fr_1fr_1.2fr]">
           <div>
-            <p className="max-w-xs text-sm leading-relaxed text-ink-soft">
+            <p className="max-w-[320px] text-[15px] leading-[1.4] text-ink">
               Willow &amp; Peony – Crafting premium, bespoke floral designs for every special
               moment.
             </p>
-            <p className="mt-4 text-sm text-ink-soft">
+            <p className="mt-4 text-[12.6px] leading-relaxed text-ink-soft">
               <a href={`mailto:${site.email}`} className="hover:underline">
                 {site.email}
               </a>
@@ -65,11 +65,14 @@ export default function Footer() {
           </div>
           {cols.map((col) => (
             <nav key={col.heading} aria-label={col.heading}>
-              <p className="text-[0.78rem] font-normal text-ink">{col.heading}</p>
+              <p className="label text-ink">{col.heading}</p>
               <ul className="mt-4 space-y-2.5">
                 {col.links.map((l) => (
                   <li key={l.href + l.label}>
-                    <Link href={l.href} className="text-[0.82rem] text-ink-soft hover:underline">
+                    <Link
+                      href={l.href}
+                      className="text-[12.6px] tracking-[-0.02em] text-ink-soft hover:underline"
+                    >
                       {l.label}
                     </Link>
                   </li>
@@ -78,14 +81,14 @@ export default function Footer() {
             </nav>
           ))}
           <div>
-            <p className="text-[0.78rem] font-normal text-ink">Subscribe to our Newsletter</p>
+            <p className="label text-ink">Subscribe to our Newsletter</p>
             <NewsletterForm />
           </div>
         </div>
       </div>
 
       <div className="border-t border-hairline">
-        <div className="mx-auto flex max-w-[1400px] flex-col gap-2 px-4 py-5 text-xs text-muted sm:flex-row sm:items-center sm:justify-between sm:px-8">
+        <div className="mx-auto flex flex-col gap-2 px-5 py-5 text-[12.6px] text-ink-soft sm:flex-row sm:items-center sm:justify-between sm:px-6">
           <p>
             © {new Date().getFullYear()} {site.name}.
           </p>

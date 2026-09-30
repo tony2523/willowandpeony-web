@@ -1,8 +1,8 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import Pic from "@/components/Pic";
+import PageHero from "@/components/PageHero";
+import Gallery from "@/components/Gallery";
 import PostCard from "@/components/PostCard";
-import Eyebrow from "@/components/Eyebrow";
 import EnquiryForm from "@/components/EnquiryForm";
 import JsonLd from "@/components/JsonLd";
 import { pageMetadata, serviceJsonLd, breadcrumbJsonLd } from "@/lib/seo";
@@ -16,25 +16,6 @@ export const metadata: Metadata = pageMetadata({
   ogImage: "event-flowers-auckland-uca-17",
 });
 
-const offers = [
-  {
-    title: "Corporate events & functions",
-    body: "Reception styling, gala dinners, awards nights, product launches and conferences — florals that set the tone and align with your brand and vision.",
-  },
-  {
-    title: "Private celebrations",
-    body: "Milestone birthdays, anniversaries and engagement parties — beauty and atmosphere brought to life through flowers.",
-  },
-  {
-    title: "Styled shoots & creative collaborations",
-    body: "We love working with other creatives to build floral stories that are bold, dreamy and editorial-worthy.",
-  },
-  {
-    title: "Client & team gifting",
-    body: "Custom floral arrangements and curated gift bundles to impress your guests or show appreciation in style.",
-  },
-];
-
 const gallery = [
   { name: "event-flowers-auckland-dsc03608-2", alt: "Sculptural centrepiece with anthuriums and citrus at a corporate dinner" },
   { name: "event-flowers-auckland-dsc03601", alt: "Table florals with fresh fruit accents at The French Café Auckland" },
@@ -44,6 +25,25 @@ const gallery = [
   { name: "event-flowers-auckland-dsc03511", alt: "Sophisticated corporate event table arrangement" },
   { name: "event-flowers-auckland-uca-17-copy-2", alt: "Statement stage installation at Unified Commerce Assembly" },
   { name: "event-flowers-auckland-uca-18-2", alt: "Colourful sculptural event flowers with orchids and tropical blooms" },
+];
+
+const offers = [
+  {
+    title: "Corporate Events & Functions",
+    body: "Reception styling, gala dinners, awards nights, product launches, or conferences — we'll help set the tone with florals that align with your brand and vision.",
+  },
+  {
+    title: "Private Celebrations",
+    body: "Whether it's a milestone birthday, anniversary, or engagement party, we bring beauty and atmosphere to life through flowers.",
+  },
+  {
+    title: "Styled Shoots & Creative Collaborations",
+    body: "We love working with other creatives to build floral stories that are bold, dreamy, and editorial-worthy.",
+  },
+  {
+    title: "Client & Team Gifting",
+    body: "Custom floral arrangements and curated gift bundles to impress your guests or show appreciation in style.",
+  },
 ];
 
 export default function EventsPage() {
@@ -66,95 +66,75 @@ export default function EventsPage() {
         ]}
       />
 
-      {/* Hero */}
-      <section className="relative h-[62vh] min-h-[400px] w-full overflow-hidden">
-        <Pic
-          name="event-flowers-auckland-uca-17"
-          alt="Large sculptural floral installation at a corporate event in Auckland"
-          sizes="100vw"
-          priority
-          className="absolute inset-0 h-full w-full object-cover"
-        />
-      </section>
+      <PageHero
+        image="event-flowers-auckland-uca-17"
+        alt="Large sculptural floral installation at a corporate event in Auckland"
+        title="Event Florals"
+      />
 
-      {/* Intro */}
-      <section className="mx-auto max-w-3xl px-4 pt-16 text-center sm:px-6">
-        <h1 className="font-serif text-3xl leading-snug text-ink sm:text-4xl">
-          Event Florals
-        </h1>
-        <p className="mt-3 text-[0.85rem] tracking-[0.08em] text-muted uppercase">
-          Intentional · Artful · Memorable
-        </p>
-        <p className="mt-8 font-serif text-xl leading-relaxed text-ink">
-          Event flowers that go beyond decoration — they transform spaces, capture attention and
-          leave a lasting impression.
-        </p>
-        <p className="mt-6 leading-relaxed text-ink-soft">
-          Our boutique Auckland studio specialises in impactful floral design for corporate events,
-          product launches, gala dinners and private celebrations. Each arrangement is thoughtfully
-          styled with premium seasonal blooms, combining elegance with unexpected details so your
-          event feels distinctive, polished and unforgettable.
-        </p>
-      </section>
+      <div className="mt-[2px]">
+        <Gallery images={gallery} perView={2} />
+      </div>
 
-      {/* What we offer */}
-      <section className="mx-auto mt-16 max-w-6xl px-4 sm:px-6">
-        <div className="grid gap-6 sm:grid-cols-2">
+      <section className="mx-auto mt-[88px] max-w-[640px] px-5 sm:px-6">
+        <h2 className="h-page text-ink">Impactful Events Floral Styling</h2>
+        <p className="h-card mt-2 text-ink-soft">Intentional. Artful. Memorable.</p>
+        <div className="mt-6 space-y-4 text-[15px] leading-[1.4] text-ink">
+          <p>
+            At Willow &amp; Peony, we create event flowers that go beyond decoration — they
+            transform spaces, capture attention, and leave a lasting impression. Based in
+            Auckland, our boutique floral studio specialises in impactful floral design for
+            corporate events, product launches, gala dinners, and private celebrations.
+          </p>
+          <p>
+            Each arrangement is thoughtfully styled with premium seasonal blooms, combining
+            elegance with unexpected details to ensure your event feels distinctive, polished,
+            and unforgettable.
+          </p>
+        </div>
+
+        <h3 className="mt-10 font-serif text-[16.8px] font-bold tracking-[-0.02em] text-ink">
+          What We Offer
+        </h3>
+        <ul className="mt-4 list-disc space-y-3 pl-5 text-[15px] leading-[1.4] text-ink">
           {offers.map((o) => (
-            <div key={o.title} className="border border-hairline bg-white p-7">
-              <h2 className="font-serif text-xl text-ink">{o.title}</h2>
-              <p className="mt-3 text-sm leading-relaxed text-ink-soft">{o.body}</p>
-            </div>
+            <li key={o.title}>
+              <strong className="font-normal">{o.title}</strong>
+              <br />
+              {o.body}
+            </li>
           ))}
-        </div>
-        <p className="mx-auto mt-10 max-w-2xl text-center leading-relaxed text-ink-soft">
-          No cookie-cutter florals here. Every event is different, and we take the time to
-          understand your needs and aesthetic — crafting florals that feel just right for the
-          moment.
+        </ul>
+
+        <h3 className="mt-10 font-serif text-[16.8px] font-bold tracking-[-0.02em] text-ink">
+          Why Choose Us
+        </h3>
+        <p className="mt-4 text-[15px] leading-[1.4] text-ink">
+          We bring a thoughtful, boutique approach to every project — no cookie-cutter florals
+          here. Every event is different, and we take the time to understand your needs and
+          aesthetic, crafting florals that feel just right for the moment.
         </p>
       </section>
 
-      {/* Gallery */}
-      <section className="mx-auto mt-20 max-w-6xl px-4 sm:px-6" aria-label="Event flower gallery">
-        <div className="columns-2 gap-4 md:columns-4 [&>*]:mb-4">
-          {gallery.map((g) => (
-            <Pic
-              key={g.name}
-              name={g.name}
-              alt={g.alt}
-              sizes="(max-width: 768px) 50vw, 25vw"
-              className="w-full break-inside-avoid"
-            />
-          ))}
-        </div>
-      </section>
-
-      {/* Latest events */}
-      <section className="mx-auto mt-24 max-w-6xl px-4 sm:px-6">
+      <section className="mt-[88px] px-5 sm:px-6">
         <div className="flex items-end justify-between">
-          <h2 className="font-serif text-3xl text-ink">Recent events</h2>
-          <Link
-            href="/journal/events/"
-            className="text-[0.78rem] tracking-[0.16em] uppercase text-rose-deep hover:text-ink"
-          >
-            View all →
+          <h2 className="h-page text-ink">Our Latest Work</h2>
+          <Link href="/journal/events/" className="link-text text-ink">
+            View All
           </Link>
         </div>
-        <div className="mt-9 grid gap-x-7 gap-y-12 sm:grid-cols-3">
+        <div className="mt-8 grid gap-x-6 gap-y-12 sm:grid-cols-3">
           {posts.map((post) => (
             <PostCard key={post.slug} post={post} />
           ))}
         </div>
       </section>
 
-      {/* Enquiry */}
-      <section id="enquire" className="mx-auto mt-24 max-w-3xl scroll-mt-24 px-4 pb-8 sm:px-6">
+      <section id="enquire" className="mx-auto mt-[88px] max-w-[720px] scroll-mt-24 px-5 sm:px-6">
         <div className="text-center">
-          <Eyebrow>Enquire</Eyebrow>
-          <h2 className="mt-3 font-serif text-3xl text-ink">Planning an event?</h2>
-          <p className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-muted">
-            Tell us about the occasion, the space and the atmosphere you want to create —
-            we&rsquo;ll come back with ideas within 1–2 business days.
+          <h2 className="h-page text-ink">Ready to bring your vision to life—bloom by bloom?</h2>
+          <p className="mx-auto mt-4 max-w-[580px] text-[15px] leading-[1.4] text-ink-soft">
+            Simply fill out the enquiry form below to get started!
           </p>
         </div>
         <div className="mt-10">

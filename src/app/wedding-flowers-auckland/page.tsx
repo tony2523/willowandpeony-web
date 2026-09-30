@@ -1,11 +1,9 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import Pic from "@/components/Pic";
+import PageHero from "@/components/PageHero";
+import Gallery from "@/components/Gallery";
 import PostCard from "@/components/PostCard";
-import CtaBand from "@/components/CtaBand";
-import Eyebrow from "@/components/Eyebrow";
 import EnquiryForm from "@/components/EnquiryForm";
-import HowWeWork from "@/components/HowWeWork";
 import JsonLd from "@/components/JsonLd";
 import { pageMetadata, serviceJsonLd, breadcrumbJsonLd } from "@/lib/seo";
 import { getPostsByCategory } from "@/lib/journal";
@@ -22,11 +20,19 @@ export const metadata: Metadata = pageMetadata({
 const gallery = [
   { name: "wedding-flowers-auckland-new-zealand-auckland-wedding-photographer-cbd-271", alt: "Bridal bouquet with soft peach and cream roses, Auckland wedding" },
   { name: "wedding-flowers-auckland-new-zealand-auckland-wedding-photographer-cbd-emma-443", alt: "Bride holding a joyful pastel bouquet in Auckland city" },
+  { name: "wedding-flowers-auckland-new-zealand-auckland-wedding-photographer-cbd-emma-419", alt: "Romantic bridal bouquet detail with garden roses" },
   { name: "wedding-flowers-auckland-img-3926", alt: "Romantic ceremony arrangement with garden roses and orchids" },
+  { name: "wedding-flowers-auckland-img-3923", alt: "Soft blush and ivory ceremony flowers" },
+  { name: "wedding-flowers-auckland-img-3939", alt: "Delicate wedding table florals" },
   { name: "wedding-flowers-auckland-dsc03988", alt: "Sculptural white and blush wedding flowers on a plinth" },
-  { name: "wedding-flowers-auckland-scarlet-style-shoot4", alt: "Bold crimson and blush bridal bouquet styled at The Narrows Landing" },
-  { name: "wedding-flowers-auckland-willowandpeony-1-13", alt: "Delicate bud vases and candles styled for a wedding reception" },
+  { name: "wedding-flowers-auckland-scarlet-style-shoot20", alt: "Rich crimson wedding styling at The Narrows Landing" },
+  { name: "wedding-flowers-auckland-scarlet-style-shoot4", alt: "Bold crimson and blush bridal bouquet" },
+  { name: "wedding-flowers-auckland-scarlet-style-shoot3", alt: "Deep red rose bouquet with trailing ribbon" },
+  { name: "wedding-flowers-auckland-scarlet-style-shoot10", alt: "Moody romantic wedding tablescape" },
   { name: "wedding-flowers-auckland-80bdd7b3b17e99d8a7325420cb8fb9c7", alt: "Garden-inspired ceremony flowers in blush and white" },
+  { name: "wedding-flowers-auckland-54086f85c7ad3b855a69348db7e5a79e", alt: "Bridal party with pastel bouquets" },
+  { name: "wedding-flowers-auckland-willowandpeony-1-13", alt: "Bud vases and candles styled for a wedding reception" },
+  { name: "wedding-flowers-auckland-willowandpeony-1-12-2", alt: "Romantic reception table styling" },
   { name: "wedding-flowers-auckland-dsc02433-4", alt: "Textural bridal bouquet with premium seasonal blooms" },
 ];
 
@@ -55,106 +61,83 @@ export default function WeddingsPage() {
         ]}
       />
 
-      {/* Hero */}
-      <section className="relative h-[62vh] min-h-[400px] w-full overflow-hidden">
-        <Pic
-          name="wedding-flowers-auckland-2c760fef1a83095d5abd94ee51e4041a"
-          alt="Bridal party with blush and ivory wedding bouquets by Willow & Peony"
-          sizes="100vw"
-          priority
-          className="absolute inset-0 h-full w-full object-cover"
-        />
-      </section>
+      <PageHero
+        image="wedding-flowers-auckland-2c760fef1a83095d5abd94ee51e4041a"
+        alt="Bridal party with blush and ivory wedding bouquets by Willow & Peony"
+        title="Wedding Florals"
+      />
 
-      {/* Intro */}
-      <section className="mx-auto max-w-3xl px-4 pt-16 text-center sm:px-6">
-        <h1 className="font-serif text-3xl leading-snug text-ink sm:text-4xl">
-          Wedding Florals
-        </h1>
-        <p className="mt-3 text-[0.85rem] tracking-[0.08em] text-muted uppercase">
-          Thoughtful · Romantic · Timeless
-        </p>
-        <p className="mt-8 font-serif text-xl leading-relaxed text-ink">
-          Weddings are deeply personal — your flowers should be too.
-        </p>
-        <p className="mt-6 leading-relaxed text-ink-soft">
-          Based on Auckland&rsquo;s North Shore, Willow &amp; Peony is a boutique wedding florist
-          specialising in romantic, modern arrangements for weddings and intimate celebrations
-          across Auckland. Our work is soft, feminine and artfully composed — premium seasonal
-          blooms with unexpected textural details, designed to feel uniquely yours.
-        </p>
-      </section>
+      {/* Gallery carousel — two 720×922 slides per view, as on the original */}
+      <div className="mt-[2px]">
+        <Gallery images={gallery} perView={2} />
+      </div>
 
-      {/* What we offer */}
-      <section className="mx-auto mt-20 max-w-6xl px-4 sm:px-6">
-        <div className="grid gap-10 md:grid-cols-2">
-          <div className="bg-ivory-deep p-8 sm:p-10">
-            <h2 className="font-serif text-2xl text-ink">Wedding flower packages</h2>
-            <p className="mt-4 leading-relaxed text-ink-soft">
-              Three thoughtfully designed tiers — Petite, Classic and Luxe — covering the floral
-              essentials from bridal bouquet to ceremony and reception styling, in our signature
-              romantic aesthetic. Perfect for couples who want beautiful blooms without the
-              overwhelm.
-            </p>
-            <Link
-              href="/wedding-flower-packages/"
-              className="mt-6 inline-block border border-ink px-6 py-2.5 text-[0.78rem] tracking-[0.16em] uppercase text-ink transition-colors hover:bg-ink hover:text-ivory"
-            >
-              View packages &amp; pricing
-            </Link>
-          </div>
-          <div className="bg-ivory-deep p-8 sm:p-10">
-            <h2 className="font-serif text-2xl text-ink">Bespoke floral design</h2>
-            <p className="mt-4 leading-relaxed text-ink-soft">
-              For couples dreaming of something entirely unique, our bespoke service is a fully
-              customised floral experience. We work closely with you — and your planner or stylist
-              — to design intentional, artful arrangements tailored to your vision, venue and
-              priorities, from dramatic installations to delicate details.
-            </p>
-            <Link
-              href="/contact/"
-              className="mt-6 inline-block border border-ink px-6 py-2.5 text-[0.78rem] tracking-[0.16em] uppercase text-ink transition-colors hover:bg-ink hover:text-ivory"
-            >
-              Enquire about bespoke
-            </Link>
-          </div>
+      {/* Rich text (measured: h2 28.6, sub-h2 21.6 grey, serif-bold 16.8 subheads) */}
+      <section className="mx-auto mt-[88px] max-w-[640px] px-5 sm:px-6">
+        <h2 className="h-page text-ink">Premium Wedding Floral Styling</h2>
+        <p className="h-card mt-2 text-ink-soft">Thoughtful. Romantic. Timeless.</p>
+        <div className="mt-6 space-y-4 text-[15px] leading-[1.4] text-ink">
+          <p>
+            Weddings are deeply personal — your flowers should be too. At Willow &amp; Peony, we
+            believe flowers should feel as magical as the moment you say &ldquo;I do.&rdquo;
+          </p>
+          <p>
+            Based on Auckland&rsquo;s North Shore, we are a boutique wedding florist specialising
+            in romantic, modern arrangements for weddings and intimate celebrations across
+            Auckland.
+          </p>
+          <p>
+            Our work is soft, feminine, and artfully composed — blending premium seasonal blooms
+            with unexpected textural details to create wedding flowers that feel uniquely yours.
+          </p>
         </div>
-        <p className="mx-auto mt-12 max-w-2xl text-center leading-relaxed text-ink-soft">
+
+        <h3 className="mt-10 font-serif text-[16.8px] font-bold tracking-[-0.02em] text-ink">
+          What We Offer
+        </h3>
+        <div className="mt-4 space-y-4 text-[15px] leading-[1.4] text-ink">
+          <p>
+            <strong className="font-normal text-ink">Wedding Flower Packages</strong>
+            <br />
+            Our thoughtfully designed{" "}
+            <Link href="/wedding-flower-packages/" className="underline underline-offset-2">
+              packages
+            </Link>{" "}
+            make planning your wedding florals simple and stress-free. With three tiers to choose
+            from, each package includes the floral essentials — from bridal bouquets to ceremony
+            and reception florals — styled in our signature romantic and refined aesthetic.
+            Perfect for couples who want beautiful blooms without the overwhelm.
+          </p>
+          <p>
+            <strong className="font-normal text-ink">Bespoke Floral Design</strong>
+            <br />
+            For couples dreaming of something entirely unique, our bespoke service offers a fully
+            customised floral experience. We work closely with you (and your planner or stylist)
+            to design intentional, artful arrangements tailored to your vision, venue, and
+            priorities — from dramatic installations to delicate floral details.
+          </p>
+        </div>
+
+        <h3 className="mt-10 font-serif text-[16.8px] font-bold tracking-[-0.02em] text-ink">
+          Why Choose Us
+        </h3>
+        <p className="mt-4 text-[15px] leading-[1.4] text-ink">
           Every couple is different — and so is every wedding we design. We take a boutique,
-          collaborative approach, starting with a deep understanding of your style, vision and
-          priorities, so your flowers feel as special as the day itself.
+          collaborative approach, starting with a deep understanding of your style, vision, and
+          priorities. Our floral designs are created with heart, artistry, and a touch of the
+          unexpected, ensuring your flowers feel as special as the day itself.
         </p>
       </section>
-
-      {/* Gallery */}
-      <section className="mx-auto mt-20 max-w-6xl px-4 sm:px-6" aria-label="Wedding flower gallery">
-        <div className="columns-2 gap-4 md:columns-4 [&>*]:mb-4">
-          {gallery.map((g) => (
-            <Pic
-              key={g.name}
-              name={g.name}
-              alt={g.alt}
-              sizes="(max-width: 768px) 50vw, 25vw"
-              className="w-full break-inside-avoid"
-            />
-          ))}
-        </div>
-      </section>
-
-      <HowWeWork />
 
       {/* Latest weddings */}
-      <section className="mx-auto mt-24 max-w-6xl px-4 sm:px-6">
+      <section className="mt-[88px] px-5 sm:px-6">
         <div className="flex items-end justify-between">
-          <h2 className="font-serif text-3xl text-ink">Recent weddings</h2>
-          <Link
-            href="/journal/weddings/"
-            className="text-[0.78rem] tracking-[0.16em] uppercase text-rose-deep hover:text-ink"
-          >
-            View all →
+          <h2 className="h-page text-ink">Our Latest Work</h2>
+          <Link href="/journal/weddings/" className="link-text text-ink">
+            View All
           </Link>
         </div>
-        <div className="mt-9 grid gap-x-7 gap-y-12 sm:grid-cols-3">
+        <div className="mt-8 grid gap-x-6 gap-y-12 sm:grid-cols-3">
           {posts.map((post) => (
             <PostCard key={post.slug} post={post} />
           ))}
@@ -162,28 +145,18 @@ export default function WeddingsPage() {
       </section>
 
       {/* Enquiry */}
-      <section id="enquire" className="mx-auto mt-24 max-w-3xl scroll-mt-24 px-4 sm:px-6">
+      <section id="enquire" className="mx-auto mt-[88px] max-w-[720px] scroll-mt-24 px-5 sm:px-6">
         <div className="text-center">
-          <Eyebrow>Enquire</Eyebrow>
-          <h2 className="mt-3 font-serif text-3xl text-ink">
-            Ready to bring your vision to life — bloom by bloom?
-          </h2>
-          <p className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-muted">
-            Tell us about your day — your style, your venue, your dream florals — and we&rsquo;ll
-            be in touch within 1–2 business days.
+          <h2 className="h-page text-ink">Ready to bring your vision to life—bloom by bloom?</h2>
+          <p className="mx-auto mt-4 max-w-[580px] text-[15px] leading-[1.4] text-ink-soft">
+            We&rsquo;d love to hear more about your day — your style, your venue, your dream
+            florals. Simply fill out the form below to get started!
           </p>
         </div>
         <div className="mt-10">
           <EnquiryForm kind="wedding" />
         </div>
       </section>
-
-      <CtaBand
-        title="Not sure what's in season for your date?"
-        body="Download our free Wedding Flower Calendar — a month-by-month guide to New Zealand's seasonal blooms."
-        buttonLabel="Get the calendar"
-        buttonHref="/wedding-flower-calendar/"
-      />
     </>
   );
 }
