@@ -120,13 +120,13 @@ export default function InstagramFeed() {
       </div>
       {/* Full-bleed, flush tiles: 2 across mobile, 3 tablet, 6 desktop */}
       <div className="mt-9 grid w-full grid-cols-2 sm:grid-cols-3 lg:grid-cols-6">
-        {items.map((item) => (
+        {items.map((item, i) => (
           <button
             key={item.id}
             type="button"
             onClick={() => setOpen(item)}
             aria-label={`Preview Instagram post: ${item.caption.slice(0, 60)}`}
-            className="group block cursor-pointer overflow-hidden"
+            className={`group block cursor-pointer overflow-hidden ${i > 3 ? "max-sm:hidden" : ""}`}
           >
             <TileImage item={item} sizes="(max-width: 640px) 50vw, 17vw" />
           </button>
