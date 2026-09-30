@@ -6,6 +6,14 @@ import Link from "next/link";
 import { nav, site } from "../../content/site";
 import { withBase } from "@/lib/images";
 
+/** Drawer shows the main nav plus Journal (kept out of the top bar to match
+ *  the original site's header). */
+const drawerLinks = [
+  ...nav.slice(0, 3),
+  { label: "Journal", href: "/journal/" },
+  ...nav.slice(3),
+];
+
 /** Slide-in mobile navigation drawer (burger menu). */
 export default function MobileNav({ light = false }: { light?: boolean }) {
   const [open, setOpen] = useState(false);
@@ -100,7 +108,7 @@ export default function MobileNav({ light = false }: { light?: boolean }) {
           </button>
         </div>
         <div className="flex-1 overflow-y-auto px-6 py-4">
-          {nav.map((item) => (
+          {drawerLinks.map((item) => (
             <Link
               key={item.href}
               href={item.href}
@@ -111,9 +119,16 @@ export default function MobileNav({ light = false }: { light?: boolean }) {
             </Link>
           ))}
           <Link
+            href="/wedding-flower-calendar/"
+            onClick={() => setOpen(false)}
+            className="mt-5 block text-sm text-ink-soft underline underline-offset-4 hover:text-ink"
+          >
+            Free wedding flower calendar
+          </Link>
+          <Link
             href="/contact/"
             onClick={() => setOpen(false)}
-            className="mt-7 block border border-ink px-6 py-3 text-center text-[0.8rem] tracking-[0.16em] uppercase text-ink transition-colors hover:bg-ink hover:text-ivory"
+            className="mt-6 block border border-ink px-6 py-3 text-center text-[0.8rem] tracking-[0.16em] uppercase text-ink transition-colors hover:bg-ink hover:text-ivory"
           >
             Enquire
           </Link>

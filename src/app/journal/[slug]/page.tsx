@@ -42,6 +42,12 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
   const related = all
     .filter((p) => p.slug !== post.slug && p.category === post.category)
     .slice(0, 3);
+  // Prev/next within the same category (posts are sorted newest-first):
+  // "previous" is the older post, "next" the newer one.
+  const inCategory = all.filter((p) => p.category === post.category);
+  const idx = inCategory.findIndex((p) => p.slug === post.slug);
+  const newer = idx > 0 ? inCategory[idx - 1] : undefined;
+  const older = idx >= 0 && idx < inCategory.length - 1 ? inCategory[idx + 1] : undefined;
   const date = new Date(post.date + "T00:00:00");
   const nice = date.toLocaleDateString("en-NZ", { day: "numeric", month: "long", year: "numeric" });
   const catLabel = post.category === "weddings" ? "Weddings" : "Events";
@@ -112,6 +118,38 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
             </Link>{" "}
             — we&rsquo;d love to hear your plans.
           </p>
+
+          {(older || newer) && (
+            <nav
+              aria-label="Post navigation"
+              className="mt-10 flex flex-col gap-6 border-t border-hairline pt-8 sm:flex-row sm:justify-between sm:gap-10"
+            >
+              <div className="sm:max-w-[46%]">
+                {older && (
+                  <Link href={`/journal/${older.slug}/`} className="group block">
+                    <span className="text-[0.72rem] tracking-[0.14em] uppercase text-muted">
+                      ← Previous post
+                    </span>
+                    <span className="mt-1.5 block font-serif text-[1.05rem] leading-snug text-ink group-hover:underline">
+                      {older.title}
+                    </span>
+                  </Link>
+                )}
+              </div>
+              <div className="sm:max-w-[46%] sm:text-right">
+                {newer && (
+                  <Link href={`/journal/${newer.slug}/`} className="group block">
+                    <span className="text-[0.72rem] tracking-[0.14em] uppercase text-muted">
+                      Next post →
+                    </span>
+                    <span className="mt-1.5 block font-serif text-[1.05rem] leading-snug text-ink group-hover:underline">
+                      {newer.title}
+                    </span>
+                  </Link>
+                )}
+              </div>
+            </nav>
+          )}
         </footer>
       </article>
 
