@@ -38,6 +38,11 @@ a new descriptive name.
 1. Add `willowandpeony.co.nz` as a zone in the t@tonyhou.com Cloudflare
    account; update the nameservers at the registrar to the ones Cloudflare
    assigns (this moves DNS off Shopify).
+1b. **Email Routing** (makes the enquiry form live): zone → Email → Email
+   Routing → enable; add `hello@willowandpeony.co.nz` as a destination
+   address and click the verification email; create a route or catch-all so
+   hello@ forwards wherever Ivy reads mail. The form then sends via the
+   Worker with zero third parties. Test with a real submission.
 2. Workers & Pages → willowandpeony → Settings → Domains & Routes → add
    custom domains `willowandpeony.co.nz` and `www.willowandpeony.co.nz`.
 3. Verify the 52 legacy Shopify URLs 301 correctly on the live domain.
@@ -130,10 +135,14 @@ Also:
 - **Static export** (`output: "export"`) — no server code, no API routes
   (route handlers must stay `force-static`), no next/image optimizer. GitHub
   Pages serves flat files.
-- Forms: `EnquiryForm` posts to `site.formEndpoint` (Formspree/Web3Forms
-  style). It is currently EMPTY → falls back to a pre-filled mailto draft.
-  To upgrade: create a (free) Formspree form, paste its endpoint into
-  `content/site.ts`.
+- Forms: `EnquiryForm` posts JSON to the site's own Worker
+  (`POST /api/enquiry` in `worker/index.js`), which emails the studio via
+  Cloudflare Email Routing's free `send_email` binding (wrangler.jsonc:
+  `SEND_EMAIL`, vars `ENQUIRY_TO`/`ENQUIRY_FROM`). 100% Cloudflare, $0.
+  Until the zone + Email Routing are live the Worker answers 503 and the
+  form falls back to a pre-filled mail draft. Optional hardening once live:
+  create a Turnstile widget (free) and `wrangler secret put TURNSTILE_SECRET`
+  — the Worker enforces it automatically when the secret exists.
 - Calendar signup posts the email to Klaviyo (company id in `content/site.ts`)
   client-side, then routes to the download page. No Klaviyo JS is loaded.
 - Keep third-party scripts at zero. Page speed is a feature.

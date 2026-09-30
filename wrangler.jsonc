@@ -1,20 +1,35 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
   // Static site on Cloudflare Workers static assets, mirroring the
-  // moustacherepublic-web setup. `npm run build` writes the site to out/;
-  // Cloudflare Workers Builds runs the build and `npx wrangler deploy` on
-  // every push to main. out/_redirects and out/_headers apply at the edge.
-  "name": "willowandpeony",
+  // moustacherepublic-web setup. Cloudflare Workers Builds runs
+  // `npm run build` + `npx wrangler deploy` on every push to main.
+  // out/_redirects and out/_headers apply at the edge.
+  "name": "willowandpeony-web",
   "compatibility_date": "2026-09-30",
-  // Only handles Next.js navigation data requests (worker/index.js explains why).
+  // Handles POST /api/enquiry (form → email) and Next's `$` nav-data paths;
+  // everything else is served straight from static assets.
   "main": "./worker/index.js",
   "assets": {
     "directory": "./out",
     "binding": "ASSETS",
-    "run_worker_first": ["/__next.*", "/*/__next.*"],
+    "run_worker_first": ["/api/*", "/__next.*", "/*/__next.*"],
     // The site uses trailing-slash URLs (/faq/ serves faq/index.html).
     "html_handling": "auto-trailing-slash",
     // Unknown URLs get the site's 404 page with a real 404 status.
     "not_found_handling": "404-page"
-  }
+  },
+  "vars": {
+    "ENQUIRY_TO": "hello@willowandpeony.co.nz",
+    "ENQUIRY_FROM": "enquiries@willowandpeony.co.nz"
+  },
+  // Free Cloudflare Email Routing sending: works once willowandpeony.co.nz
+  // is an active zone with Email Routing enabled and ENQUIRY_TO verified as
+  // a destination address (see CLAUDE.md go-live checklist). Until then the
+  // Worker returns 503 and the form falls back to a mail draft.
+  "send_email": [
+    {
+      "name": "SEND_EMAIL",
+      "allowed_destination_addresses": ["hello@willowandpeony.co.nz"]
+    }
+  ]
 }

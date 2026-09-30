@@ -11,47 +11,59 @@ type Props = {
 
 /**
  * Enquiry form, styled to the original (15px Chivo inputs, 41px tall,
- * hairline borders, small letterspaced outlined Send button). Posts to
- * site.formEndpoint (Formspree/Web3Forms-compatible) when configured;
- * otherwise opens a pre-filled email draft to the studio.
+ * hairline borders, small letterspaced outlined Send button).
+ *
+ * Submits to the site's own Cloudflare Worker (POST /api/enquiry), which
+ * emails the studio via Cloudflare Email Routing — free, no third parties.
+ * If the API isn't available (GitHub Pages preview, or the zone isn't live
+ * on Cloudflare yet) it falls back to opening a pre-filled email draft, so
+ * no enquiry is ever lost.
  */
 export default function EnquiryForm({ kind = "general", compact = false }: Props) {
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
 
+  function mailtoFallback(fields: Record<string, string>) {
+    const subject = encodeURIComponent(
+      kind === "general"
+        ? "Enquiry — Willow & Peony"
+        : `${kind === "wedding" ? "Wedding" : "Event"} enquiry — ${fields.name || ""}`,
+    );
+    const body = encodeURIComponent(
+      Object.entries(fields)
+        .filter(([k]) => k !== "_gotcha")
+        .map(([k, v]) => `${k[0].toUpperCase() + k.slice(1)}: ${v}`)
+        .join("\n"),
+    );
+    window.location.href = `mailto:${site.email}?subject=${subject}&body=${body}`;
+  }
+
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = e.currentTarget;
-    const data = new FormData(form);
-    const fields = Object.fromEntries(data.entries()) as Record<string, string>;
-
-    if (!site.formEndpoint) {
-      const subject = encodeURIComponent(
-        kind === "general"
-          ? "Enquiry — Willow & Peony"
-          : `${kind === "wedding" ? "Wedding" : "Event"} enquiry — ${fields.name || ""}`,
-      );
-      const body = encodeURIComponent(
-        Object.entries(fields)
-          .filter(([k]) => k !== "_gotcha")
-          .map(([k, v]) => `${k[0].toUpperCase() + k.slice(1)}: ${v}`)
-          .join("\n"),
-      );
-      window.location.href = `mailto:${site.email}?subject=${subject}&body=${body}`;
-      return;
-    }
+    const fields = Object.fromEntries(new FormData(form).entries()) as Record<string, string>;
 
     setStatus("sending");
     try {
-      const res = await fetch(site.formEndpoint, {
+      const res = await fetch("/api/enquiry", {
         method: "POST",
-        headers: { Accept: "application/json" },
-        body: data,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...fields, kind }),
       });
-      if (!res.ok) throw new Error(String(res.status));
-      setStatus("sent");
-      form.reset();
+      if (res.ok) {
+        setStatus("sent");
+        form.reset();
+        return;
+      }
+      if (res.status === 400) {
+        // Validation/bot-check failure — surface it rather than emailing.
+        setStatus("error");
+        return;
+      }
+      throw new Error(String(res.status));
     } catch {
-      setStatus("error");
+      // API missing (preview host) or email not configured yet → mail draft.
+      setStatus("idle");
+      mailtoFallback(fields);
     }
   }
 
