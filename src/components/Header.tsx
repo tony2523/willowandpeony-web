@@ -92,7 +92,7 @@ export default function Header() {
             alt="Willow & Peony"
             width={250}
             height={30}
-            className="h-[17px] w-auto sm:h-[26px]"
+            className="h-[20px] w-auto sm:h-[26px]"
           />
         </Link>
 
