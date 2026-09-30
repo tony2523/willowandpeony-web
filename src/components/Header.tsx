@@ -46,9 +46,12 @@ export default function Header() {
 
   const light = overlay && scrollState === "top";
 
-  const linkCls = light
-    ? "text-[0.72rem] tracking-[0.08em] uppercase text-white/95 transition-opacity hover:opacity-70"
-    : "text-[0.72rem] tracking-[0.08em] uppercase text-ink transition-opacity hover:opacity-60";
+  const colorCls = light
+    ? "text-white/95 transition-opacity hover:opacity-70"
+    : "text-ink transition-opacity hover:opacity-60";
+  const linkCls = `text-[0.72rem] tracking-[0.08em] uppercase ${colorCls}`;
+  // Slightly smaller on phones so logo / burger / enquire breathe.
+  const enquireCls = `py-2 text-[0.68rem] tracking-[0.05em] uppercase sm:text-[0.72rem] sm:tracking-[0.08em] ${colorCls}`;
 
   const headerCls = overlay
     ? `fixed inset-x-0 top-0 z-50 transition-[transform,background-color,border-color] duration-300 ${
@@ -62,7 +65,7 @@ export default function Header() {
 
   return (
     <header className={headerCls}>
-      <div className="relative mx-auto grid max-w-[1400px] grid-cols-[1fr_auto_1fr] items-center px-4 py-5 sm:px-8">
+      <div className="relative mx-auto grid max-w-[1400px] grid-cols-[1fr_auto_1fr] items-center gap-4 px-4 py-4 sm:gap-6 sm:px-8 sm:py-5">
         {/* Left: desktop nav / mobile burger */}
         <nav aria-label="Main" className="hidden items-center gap-5 md:flex">
           {nav.map((item) => (
@@ -76,7 +79,7 @@ export default function Header() {
             </Link>
           ))}
         </nav>
-        <div className="md:hidden">
+        <div className="-ml-2 md:hidden">
           <MobileNav light={light} />
         </div>
 
@@ -89,13 +92,13 @@ export default function Header() {
             alt="Willow & Peony"
             width={250}
             height={30}
-            className="h-[22px] w-auto sm:h-[26px]"
+            className="h-[17px] w-auto sm:h-[26px]"
           />
         </Link>
 
         {/* Right: enquire (all breakpoints) */}
         <div className="flex items-center justify-end">
-          <Link href="/contact/" className={linkCls}>
+          <Link href="/contact/" className={enquireCls}>
             Enquire
           </Link>
         </div>
