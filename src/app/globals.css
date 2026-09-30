@@ -18,9 +18,8 @@
   --font-sans: var(--font-chivo), "Chivo", system-ui, sans-serif;
 }
 
-html {
-  scroll-behavior: smooth;
-}
+/* No smooth scrolling on <html>: page navigations must show the top of the
+   new page instantly (a smooth default animates Next's scroll reset). */
 
 body {
   background: var(--color-ivory);
@@ -141,9 +140,6 @@ summary {
 
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
   *,
   *::before,
   *::after {
