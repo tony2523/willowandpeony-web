@@ -7,7 +7,7 @@ import { nav, site } from "../../content/site";
 import { withBase } from "@/lib/images";
 
 /** Slide-in mobile navigation drawer (burger menu). */
-export default function MobileNav() {
+export default function MobileNav({ light = false }: { light?: boolean }) {
   const [open, setOpen] = useState(false);
   // true after hydration — the drawer portal can only render client-side
   const mounted = useSyncExternalStore(
@@ -41,19 +41,19 @@ export default function MobileNav() {
         <span className="relative block h-3.5 w-6">
           <span
             aria-hidden
-            className={`absolute left-0 top-0 h-px w-6 bg-ink transition-transform duration-300 ${
+            className={`absolute left-0 top-0 h-px w-6 ${light ? "bg-white" : "bg-ink"} transition-transform duration-300 ${
               open ? "translate-y-[7px] rotate-45" : ""
             }`}
           />
           <span
             aria-hidden
-            className={`absolute left-0 top-[7px] h-px w-6 bg-ink transition-opacity duration-200 ${
+            className={`absolute left-0 top-[7px] h-px w-6 ${light ? "bg-white" : "bg-ink"} transition-opacity duration-200 ${
               open ? "opacity-0" : ""
             }`}
           />
           <span
             aria-hidden
-            className={`absolute left-0 top-[14px] h-px w-6 bg-ink transition-transform duration-300 ${
+            className={`absolute left-0 top-[14px] h-px w-6 ${light ? "bg-white" : "bg-ink"} transition-transform duration-300 ${
               open ? "-translate-y-[7px] -rotate-45" : ""
             }`}
           />

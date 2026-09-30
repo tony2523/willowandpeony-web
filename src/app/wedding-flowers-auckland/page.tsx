@@ -56,30 +56,25 @@ export default function WeddingsPage() {
       />
 
       {/* Hero */}
-      <section className="relative">
-        <div className="relative h-[56vh] min-h-[400px] w-full overflow-hidden">
-          <Pic
-            name="wedding-flowers-auckland-2c760fef1a83095d5abd94ee51e4041a"
-            alt="Bridal party with blush and ivory wedding bouquets by Willow & Peony"
-            sizes="100vw"
-            priority
-            className="absolute inset-0 h-full w-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-ink/55 via-transparent to-transparent" />
-          <div className="absolute inset-x-0 bottom-0 mx-auto max-w-6xl px-4 pb-12 sm:px-6">
-            <Eyebrow>
-              <span className="text-ivory/80">Thoughtful · Romantic · Timeless</span>
-            </Eyebrow>
-            <h1 className="mt-3 max-w-2xl font-serif text-4xl leading-[1.1] text-ivory sm:text-5xl">
-              Wedding flowers in Auckland
-            </h1>
-          </div>
-        </div>
+      <section className="relative h-[62vh] min-h-[400px] w-full overflow-hidden">
+        <Pic
+          name="wedding-flowers-auckland-2c760fef1a83095d5abd94ee51e4041a"
+          alt="Bridal party with blush and ivory wedding bouquets by Willow & Peony"
+          sizes="100vw"
+          priority
+          className="absolute inset-0 h-full w-full object-cover"
+        />
       </section>
 
       {/* Intro */}
       <section className="mx-auto max-w-3xl px-4 pt-16 text-center sm:px-6">
-        <p className="font-serif text-2xl leading-relaxed text-ink">
+        <h1 className="font-serif text-3xl leading-snug text-ink sm:text-4xl">
+          Wedding Florals
+        </h1>
+        <p className="mt-3 text-[0.85rem] tracking-[0.08em] text-muted uppercase">
+          Thoughtful · Romantic · Timeless
+        </p>
+        <p className="mt-8 font-serif text-xl leading-relaxed text-ink">
           Weddings are deeply personal — your flowers should be too.
         </p>
         <p className="mt-6 leading-relaxed text-ink-soft">

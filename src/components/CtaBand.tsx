@@ -16,21 +16,21 @@ export default function CtaBand({
   secondaryHref?: string;
 }) {
   return (
-    <section className="mt-24 bg-ink text-ivory">
-      <div className="mx-auto max-w-3xl px-4 py-20 text-center sm:px-6">
-        <h2 className="font-serif text-3xl leading-tight sm:text-4xl">{title}</h2>
-        <p className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-ivory/70">{body}</p>
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+    <section className="mt-24 border-t border-hairline">
+      <div className="mx-auto max-w-2xl px-4 py-16 text-center sm:px-6">
+        <h2 className="font-serif text-2xl leading-snug text-ink sm:text-3xl">{title}</h2>
+        <p className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-ink-soft">{body}</p>
+        <div className="mt-7 flex flex-wrap items-center justify-center gap-4">
           <Link
             href={buttonHref}
-            className="bg-ivory px-7 py-3 text-[0.8rem] tracking-[0.16em] uppercase text-ink transition-opacity hover:opacity-85"
+            className="bg-ink px-7 py-3 text-[0.75rem] tracking-[0.1em] uppercase text-white transition-opacity hover:opacity-80"
           >
             {buttonLabel}
           </Link>
           {secondaryLabel && secondaryHref && (
             <Link
               href={secondaryHref}
-              className="border border-ivory/40 px-7 py-3 text-[0.8rem] tracking-[0.16em] uppercase text-ivory transition-colors hover:border-ivory"
+              className="border border-ink px-7 py-3 text-[0.75rem] tracking-[0.1em] uppercase text-ink transition-colors hover:bg-ink hover:text-white"
             >
               {secondaryLabel}
             </Link>

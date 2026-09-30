@@ -67,30 +67,25 @@ export default function EventsPage() {
       />
 
       {/* Hero */}
-      <section className="relative">
-        <div className="relative h-[56vh] min-h-[400px] w-full overflow-hidden">
-          <Pic
-            name="event-flowers-auckland-uca-17"
-            alt="Large sculptural floral installation at a corporate event in Auckland"
-            sizes="100vw"
-            priority
-            className="absolute inset-0 h-full w-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-ink/55 via-transparent to-transparent" />
-          <div className="absolute inset-x-0 bottom-0 mx-auto max-w-6xl px-4 pb-12 sm:px-6">
-            <Eyebrow>
-              <span className="text-ivory/80">Intentional · Artful · Memorable</span>
-            </Eyebrow>
-            <h1 className="mt-3 max-w-2xl font-serif text-4xl leading-[1.1] text-ivory sm:text-5xl">
-              Event flowers in Auckland
-            </h1>
-          </div>
-        </div>
+      <section className="relative h-[62vh] min-h-[400px] w-full overflow-hidden">
+        <Pic
+          name="event-flowers-auckland-uca-17"
+          alt="Large sculptural floral installation at a corporate event in Auckland"
+          sizes="100vw"
+          priority
+          className="absolute inset-0 h-full w-full object-cover"
+        />
       </section>
 
       {/* Intro */}
       <section className="mx-auto max-w-3xl px-4 pt-16 text-center sm:px-6">
-        <p className="font-serif text-2xl leading-relaxed text-ink">
+        <h1 className="font-serif text-3xl leading-snug text-ink sm:text-4xl">
+          Event Florals
+        </h1>
+        <p className="mt-3 text-[0.85rem] tracking-[0.08em] text-muted uppercase">
+          Intentional · Artful · Memorable
+        </p>
+        <p className="mt-8 font-serif text-xl leading-relaxed text-ink">
           Event flowers that go beyond decoration — they transform spaces, capture attention and
           leave a lasting impression.
         </p>

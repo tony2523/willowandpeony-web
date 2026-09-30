@@ -35,24 +35,19 @@ export default function AboutPage() {
         ])}
       />
 
-      <section className="relative">
-        <div className="relative h-[48vh] min-h-[360px] w-full overflow-hidden">
-          <Pic
-            name="willow-and-peony-bouquet-scarlet-styled-shoot-2-copy"
-            alt="Willow & Peony floral styling with rich romantic blooms"
-            sizes="100vw"
-            priority
-            className="absolute inset-0 h-full w-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-ink/55 via-transparent to-transparent" />
-          <div className="absolute inset-x-0 bottom-0 mx-auto max-w-6xl px-4 pb-12 sm:px-6">
-            <h1 className="font-serif text-4xl leading-[1.1] text-ivory sm:text-5xl">Our story</h1>
-          </div>
-        </div>
+      <section className="relative h-[52vh] min-h-[360px] w-full overflow-hidden">
+        <Pic
+          name="willow-and-peony-bouquet-scarlet-styled-shoot-2-copy"
+          alt="Willow & Peony floral styling with rich romantic blooms"
+          sizes="100vw"
+          priority
+          className="absolute inset-0 h-full w-full object-cover"
+        />
       </section>
 
       <section className="mx-auto max-w-3xl px-4 pt-16 text-center sm:px-6">
-        <p className="font-serif text-2xl leading-relaxed text-ink">
+        <h1 className="font-serif text-3xl leading-snug text-ink sm:text-4xl">Our Story</h1>
+        <p className="mt-8 font-serif text-xl leading-relaxed text-ink">
           Welcome to Willow &amp; Peony, where every floral creation tells a story of elegance,
           creativity and a deep love for nature&rsquo;s beauty.
         </p>

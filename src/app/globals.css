@@ -1,16 +1,18 @@
 @import "tailwindcss";
 
 @theme {
-  /* Willow & Peony design tokens — warm ivory, ink, soft rose */
-  --color-ivory: #faf8f4;
-  --color-ivory-deep: #f3efe7;
-  --color-ink: #262220;
-  --color-ink-soft: #4f4842;
-  --color-muted: #7d746c;
-  --color-hairline: #e6dfd4;
-  --color-rose: #a96b5b;
-  --color-rose-deep: #8e5546;
-  --color-blush: #efe4dd;
+  /* Willow & Peony design tokens — matched to the original site:
+     pure white, black, greys (original scheme: bg #fff, fg #000,
+     secondary #4d4d4d, border #e1e1e1, black buttons) */
+  --color-ivory: #ffffff;
+  --color-ivory-deep: #f7f7f7;
+  --color-ink: #0a0a0a;
+  --color-ink-soft: #4d4d4d;
+  --color-muted: #757575;
+  --color-hairline: #e1e1e1;
+  --color-rose: #0a0a0a;
+  --color-rose-deep: #000000;
+  --color-blush: #f2f2f2;
 
   --font-serif: var(--font-newsreader), "Newsreader", Georgia, serif;
   --font-sans: var(--font-chivo), "Chivo", system-ui, sans-serif;

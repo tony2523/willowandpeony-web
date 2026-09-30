@@ -71,6 +71,20 @@ repo variables (`gh variable set …`):
 - Images: always through the `Pic` component or markdown (posts) so width/
   height/srcset/lazy-loading are emitted. LCP/hero images set `priority`.
 
+## Design contract (Tony's explicit instruction, 2026-09-30)
+
+The site must look like the ORIGINAL Shopify site as much as possible:
+- Pure white background, black text, grey secondary (#4d4d4d), #e1e1e1 hairlines,
+  black buttons. No warm/rose accent colours.
+- Header: nav links left, CENTRED logo, enquire right; transparent with the
+  white logo over the home hero, solid white elsewhere. Mobile: burger left,
+  centred logo, slide-in drawer.
+- Home: clean full-height hero (no text overlay), centred serif intro heading,
+  3 minimal service cards, white founder section, 4-col "Our Latest Work"
+  (weddings category), centred-logo divider above the footer.
+- Footer: tagline + Customer Service / About Us / Policies columns + newsletter.
+- Never redesign the logo (public/brand/ PNGs are the originals — keep as is).
+
 ## Constraints
 
 - **Static export** (`output: "export"`) — no server code, no API routes

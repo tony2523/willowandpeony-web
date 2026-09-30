@@ -27,7 +27,7 @@ export const site = {
   // back to a pre-filled email draft. See CLAUDE.md → "Forms".
   formEndpoint: "",
   // Site-wide announcement bar. Empty string hides it. Update each season.
-  announcement: "Now booking 2027 weddings — a limited number of 2026–27 dates remain",
+  announcement: "",
 } as const;
 
 /** The consultation-to-wedding-day journey, shown on service + contact pages. */
@@ -52,9 +52,8 @@ export const processSteps = [
 
 export const nav = [
   { label: "Weddings", href: "/wedding-flowers-auckland/" },
-  { label: "Packages", href: "/wedding-flower-packages/" },
+  { label: "Wedding Packages", href: "/wedding-flower-packages/" },
   { label: "Events", href: "/event-flowers-auckland/" },
-  { label: "Journal", href: "/journal/" },
   { label: "Our Story", href: "/about/" },
   { label: "Contact", href: "/contact/" },
 ] as const;
