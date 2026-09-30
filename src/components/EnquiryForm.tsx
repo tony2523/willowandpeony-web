@@ -99,6 +99,30 @@ export default function EnquiryForm({ kind = "general" }: Props) {
             </label>
             <input id="f-venue" name="venue" className={input} />
           </div>
+          <div>
+            <label htmlFor="f-guests" className={label}>
+              Approximate guest numbers
+            </label>
+            <input
+              id="f-guests"
+              name="guests"
+              inputMode="numeric"
+              className={input}
+              placeholder="e.g. 80"
+            />
+          </div>
+          <div>
+            <label htmlFor="f-budget" className={label}>
+              Floral budget
+            </label>
+            <select id="f-budget" name="budget" className={input} defaultValue="Not sure yet">
+              <option>Under $1,000</option>
+              <option>$1,000 – $2,500</option>
+              <option>$2,500 – $5,000</option>
+              <option>$5,000+</option>
+              <option>Not sure yet</option>
+            </select>
+          </div>
         </>
       ) : (
         <div>
@@ -133,6 +157,18 @@ export default function EnquiryForm({ kind = "general" }: Props) {
         />
       </div>
       <div className="sm:col-span-2">
+        <label htmlFor="f-found" className={label}>
+          How did you find us?
+        </label>
+        <select id="f-found" name="found_us" className={input} defaultValue="Google search">
+          <option>Google search</option>
+          <option>Instagram</option>
+          <option>Referral from a friend or vendor</option>
+          <option>Saw our flowers at a wedding or event</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div className="sm:col-span-2">
         <button
           type="submit"
           disabled={status === "sending"}
@@ -140,6 +176,7 @@ export default function EnquiryForm({ kind = "general" }: Props) {
         >
           {status === "sending" ? "Sending…" : "Send enquiry"}
         </button>
+        <p className="mt-3 text-xs text-muted">We reply to every enquiry within 1–2 business days.</p>
         {status === "error" && (
           <p className="mt-3 text-sm text-rose-deep">
             Something went wrong — please email us directly at{" "}

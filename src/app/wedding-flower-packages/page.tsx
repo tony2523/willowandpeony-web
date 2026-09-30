@@ -76,6 +76,13 @@ export default function PackagesPage() {
           — from your bouquet to ceremony features and reception styling, each tier delivers
           premium, artful florals that feel seamless, elegant and unforgettable.
         </p>
+        <p className="mt-5 text-sm leading-relaxed text-muted">
+          Every package includes Ivy&rsquo;s design time and premium seasonal sourcing; Classic and
+          Luxe also include consultation, a full design proposal, delivery, on-the-day setup,
+          next-day pack-out and all vase and plinth hire. Most of our couples choose Classic or
+          Luxe, or use a package as the starting point for a fully bespoke design — tell us your
+          budget and we&rsquo;ll design to it honestly.
+        </p>
       </section>
 
       {/* Packages */}

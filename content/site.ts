@@ -26,7 +26,29 @@ export const site = {
   // Form endpoint (Formspree / Web3Forms compatible). Leave empty to fall
   // back to a pre-filled email draft. See CLAUDE.md → "Forms".
   formEndpoint: "",
+  // Site-wide announcement bar. Empty string hides it. Update each season.
+  announcement: "Now booking 2027 weddings — a limited number of 2026–27 dates remain",
 } as const;
+
+/** The consultation-to-wedding-day journey, shown on service + contact pages. */
+export const processSteps = [
+  {
+    title: "Enquire",
+    body: "Tell us your date, venue and the feeling you want to create. We reply within 1–2 business days.",
+  },
+  {
+    title: "Consultation",
+    body: "A relaxed chat about your vision, palette and priorities — with your planner or stylist welcome too.",
+  },
+  {
+    title: "Design proposal",
+    body: "A tailored proposal with design direction, palette and clear pricing, refined together until it feels right.",
+  },
+  {
+    title: "Your day",
+    body: "We source, craft, deliver and style everything — then quietly pack it all away the next day.",
+  },
+] as const;
 
 export const nav = [
   { label: "Weddings", href: "/wedding-flowers-auckland/" },
@@ -120,8 +142,16 @@ export const faqs: Faq[] = [
     a: "Yes. We create floral styling for corporate events, product launches, gala dinners, conferences and private celebrations across Auckland — from reception styling and stage installations to table arrangements and client gifting.",
   },
   {
+    q: "How much do wedding flowers cost in Auckland?",
+    a: "Our curated packages give you a clear starting point: Petite from $500 for elopements and micro-ceremonies, Classic at $2,500 for smaller weddings with full design and setup, and Luxe at $5,000 for high-impact styling across ceremony and reception. Fully bespoke designs are quoted to your vision and venue — tell us your budget and we'll design to it honestly.",
+  },
+  {
     q: "How far in advance should I book my wedding flowers?",
     a: "As a boutique studio we take a limited number of weddings each season, so we recommend enquiring 6–12 months before your date, and earlier for peak summer weekends. That said, we love a short-notice elopement — always ask.",
+  },
+  {
+    q: "Is delivery, setup and pack-down included?",
+    a: "Yes — our Classic and Luxe packages include delivery, on-the-day setup and next-day pack-out anywhere in Auckland, plus all vase and plinth hire. Petite packages are pickup or local delivery. For bespoke weddings and events, install and pack-down are always quoted as part of the proposal, so there are no surprises.",
   },
   {
     q: "Do you do custom flower orders?",

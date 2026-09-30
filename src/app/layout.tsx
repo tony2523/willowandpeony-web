@@ -3,6 +3,8 @@ import { Newsreader, Chivo } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import AnnouncementBar from "@/components/AnnouncementBar";
+import StickyEnquire from "@/components/StickyEnquire";
 import JsonLd from "@/components/JsonLd";
 import { floristJsonLd, websiteJsonLd } from "@/lib/seo";
 import { site } from "../../content/site";
@@ -37,11 +39,13 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en-NZ" className={`${newsreader.variable} ${chivo.variable} h-full antialiased`}>
-      <body className="flex min-h-full flex-col">
+      <body className="flex min-h-full flex-col pb-[68px] md:pb-0">
         <JsonLd data={[floristJsonLd(), websiteJsonLd()]} />
+        <AnnouncementBar />
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
+        <StickyEnquire />
       </body>
     </html>
   );

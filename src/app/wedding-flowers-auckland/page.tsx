@@ -5,6 +5,7 @@ import PostCard from "@/components/PostCard";
 import CtaBand from "@/components/CtaBand";
 import Eyebrow from "@/components/Eyebrow";
 import EnquiryForm from "@/components/EnquiryForm";
+import HowWeWork from "@/components/HowWeWork";
 import JsonLd from "@/components/JsonLd";
 import { pageMetadata, serviceJsonLd, breadcrumbJsonLd } from "@/lib/seo";
 import { getPostsByCategory } from "@/lib/journal";
@@ -144,6 +145,8 @@ export default function WeddingsPage() {
           ))}
         </div>
       </section>
+
+      <HowWeWork />
 
       {/* Latest weddings */}
       <section className="mx-auto mt-24 max-w-6xl px-4 sm:px-6">

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Eyebrow from "@/components/Eyebrow";
 import EnquiryForm from "@/components/EnquiryForm";
+import HowWeWork from "@/components/HowWeWork";
 import JsonLd from "@/components/JsonLd";
 import { pageMetadata, breadcrumbJsonLd } from "@/lib/seo";
 import { site } from "../../../content/site";
@@ -73,6 +74,7 @@ export default function ContactPage() {
           </div>
         </div>
       </section>
+      <HowWeWork />
     </>
   );
 }
