@@ -108,7 +108,7 @@ export default function HomePage() {
           <li className="hidden sm:block" aria-hidden>
             ·
           </li>
-          <li>Now booking 2027</li>
+          <li>Now booking 2026 and 2027</li>
         </ul>
       </section>
 
@@ -206,7 +206,7 @@ export default function HomePage() {
               ))}
             </div>
             <Link
-              href="/journal/hotel-britomart-wedding-flowers-auckland/"
+              href="/work/hotel-britomart-wedding-flowers-auckland/"
               className="t-link mt-10 self-start text-ink"
             >
               Read their story
@@ -256,15 +256,15 @@ export default function HomePage() {
         <LatestWork posts={latest} />
       </div>
 
-      {/* Instagram */}
-      <div className="mx-auto mt-24 max-w-[1280px] px-5 sm:px-6 md:mt-[140px]">
+      {/* Instagram — full-bleed strip */}
+      <div className="mt-24 md:mt-[140px]">
         <InstagramFeed />
       </div>
 
       {/* CTA band */}
       <section className="mt-24 border-t border-hairline bg-paper md:mt-[140px]">
         <div className="mx-auto flex max-w-[900px] flex-col items-center px-5 py-16 text-center sm:py-20">
-          <p className="eyebrow text-muted">Now booking 2027 weddings</p>
+          <p className="eyebrow text-muted">Now booking 2026 and 2027 weddings</p>
           <h2 className="display-3 mt-4 text-ink">
             Let&rsquo;s talk about <em>your day</em>
           </h2>

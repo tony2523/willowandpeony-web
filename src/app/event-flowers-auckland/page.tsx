@@ -111,7 +111,7 @@ export default function EventsPage() {
               and conversation into a commerce conference.
             </p>
             <Link
-              href="/journal/unified-commerce-assembly-2026-event-flowers/"
+              href="/work/unified-commerce-assembly-2026-event-flowers/"
               className="t-link mt-7 inline-block text-ink"
             >
               Read the case study

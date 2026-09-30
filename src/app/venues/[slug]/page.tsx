@@ -201,7 +201,7 @@ export default async function VenueGuidePage({
             <p className="mt-4 max-w-[480px] text-[14px] leading-[1.7] text-ink-soft">
               {venue.post.blurb}
             </p>
-            <Link href={`/journal/${venue.post.slug}/`} className="t-link mt-7 inline-block text-ink">
+            <Link href={`/work/${venue.post.slug}/`} className="t-link mt-7 inline-block text-ink">
               Read their story
             </Link>
           </div>

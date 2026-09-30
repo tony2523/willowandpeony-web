@@ -1,4 +1,5 @@
 import { getPosts } from "@/lib/journal";
+import { getArticles } from "@/lib/blog";
 import { site, weddingPackages, faqs, delivery } from "../../../content/site";
 import { venues } from "../../../content/venues";
 import { googleRating } from "../../../content/reviews";
@@ -50,11 +51,18 @@ export async function GET() {
       (v) => `- [Wedding flowers at ${v.name}](${site.domain}/venues/${v.slug}/): ${v.intro}`,
     ),
     "",
-    "## Journal (real weddings & events)",
+    "## Our work (real weddings & events)",
     "",
     ...posts.map(
       (p) =>
-        `- [${p.title}](${site.domain}/journal/${p.slug}/): ${p.description.slice(0, 140)}`,
+        `- [${p.title}](${site.domain}/work/${p.slug}/): ${p.description.slice(0, 140)}`,
+    ),
+    "",
+    "## Journal (florist's notes & guides)",
+    "",
+    ...getArticles().map(
+      (a) =>
+        `- [${a.title}](${site.domain}/journal/${a.slug}/): ${a.description.slice(0, 140)}`,
     ),
     "",
     "## FAQ",

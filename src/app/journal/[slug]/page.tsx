@@ -3,12 +3,14 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Pic from "@/components/Pic";
 import JsonLd from "@/components/JsonLd";
-import { pageMetadata, articleJsonLd, breadcrumbJsonLd } from "@/lib/seo";
-import { getPost, getPosts } from "@/lib/journal";
+import NewsletterForm from "@/components/NewsletterForm";
+import { pageMetadata, breadcrumbJsonLd } from "@/lib/seo";
+import { imageOgUrl } from "@/lib/images";
+import { getArticle, getArticles } from "@/lib/blog";
 import { site } from "../../../../content/site";
 
 export function generateStaticParams() {
-  return getPosts().map((p) => ({ slug: p.slug }));
+  return getArticles().map((a) => ({ slug: a.slug }));
 }
 
 export const dynamicParams = false;
@@ -19,208 +21,155 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const post = getPost(slug);
-  if (!post) return {};
+  const article = getArticle(slug);
+  if (!article) return {};
   return pageMetadata({
-    title: post.title,
-    description: post.description,
-    path: `/journal/${post.slug}/`,
-    ogImage: post.cover,
+    title: article.title,
+    description: article.description,
+    path: `/journal/${article.slug}/`,
+    ogImage: article.cover,
     type: "article",
-    publishedTime: post.date,
+    publishedTime: article.date,
   });
 }
 
-export default async function PostPage({ params }: { params: Promise<{ slug: string }> }) {
+export default async function ArticlePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const post = getPost(slug);
-  if (!post) notFound();
+  const article = getArticle(slug);
+  if (!article) notFound();
 
-  const all = getPosts();
-  const inCategory = all.filter((p) => p.category === post.category);
-  const idx = inCategory.findIndex((p) => p.slug === post.slug);
-  const newer = idx > 0 ? inCategory[idx - 1] : undefined;
-  const older = idx >= 0 && idx < inCategory.length - 1 ? inCategory[idx + 1] : undefined;
-  const date = new Date(post.date + "T00:00:00");
-  const nice = date.toLocaleDateString("en-NZ", { month: "long", year: "numeric" });
-  const isWedding = post.category === "weddings";
-  const catLabel = isWedding ? "Weddings" : "Events";
-  const catPath = `/journal/${post.category}/`;
-  const venueShort = post.venue.split(",")[0];
+  const related = getArticles().filter((a) => a.slug !== article.slug).slice(0, 2);
+  const nice = new Date(article.date + "T00:00:00").toLocaleDateString("en-NZ", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
 
   return (
     <>
       <JsonLd
         data={[
-          articleJsonLd({
-            title: post.title,
-            description: post.description,
-            path: `/journal/${post.slug}/`,
-            date: post.date,
-            cover: post.cover,
-            venue: post.venue,
-          }),
+          {
+            "@context": "https://schema.org",
+            "@type": "BlogPosting",
+            headline: article.title,
+            description: article.description,
+            url: `${site.domain}/journal/${article.slug}/`,
+            datePublished: article.date,
+            dateModified: article.date,
+            inLanguage: "en-NZ",
+            image: imageOgUrl(article.cover, site.domain),
+            author: { "@type": "Person", name: site.founder, url: `${site.domain}/about/` },
+            publisher: { "@id": `${site.domain}/#florist` },
+            mainEntityOfPage: `${site.domain}/journal/${article.slug}/`,
+          },
           breadcrumbJsonLd([
             { name: "Home", path: "/" },
             { name: "Journal", path: "/journal/" },
-            { name: catLabel, path: catPath },
-            { name: post.title, path: `/journal/${post.slug}/` },
+            { name: article.title, path: `/journal/${article.slug}/` },
           ]),
         ]}
       />
 
       <article>
         {/* Title block */}
-        <header className="mx-auto max-w-[980px] px-5 pt-16 text-center sm:px-6 md:pt-24">
+        <header className="mx-auto max-w-[820px] px-5 pt-16 text-center sm:px-6 md:pt-24">
           <p className="eyebrow text-muted">
-            {isWedding ? "Real wedding" : "Real event"}
-            {venueShort ? ` · ${venueShort}` : ""} · {nice}
+            The journal · {article.tag}
           </p>
-          <h1 className="display-1 mt-5 text-ink">{post.title}</h1>
+          <h1 className="display-1 mt-5 text-ink">{article.title}</h1>
           <p className="mt-5 text-[13px] text-muted">
-            {isWedding ? "Words & flowers" : "Flowers"} by {site.founder}
+            By {site.founder} · {nice} · {article.readMinutes} min read
           </p>
         </header>
 
-        {/* Full-bleed cover */}
-        <div className="mt-14 md:mt-20">
+        {/* Cover */}
+        <div className="mx-auto mt-12 max-w-[1080px] px-5 sm:px-6 md:mt-16">
           <Pic
-            name={post.cover}
-            alt={post.title}
-            sizes="100vw"
+            name={article.cover}
+            alt={article.title}
+            sizes="(max-width: 1100px) 100vw, 1032px"
             priority
-            className="max-h-[720px] w-full object-cover"
+            className="max-h-[620px] w-full object-cover"
           />
         </div>
 
-        {/* Details rail + story */}
-        <div className="mx-auto mt-16 grid max-w-[1080px] gap-12 px-5 sm:px-6 md:mt-24 md:grid-cols-[280px_minmax(0,1fr)] md:gap-16">
-          <aside className="h-fit border-t border-hairline pt-6 md:sticky md:top-24">
-            <p className="eyebrow text-muted">The details</p>
-            <dl className="mt-5 space-y-4 text-[13px] text-ink-soft">
-              {post.venue && (
-                <div>
-                  <dt className="text-muted">Venue</dt>
-                  <dd>{post.venue}</dd>
-                </div>
-              )}
-              <div>
-                <dt className="text-muted">Occasion</dt>
-                <dd>{isWedding ? "Wedding" : "Event"}</dd>
-              </div>
-              <div>
-                <dt className="text-muted">Date</dt>
-                <dd>{nice}</dd>
-              </div>
-              <div>
-                <dt className="text-muted">Flowers</dt>
-                <dd>{site.name}</dd>
-              </div>
-            </dl>
-          </aside>
+        {/* Body */}
+        <div
+          className="prose-wp mx-auto mt-12 max-w-[680px] px-5 sm:px-6 md:mt-16"
+          dangerouslySetInnerHTML={{ __html: article.html }}
+        />
 
-          <div
-            className="prose-wp max-w-[680px]"
-            dangerouslySetInnerHTML={{ __html: post.html }}
-          />
-        </div>
-
-        {/* Credits band */}
-        <section className="mt-24 border-t border-hairline bg-paper md:mt-[140px]">
-          <div className="mx-auto max-w-[1080px] px-5 py-14 sm:px-6">
-            <p className="eyebrow text-muted">The people who made it</p>
-            <div className="mt-6 flex flex-wrap gap-x-14 gap-y-5 text-[13px] leading-[1.9] text-ink-soft">
-              {post.venue && (
-                <div>
-                  <span className="text-muted">Venue</span>
-                  <br />
-                  {post.venue.split(",")[0]}
-                </div>
-              )}
-              <div>
-                <span className="text-muted">Flowers</span>
-                <br />
-                {site.name}
-              </div>
+        {/* Author */}
+        <aside className="mx-auto mt-16 max-w-[680px] px-5 sm:px-6 md:mt-20">
+          <div className="flex items-center gap-5 border-y border-hairline py-7">
+            <Pic
+              name="willow-and-peony-bouquet-ivy-willow-peony-copy-a677a82d-5fc6-4fcd-b72d-c0884402c2e5"
+              alt={`${site.founder}, founder of ${site.name}`}
+              sizes="72px"
+              aspect="1/1"
+              className="h-[72px] w-[72px] shrink-0 rounded-full object-cover"
+            />
+            <div>
+              <p className="font-serif text-[17px] font-light text-ink">
+                {site.founder} · founder &amp; lead florist
+              </p>
+              <p className="mt-1 text-[13px] leading-relaxed text-ink-soft">
+                Ivy designs romantic, artful flowers for weddings and events across Auckland.{" "}
+                <Link href="/about/" className="underline underline-offset-2">
+                  Her story
+                </Link>{" "}
+                ·{" "}
+                <Link href="/work/" className="underline underline-offset-2">
+                  her work
+                </Link>
+              </p>
             </div>
           </div>
-        </section>
+        </aside>
 
-        {/* Keep reading */}
-        {(older || newer) && (
-          <nav
-            aria-label="More stories"
-            className="mx-auto mt-24 max-w-[1080px] px-5 sm:px-6 md:mt-[140px]"
-          >
+        {/* Related articles */}
+        {related.length > 0 && (
+          <nav aria-label="More from the journal" className="mx-auto mt-20 max-w-[1080px] px-5 sm:px-6 md:mt-28">
             <div className="mb-8 flex items-end justify-between">
               <p className="eyebrow text-muted">Keep reading</p>
-              <Link href="/work/" className="t-link text-ink">
-                All our work
+              <Link href="/journal/" className="t-link text-ink">
+                All journal entries
               </Link>
             </div>
-            <div className="grid gap-8 sm:grid-cols-2">
-              <div>
-                {older && (
-                  <Link href={`/journal/${older.slug}/`} className="group flex items-center gap-5">
+            <div className="grid gap-x-6 gap-y-10 sm:grid-cols-2">
+              {related.map((a) => (
+                <Link key={a.slug} href={`/journal/${a.slug}/`} className="group block">
+                  <div className="overflow-hidden bg-paper">
                     <Pic
-                      name={older.cover}
-                      alt=""
-                      sizes="180px"
-                      aspect="9/10"
-                      className="h-auto w-[120px] shrink-0 object-cover sm:w-[160px]"
+                      name={a.cover}
+                      alt={a.title}
+                      sizes="(max-width: 640px) 100vw, 50vw"
+                      aspect="4/3"
+                      className="h-auto w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02]"
                     />
-                    <span>
-                      <span className="block text-[10.5px] tracking-[0.14em] text-muted uppercase">
-                        Previous
-                      </span>
-                      <span className="mt-2 block font-serif text-[19px] leading-[1.3] font-light text-ink group-hover:underline group-hover:decoration-[1px] group-hover:underline-offset-[5px]">
-                        {older.title}
-                      </span>
-                    </span>
-                  </Link>
-                )}
-              </div>
-              <div className="sm:justify-self-end">
-                {newer && (
-                  <Link
-                    href={`/journal/${newer.slug}/`}
-                    className="group flex items-center gap-5 sm:flex-row-reverse sm:text-right"
-                  >
-                    <Pic
-                      name={newer.cover}
-                      alt=""
-                      sizes="180px"
-                      aspect="9/10"
-                      className="h-auto w-[120px] shrink-0 object-cover sm:w-[160px]"
-                    />
-                    <span>
-                      <span className="block text-[10.5px] tracking-[0.14em] text-muted uppercase">
-                        Next
-                      </span>
-                      <span className="mt-2 block font-serif text-[19px] leading-[1.3] font-light text-ink group-hover:underline group-hover:decoration-[1px] group-hover:underline-offset-[5px]">
-                        {newer.title}
-                      </span>
-                    </span>
-                  </Link>
-                )}
-              </div>
+                  </div>
+                  <p className="mt-4 text-[10.5px] tracking-[0.16em] text-muted uppercase">
+                    {a.tag}
+                  </p>
+                  <h2 className="mt-1.5 font-serif text-[20px] leading-[1.3] font-light text-ink group-hover:underline group-hover:decoration-[1px] group-hover:underline-offset-[5px]">
+                    {a.title}
+                  </h2>
+                </Link>
+              ))}
             </div>
           </nav>
         )}
 
-        {/* CTA */}
+        {/* Newsletter band */}
         <section className="mt-24 border-t border-hairline bg-paper md:mt-[140px]">
-          <div className="mx-auto flex max-w-[900px] flex-col items-center px-5 py-16 text-center sm:py-20">
-            <p className="eyebrow text-muted">
-              {isWedding ? "Dreaming of something like this?" : "Planning an event to remember?"}
-            </p>
+          <div className="mx-auto max-w-[560px] px-5 py-16 text-center sm:px-6 md:py-20">
+            <p className="eyebrow text-muted">Notes in your inbox</p>
             <h2 className="display-3 mt-4 text-ink">
-              Let&rsquo;s design it for <em>{isWedding ? "your day" : "your event"}</em>
+              New journal entries, <em>as they bloom</em>
             </h2>
-            <div className="mt-8">
-              <Link href="/contact/" className="btn-solid">
-                {isWedding ? "Check your date" : "Start an enquiry"}
-              </Link>
+            <div className="mx-auto mt-7 max-w-[380px] text-left">
+              <NewsletterForm />
             </div>
           </div>
         </section>

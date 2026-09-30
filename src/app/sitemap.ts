@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { getPosts } from "@/lib/journal";
+import { getArticles } from "@/lib/blog";
 import { site } from "../../content/site";
 import { venues } from "../../content/venues";
 
@@ -16,8 +17,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/work/", priority: 0.8, changeFrequency: "weekly" },
     { path: "/venues/", priority: 0.8, changeFrequency: "monthly" },
     { path: "/journal/", priority: 0.8, changeFrequency: "weekly" },
-    { path: "/journal/weddings/", priority: 0.7, changeFrequency: "weekly" },
-    { path: "/journal/events/", priority: 0.7, changeFrequency: "weekly" },
     { path: "/about/", priority: 0.6, changeFrequency: "yearly" },
     { path: "/contact/", priority: 0.7, changeFrequency: "yearly" },
     { path: "/faq/", priority: 0.6, changeFrequency: "monthly" },
@@ -41,8 +40,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly" as const,
       priority: 0.7,
     })),
+    ...getArticles().map((a) => ({
+      url: `${site.domain}/journal/${a.slug}/`,
+      lastModified: a.date,
+      changeFrequency: "yearly" as const,
+      priority: 0.6,
+    })),
     ...getPosts().map((post) => ({
-      url: `${site.domain}/journal/${post.slug}/`,
+      url: `${site.domain}/work/${post.slug}/`,
       lastModified: post.date,
       changeFrequency: "yearly" as const,
       priority: 0.6,

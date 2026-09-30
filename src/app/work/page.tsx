@@ -47,7 +47,7 @@ export default function WorkPage() {
             hasPart: items.map((i) => ({
               "@type": "Article",
               headline: i.title,
-              url: `${site.domain}/journal/${i.slug}/`,
+              url: `${site.domain}/work/${i.slug}/`,
             })),
           },
         ]}

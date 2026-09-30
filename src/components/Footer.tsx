@@ -104,7 +104,7 @@ export default function Footer() {
           <p>
             © {new Date().getFullYear()} {site.name} · Auckland, New Zealand
           </p>
-          <p className="tracking-[0.14em] uppercase">Now booking 2027 weddings</p>
+          <p className="tracking-[0.14em] uppercase">Now booking 2026 and 2027 weddings</p>
         </div>
       </div>
     </footer>

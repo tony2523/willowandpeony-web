@@ -12,7 +12,7 @@ export function postMeta(post: Post): string {
 export default function PostCard({ post, priority = false }: { post: Post; priority?: boolean }) {
   return (
     <article className="group">
-      <Link href={`/journal/${post.slug}/`} className="block">
+      <Link href={`/work/${post.slug}/`} className="block">
         <div className="overflow-hidden bg-paper">
           <Pic
             name={post.cover}

@@ -80,7 +80,7 @@ export default function WorkGrid({
       <div className="mt-10 grid gap-x-6 gap-y-14 md:grid-cols-2">
         {visible.map((item) => (
           <article key={item.slug} className="group">
-            <Link href={`/journal/${item.slug}/`} className="block">
+            <Link href={`/work/${item.slug}/`} className="block">
               <div className="overflow-hidden bg-paper">
                 <img
                   src={item.src}

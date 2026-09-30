@@ -118,8 +118,8 @@ export default function InstagramFeed() {
         </a>
         <p className="mt-3 text-[12px] text-muted">Tap any tile to preview</p>
       </div>
-      {/* 2 across on mobile, 6 across desktop, flush tiles */}
-      <div className="mt-9 grid grid-cols-2 sm:grid-cols-6">
+      {/* Full-bleed, flush tiles: 2 across mobile, 3 tablet, 6 desktop */}
+      <div className="mt-9 grid w-full grid-cols-2 sm:grid-cols-3 lg:grid-cols-6">
         {items.map((item) => (
           <button
             key={item.id}

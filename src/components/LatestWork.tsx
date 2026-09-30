@@ -33,7 +33,7 @@ export default function LatestWork({
       <div className="grid gap-x-6 gap-y-12 md:grid-cols-2">
         {posts.slice(0, 2).map((post) => (
           <article key={post.slug} className="group">
-            <Link href={`/journal/${post.slug}/`} className="block">
+            <Link href={`/work/${post.slug}/`} className="block">
               <div className="overflow-hidden bg-paper">
                 <Pic
                   name={post.cover}
