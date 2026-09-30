@@ -9,7 +9,7 @@ from the original Shopify store in September 2026.
 1. Edit content (see below) → `npm run build` locally if you want to verify.
 2. Commit and push to `main`.
 3. GitHub Actions (`.github/workflows/deploy.yml`) builds and deploys to
-   GitHub Pages automatically. Nothing else to do.
+   Cloudflare automatically. Nothing else to do.
 
 Repo: `tony2523/willowandpeony-web`. TWO deploy targets run from every push
 during the transition (2026-09-30):
@@ -25,10 +25,10 @@ during the transition (2026-09-30):
   Real 301s come from the generated `_redirects`; caching + security headers
   from `_headers` (both written by scripts/postbuild.mjs; workers.dev hosts
   get X-Robots-Tag noindex).
-- **GitHub Pages (legacy, retire after Cloudflare is confirmed)** —
-  `.github/workflows/deploy.yml`, preview under tonyhou.com/willowandpeony-web/
-  via repo vars `PAGES_BASE_PATH` / `DEPLOY_CNAME`. When retiring: delete that
-  workflow, disable Pages in repo settings, then the repo can go PRIVATE.
+- **GitHub Pages: RETIRED (2026-10-01)** — the workflow and the Pages site
+  at tonyhou.com/willowandpeony-web/ were deleted. Cloudflare is the only
+  deploy target; previews live on workers.dev and staging.willowandpeony.co.nz
+  (both stamped X-Robots-Tag: noindex by the Worker).
 
 **Image caching rule:** `_headers` gives `/images/*` a one-year immutable
 cache. Never re-use an image filename for a different photo — replacements get
@@ -48,7 +48,8 @@ a new descriptive name.
 3. Verify the 52 legacy Shopify URLs 301 correctly on the live domain.
 4. Submit `https://willowandpeony.co.nz/sitemap.xml` in Google Search Console;
    set up Cloudflare Web Analytics.
-5. Retire GitHub Pages (see above) and flip the repo private.
+5. GitHub Pages already retired — optionally flip the repo private
+   (verify Workers Builds still deploys afterwards).
 
 ## Where content lives (edit these, not the page components, for routine updates)
 

@@ -27,9 +27,9 @@ posts + one facts file); every push to `main` deploys automatically.
      token anywhere. Real 301s via `_redirects`, caching/security via
      `_headers`. workers.dev URL: ask Tony or see dash (couldn't derive
      the account subdomain).
-   - **GitHub Pages** (legacy, retire after Cloudflare confirmed):
-     tonyhou.com/willowandpeony-web/ — noindexed preview. After retiring,
-     flip the repo private.
+   - **GitHub Pages: retired 2026-10-01** (workflow + Pages site deleted;
+     Cloudflare is the only deploy target — previews on workers.dev and
+     staging.willowandpeony.co.nz, both noindexed by the Worker).
 4. **Enquiry email, 100% Cloudflare, $0** — `POST /api/enquiry` in
    `worker/index.js` sends via Email Routing's free `send_email` binding
    (to hello@, Reply-To enquirer, honeypot + optional Turnstile). Activates
