@@ -92,6 +92,16 @@ a new descriptive name.
 - Images: always through the `Pic` component or markdown (posts) so width/
   height/srcset/lazy-loading are emitted. LCP/hero images set `priority`.
 
+
+## Redesign in review (2026-09-30)
+
+A full editorial redesign is awaiting Tony's approval on the Design canvas:
+https://claude.ai/artifact/VsGEFc7EbBNXMYr2MDMNYq (11 boards, v2 with his
+feedback applied). Decisions, feedback log, open placeholders and next steps:
+[docs/PROJECT-LOG.md](docs/PROJECT-LOG.md). Until a board is approved, the
+LIVE site keeps the exact-copy design contract below. When boards are
+approved, build them into the site and update the contract.
+
 ## Design contract (Tony's explicit instruction, 2026-09-30)
 
 The site must look like the ORIGINAL Shopify site as much as possible.
