@@ -11,7 +11,7 @@ export const metadata: Metadata = pageMetadata({
   description:
     "Curated wedding flower packages from a boutique Auckland florist: Petite $500, Classic $2,500 and Luxe $5,000. Bouquets, ceremony and reception styling — transparent pricing, stress-free planning.",
   path: "/wedding-flower-packages/",
-  ogImage: "blush-and-white-ceremony-plinth-arrangements-at-rydges-formosa-aucklan",
+  ogImage: "wedding-flower-package-auckland-image-41-copy",
 });
 
 /** Pricing questions surfaced on this page (full list on /faq/). */
@@ -51,8 +51,8 @@ export default function PackagesPage() {
       />
 
       <Hero
-        image="blush-and-white-ceremony-plinth-arrangements-at-rydges-formosa-aucklan"
-        alt="Blush and white ceremony plinth arrangements framing a couple's vows at Rydges Formosa, Auckland"
+        image="wedding-flower-package-auckland-image-41-copy"
+        alt="Romantic wedding reception styling with flowers and candles in Auckland"
         eyebrow="Wedding packages"
         title={
           <>
@@ -136,7 +136,7 @@ export default function PackagesPage() {
               name={pkg.image}
               alt={`${pkg.name} wedding flower package by Willow & Peony`}
               sizes="33vw"
-              aspect="3/4"
+              aspect="4/3"
               className="h-auto w-full object-cover"
             />
           ))}

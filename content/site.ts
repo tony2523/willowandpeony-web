@@ -93,7 +93,7 @@ export const weddingPackages: WeddingPackage[] = [
       "Pickup or local delivery (fees apply)",
     ],
     note: "Additional bouquets and buttonholes can be added for an extra fee.",
-    image: "kate-holding-a-romantic-bridal-bouquet-with-white-roses-blush-garden-r",
+    image: "wedding-flowers-auckland-scarlet-style-shoot3",
   },
   {
     name: "Classic",
@@ -114,7 +114,7 @@ export const weddingPackages: WeddingPackage[] = [
       { label: "Ceremony only", items: ["2 × Large plinth arrangements"] },
       { label: "Reception only", items: ["6 × Table arrangements", "1 × Bar arrangement"] },
     ],
-    image: "sarah-and-samuels-blush-and-white-ceremony-flowers-with-soft-candlelig",
+    image: "wedding-flower-package-auckland-scarlet-style-shoot22",
   },
   {
     name: "Luxe",
@@ -135,7 +135,7 @@ export const weddingPackages: WeddingPackage[] = [
       "Delivery, setup & next-day pack-out (within Auckland)",
       "All hire included (vases & plinths)",
     ],
-    image: "head-table-wedding-flowers-at-rydges-formosa-auckland-with-blush-and-w",
+    image: "wedding-flowers-auckland-scarlet-style-shoot20",
   },
 ];
 
