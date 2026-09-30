@@ -51,10 +51,22 @@ export const processSteps = [
 
 export const nav = [
   { label: "Weddings", href: "/wedding-flowers-auckland/" },
-  { label: "Wedding Packages", href: "/wedding-flower-packages/" },
   { label: "Events", href: "/event-flowers-auckland/" },
   { label: "Our Story", href: "/about/" },
-  { label: "Contact", href: "/contact/" },
+  { label: "Gallery", href: "/gallery/" },
+] as const;
+
+/** Extended set for the mobile drawer. */
+export const drawerNav = [
+  { label: "Weddings", href: "/wedding-flowers-auckland/" },
+  { label: "Wedding Packages", href: "/wedding-flower-packages/" },
+  { label: "Events", href: "/event-flowers-auckland/" },
+  { label: "Gallery", href: "/gallery/" },
+  { label: "Our Work", href: "/work/" },
+  { label: "Venue Guides", href: "/venues/" },
+  { label: "Our Story", href: "/about/" },
+  { label: "Journal", href: "/journal/" },
+  { label: "FAQ", href: "/faq/" },
 ] as const;
 
 export type WeddingPackage = {

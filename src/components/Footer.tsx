@@ -3,100 +3,108 @@ import { site } from "../../content/site";
 import { withBase } from "@/lib/images";
 import NewsletterForm from "./NewsletterForm";
 
+/** Editorial four-column footer, per the design system boards. */
 const cols = [
   {
-    heading: "Customer Service",
+    heading: "Flowers",
     links: [
-      { label: "Contact Us", href: "/contact/" },
+      { label: "Wedding Flowers", href: "/wedding-flowers-auckland/" },
+      { label: "Wedding Packages", href: "/wedding-flower-packages/" },
+      { label: "Event Flowers", href: "/event-flowers-auckland/" },
+      { label: "Gallery", href: "/gallery/" },
       { label: "Delivery", href: "/flower-delivery-auckland/" },
-      { label: "Return", href: "/refund-policy/" },
     ],
   },
   {
-    heading: "About Us",
+    heading: "Studio",
     links: [
       { label: "Our Story", href: "/about/" },
-      { label: "FAQ", href: "/faq/" },
-      { label: "Weddings", href: "/wedding-flowers-auckland/" },
-      { label: "Events", href: "/event-flowers-auckland/" },
+      { label: "Our Work", href: "/work/" },
       { label: "Journal", href: "/journal/" },
+      { label: "Venue Guides", href: "/venues/" },
+      { label: "FAQ", href: "/faq/" },
     ],
   },
   {
-    heading: "Policies",
+    heading: "Connect",
     links: [
+      { label: "Contact", href: "/contact/" },
+      { label: "Instagram", href: site.instagram, external: true },
       { label: "Privacy Policy", href: "/privacy-policy/" },
-      { label: "Terms and Conditions", href: "/terms-of-service/" },
+      { label: "Terms & Conditions", href: "/terms-of-service/" },
+      { label: "Refund Policy", href: "/refund-policy/" },
     ],
   },
 ];
 
 export default function Footer() {
   return (
-    <footer className="mt-[88px] bg-white">
-      {/* Centred logo, as on the original (300×36) */}
-      <div className="border-t border-hairline pt-[88px] pb-12 text-center">
-        <img
-          src={withBase("/brand/willow-and-peony-logo.png")}
-          alt="Willow & Peony"
-          width={250}
-          height={30}
-          loading="lazy"
-          className="mx-auto h-[36px] w-auto"
-        />
-      </div>
-
-      <div className="border-t border-hairline">
-        <div className="mx-auto grid gap-10 px-5 py-12 sm:px-6 md:grid-cols-[1.3fr_1fr_1fr_1fr_1.2fr]">
-          <div>
-            <p className="max-w-[320px] text-[15px] leading-[1.4] text-ink">
-              Willow &amp; Peony – Crafting premium, bespoke floral designs for every special
-              moment.
-            </p>
-            <p className="mt-4 text-[12.6px] leading-relaxed text-ink-soft">
-              <a href={`mailto:${site.email}`} className="hover:underline">
-                {site.email}
-              </a>
-              <br />
-              <a href={`tel:${site.phone.replace(/\s/g, "")}`} className="hover:underline">
-                {site.phoneDisplay}
-              </a>
-            </p>
+    <footer className="mt-24 border-t border-hairline bg-white sm:mt-32">
+      <div className="mx-auto grid max-w-[1280px] gap-12 px-5 pt-16 pb-4 sm:px-6 md:grid-cols-[1.5fr_1fr_1fr_1fr] lg:gap-14">
+        <div>
+          <img
+            src={withBase("/brand/willow-and-peony-logo.png")}
+            alt="Willow & Peony"
+            width={250}
+            height={30}
+            loading="lazy"
+            className="h-[28px] w-auto"
+          />
+          <p className="mt-5 max-w-[300px] font-serif text-[17px] leading-[1.55] font-light text-ink-soft italic">
+            Crafting premium, bespoke floral designs for every special moment.
+          </p>
+          <p className="mt-5 text-[13px] leading-relaxed text-ink-soft">
+            <a href={`mailto:${site.email}`} className="hover:underline">
+              {site.email}
+            </a>
+            <br />
+            <a href={`tel:${site.phone.replace(/\s/g, "")}`} className="hover:underline">
+              {site.phoneDisplay}
+            </a>
+          </p>
+          <div className="mt-7 max-w-[300px]">
+            <p className="eyebrow text-muted">Newsletter</p>
+            <NewsletterForm />
           </div>
-          {cols.map((col) => (
-            <nav key={col.heading} aria-label={col.heading}>
-              <p className="label text-ink">{col.heading}</p>
-              <ul className="mt-4 space-y-2.5">
-                {col.links.map((l) => (
-                  <li key={l.href + l.label}>
+        </div>
+        {cols.map((col) => (
+          <nav key={col.heading} aria-label={col.heading}>
+            <p className="eyebrow text-muted">{col.heading}</p>
+            <ul className="mt-4 space-y-2.5">
+              {col.links.map((l) =>
+                "external" in l && l.external ? (
+                  <li key={l.label}>
+                    <a
+                      href={l.href}
+                      target="_blank"
+                      rel="noopener"
+                      className="text-[13px] leading-[2.1] text-ink-soft hover:text-ink hover:underline"
+                    >
+                      {l.label}
+                    </a>
+                  </li>
+                ) : (
+                  <li key={l.label}>
                     <Link
                       href={l.href}
-                      className="text-[12.6px] tracking-[-0.02em] text-ink-soft hover:underline"
+                      className="text-[13px] leading-[2.1] text-ink-soft hover:text-ink hover:underline"
                     >
                       {l.label}
                     </Link>
                   </li>
-                ))}
-              </ul>
-            </nav>
-          ))}
-          <div>
-            <p className="label text-ink">Subscribe to our Newsletter</p>
-            <NewsletterForm />
-          </div>
-        </div>
+                ),
+              )}
+            </ul>
+          </nav>
+        ))}
       </div>
 
-      <div className="border-t border-hairline">
-        <div className="mx-auto flex flex-col gap-2 px-5 py-5 text-[12.6px] text-ink-soft sm:flex-row sm:items-center sm:justify-between sm:px-6">
+      <div className="mx-auto max-w-[1280px] px-5 sm:px-6">
+        <div className="mt-12 flex flex-col gap-2 border-t border-hairline py-5 text-[11.5px] text-muted sm:flex-row sm:items-center sm:justify-between">
           <p>
-            © {new Date().getFullYear()} {site.name}.
+            © {new Date().getFullYear()} {site.name} · Auckland, New Zealand
           </p>
-          <p>
-            <Link href="/wedding-flower-calendar/" className="hover:underline">
-              Free wedding flower calendar
-            </Link>
-          </p>
+          <p className="tracking-[0.14em] uppercase">Now booking 2027 weddings</p>
         </div>
       </div>
     </footer>

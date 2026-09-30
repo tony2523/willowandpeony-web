@@ -83,6 +83,29 @@ posts + one facts file); every push to `main` deploys automatically.
    worker, retire GH Pages, repo private, Search Console. (Checklist in
    CLAUDE.md.)
 
+
+## Redesign build (2026-10-01)
+
+The approved canvas design (Version 9, 26 boards incl. 13 mobile) is BUILT
+and live on main. Highlights:
+
+- All pages rebuilt to the editorial system (see CLAUDE.md design contract).
+- Real content added: 14 Google reviews verbatim (content/reviews.ts,
+  5.0 rating) driving TestimonialSlider on Home/Weddings/Events/Contact;
+  6 venue guides (content/venues.ts) with researched facts (venue sites +
+  wedding directories) and W&P's own photography per venue.
+- New routes: /gallery/ (166-image filterable portfolio + lightbox),
+  /work/ (all 14 stories, filters + load more, ?type= pre-filter),
+  /venues/ + 6 guides. Sitemap + llms.txt extended.
+- Enquiry forms mirror the live Shopify forms field-for-field; worker
+  emails now include company/event type/requirements/comments.
+- Venue marketing imagery: currently using W&P's own photos (rights-clean).
+  If Tony wants venues' official photos, ask each venue for permission.
+
+Still needed from Tony: Instagram Graph API token (live feed falls back to
+curated tiles until set), photographer credits for story pages, workers.dev
+URL confirmation, and the go-live checklist in CLAUDE.md.
+
 ## Gotchas learned
 
 - Pushing from the Claude sandbox fails on >~5MB packs (proxy); disable

@@ -3,35 +3,102 @@
 import { useState } from "react";
 import { site } from "../../content/site";
 
+type Kind = "wedding" | "event" | "general";
+
 type Props = {
-  kind?: "wedding" | "event" | "general";
-  /** Compact = the original contact-page form: just e-mail + message + Send. */
+  kind?: Kind;
+  /** Show the Wedding / Event / Something else selector (contact page). */
+  selector?: boolean;
+  /** Compact = short form: name, email, message. */
   compact?: boolean;
 };
 
+/** The floral requirements Ivy collects on the live wedding form. */
+const REQUIREMENTS = [
+  "Bridal bouquet",
+  "Bridesmaids bouquets",
+  "Buttonholes",
+  "Corsages",
+  "Arch or arbor installation",
+  "Plinths flowers",
+  "Aisle flowers",
+  "Grounded floral meadow",
+  "Welcome sign flowers",
+  "Bud vase flowers",
+  "Table centrepieces",
+  "Head table flowers",
+  "Bar arrangement",
+  "Cake flowers",
+  "Others",
+] as const;
+
+const BUDGETS = [
+  "Under $1,000",
+  "$1,000 – $2,500",
+  "$2,500 – $5,000",
+  "$5,000 – $10,000",
+  "$10,000+",
+  "Not sure yet",
+] as const;
+
+const EVENT_TYPES = [
+  "Corporate event",
+  "Gala dinner",
+  "Conference",
+  "Product launch",
+  "Private celebration",
+  "Styled shoot",
+  "Other",
+] as const;
+
+const FOUND_US = [
+  "Google search",
+  "Instagram",
+  "Referral from a friend",
+  "Venue or planner recommendation",
+  "Attended an event we flowered",
+  "Other",
+] as const;
+
+function Field({
+  label,
+  children,
+  className = "",
+}: {
+  label: string;
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <label className={`block ${className}`}>
+      <span className="mb-1.5 block text-[12px] tracking-[0.06em] text-muted uppercase">
+        {label}
+      </span>
+      {children}
+    </label>
+  );
+}
+
 /**
- * Enquiry form, styled to the original (15px Chivo inputs, 41px tall,
- * hairline borders, small letterspaced outlined Send button).
- *
- * Submits to the site's own Cloudflare Worker (POST /api/enquiry), which
- * emails the studio via Cloudflare Email Routing — free, no third parties.
- * If the API isn't available (GitHub Pages preview, or the zone isn't live
- * on Cloudflare yet) it falls back to opening a pre-filled email draft, so
- * no enquiry is ever lost.
+ * Enquiry form matching the live site's Shopify forms field-for-field.
+ * Submits to the site's Cloudflare Worker (POST /api/enquiry) which emails
+ * the studio via Cloudflare Email Routing; if the API isn't available it
+ * falls back to a pre-filled email draft so no enquiry is ever lost.
  */
-export default function EnquiryForm({ kind = "general", compact = false }: Props) {
+export default function EnquiryForm({ kind = "general", selector = false, compact = false }: Props) {
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [mode, setMode] = useState<Kind>(kind);
 
   function mailtoFallback(fields: Record<string, string>) {
     const subject = encodeURIComponent(
-      kind === "general"
+      mode === "general"
         ? "Enquiry — Willow & Peony"
-        : `${kind === "wedding" ? "Wedding" : "Event"} enquiry — ${fields.name || ""}`,
+        : `${mode === "wedding" ? "Wedding" : "Event"} enquiry — ${fields.name || ""}`,
     );
     const body = encodeURIComponent(
       Object.entries(fields)
         .filter(([k]) => k !== "_gotcha")
-        .map(([k, v]) => `${k[0].toUpperCase() + k.slice(1)}: ${v}`)
+        .map(([k, v]) => `${k.replace(/_/g, " ")}: ${v}`)
         .join("\n"),
     );
     window.location.href = `mailto:${site.email}?subject=${subject}&body=${body}`;
@@ -40,14 +107,18 @@ export default function EnquiryForm({ kind = "general", compact = false }: Props
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = e.currentTarget;
-    const fields = Object.fromEntries(new FormData(form).entries()) as Record<string, string>;
+    const data = new FormData(form);
+    const fields = Object.fromEntries(data.entries()) as Record<string, string>;
+    const requirements = data.getAll("requirements").map(String);
+    delete fields.requirements;
+    if (requirements.length) fields.requirements = requirements.join(", ");
 
     setStatus("sending");
     try {
       const res = await fetch("/api/enquiry", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...fields, kind }),
+        body: JSON.stringify({ ...fields, kind: mode }),
       });
       if (res.ok) {
         setStatus("sent");
@@ -55,13 +126,11 @@ export default function EnquiryForm({ kind = "general", compact = false }: Props
         return;
       }
       if (res.status === 400) {
-        // Validation/bot-check failure — surface it rather than emailing.
         setStatus("error");
         return;
       }
       throw new Error(String(res.status));
     } catch {
-      // API missing (preview host) or email not configured yet → mail draft.
       setStatus("idle");
       mailtoFallback(fields);
     }
@@ -69,145 +138,201 @@ export default function EnquiryForm({ kind = "general", compact = false }: Props
 
   if (status === "sent") {
     return (
-      <div className="border border-hairline p-8 text-center">
+      <div className="border border-hairline bg-white p-10 text-center">
         <p className="h-card text-ink">Thank you — we&rsquo;ve received your enquiry.</p>
-        <p className="mt-2 text-[15px] text-ink-soft">
+        <p className="mt-2 text-[14px] text-ink-soft">
           We&rsquo;ll be in touch within 1–2 business days.
         </p>
       </div>
     );
   }
 
-  const label = "label mb-1.5 block text-ink-soft";
-
-  if (compact) {
-    return (
-      <form onSubmit={onSubmit} className="space-y-4">
-        <input type="text" name="_gotcha" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
-        <div>
-          <label htmlFor="c-email" className={label}>
-            E-mail *
-          </label>
-          <input id="c-email" name="email" type="email" required autoComplete="email" placeholder="E-mail" className="input-wp" />
-        </div>
-        <div>
-          <label htmlFor="c-message" className={label}>
-            Message
-          </label>
-          <textarea id="c-message" name="message" required rows={4} placeholder="Message" className="input-wp" />
-        </div>
-        <button type="submit" disabled={status === "sending"} className="btn-wp disabled:opacity-50">
-          {status === "sending" ? "Sending…" : "Send"}
-        </button>
-        {status === "error" && (
-          <p className="text-[13px] text-ink-soft">
-            Something went wrong — please email{" "}
-            <a href={`mailto:${site.email}`} className="underline">
-              {site.email}
-            </a>
-            .
-          </p>
-        )}
-      </form>
-    );
-  }
-
   return (
-    <form onSubmit={onSubmit} className="grid gap-5 sm:grid-cols-2">
-      <input type="text" name="_gotcha" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
-      <div>
-        <label htmlFor="f-name" className={label}>
-          Name *
-        </label>
-        <input id="f-name" name="name" required autoComplete="name" className="input-wp" />
-      </div>
-      <div>
-        <label htmlFor="f-email" className={label}>
-          E-mail *
-        </label>
-        <input id="f-email" name="email" type="email" required autoComplete="email" className="input-wp" />
-      </div>
-      <div>
-        <label htmlFor="f-phone" className={label}>
-          Phone
-        </label>
-        <input id="f-phone" name="phone" type="tel" autoComplete="tel" className="input-wp" />
-      </div>
-      <div>
-        <label htmlFor="f-date" className={label}>
-          {kind === "event" ? "Event date" : "Wedding date"}
-        </label>
-        <input id="f-date" name="date" type="date" className="input-wp" />
-      </div>
-      <div className="sm:col-span-2">
-        <label htmlFor="f-venue" className={label}>
-          Venue (or venues you&rsquo;re considering)
-        </label>
-        <input id="f-venue" name="venue" className="input-wp" />
-      </div>
-      <div>
-        <label htmlFor="f-guests" className={label}>
-          Approximate guest numbers
-        </label>
-        <input id="f-guests" name="guests" inputMode="numeric" className="input-wp" placeholder="e.g. 80" />
-      </div>
-      <div>
-        <label htmlFor="f-budget" className={label}>
-          Floral budget
-        </label>
-        <select id="f-budget" name="budget" className="input-wp" defaultValue="Not sure yet">
-          <option>Under $1,000</option>
-          <option>$1,000 – $2,500</option>
-          <option>$2,500 – $5,000</option>
-          <option>$5,000+</option>
-          <option>Not sure yet</option>
-        </select>
-      </div>
-      <div className="sm:col-span-2">
-        <label htmlFor="f-message" className={label}>
-          Message *
-        </label>
-        <textarea
-          id="f-message"
-          name="message"
-          required
-          rows={5}
-          className="input-wp"
-          placeholder={
-            kind === "wedding"
-              ? "Your style, palette, must-have flowers…"
-              : "The occasion, the space, the atmosphere you want to create…"
-          }
-        />
-      </div>
-      <div className="sm:col-span-2">
-        <label htmlFor="f-found" className={label}>
-          How did you find us?
-        </label>
-        <select id="f-found" name="found_us" className="input-wp" defaultValue="Google search">
-          <option>Google search</option>
-          <option>Instagram</option>
-          <option>Referral from a friend or vendor</option>
-          <option>Saw our flowers at a wedding or event</option>
-          <option>Other</option>
-        </select>
-      </div>
-      <div className="sm:col-span-2">
-        <button type="submit" disabled={status === "sending"} className="btn-wp disabled:opacity-50">
-          {status === "sending" ? "Sending…" : "Send"}
-        </button>
-        <p className="mt-3 text-[12.6px] text-ink-soft">
-          We reply to every enquiry within 1–2 business days.
+    <form onSubmit={onSubmit}>
+      {/* Honeypot */}
+      <input
+        type="text"
+        name="_gotcha"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        className="hidden"
+      />
+
+      {selector && (
+        <div className="mb-7">
+          <p className="eyebrow text-muted">I&rsquo;m enquiring about</p>
+          <div className="mt-3 flex flex-wrap gap-2.5" role="group" aria-label="Enquiry type">
+            {(
+              [
+                ["wedding", "Wedding"],
+                ["event", "Event"],
+                ["general", "Something else"],
+              ] as const
+            ).map(([value, label]) => (
+              <button
+                key={value}
+                type="button"
+                onClick={() => setMode(value)}
+                aria-pressed={mode === value}
+                className={`px-4 py-2.5 text-[11px] tracking-[0.14em] uppercase transition-colors ${
+                  mode === value
+                    ? "bg-ink text-white"
+                    : "border border-hairline text-ink-soft hover:border-ink"
+                }`}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {compact || mode === "general" ? (
+        <div className="grid gap-4">
+          <div className="grid gap-4 sm:grid-cols-2">
+            <Field label="Your name">
+              <input name="name" required autoComplete="name" className="input-wp" />
+            </Field>
+            <Field label="Email">
+              <input type="email" name="email" required autoComplete="email" className="input-wp" />
+            </Field>
+          </div>
+          <Field label="Phone (optional)">
+            <input type="tel" name="phone" autoComplete="tel" className="input-wp" />
+          </Field>
+          <Field label="Your message">
+            <textarea name="message" required rows={5} className="input-wp" />
+          </Field>
+        </div>
+      ) : mode === "wedding" ? (
+        <div className="grid gap-4">
+          <div className="grid gap-4 sm:grid-cols-2">
+            <Field label="Your name">
+              <input name="name" required autoComplete="name" className="input-wp" />
+            </Field>
+            <Field label="Email">
+              <input type="email" name="email" required autoComplete="email" className="input-wp" />
+            </Field>
+            <Field label="Phone">
+              <input type="tel" name="phone" autoComplete="tel" className="input-wp" />
+            </Field>
+            <Field label="Wedding date">
+              <input name="date" placeholder="DD/MM/YYYY" className="input-wp" />
+            </Field>
+            <Field label="Venue (or shortlist)">
+              <input name="venue" className="input-wp" />
+            </Field>
+            <Field label="Budget">
+              <select name="budget" defaultValue="" className="input-wp">
+                <option value="" disabled>
+                  Select a range
+                </option>
+                {BUDGETS.map((b) => (
+                  <option key={b}>{b}</option>
+                ))}
+              </select>
+            </Field>
+          </div>
+
+          <fieldset className="mt-3">
+            <legend className="eyebrow text-muted">
+              Floral requirements — tick all that apply
+            </legend>
+            <div className="mt-4 grid grid-cols-1 gap-x-5 gap-y-3 sm:grid-cols-2 lg:grid-cols-3">
+              {REQUIREMENTS.map((r) => (
+                <label
+                  key={r}
+                  className="flex cursor-pointer items-center gap-2.5 text-[13px] text-ink-soft"
+                >
+                  <input type="checkbox" name="requirements" value={r} className="check-wp" />
+                  {r}
+                </label>
+              ))}
+            </div>
+          </fieldset>
+
+          <Field label="Additional comments" className="mt-3">
+            <textarea
+              name="message"
+              required
+              rows={4}
+              placeholder="Your style, palette, must-have flowers…"
+              className="input-wp"
+            />
+          </Field>
+          <Field label="How did you hear about us?">
+            <select name="found_us" defaultValue="" className="input-wp">
+              <option value="" disabled>
+                Select one
+              </option>
+              {FOUND_US.map((f) => (
+                <option key={f}>{f}</option>
+              ))}
+            </select>
+          </Field>
+        </div>
+      ) : (
+        <div className="grid gap-4">
+          <div className="grid gap-4 sm:grid-cols-2">
+            <Field label="Key contact name">
+              <input name="name" required autoComplete="name" className="input-wp" />
+            </Field>
+            <Field label="Company (if applicable)">
+              <input name="company" autoComplete="organization" className="input-wp" />
+            </Field>
+            <Field label="Email">
+              <input type="email" name="email" required autoComplete="email" className="input-wp" />
+            </Field>
+            <Field label="Phone">
+              <input type="tel" name="phone" autoComplete="tel" className="input-wp" />
+            </Field>
+            <Field label="Event date">
+              <input name="date" placeholder="DD/MM/YYYY" className="input-wp" />
+            </Field>
+            <Field label="Event type">
+              <select name="event_type" defaultValue="" className="input-wp">
+                <option value="" disabled>
+                  Select one
+                </option>
+                {EVENT_TYPES.map((t) => (
+                  <option key={t}>{t}</option>
+                ))}
+              </select>
+            </Field>
+          </div>
+          <Field label="Your message">
+            <textarea
+              name="message"
+              required
+              rows={4}
+              placeholder="The occasion, the space, the atmosphere you want to create…"
+              className="input-wp"
+            />
+          </Field>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <Field label="Budget">
+              <input name="budget" className="input-wp" />
+            </Field>
+            <Field label="Additional comments">
+              <input name="comments" className="input-wp" />
+            </Field>
+          </div>
+        </div>
+      )}
+
+      {status === "error" && (
+        <p className="mt-4 text-[13px] text-ink" role="alert">
+          Something wasn&rsquo;t right — please check your email address and message, then try
+          again.
         </p>
-        {status === "error" && (
-          <p className="mt-3 text-[13px] text-ink-soft">
-            Something went wrong — please email us directly at{" "}
-            <a href={`mailto:${site.email}`} className="underline">
-              {site.email}
-            </a>
-            .
-          </p>
-        )}
+      )}
+
+      <div className="mt-7">
+        <button type="submit" disabled={status === "sending"} className="btn-solid disabled:opacity-60">
+          {status === "sending" ? "Sending…" : "Send enquiry"}
+        </button>
+        <p className="mt-3.5 text-[12px] text-muted">We reply within 1–2 business days.</p>
       </div>
     </form>
   );

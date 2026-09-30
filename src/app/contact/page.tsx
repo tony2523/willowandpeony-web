@@ -1,14 +1,15 @@
-import Link from "next/link";
 import type { Metadata } from "next";
+import Pic from "@/components/Pic";
 import EnquiryForm from "@/components/EnquiryForm";
 import JsonLd from "@/components/JsonLd";
 import { pageMetadata, breadcrumbJsonLd } from "@/lib/seo";
 import { site } from "../../../content/site";
+import { googleRating } from "../../../content/reviews";
 
 export const metadata: Metadata = pageMetadata({
   title: "Contact Us — Boutique Florist Auckland",
   description:
-    "Get in touch with Willow & Peony, boutique florist in Auckland. Wedding and event enquiries, custom floral orders and flower delivery questions — replies within 24 hours on weekdays.",
+    "Get in touch with Willow & Peony, boutique florist in Auckland. Wedding and event enquiries, custom floral orders and flower delivery questions — replies within 1–2 business days.",
   path: "/contact/",
 });
 
@@ -21,54 +22,67 @@ export default function ContactPage() {
           { name: "Contact", path: "/contact/" },
         ])}
       />
-      {/* Two columns as on the original: 608px text left, compact form right */}
-      <section className="mx-auto max-w-[1200px] px-5 pt-14 sm:px-6">
-        <div className="flex flex-col gap-12 md:flex-row md:justify-between">
-          <div className="max-w-[608px]">
-            <h1 className="h-card text-ink">Contact Us</h1>
-            <div className="mt-5 space-y-4 text-[15px] leading-[1.4] text-ink">
-              <p>
-                Thank you for visiting Willow &amp; Peony! We&rsquo;re delighted to assist with
-                any questions, custom floral requests, or order details. Simply complete the form
-                on the page, and our team will get back to you promptly.
-              </p>
-              <p>
-                <strong className="font-normal">What to Expect:</strong>
-              </p>
-              <ul className="list-disc space-y-1.5 pl-5">
-                <li>Personalised responses within 24 hours on weekdays.</li>
-                <li>Assistance with custom arrangements, event flowers, or bulk orders.</li>
-                <li>Advice on flower care, delivery options, and thoughtful gift ideas.</li>
-              </ul>
-              <p>
-                We look forward to helping you bring a touch of natural beauty into your day with
-                our handcrafted blooms. Let us know how we can make your Willow &amp; Peony
-                experience even more memorable!
-              </p>
-              <p className="text-ink-soft">
-                <a href={`mailto:${site.email}`} className="hover:underline">
-                  {site.email}
-                </a>
-                <br />
-                <a href={`tel:${site.phone.replace(/\s/g, "")}`} className="hover:underline">
-                  {site.phoneDisplay}
-                </a>{" "}
-                ({site.phoneHours})
-              </p>
+
+      <section className="mx-auto max-w-[1280px] px-5 pt-16 sm:px-6 md:pt-24">
+        <div className="grid gap-14 md:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] md:gap-20">
+          {/* Form column */}
+          <div>
+            <p className="eyebrow text-muted">Contact</p>
+            <h1 className="display-2 mt-3 text-ink">
+              We&rsquo;d love to hear about <em>your day</em>
+            </h1>
+            <p className="mt-5 max-w-[520px] text-[15px] leading-[1.7] font-light text-ink-soft">
+              Tell us what you&rsquo;re dreaming of — a wedding, an event, or something else
+              entirely. We reply personally within 1–2 business days.
+            </p>
+            <div className="mt-10">
+              <EnquiryForm kind="wedding" selector />
             </div>
           </div>
-          <div className="w-full md:max-w-[442px]">
-            <EnquiryForm kind="general" compact />
-          </div>
+
+          {/* Ivy + studio details */}
+          <aside className="md:pt-24">
+            <Pic
+              name="willow-and-peony-bouquet-ivy-willow-peony-copy-a677a82d-5fc6-4fcd-b72d-c0884402c2e5"
+              alt="Ivy Diao, founder and lead florist of Willow & Peony"
+              sizes="(max-width: 768px) 100vw, 480px"
+              className="h-auto w-full object-cover"
+            />
+            <blockquote className="mt-6">
+              <p className="font-serif text-[19px] leading-[1.5] font-light text-ink italic">
+                &ldquo;We reply to every enquiry personally.&rdquo;
+              </p>
+              <footer className="eyebrow mt-3 text-muted">Ivy · Willow &amp; Peony</footer>
+            </blockquote>
+            <div className="mt-8 space-y-1.5 border-t border-hairline pt-6 text-[13.5px] text-ink-soft">
+              <p>
+                <a href={`mailto:${site.email}`} className="hover:text-ink hover:underline">
+                  {site.email}
+                </a>
+              </p>
+              <p>
+                <a
+                  href={`tel:${site.phone.replace(/\s/g, "")}`}
+                  className="hover:text-ink hover:underline"
+                >
+                  {site.phoneDisplay}
+                </a>{" "}
+                <span className="text-muted">({site.phoneHours})</span>
+              </p>
+              <p className="pt-2 text-[12.5px] text-muted">
+                <span aria-hidden>★★★★★</span>{" "}
+                <a
+                  href={googleRating.url}
+                  target="_blank"
+                  rel="noopener"
+                  className="underline underline-offset-4 hover:text-ink"
+                >
+                  {googleRating.value.toFixed(1)} from {googleRating.count} Google reviews
+                </a>
+              </p>
+            </div>
+          </aside>
         </div>
-        {/* Breadcrumb, as on the original */}
-        <nav aria-label="Breadcrumb" className="mt-16 text-[12.6px] text-ink-soft">
-          <Link href="/" className="hover:underline">
-            Home
-          </Link>
-          <span aria-hidden> / </span>
-          <span>Contact</span>
-        </nav>
       </section>
     </>
   );

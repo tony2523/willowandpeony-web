@@ -1,5 +1,7 @@
 import { getPosts } from "@/lib/journal";
 import { site, weddingPackages, faqs, delivery } from "../../../content/site";
+import { venues } from "../../../content/venues";
+import { googleRating } from "../../../content/reviews";
 
 export const dynamic = "force-static";
 
@@ -20,6 +22,7 @@ export async function GET() {
     `- Email: ${site.email}`,
     `- Phone: ${site.phone} (${site.phoneHours})`,
     `- This is an information site: enquiries by form, email or phone. No online checkout.`,
+    `- Google rating: ${googleRating.value.toFixed(1)} stars from ${googleRating.count} reviews`,
     "",
     "## Services",
     "",
@@ -34,10 +37,18 @@ export async function GET() {
     "",
     "## Key pages",
     "",
+    `- [Gallery](${site.domain}/gallery/): Portfolio of wedding and event florals`,
+    `- [Our work](${site.domain}/work/): Every wedding and event story, filterable`,
     `- [Our story](${site.domain}/about/): About founder Ivy and the studio`,
     `- [FAQ](${site.domain}/faq/): Booking, delivery, flower care`,
     `- [Contact](${site.domain}/contact/): Enquiry form, email, phone`,
     `- [Wedding flower calendar](${site.domain}/wedding-flower-calendar/): Free month-by-month NZ seasonal bloom guide (PDF)`,
+    "",
+    "## Venue guides (wedding flowers by Auckland venue)",
+    "",
+    ...venues.map(
+      (v) => `- [Wedding flowers at ${v.name}](${site.domain}/venues/${v.slug}/): ${v.intro}`,
+    ),
     "",
     "## Journal (real weddings & events)",
     "",

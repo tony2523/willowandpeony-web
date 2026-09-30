@@ -42,13 +42,11 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
   const newer = idx > 0 ? inCategory[idx - 1] : undefined;
   const older = idx >= 0 && idx < inCategory.length - 1 ? inCategory[idx + 1] : undefined;
   const date = new Date(post.date + "T00:00:00");
-  const nice = date.toLocaleDateString("en-NZ", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-  });
-  const catLabel = post.category === "weddings" ? "Weddings" : "Events";
+  const nice = date.toLocaleDateString("en-NZ", { month: "long", year: "numeric" });
+  const isWedding = post.category === "weddings";
+  const catLabel = isWedding ? "Weddings" : "Events";
   const catPath = `/journal/${post.category}/`;
+  const venueShort = post.venue.split(",")[0];
 
   return (
     <>
@@ -72,71 +70,160 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
       />
 
       <article>
-        {/* Header, as on the original: date + author caption above a centred
-            28.6px title in a 608px column */}
-        <header className="mx-auto max-w-[640px] px-5 pt-14 text-center sm:px-6">
-          <p className="text-[15px] text-ink-soft">
-            <time dateTime={post.date}>{nice}</time>{" "}
-            <span className="ml-2">{site.founder}</span>
+        {/* Title block */}
+        <header className="mx-auto max-w-[980px] px-5 pt-16 text-center sm:px-6 md:pt-24">
+          <p className="eyebrow text-muted">
+            {isWedding ? "Real wedding" : "Real event"}
+            {venueShort ? ` · ${venueShort}` : ""} · {nice}
           </p>
-          <h1 className="h-page mt-3 text-ink">{post.title}</h1>
+          <h1 className="display-1 mt-5 text-ink">{post.title}</h1>
+          <p className="mt-5 text-[13px] text-muted">
+            {isWedding ? "Words & flowers" : "Flowers"} by {site.founder}
+          </p>
         </header>
 
-        {/* Cover — 972px wide on the original */}
-        <div className="mx-auto mt-10 max-w-[972px] px-5 sm:px-6">
+        {/* Full-bleed cover */}
+        <div className="mt-14 md:mt-20">
           <Pic
             name={post.cover}
             alt={post.title}
-            sizes="(max-width: 1000px) 100vw, 972px"
+            sizes="100vw"
             priority
-            className="h-auto w-full"
+            className="max-h-[720px] w-full object-cover"
           />
         </div>
 
-        {/* Body — 608px column (measured) */}
-        <div
-          className="prose-wp mx-auto max-w-[608px] px-5 pt-2 sm:px-6"
-          dangerouslySetInnerHTML={{ __html: post.html }}
-        />
+        {/* Details rail + story */}
+        <div className="mx-auto mt-16 grid max-w-[1080px] gap-12 px-5 sm:px-6 md:mt-24 md:grid-cols-[280px_minmax(0,1fr)] md:gap-16">
+          <aside className="h-fit border-t border-hairline pt-6 md:sticky md:top-24">
+            <p className="eyebrow text-muted">The details</p>
+            <dl className="mt-5 space-y-4 text-[13px] text-ink-soft">
+              {post.venue && (
+                <div>
+                  <dt className="text-muted">Venue</dt>
+                  <dd>{post.venue}</dd>
+                </div>
+              )}
+              <div>
+                <dt className="text-muted">Occasion</dt>
+                <dd>{isWedding ? "Wedding" : "Event"}</dd>
+              </div>
+              <div>
+                <dt className="text-muted">Date</dt>
+                <dd>{nice}</dd>
+              </div>
+              <div>
+                <dt className="text-muted">Flowers</dt>
+                <dd>{site.name}</dd>
+              </div>
+            </dl>
+          </aside>
 
-        <footer className="mx-auto mt-14 max-w-[608px] px-5 sm:px-6">
-          <p className="text-[15px] leading-[1.4] text-ink-soft">
-            Planning {post.category === "weddings" ? "your wedding flowers" : "an event"} in
-            Auckland?{" "}
-            <Link href="/contact/" className="text-ink underline underline-offset-2">
-              Get in touch
-            </Link>{" "}
-            — we&rsquo;d love to hear your plans.
-          </p>
+          <div
+            className="prose-wp max-w-[680px]"
+            dangerouslySetInnerHTML={{ __html: post.html }}
+          />
+        </div>
 
-          {(older || newer) && (
-            <nav
-              aria-label="Post navigation"
-              className="mt-10 flex flex-col gap-6 border-t border-hairline pt-8 sm:flex-row sm:justify-between sm:gap-10"
-            >
-              <div className="sm:max-w-[46%]">
+        {/* Credits band */}
+        <section className="mt-24 border-t border-hairline bg-paper md:mt-[140px]">
+          <div className="mx-auto max-w-[1080px] px-5 py-14 sm:px-6">
+            <p className="eyebrow text-muted">The people who made it</p>
+            <div className="mt-6 flex flex-wrap gap-x-14 gap-y-5 text-[13px] leading-[1.9] text-ink-soft">
+              {post.venue && (
+                <div>
+                  <span className="text-muted">Venue</span>
+                  <br />
+                  {post.venue.split(",")[0]}
+                </div>
+              )}
+              <div>
+                <span className="text-muted">Flowers</span>
+                <br />
+                {site.name}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Keep reading */}
+        {(older || newer) && (
+          <nav
+            aria-label="More stories"
+            className="mx-auto mt-24 max-w-[1080px] px-5 sm:px-6 md:mt-[140px]"
+          >
+            <div className="mb-8 flex items-end justify-between">
+              <p className="eyebrow text-muted">Keep reading</p>
+              <Link href="/work/" className="t-link text-ink">
+                All our work
+              </Link>
+            </div>
+            <div className="grid gap-8 sm:grid-cols-2">
+              <div>
                 {older && (
-                  <Link href={`/journal/${older.slug}/`} className="group block">
-                    <span className="label text-ink-soft">← Previous post</span>
-                    <span className="h-card mt-1.5 block text-ink group-hover:underline">
-                      {older.title}
+                  <Link href={`/journal/${older.slug}/`} className="group flex items-center gap-5">
+                    <Pic
+                      name={older.cover}
+                      alt=""
+                      sizes="180px"
+                      aspect="9/10"
+                      className="h-auto w-[120px] shrink-0 object-cover sm:w-[160px]"
+                    />
+                    <span>
+                      <span className="block text-[10.5px] tracking-[0.14em] text-muted uppercase">
+                        Previous
+                      </span>
+                      <span className="mt-2 block font-serif text-[19px] leading-[1.3] font-light text-ink group-hover:underline group-hover:underline-offset-4">
+                        {older.title}
+                      </span>
                     </span>
                   </Link>
                 )}
               </div>
-              <div className="sm:max-w-[46%] sm:text-right">
+              <div className="sm:justify-self-end">
                 {newer && (
-                  <Link href={`/journal/${newer.slug}/`} className="group block">
-                    <span className="label text-ink-soft">Next post →</span>
-                    <span className="h-card mt-1.5 block text-ink group-hover:underline">
-                      {newer.title}
+                  <Link
+                    href={`/journal/${newer.slug}/`}
+                    className="group flex items-center gap-5 sm:flex-row-reverse sm:text-right"
+                  >
+                    <Pic
+                      name={newer.cover}
+                      alt=""
+                      sizes="180px"
+                      aspect="9/10"
+                      className="h-auto w-[120px] shrink-0 object-cover sm:w-[160px]"
+                    />
+                    <span>
+                      <span className="block text-[10.5px] tracking-[0.14em] text-muted uppercase">
+                        Next
+                      </span>
+                      <span className="mt-2 block font-serif text-[19px] leading-[1.3] font-light text-ink group-hover:underline group-hover:underline-offset-4">
+                        {newer.title}
+                      </span>
                     </span>
                   </Link>
                 )}
               </div>
-            </nav>
-          )}
-        </footer>
+            </div>
+          </nav>
+        )}
+
+        {/* CTA */}
+        <section className="mt-24 border-t border-hairline bg-paper md:mt-[140px]">
+          <div className="mx-auto flex max-w-[900px] flex-col items-center px-5 py-16 text-center sm:py-20">
+            <p className="eyebrow text-muted">
+              {isWedding ? "Dreaming of something like this?" : "Planning an event to remember?"}
+            </p>
+            <h2 className="display-3 mt-4 text-ink">
+              Let&rsquo;s design it for <em>{isWedding ? "your day" : "your event"}</em>
+            </h2>
+            <div className="mt-8">
+              <Link href="/contact/" className="btn-solid">
+                {isWedding ? "Check your date" : "Start an enquiry"}
+              </Link>
+            </div>
+          </div>
+        </section>
       </article>
     </>
   );

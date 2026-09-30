@@ -71,16 +71,21 @@ async function handleEnquiry(request, env) {
 
   const lines = [
     name && `Name: ${name}`,
+    data.company && `Company: ${clean(data.company, MAX.other)}`,
     `Email: ${email}`,
     data.phone && `Phone: ${clean(data.phone, MAX.other)}`,
     data.date && `Date: ${clean(data.date, MAX.other)}`,
     data.venue && `Venue: ${clean(data.venue, MAX.other)}`,
+    data.event_type && `Event type: ${clean(data.event_type, MAX.other)}`,
     data.guests && `Guests: ${clean(data.guests, MAX.other)}`,
     data.budget && `Budget: ${clean(data.budget, MAX.other)}`,
+    data.requirements && `Floral requirements: ${clean(data.requirements, MAX.message)}`,
     data.found_us && `Found us via: ${clean(data.found_us, MAX.other)}`,
     "",
     "Message:",
     message,
+    data.comments && "",
+    data.comments && `Additional comments: ${clean(data.comments, MAX.message)}`,
   ].filter((l) => l !== undefined && l !== null && l !== false);
 
   const from = env.ENQUIRY_FROM;

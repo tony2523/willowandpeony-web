@@ -106,14 +106,20 @@ export default function InstagramFeed() {
   }, [open]);
 
   return (
-    <section className="mt-[135px] px-5 sm:px-6" aria-label="Instagram">
-      <p className="text-center text-[15px] leading-[28px] text-ink">
-        <a href={site.instagram} target="_blank" rel="noopener" className="hover:underline">
-          Follow Us @{site.instagramHandle}
+    <section aria-label="Instagram">
+      <div className="text-center">
+        <a
+          href={site.instagram}
+          target="_blank"
+          rel="noopener"
+          className="eyebrow text-ink hover:underline hover:underline-offset-4"
+        >
+          @{site.instagramHandle}
         </a>
-      </p>
-      {/* 2 across on mobile, 6 across desktop, flush tiles (measured) */}
-      <div className="mt-[30px] grid grid-cols-2 sm:grid-cols-6">
+        <p className="mt-3 text-[12px] text-muted">Tap any tile to preview</p>
+      </div>
+      {/* 2 across on mobile, 6 across desktop, flush tiles */}
+      <div className="mt-9 grid grid-cols-2 sm:grid-cols-6">
         {items.map((item) => (
           <button
             key={item.id}

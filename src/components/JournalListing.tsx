@@ -2,10 +2,7 @@ import Link from "next/link";
 import PostCard from "./PostCard";
 import type { Post } from "@/lib/journal";
 
-/**
- * Blog listing, measured from the original: small left-aligned serif title
- * (21.6px), 4-column grid of square cards with a 24px gap.
- */
+/** Journal listing — editorial header with category chips, 3-up card grid. */
 export default function JournalListing({
   title,
   posts,
@@ -21,26 +18,33 @@ export default function JournalListing({
     { key: "events", label: "Events", href: "/journal/events/" },
   ] as const;
   return (
-    <section className="px-5 pt-14 sm:px-6">
-      <div className="flex items-end justify-between">
-        <h1 className="h-card text-ink">{title}</h1>
-        <nav aria-label="Journal categories" className="flex gap-5">
-          {filters.map((f) =>
-            f.key === active ? (
-              <span key={f.key} className="link-text text-ink">
-                {f.label}
-              </span>
-            ) : (
-              <Link key={f.key} href={f.href} className="link-text text-ink-soft hover:text-ink">
-                {f.label}
-              </Link>
-            ),
-          )}
-        </nav>
-      </div>
-      <div className="mt-8 grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
+    <section className="mx-auto max-w-[1280px] px-5 pt-16 sm:px-6 md:pt-24">
+      <p className="eyebrow text-muted">The journal</p>
+      <h1 className="display-1 mt-3 text-ink">{title}</h1>
+      <nav aria-label="Journal categories" className="mt-8 flex flex-wrap gap-2.5">
+        {filters.map((f) =>
+          f.key === active ? (
+            <span
+              key={f.key}
+              className="bg-ink px-4 py-2.5 text-[11px] tracking-[0.14em] text-white uppercase"
+              aria-current="page"
+            >
+              {f.label}
+            </span>
+          ) : (
+            <Link
+              key={f.key}
+              href={f.href}
+              className="border border-hairline px-4 py-2.5 text-[11px] tracking-[0.14em] text-ink-soft uppercase transition-colors hover:border-ink"
+            >
+              {f.label}
+            </Link>
+          ),
+        )}
+      </nav>
+      <div className="mt-12 grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
         {posts.map((post, i) => (
-          <PostCard key={post.slug} post={post} priority={i < 4} />
+          <PostCard key={post.slug} post={post} priority={i < 3} />
         ))}
       </div>
     </section>

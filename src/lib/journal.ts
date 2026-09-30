@@ -13,6 +13,7 @@ export type Post = {
   category: "weddings" | "events";
   venue: string;
   cover: string; // image manifest name
+  images: string[]; // manifest names of every inline image, in order
   html: string;
   plain: string; // plain-text body (for AEO / llms.txt)
 };
@@ -55,6 +56,9 @@ export function getPosts(): Post[] {
     const raw = fs.readFileSync(path.join(JOURNAL_DIR, file), "utf8");
     const { data, content } = matter(raw);
     const html = marked.parse(content, { renderer: renderer(), async: false }) as string;
+    const images = [...content.matchAll(/!\[[^\]]*\]\(\/images\/([^)\s]+)\)/g)]
+      .map((m) => m[1])
+      .filter((name) => getImage(name));
     const plain = content
       .replace(/!\[[^\]]*\]\([^)]*\)/g, "")
       .replace(/\[([^\]]*)\]\([^)]*\)/g, "$1")
@@ -69,6 +73,7 @@ export function getPosts(): Post[] {
       category: data.category as "weddings" | "events",
       venue: (data.venue as string) || "",
       cover: data.cover as string,
+      images,
       html,
       plain,
     };

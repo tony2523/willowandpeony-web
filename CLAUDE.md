@@ -93,52 +93,41 @@ a new descriptive name.
   height/srcset/lazy-loading are emitted. LCP/hero images set `priority`.
 
 
-## Redesign in review (2026-09-30)
+## Design contract — editorial redesign (BUILT, 2026-10-01)
 
-A full editorial redesign is awaiting Tony's approval on the Design canvas:
-https://claude.ai/artifact/VsGEFc7EbBNXMYr2MDMNYq (11 boards, v2 with his
-feedback applied). Decisions, feedback log, open placeholders and next steps:
-[docs/PROJECT-LOG.md](docs/PROJECT-LOG.md). Until a board is approved, the
-LIVE site keeps the exact-copy design contract below. When boards are
-approved, build them into the site and update the contract.
+The approved editorial redesign from the Design canvas
+(https://claude.ai/artifact/VsGEFc7EbBNXMYr2MDMNYq, 26 boards incl. full
+mobile set) is now the LIVE design. The old pixel-copy-of-Shopify contract
+is retired. The system:
 
-## Design contract (Tony's explicit instruction, 2026-09-30)
-
-The site must look like the ORIGINAL Shopify site as much as possible.
-MEASURED SPEC (2026-09-30, taken from the live original at 1440×900 — do not
-eyeball, these are the numbers):
-- Body: Chivo 300, 15px/21px, #000; secondary text #4d4d4d; borders #e1e1e1.
-- Headings (`globals.css` utilities): `.h-page` 28.6px, `.h-card` 21.6px —
-  Newsreader 400, ls -0.02em, same size on mobile. `.label` Chivo 400 12.6px
-  ls .08em; `.link-text` 11.7px underlined. Serif-bold body subheads 16.8px.
-- Header: 51px tall, logo 250×30 (160×19 mobile), nav links Newsreader 16.8px
-  normal case; transparent over the hero on home/weddings/packages/events/about.
-- Home: 100svh hero → 88px rhythm between all sections → intro (640/580 cols)
-  → 3 service cards (452:582, 20px gap, 12.6px grey labels) → founder (292px
-  image + 560px text, centred) → latest work (4 SQUARE cards, 24px gap).
-- Page banners: 65vh, centred white 28.6px title on the image.
-- Weddings/Events: banner → 2-up 720×922 snap carousel → centred 640px rich
-  text → latest work (3 cards) → enquiry form.
-- Packages: centred intro → alternating 321×418 image / 501px text rows.
-- Our Story: banner with intro on image → half-bleed 720×900 image+text →
-  4-up 331×425 bouquet carousel.
-- Journal: listing = 21.6px title + 4-col square grid; post = date/author
-  caption, centred 28.6px title, 972px cover, 608px body col, 21.6px h2s,
-  prev/next links.
-- Contact: 608px text left + 442px compact form (E-mail, Message, Send).
-- Forms: `.input-wp` (41px, 15px Chivo) and `.btn-wp` (11.7px outlined).
-
-Also:
-- Pure white background, black text, grey secondary (#4d4d4d), #e1e1e1 hairlines,
-  black buttons. No warm/rose accent colours.
-- Header: nav links left, CENTRED logo, enquire right; transparent with the
-  white logo over the home hero, solid white elsewhere. Mobile: burger left,
-  centred logo, slide-in drawer.
-- Home: clean full-height hero (no text overlay), centred serif intro heading,
-  3 minimal service cards, white founder section, 4-col "Our Latest Work"
-  (weddings category), centred-logo divider above the footer.
-- Footer: tagline + Customer Service / About Us / Policies columns + newsletter.
+- Palette (globals.css tokens): ink #1a1815 · soft #57524b · muted #8a847b ·
+  hairline #e6e2da · paper #f7f5f0 · white. CTA bands are always warm paper,
+  never black. Buttons: `.btn-solid` (ink), `.btn-white` / `.btn-ghost-white`
+  on photos, `.btn-outline` for load-more.
+- Type: Newsreader Light display (`.display-hero/-1/-2/-3`, clamp scales,
+  italic `<em>` accents), Chivo 300 body 15px/1.6, `.eyebrow` 11.5px caps
+  ls .18em, `.t-link` 12px caps with bottom border.
+- Spacing system (Tony's margin rule): every section owns its gaps —
+  `mt-24 md:mt-[140px]` between sections, and a coloured band never sits
+  flush against content; the white gap comes BEFORE the band, identical
+  whatever the colours. Interior page heros are 640px (`Hero`), home is
+  100svh.
+- Nav: Weddings · Events · Our Story · Gallery + Enquire button; drawer
+  carries the extended set (`drawerNav`). "Wedding packages" everywhere —
+  never "wedding investment".
+- Reusable modules: `LatestWork` (3 cards → /work/ pre-filtered),
+  `TestimonialSlider` (real Google reviews from content/reviews.ts, 5.0/14),
+  `ProcessSteps`, `CtaBand`, `WorkGrid` (filters + load more),
+  `GalleryLightbox` (filters + full-screen flick-through), `EnquiryForm`
+  (field sets copied from the live Shopify forms: 15-item floral
+  requirements checklist etc.; contact page adds the type selector).
+- New routes: /gallery/, /work/, /venues/ + /venues/<slug>/ (data in
+  content/venues.ts — facts researched from venue sites, photos are W&P's
+  own work at each venue). Journal posts render as story pages (details
+  rail, credits band, keep-reading, category-flavoured CTA).
 - Never redesign the logo (public/brand/ PNGs are the originals — keep as is).
+- Reviews: content/reviews.ts holds the 14 Google reviews verbatim + the
+  profile URL. Update by re-reading the Google Business Profile.
 
 ## Constraints
 

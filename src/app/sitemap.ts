@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { getPosts } from "@/lib/journal";
 import { site } from "../../content/site";
+import { venues } from "../../content/venues";
 
 export const dynamic = "force-static";
 
@@ -11,6 +12,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/wedding-flowers-auckland/", priority: 0.9, changeFrequency: "monthly" },
     { path: "/wedding-flower-packages/", priority: 0.9, changeFrequency: "monthly" },
     { path: "/event-flowers-auckland/", priority: 0.9, changeFrequency: "monthly" },
+    { path: "/gallery/", priority: 0.8, changeFrequency: "weekly" },
+    { path: "/work/", priority: 0.8, changeFrequency: "weekly" },
+    { path: "/venues/", priority: 0.8, changeFrequency: "monthly" },
     { path: "/journal/", priority: 0.8, changeFrequency: "weekly" },
     { path: "/journal/weddings/", priority: 0.7, changeFrequency: "weekly" },
     { path: "/journal/events/", priority: 0.7, changeFrequency: "weekly" },
@@ -30,6 +34,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: now,
       changeFrequency: p.changeFrequency,
       priority: p.priority,
+    })),
+    ...venues.map((v) => ({
+      url: `${site.domain}/venues/${v.slug}/`,
+      lastModified: now,
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
     })),
     ...getPosts().map((post) => ({
       url: `${site.domain}/journal/${post.slug}/`,
