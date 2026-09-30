@@ -9,6 +9,11 @@
   // Handles POST /api/enquiry (form → email) and Next's `$` nav-data paths;
   // everything else is served straight from static assets.
   "main": "./worker/index.js",
+  // staging.willowandpeony.co.nz serves the production deployment (the
+  // Worker stamps it X-Robots-Tag: noindex). wrangler registers the DNS
+  // record + certificate on deploy. The *.staging wildcard stays reserved
+  // for per-branch preview aliases via the dashboard's Preview domain.
+  "routes": [{ "pattern": "staging.willowandpeony.co.nz", "custom_domain": true }],
   "assets": {
     "directory": "./out",
     "binding": "ASSETS",
