@@ -70,7 +70,7 @@ export default function WeddingsPage() {
       {/* Split section, as on the original: auto-cycling slideshow left
           (720×922), left-aligned 520px text column right, vertically centred */}
       <section className="mt-[88px] flex flex-col md:flex-row">
-        <div className="w-full md:w-1/2">
+        <div className="w-full px-5 md:w-1/2 md:px-0">
           <Slideshow images={gallery} />
         </div>
         <div className="flex w-full items-center justify-center px-5 py-14 sm:px-6 md:w-1/2 md:py-8">

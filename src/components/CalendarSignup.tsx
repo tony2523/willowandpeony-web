@@ -51,7 +51,7 @@ export default function CalendarSignup() {
   }
 
   return (
-    <form onSubmit={onSubmit} className="mx-auto mt-8 flex max-w-md flex-col gap-3 sm:flex-row">
+    <form onSubmit={onSubmit} className="flex flex-col gap-2.5">
       <label htmlFor="cal-email" className="sr-only">
         Email address
       </label>
@@ -62,12 +62,12 @@ export default function CalendarSignup() {
         required
         placeholder="Your email address"
         autoComplete="email"
-        className="w-full flex-1 border border-hairline bg-white px-4 py-3 text-sm text-ink placeholder:text-muted/70 focus:border-rose focus:outline-none"
+        className="input-wp"
       />
       <button
         type="submit"
         disabled={sending}
-        className="bg-ink px-7 py-3 text-[0.78rem] tracking-[0.16em] uppercase text-ivory transition-opacity hover:opacity-90 disabled:opacity-50"
+        className="btn-wp disabled:opacity-50"
       >
         {sending ? "One moment…" : "Get the calendar"}
       </button>

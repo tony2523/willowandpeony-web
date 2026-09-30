@@ -28,10 +28,10 @@ export default function DeliveryPage() {
           ]),
         ]}
       />
-      {/* Plain prose page, as on the original delivery-information page */}
-      <section className="mx-auto max-w-[608px] px-5 pt-14 sm:px-6">
-        <h1 className="h-page text-ink">Delivery Information</h1>
-        <div className="mt-6 space-y-4 text-[15px] leading-[1.4] text-ink">
+      {/* Full-width page template, as on the original (21.6px left title) */}
+      <section className="px-5 pt-12 sm:px-6">
+        <h1 className="h-card text-ink">Delivery Information</h1>
+        <div className="mt-6 max-w-[820px] space-y-4 text-[15px] leading-[1.4] text-ink">
           <p>
             At Willow &amp; Peony, we offer <strong className="font-normal">same-day flower delivery</strong>{" "}
             across Auckland on selected arrangements,{" "}

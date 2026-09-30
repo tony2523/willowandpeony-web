@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Eyebrow from "@/components/Eyebrow";
 import { pageMetadata } from "@/lib/seo";
 import { site } from "../../../content/site";
 
@@ -35,23 +34,24 @@ const sections = [
 
 export default function RefundPage() {
   return (
-    <section className="mx-auto max-w-3xl px-4 pt-16 sm:px-6">
-      <Eyebrow>Policies</Eyebrow>
-      <h1 className="mt-3 font-serif text-4xl text-ink">Refund policy</h1>
-      <div className="mt-10 space-y-8">
+    <section className="px-5 pt-12 sm:px-6">
+      <h1 className="h-card text-ink">Refund Policy</h1>
+      <div className="mt-6 max-w-[820px] space-y-6">
         {sections.map((s) => (
           <div key={s.h}>
-            <h2 className="font-serif text-xl text-ink">{s.h}</h2>
-            <p className="mt-2.5 leading-relaxed text-ink-soft">{s.p}</p>
+            <p className="text-[15px] text-ink">
+              <strong className="font-normal">{s.h}</strong>
+            </p>
+            <p className="mt-1 text-[15px] leading-[1.4] text-ink">{s.p}</p>
           </div>
         ))}
-        <p className="border-t border-hairline pt-6 text-sm text-muted">
+        <p className="border-t border-hairline pt-6 text-[13px] text-ink-soft">
           Questions about an order? Email{" "}
-          <a href={`mailto:${site.email}`} className="text-rose-deep underline underline-offset-2">
+          <a href={`mailto:${site.email}`} className="underline underline-offset-2">
             {site.email}
           </a>{" "}
           or call{" "}
-          <a href={`tel:${site.phone.replace(/\s/g, "")}`} className="text-rose-deep underline underline-offset-2">
+          <a href={`tel:${site.phone.replace(/\s/g, "")}`} className="underline underline-offset-2">
             {site.phoneDisplay}
           </a>
           .

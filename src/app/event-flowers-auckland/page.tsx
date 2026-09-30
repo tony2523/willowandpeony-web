@@ -75,8 +75,8 @@ export default function EventsPage() {
       {/* Split section, as on the original: auto-cycling slideshow left,
           left-aligned text column right */}
       <section className="mt-[88px] flex flex-col md:flex-row">
-        <div className="w-full md:w-1/2">
-          <Slideshow images={gallery} />
+        <div className="w-full px-5 md:w-1/2 md:px-0">
+          <Slideshow images={gallery} aspect="720/900" />
         </div>
         <div className="flex w-full items-center justify-center px-5 py-14 sm:px-6 md:w-1/2 md:py-8">
           <div className="w-full max-w-[520px]">

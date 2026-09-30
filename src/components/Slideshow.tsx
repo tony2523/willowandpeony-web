@@ -12,9 +12,11 @@ import Pic from "./Pic";
 export default function Slideshow({
   images,
   interval = 4000,
+  aspect = "720/922",
 }: {
   images: { name: string; alt: string }[];
   interval?: number;
+  aspect?: string;
 }) {
   const [index, setIndex] = useState(0);
 
@@ -27,7 +29,7 @@ export default function Slideshow({
   const next = (index + 1) % images.length;
 
   return (
-    <div className="relative w-full overflow-hidden" style={{ aspectRatio: "720/922" }}>
+    <div className="relative w-full overflow-hidden" style={{ aspectRatio: aspect }}>
       {images.map((img, idx) => {
         if (idx !== index && idx !== next) return null;
         return (
