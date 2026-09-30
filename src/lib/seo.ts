@@ -18,7 +18,7 @@ export function pageMetadata({
   title,
   description,
   path,
-  ogImage = "wedding-flowers-auckland-2c760fef1a83095d5abd94ee51e4041a",
+  ogImage = "auckland-bridal-party-blush-bouquets-hero",
   noindex = false,
   type = "website",
   publishedTime,
@@ -63,7 +63,7 @@ export function floristJsonLd() {
     telephone: site.phone,
     founder: { "@type": "Person", name: site.founder },
     sameAs: [site.instagram],
-    image: imageOgUrl("wedding-flowers-auckland-2c760fef1a83095d5abd94ee51e4041a", site.domain),
+    image: imageOgUrl("auckland-bridal-party-blush-bouquets-hero", site.domain),
     priceRange: "$$-$$$",
     address: {
       "@type": "PostalAddress",

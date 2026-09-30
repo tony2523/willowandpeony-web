@@ -62,6 +62,7 @@ export default function EventsPage() {
 
       <Hero
         image="event-flowers-auckland-uca-17"
+        position="object-[45%_center] md:object-center"
         alt="Large sculptural floral installation at a corporate event in Auckland"
         eyebrow="Corporate & event florals · Auckland"
         title={

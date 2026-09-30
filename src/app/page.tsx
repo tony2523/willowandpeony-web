@@ -49,11 +49,11 @@ export default function HomePage() {
       {/* Hero — full-viewport image, transparent header floats over it */}
       <section className="relative h-svh w-full overflow-hidden">
         <Pic
-          name="wedding-flowers-auckland-2c760fef1a83095d5abd94ee51e4041a"
-          alt="Bridesmaids holding blush and ivory bouquets by Willow & Peony, Auckland"
+          name="auckland-bridal-party-blush-bouquets-hero"
+          alt="Bridal party holding blush and ivory bouquets by Willow & Peony, Auckland"
           sizes="100vw"
           priority
-          className="absolute inset-0 h-full w-full object-cover"
+          className="absolute inset-0 h-full w-full object-cover object-[50%_62%] md:object-center"
         />
         <div
           aria-hidden
@@ -261,8 +261,8 @@ export default function HomePage() {
         <InstagramFeed />
       </div>
 
-      {/* CTA band */}
-      <section className="mt-24 border-t border-hairline bg-paper md:mt-[140px]">
+      {/* CTA band — flush against the Instagram strip (two full-bleeds read as one) */}
+      <section className="border-t border-hairline bg-paper">
         <div className="mx-auto flex max-w-[900px] flex-col items-center px-5 py-16 text-center sm:py-20">
           <p className="eyebrow text-muted">Now booking 2026 and 2027 weddings</p>
           <h2 className="display-3 mt-4 text-ink">

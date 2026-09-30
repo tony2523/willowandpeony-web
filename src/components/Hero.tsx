@@ -15,6 +15,7 @@ export default function Hero({
   cta,
   secondaryCta,
   compact = false,
+  position = "object-center",
 }: {
   image: string;
   alt?: string;
@@ -24,6 +25,9 @@ export default function Hero({
   cta?: { label: string; href: string };
   secondaryCta?: { label: string; href: string };
   compact?: boolean;
+  /** Per-image object-position for portrait crops (see memory: analyze
+   *  the composition; e.g. "object-[45%_center] md:object-center"). */
+  position?: string;
 }) {
   const entry = getImage(image);
   return (
@@ -37,7 +41,7 @@ export default function Hero({
           height={entry.h}
           alt={alt}
           fetchPriority="high"
-          className="absolute inset-0 h-full w-full object-cover"
+          className={`absolute inset-0 h-full w-full object-cover ${position}`}
         />
       )}
       <div
