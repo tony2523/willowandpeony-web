@@ -81,6 +81,9 @@ fs.writeFileSync(
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
   X-Frame-Options: SAMEORIGIN
+
+https://*.workers.dev/*
+  X-Robots-Tag: noindex
 `,
 );
 

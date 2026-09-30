@@ -14,19 +14,21 @@ from the original Shopify store in September 2026.
 Repo: `tony2523/willowandpeony-web`. TWO deploy targets run from every push
 during the transition (2026-09-30):
 
-- **Cloudflare Pages (the keeper)** — `.github/workflows/deploy-cloudflare.yml`
-  deploys to project `willowandpeony` (preview: https://willowandpeony.pages.dev,
-  auto-noindexed by Cloudflare). Account: Tony's t@tonyhou.com Cloudflare
-  account, id in repo variable `CLOUDFLARE_ACCOUNT_ID`
-  (c4a3b32fddc9a1621a097c0c1a61f810). Auth: repo secret `CLOUDFLARE_API_TOKEN`
-  (Account → Cloudflare Pages → Edit). The workflow skips politely if the
-  secret is missing. Real 301s come from the generated `_redirects`; caching
-  and security headers from `_headers` (both written by scripts/postbuild.mjs).
+- **Cloudflare Workers static assets (the keeper)** — same pattern as
+  moustacherepublic-web: **Workers Builds** is connected to the GitHub repo in
+  the Cloudflare dashboard (Tony's t@tonyhou.com account, id
+  c4a3b32fddc9a1621a097c0c1a61f810), so Cloudflare itself builds and deploys
+  on every push to main. Worker name `willowandpeony`; config `wrangler.jsonc`
+  (assets from `out/`, `worker/index.js` only rewrites Next's `$` nav-data
+  paths); build command `npm run build`, deploy command `npx wrangler deploy`,
+  build variable `NODE_VERSION=22`. No API token or GitHub secret involved.
+  Real 301s come from the generated `_redirects`; caching + security headers
+  from `_headers` (both written by scripts/postbuild.mjs; workers.dev hosts
+  get X-Robots-Tag noindex).
 - **GitHub Pages (legacy, retire after Cloudflare is confirmed)** —
   `.github/workflows/deploy.yml`, preview under tonyhou.com/willowandpeony-web/
   via repo vars `PAGES_BASE_PATH` / `DEPLOY_CNAME`. When retiring: delete that
-  workflow, disable Pages in repo settings, then the repo can go PRIVATE
-  (Cloudflare deploys fine from a private repo).
+  workflow, disable Pages in repo settings, then the repo can go PRIVATE.
 
 **Image caching rule:** `_headers` gives `/images/*` a one-year immutable
 cache. Never re-use an image filename for a different photo — replacements get
@@ -36,8 +38,8 @@ a new descriptive name.
 1. Add `willowandpeony.co.nz` as a zone in the t@tonyhou.com Cloudflare
    account; update the nameservers at the registrar to the ones Cloudflare
    assigns (this moves DNS off Shopify).
-2. Workers & Pages → willowandpeony → Custom domains → add
-   `willowandpeony.co.nz` and `www.willowandpeony.co.nz`.
+2. Workers & Pages → willowandpeony → Settings → Domains & Routes → add
+   custom domains `willowandpeony.co.nz` and `www.willowandpeony.co.nz`.
 3. Verify the 52 legacy Shopify URLs 301 correctly on the live domain.
 4. Submit `https://willowandpeony.co.nz/sitemap.xml` in Google Search Console;
    set up Cloudflare Web Analytics.
