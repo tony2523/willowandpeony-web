@@ -166,9 +166,13 @@ const worker = {
     }
     if (url.pathname.includes("$")) url.pathname = url.pathname.replaceAll("$", "%24");
     const res = await env.ASSETS.fetch(new Request(url, request));
-    // The workers.dev preview host must never be indexed (the custom domain
-    // is the only canonical host). Belt-and-braces alongside _headers.
-    if (url.hostname.endsWith(".workers.dev")) {
+    // Preview hosts must never be indexed (the custom domain is the only
+    // canonical host). Belt-and-braces alongside _headers.
+    if (
+      url.hostname.endsWith(".workers.dev") ||
+      url.hostname === "staging.willowandpeony.co.nz" ||
+      url.hostname.endsWith(".staging.willowandpeony.co.nz")
+    ) {
       const marked = new Response(res.body, res);
       marked.headers.set("X-Robots-Tag", "noindex, nofollow");
       return marked;

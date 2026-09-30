@@ -20,12 +20,18 @@
   },
   "vars": {
     "ENQUIRY_TO": "hello@willowandpeony.co.nz",
-    "ENQUIRY_FROM": "enquiries@willowandpeony.co.nz"
+    // From lives on the mail. subdomain: Email Routing is enabled ONLY for
+    // that subdomain, so the apex MX (Google Workspace — Ivy's real inbox)
+    // is never touched. Do not enable Email Routing on the apex domain.
+    "ENQUIRY_FROM": "enquiries@mail.willowandpeony.co.nz"
   },
-  // Free Cloudflare Email Routing sending: works once willowandpeony.co.nz
-  // is an active zone with Email Routing enabled and ENQUIRY_TO verified as
-  // a destination address (see CLAUDE.md go-live checklist). Until then the
-  // Worker returns 503 and the form falls back to a mail draft.
+  // Free Cloudflare Email Routing sending. Requires (dashboard, one-time):
+  //  1. Zone → Email Routing → Settings → Subdomains → add "mail"
+  //     (Cloudflare adds MX/SPF for mail.willowandpeony.co.nz only).
+  //  2. Destination addresses → add hello@willowandpeony.co.nz → Ivy clicks
+  //     the verification link (arrives in her Google mailbox).
+  // Until then the Worker returns an error and the form falls back to a
+  // pre-filled mail draft, so no enquiry is ever lost.
   "send_email": [
     {
       "name": "SEND_EMAIL",
