@@ -22,7 +22,7 @@ const FILTERS: { value: Filter; label: string }[] = [
   { value: "events", label: "Events" },
 ];
 
-const PAGE = 9;
+const PAGE = 6;
 
 /**
  * The unified Our Work grid: every story with All/Weddings/Events filters
@@ -77,7 +77,7 @@ export default function WorkGrid({
         ))}
       </div>
 
-      <div className="mt-10 grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-10 grid gap-x-6 gap-y-14 md:grid-cols-2">
         {visible.map((item) => (
           <article key={item.slug} className="group">
             <Link href={`/journal/${item.slug}/`} className="block">
@@ -85,16 +85,16 @@ export default function WorkGrid({
                 <img
                   src={item.src}
                   srcSet={item.srcSet}
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  sizes="(max-width: 768px) 100vw, 50vw"
                   width={item.w}
                   height={item.h}
                   alt={item.title}
                   loading="lazy"
                   decoding="async"
-                  className="aspect-[4/5] h-auto w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02]"
+                  className="aspect-[4/3] h-auto w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02]"
                 />
               </div>
-              <h3 className="h-card mt-4 text-ink group-hover:underline group-hover:underline-offset-4">
+              <h3 className="mt-4 font-serif text-[21px] leading-[1.3] font-light text-ink group-hover:underline group-hover:underline-offset-4 md:text-[23px]">
                 {item.title}
               </h3>
             </Link>

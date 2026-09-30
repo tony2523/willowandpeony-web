@@ -355,14 +355,13 @@ summary {
   text-align: center;
 }
 
-/* Header nav links: Chivo caps with animated underline. */
+/* Header nav links: Chivo sentence case with animated underline. */
 .nav-link {
   position: relative;
   font-family: var(--font-sans);
   font-weight: 400;
-  font-size: 12px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  font-size: 13.5px;
+  letter-spacing: 0.02em;
   line-height: 1.4;
   padding: 20px 0;
 }

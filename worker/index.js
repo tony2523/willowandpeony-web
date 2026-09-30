@@ -165,7 +165,15 @@ const worker = {
       return new Response("Method not allowed", { status: 405 });
     }
     if (url.pathname.includes("$")) url.pathname = url.pathname.replaceAll("$", "%24");
-    return env.ASSETS.fetch(new Request(url, request));
+    const res = await env.ASSETS.fetch(new Request(url, request));
+    // The workers.dev preview host must never be indexed (the custom domain
+    // is the only canonical host). Belt-and-braces alongside _headers.
+    if (url.hostname.endsWith(".workers.dev")) {
+      const marked = new Response(res.body, res);
+      marked.headers.set("X-Robots-Tag", "noindex, nofollow");
+      return marked;
+    }
+    return res;
   },
 };
 

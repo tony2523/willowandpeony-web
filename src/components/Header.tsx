@@ -114,7 +114,7 @@ export default function Header() {
         <div className="flex items-center justify-end">
           <Link
             href="/contact/"
-            className={`hidden border px-5 py-2.5 text-[11px] tracking-[0.14em] uppercase transition-colors md:inline-block ${
+            className={`hidden border px-5 py-2.5 text-[13px] tracking-[0.02em] transition-colors md:inline-block ${
               transparent
                 ? "border-white/85 text-white group-hover:border-ink group-hover:text-ink hover:bg-white hover:text-ink"
                 : "border-ink text-ink hover:bg-ink hover:text-white"
