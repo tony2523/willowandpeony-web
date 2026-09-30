@@ -113,7 +113,7 @@ export default function MobileNav({ light = false }: { light?: boolean }) {
               key={item.href}
               href={item.href}
               onClick={() => setOpen(false)}
-              className="block border-b border-hairline py-4 font-serif text-xl text-ink transition-colors hover:text-rose-deep"
+              className="block border-b border-hairline py-4 font-serif text-[16.8px] tracking-[-0.02em] text-ink"
             >
               {item.label}
             </Link>

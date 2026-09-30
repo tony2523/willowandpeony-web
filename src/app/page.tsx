@@ -50,7 +50,7 @@ export default function HomePage() {
       </section>
 
       {/* Intro — heading col 640px, paragraphs 580px (measured) */}
-      <section className="mx-auto mt-[88px] max-w-[640px] px-5 text-center sm:px-6">
+      <section className="mx-auto mt-[96px] max-w-[640px] px-5 text-center sm:px-6">
         <h1 className="h-page text-ink">Artful Florals for Beautifully Considered Events</h1>
         <div className="mx-auto max-w-[580px]">
           <p className="mt-6 text-[15px] leading-[1.4] text-ink">
@@ -67,7 +67,7 @@ export default function HomePage() {
       </section>
 
       {/* Services — 3 columns, 20px gap, labels 12.6px grey (measured) */}
-      <section className="mt-[88px] px-5 sm:px-6" aria-labelledby="services-heading">
+      <section className="mt-[103px] px-5 sm:px-6" aria-labelledby="services-heading">
         <h2 id="services-heading" className="sr-only">
           What we do
         </h2>
@@ -83,24 +83,16 @@ export default function HomePage() {
                   className="h-auto w-full transition-transform duration-700 ease-out group-hover:scale-[1.02]"
                 />
               </div>
-              <p className="label mt-3 text-ink-soft group-hover:underline">{s.label}</p>
+              <p className="label mt-4 text-ink-soft group-hover:underline">{s.label}</p>
             </Link>
           ))}
         </div>
       </section>
 
-      {/* Founder — small image (292px) beside a 560px text column (measured) */}
-      <section className="mx-auto mt-[88px] px-5 sm:px-6">
-        <div className="mx-auto flex max-w-[920px] flex-col items-center gap-10 md:flex-row md:gap-16">
-          <div className="w-full max-w-[292px] shrink-0">
-            <Pic
-              name="willow-and-peony-bouquet-ivy-willow-peony-copy-a677a82d-5fc6-4fcd-b72d-c0884402c2e5"
-              alt="Ivy, founder and lead florist of Willow & Peony, holding a bouquet"
-              sizes="292px"
-              className="h-auto w-full"
-            />
-          </div>
-          <div className="max-w-[560px]">
+      {/* Founder — 560px text LEFT, 321×418 image RIGHT (measured) */}
+      <section className="mx-auto mt-[202px] px-5 sm:px-6">
+        <div className="mx-auto flex max-w-[890px] flex-col-reverse items-center gap-10 md:flex-row md:gap-[9px]">
+          <div className="w-full md:max-w-[560px]">
             <h2 className="h-page text-ink">MEET OUR FOUNDER: IVY</h2>
             <div className="mt-5 space-y-4 text-[15px] leading-[1.4] text-ink-soft">
               <p>
@@ -118,11 +110,20 @@ export default function HomePage() {
               </p>
             </div>
           </div>
+          <div className="w-full max-w-[321px] shrink-0">
+            <Pic
+              name="willow-and-peony-bouquet-ivy-willow-peony-copy-a677a82d-5fc6-4fcd-b72d-c0884402c2e5"
+              alt="Ivy, founder and lead florist of Willow & Peony, holding a bouquet"
+              sizes="321px"
+              aspect="321/418"
+              className="h-auto w-full"
+            />
+          </div>
         </div>
       </section>
 
       {/* Latest work — 4 square cards, 24px gap (measured) */}
-      <section className="mt-[88px] px-5 sm:px-6" aria-labelledby="latest-heading">
+      <section className="mt-[106px] px-5 sm:px-6" aria-labelledby="latest-heading">
         <div className="flex items-end justify-between">
           <h2 id="latest-heading" className="h-page text-ink">
             Our Latest Work
@@ -131,7 +132,7 @@ export default function HomePage() {
             Go to blogs
           </Link>
         </div>
-        <div className="mt-8 grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-6 grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
           {latest.map((post) => (
             <PostCard key={post.slug} post={post} />
           ))}

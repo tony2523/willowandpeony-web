@@ -25,9 +25,9 @@ export default function PostCard({ post, priority = false }: { post: Post; prior
             className="h-auto w-full transition-transform duration-700 ease-out group-hover:scale-[1.02]"
           />
         </div>
-        <h3 className="h-card mt-4 text-ink group-hover:underline">{post.title}</h3>
+        <h3 className="h-card mt-[19px] text-ink group-hover:underline">{post.title}</h3>
       </Link>
-      <p className="mt-1.5 text-[15px] text-ink-soft">
+      <p className="mt-[11px] text-[15px] text-ink-soft">
         <time dateTime={post.date}>{nice}</time> <span className="ml-2">{site.founder}</span>
       </p>
     </article>

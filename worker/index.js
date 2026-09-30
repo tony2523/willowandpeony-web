@@ -106,11 +106,57 @@ async function handleEnquiry(request, env) {
   return json({ ok: true });
 }
 
+// Live Instagram feed for the home page grid. Requires the INSTAGRAM_TOKEN
+// secret (long-lived "Instagram API with Instagram Login" token — see
+// CLAUDE.md). Cached at the edge for 6 hours; returns an empty list until
+// the token is configured, and the page falls back to its curated tiles.
+async function handleInstagram(request, env, ctx) {
+  const headers = {
+    "Content-Type": "application/json",
+    "Cache-Control": "public, max-age=21600",
+  };
+  if (!env.INSTAGRAM_TOKEN) {
+    return new Response(JSON.stringify({ items: [] }), {
+      headers: { ...headers, "Cache-Control": "public, max-age=300" },
+    });
+  }
+  const cacheKey = new Request("https://willowandpeony.co.nz/__cache/instagram-feed");
+  const cache = caches.default;
+  const hit = await cache.match(cacheKey);
+  if (hit) return hit;
+  try {
+    const r = await fetch(
+      `https://graph.instagram.com/me/media?fields=id,caption,media_type,media_url,thumbnail_url,permalink&limit=18&access_token=${env.INSTAGRAM_TOKEN}`,
+    );
+    const data = await r.json();
+    const items = (data.data || [])
+      .map((m) => ({
+        id: m.id,
+        src: m.media_type === "VIDEO" ? m.thumbnail_url : m.media_url,
+        permalink: m.permalink,
+        caption: (m.caption || "").slice(0, 300),
+      }))
+      .filter((m) => m.src)
+      .slice(0, 12);
+    const res = new Response(JSON.stringify({ items }), { headers });
+    ctx.waitUntil(cache.put(cacheKey, res.clone()));
+    return res;
+  } catch {
+    return new Response(JSON.stringify({ items: [] }), {
+      headers: { ...headers, "Cache-Control": "public, max-age=600" },
+    });
+  }
+}
+
 const worker = {
-  async fetch(request, env) {
+  async fetch(request, env, ctx) {
     const url = new URL(request.url);
     if (url.pathname === "/api/enquiry") {
       if (request.method === "POST") return handleEnquiry(request, env);
+      return new Response("Method not allowed", { status: 405 });
+    }
+    if (url.pathname === "/api/instagram") {
+      if (request.method === "GET") return handleInstagram(request, env, ctx);
       return new Response("Method not allowed", { status: 405 });
     }
     if (url.pathname.includes("$")) url.pathname = url.pathname.replaceAll("$", "%24");
