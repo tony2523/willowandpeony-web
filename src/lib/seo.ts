@@ -62,6 +62,7 @@ export function floristJsonLd() {
     email: site.email,
     telephone: site.phone,
     founder: { "@type": "Person", name: site.founder },
+    sameAs: [site.instagram],
     image: imageOgUrl("wedding-flowers-auckland-2c760fef1a83095d5abd94ee51e4041a", site.domain),
     priceRange: "$$-$$$",
     address: {

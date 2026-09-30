@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import PageHero from "@/components/PageHero";
-import Gallery from "@/components/Gallery";
+import Slideshow from "@/components/Slideshow";
 import PostCard from "@/components/PostCard";
 import EnquiryForm from "@/components/EnquiryForm";
 import JsonLd from "@/components/JsonLd";
@@ -72,11 +72,14 @@ export default function EventsPage() {
         title="Event Florals"
       />
 
-      <div className="mt-[2px]">
-        <Gallery images={gallery} perView={2} />
-      </div>
-
-      <section className="mx-auto mt-[88px] max-w-[640px] px-5 sm:px-6">
+      {/* Split section, as on the original: auto-cycling slideshow left,
+          left-aligned text column right */}
+      <section className="mt-[88px] flex flex-col md:flex-row">
+        <div className="w-full md:w-1/2">
+          <Slideshow images={gallery} />
+        </div>
+        <div className="flex w-full items-center justify-center px-5 py-14 sm:px-6 md:w-1/2 md:py-8">
+          <div className="w-full max-w-[520px]">
         <h2 className="h-page text-ink">Impactful Events Floral Styling</h2>
         <p className="h-card mt-2 text-ink-soft">Intentional. Artful. Memorable.</p>
         <div className="mt-6 space-y-4 text-[15px] leading-[1.4] text-ink">
@@ -114,6 +117,8 @@ export default function EventsPage() {
           here. Every event is different, and we take the time to understand your needs and
           aesthetic, crafting florals that feel just right for the moment.
         </p>
+          </div>
+        </div>
       </section>
 
       <section className="mt-[88px] px-5 sm:px-6">

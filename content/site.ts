@@ -23,6 +23,8 @@ export const site = {
   // Klaviyo account (newsletter / calendar list) — company id from the
   // original store, kept so signups continue flowing to the same account.
   klaviyoCompanyId: "UDXJCc",
+  instagram: "https://www.instagram.com/willowandpeony.nz",
+  instagramHandle: "willowandpeony.nz",
   // Site-wide announcement bar. Empty string hides it. Update each season.
   announcement: "",
 } as const;

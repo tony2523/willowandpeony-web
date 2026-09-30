@@ -4,6 +4,7 @@ import Pic from "@/components/Pic";
 import PostCard from "@/components/PostCard";
 import { pageMetadata } from "@/lib/seo";
 import { getPostsByCategory } from "@/lib/journal";
+import InstagramFeed from "@/components/InstagramFeed";
 
 export const metadata: Metadata = pageMetadata({
   title: "Wedding & Event Florist Auckland | Willow & Peony",
@@ -136,6 +137,8 @@ export default function HomePage() {
           ))}
         </div>
       </section>
+
+      <InstagramFeed />
     </>
   );
 }
