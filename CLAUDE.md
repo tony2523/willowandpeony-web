@@ -59,9 +59,12 @@ a new descriptive name.
   (names/prices/inclusions), FAQs, delivery info. FAQs here are also emitted
   as FAQPage structured data and into llms.txt automatically.
 - `content/journal/*.md` — one file per journal post (real weddings/events).
-  Frontmatter: `title`, `description` (meta description), `date`
+  Frontmatter: `title`, `description` (meta description, ≤155 chars), `date`
   (YYYY-MM-DD), `category` (`weddings` | `events`), `venue`, `cover` (image
-  name from the manifest, no extension). Body is markdown; images are
+  name from the manifest, no extension), optional `seoTitle` (search title
+  when the display title is over ~43 chars). Journal articles in
+  `content/blog/` also take `seoDescription` (their `description` shows on
+  the /journal/ listing). Plain `&` in frontmatter, never `&amp;`. Body is markdown; images are
   `![alt](/images/<image-name>)` — alt text doubles as SEO, write it well.
 - `content/redirects.json` — legacy URL → new URL map. Post-build script
   writes a meta-refresh stub for every entry.
@@ -85,8 +88,10 @@ a new descriptive name.
 - URLs: keyword-rich, always trailing slash. Never rename an existing URL
   without adding the old one to `content/redirects.json`.
 - Every page defines metadata via `pageMetadata()` (`src/lib/seo.ts`) —
-  title ≤ 60 chars, description ~150 chars, canonical on the production
-  domain.
+  title ≤ 60 chars (the ` | Willow & Peony` suffix is dropped automatically
+  when it would overflow), description 110–155 chars, canonical on the
+  production domain. Venue guides read `metaDescription` from
+  content/venues.ts.
 - JSON-LD: Florist + WebSite ship site-wide from the layout; Service/Offer on
   service pages; Article on posts; FAQPage on /faq/; BreadcrumbList on inner
   pages. Builders live in `src/lib/seo.ts`.
@@ -94,6 +99,10 @@ a new descriptive name.
   keep `content/site.ts` facts accurate and it stays accurate.
 - Images: always through the `Pic` component or markdown (posts) so width/
   height/srcset/lazy-loading are emitted. LCP/hero images set `priority`.
+  Variants: 480/768/960/1200/1600w WebP (768 and 1200 fit 2x/3x phones).
+  `npm run images` only encodes missing variants and keeps hand-made extras
+  (home hero 1800w/2400w). Card thumbnails inside a titled link use
+  `alt=""` (the title names the link); story pages carry the real alt.
 
 
 ## Design contract — editorial redesign (BUILT, 2026-10-01)
@@ -103,7 +112,8 @@ The approved editorial redesign from the Design canvas
 mobile set) is now the LIVE design. The old pixel-copy-of-Shopify contract
 is retired. The system:
 
-- Palette (globals.css tokens): ink #1a1815 · soft #57524b · muted #8a847b ·
+- Palette (globals.css tokens): ink #1a1815 · soft #57524b · muted #756f66
+  (darkened from #8a847b for WCAG AA on white and paper — don't lighten) ·
   hairline #e6e2da · paper #f7f5f0 · white. CTA bands are always warm paper,
   never black. Buttons: `.btn-solid` (ink), `.btn-white` / `.btn-ghost-white`
   on photos, `.btn-outline` for load-more.
@@ -115,8 +125,10 @@ is retired. The system:
   flush against content; the white gap comes BEFORE the band, identical
   whatever the colours. Interior page heros are 640px (`Hero`), home is
   100svh.
-- Nav: Weddings · Events · Our Story · Gallery + Enquire button; drawer
-  carries the extended set (`drawerNav`). "Wedding packages" everywhere —
+- Nav: Weddings · Events · Our Story · Gallery + Enquire button from 1024px
+  (`lg`); below that the burger drawer (four links wrap at tablet widths).
+  Drawer carries the extended set (`drawerNav`), is `inert` and shadowless
+  when closed (it's portalled to <body>). "Wedding packages" everywhere —
   never "wedding investment".
 - Reusable modules: `LatestWork` (3 cards → /work/ pre-filtered),
   `TestimonialSlider` (real Google reviews from content/reviews.ts, 5.0/14),
