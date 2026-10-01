@@ -58,7 +58,24 @@ if (CNAME) fs.writeFileSync(path.join(OUT, "CNAME"), CNAME + "\n");
 const redirectLines = Object.entries(redirects)
   .map(([from, to]) => `${from} ${to} 301\n${from}/ ${to} 301`)
   .join("\n");
-fs.writeFileSync(path.join(OUT, "_redirects"), redirectLines + "\n");
+// Catch-alls for old Shopify URLs not in redirects.json (deleted products,
+// unseen collections/posts, system pages). Cloudflare applies the first
+// matching rule, so these must come after the exact redirects above.
+const catchAll = [
+  "/agents.md /llms.txt 301",
+  "/policies/contact-information /contact/ 301",
+  "/products/* / 301",
+  "/collections/* / 301",
+  "/blogs/weddings-events/* /work/ 301",
+  "/blogs/events/* /work/ 301",
+  "/blogs/news/* /journal/ 301",
+  "/pages/* / 301",
+  "/policies/* / 301",
+  "/cart / 301",
+  "/account/* / 301",
+  "/search / 301",
+].join("\n");
+fs.writeFileSync(path.join(OUT, "_redirects"), redirectLines + "\n" + catchAll + "\n");
 
 // Cloudflare Pages: long-lived caching for assets + baseline security headers.
 // NOTE: /images/ files are cached for a year — never re-use a filename for a
