@@ -22,7 +22,7 @@ const FILTERS: { value: Filter; label: string }[] = [
   { value: "events", label: "Events" },
 ];
 
-const PAGE = 6;
+const PAGE = 24;
 
 /**
  * The unified Our Work grid: every story with All/Weddings/Events filters

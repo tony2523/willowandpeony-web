@@ -397,6 +397,22 @@ summary {
   scroll-snap-align: start;
 }
 
+/* Space above the footer. A page that ends with a full-width coloured band
+   (e.g. the paper CTA band) runs straight into the footer instead (Tony,
+   2026-10-01): a white gap there reads as unfinished. */
+.site-main {
+  padding-bottom: 6rem;
+}
+@media (min-width: 640px) {
+  .site-main {
+    padding-bottom: 8rem;
+  }
+}
+.site-main:has(> .bg-paper:last-child),
+.site-main:has(> :last-child > .bg-paper:last-child) {
+  padding-bottom: 0;
+}
+
 /* Fade-in for sliders/lightboxes (used via animate-[fadein_…]) */
 @keyframes fadein {
   from {

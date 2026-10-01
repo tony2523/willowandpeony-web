@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { site } from "../../content/site";
 import { withBase } from "@/lib/images";
-import NewsletterForm from "./NewsletterForm";
 
 /** Editorial four-column footer, per the design system boards. */
 const cols = [
@@ -39,7 +38,7 @@ const cols = [
 
 export default function Footer() {
   return (
-    <footer className="mt-24 border-t border-hairline bg-white sm:mt-32">
+    <footer className="border-t border-hairline bg-white">
       <div className="mx-auto grid max-w-[1280px] gap-12 px-5 pt-16 pb-4 sm:px-6 md:grid-cols-[1.5fr_1fr_1fr_1fr] lg:gap-14">
         <div>
           <img
@@ -62,10 +61,6 @@ export default function Footer() {
               {site.phoneDisplay}
             </a>
           </p>
-          <div className="mt-7 max-w-[300px]">
-            <p className="eyebrow text-muted">Newsletter</p>
-            <NewsletterForm />
-          </div>
         </div>
         {cols.map((col) => (
           <nav key={col.heading} aria-label={col.heading}>
