@@ -51,11 +51,10 @@ Set on another transparent plinth, the installation appeared to float beside the
 
 ![Sculptural Event Flowers for Unified Commerce Assembly 2026 — florals by Willow & Peony](/images/unified-commerce-assembly-2026-event-flo-uca-2026-by-annupam-1)
 
-##
 
 ![Sculptural Event Flowers for Unified Commerce Assembly 2026 — florals by Willow & Peony](/images/unified-commerce-assembly-2026-event-flo-uca-2026-by-annupam-3)
 
-One idea, expressed at two scales
+## One idea, expressed at two scales
 
 While the two arrangements served different purposes, they shared one cohesive visual language: acid green, crisp white and deep berry tones; sculptural flowers; fresh produce; and transparent display structures.
 
@@ -72,5 +71,3 @@ It was a pleasure to create these floral moments for Moustache Republic’s Unif
 ![Sculptural Event Flowers for Unified Commerce Assembly 2026 — florals by Willow & Peony](/images/unified-commerce-assembly-2026-event-flo-uca-2026-by-annupam-9)
 
 ![Sculptural Event Flowers for Unified Commerce Assembly 2026 — florals by Willow & Peony](/images/unified-commerce-assembly-2026-event-flo-uca-2026-by-annupam-7)
-
-## Planning flowers for a corporate event?

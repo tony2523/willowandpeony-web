@@ -39,7 +39,7 @@ export async function GET() {
     `- [Gallery](${site.domain}/gallery/): Portfolio of wedding and event florals`,
     `- [Our work](${site.domain}/work/): Every wedding and event story, filterable`,
     `- [Our story](${site.domain}/about/): About founder Ivy and the studio`,
-    `- [FAQ](${site.domain}/faq/): Booking, delivery, flower care`,
+    `- [FAQ](${site.domain}/faq/): Booking, pricing, setup and seasonal flowers`,
     `- [Contact](${site.domain}/contact/): Enquiry form, email, phone`,
     `- [Wedding flower calendar](${site.domain}/wedding-flower-calendar/): Free month-by-month NZ seasonal bloom guide (PDF)`,
     "",

@@ -20,33 +20,19 @@ Set in the refined ambience of The French Café, the floral design was thoughtfu
 ### Floral Styling with Layers of Intent
 
 At the heart of each table sat a lush centrepiece arrangement composed of:
--
-
-White lisianthus
--
-
-Cosmos
--
-
-Bishop’s flower
--
-
-Softly toned cream and lemon gerberas
+- White lisianthus
+- Cosmos
+- Bishop’s flower
+- Softly toned cream and lemon gerberas
 
 ![Shopify x Moustache Republic - E-commerce Leadership Dinner — florals by Willow & Peony](/images/shopify-leadership-dinner-event-flowers--dsc03584)
 
 This arrangement brought airy romance and modern refinement to the core of the table, serving as the visual anchor for the dinner experience.
 
 Flanking this centrepiece on both sides were Ikebana-style arrangements, designed to add sculptural interest and spatial rhythm without overwhelming the table’s functional elegance. These minimalist yet expressive compositions featured:
--
-
-Gerberas
--
-
-Japanese anemones
--
-
-Pom pom dahlias
+- Gerberas
+- Japanese anemones
+- Pom pom dahlias
 
 ![Shopify x Moustache Republic - E-commerce Leadership Dinner — florals by Willow & Peony](/images/shopify-leadership-dinner-event-flowers--dsc03511)
 

@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Pic from "@/components/Pic";
 import JsonLd from "@/components/JsonLd";
-import NewsletterForm from "@/components/NewsletterForm";
 import { pageMetadata, breadcrumbJsonLd } from "@/lib/seo";
 import { getArticles } from "@/lib/blog";
 import { site } from "../../../content/site";
@@ -133,21 +132,6 @@ export default function JournalPage() {
         </div>
       </section>
 
-      {/* Newsletter band */}
-      <section className="mt-24 border-t border-hairline bg-paper md:mt-[140px]">
-        <div className="mx-auto max-w-[560px] px-5 py-16 text-center sm:px-6 md:py-20">
-          <p className="eyebrow text-muted">Notes in your inbox</p>
-          <h2 className="display-3 mt-4 text-ink">
-            New journal entries, <em>as they bloom</em>
-          </h2>
-          <p className="mx-auto mt-4 max-w-[420px] text-[14px] leading-[1.7] text-ink-soft">
-            Seasonal guides and studio notes, a few times a year. No noise.
-          </p>
-          <div className="mx-auto mt-7 max-w-[380px] text-left">
-            <NewsletterForm />
-          </div>
-        </div>
-      </section>
     </>
   );
 }

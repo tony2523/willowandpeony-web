@@ -9,7 +9,7 @@ import { googleRating } from "../../../content/reviews";
 export const metadata: Metadata = pageMetadata({
   title: "Contact Us — Boutique Florist Auckland",
   description:
-    "Get in touch with Willow & Peony, boutique florist in Auckland. Wedding and event enquiries, custom floral orders and flower delivery questions — replies within 1–2 business days.",
+    "Get in touch with Willow & Peony, boutique wedding and event florist in Auckland. Tell us about your wedding or event and we'll reply within 1–2 business days.",
   path: "/contact/",
 });
 

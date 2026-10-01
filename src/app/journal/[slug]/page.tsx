@@ -3,7 +3,6 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Pic from "@/components/Pic";
 import JsonLd from "@/components/JsonLd";
-import NewsletterForm from "@/components/NewsletterForm";
 import { pageMetadata, breadcrumbJsonLd } from "@/lib/seo";
 import { imageOgUrl } from "@/lib/images";
 import { getArticle, getArticles } from "@/lib/blog";
@@ -161,18 +160,6 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
           </nav>
         )}
 
-        {/* Newsletter band */}
-        <section className="mt-24 border-t border-hairline bg-paper md:mt-[140px]">
-          <div className="mx-auto max-w-[560px] px-5 py-16 text-center sm:px-6 md:py-20">
-            <p className="eyebrow text-muted">Notes in your inbox</p>
-            <h2 className="display-3 mt-4 text-ink">
-              New journal entries, <em>as they bloom</em>
-            </h2>
-            <div className="mx-auto mt-7 max-w-[380px] text-left">
-              <NewsletterForm />
-            </div>
-          </div>
-        </section>
       </article>
     </>
   );

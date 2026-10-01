@@ -2,7 +2,7 @@ import redirectsJson from "./redirects.json";
 
 /**
  * Willow & Peony — single source of truth for business facts.
- * Edit this file to update contact details, packages, FAQs, delivery info.
+ * Edit this file to update contact details, packages and FAQs.
  * Every page reads from here, so changes propagate site-wide.
  */
 
@@ -20,9 +20,6 @@ export const site = {
   founder: "Ivy Diao",
   region: "Auckland",
   base: "North Shore, Auckland, New Zealand",
-  // Klaviyo account (newsletter / calendar list) — company id from the
-  // original store, kept so signups continue flowing to the same account.
-  klaviyoCompanyId: "UDXJCc",
   instagram: "https://www.instagram.com/willowandpeony.nz",
   instagramHandle: "willowandpeony.nz",
   // Site-wide announcement bar. Empty string hides it. Update each season.
@@ -168,28 +165,8 @@ export const faqs: Faq[] = [
     a: "Yes. We create custom floral arrangements tailored to your brief for any occasion. Email hello@willowandpeony.co.nz with what you have in mind and we will come back to you with options.",
   },
   {
-    q: "Where do you deliver, and on which days?",
-    a: "We deliver Monday to Saturday across Auckland — north to Hatfields Beach, south to Tuakau, west to Muriwai and east to Clevedon & Maraetai. We do not deliver on Sundays, with the exception of Mother's Day.",
-  },
-  {
     q: "Can I choose the colours of my flowers?",
     a: "We work with the freshest seasonal blooms, so we cannot guarantee specific flowers or exact colours as availability varies through the year. If you have a particular palette or flower in mind, tell us in advance and we will do our best to accommodate it.",
-  },
-  {
-    q: "How do I care for my bouquet?",
-    a: "Start with a clean vase, trim the stems at a 45-degree angle (under running water if possible), keep flowers away from ripening fruit, and place them in a cool spot out of direct sunlight, drafts and air conditioning. Change the water every two days. With care, your flowers should stay fresh for 4–7 days.",
-  },
-  {
-    q: "How do I care for flowers in a box or a floral cake?",
-    a: "Boxed arrangements and floral cakes are set in floral foam. Check the foam daily and slowly add water to keep it moist, keep the arrangement cool and out of direct sun, remove any wilted stems promptly, and avoid moving it around. Expect 3–7 days of freshness with proper care.",
-  },
-  {
-    q: "What if no one is home to accept a delivery?",
-    a: "Our courier will leave the arrangement in a safe location if no one is available. If a safe drop is not possible, or the address is incorrect, a re-delivery fee equal to the original delivery charge applies. We cannot take responsibility for flowers left in extreme weather.",
-  },
-  {
-    q: "Can I request a specific delivery time?",
-    a: "We cannot guarantee exact delivery times because our routes change daily, but deliveries are generally completed before 6pm. If timing is critical — for a venue or a surprise — get in touch and we will do our best.",
   },
 ];
 

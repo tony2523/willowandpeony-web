@@ -80,7 +80,7 @@ export function floristJsonLd() {
       "Bridal bouquets",
       "Event floral styling",
       "Corporate event flowers",
-      "Flower delivery Auckland",
+      "Wedding venue styling",
     ],
     openingHoursSpecification: [
       {

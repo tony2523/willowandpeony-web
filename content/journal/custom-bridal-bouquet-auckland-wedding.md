@@ -14,18 +14,10 @@ At Willow & Peony, I love creating bespoke bridal bouquets that reflect each bri
 ### Designing the Bride’s Dream Bouquet
 
 The process began with her reference photos, which captured soft peach tones, vibrant pinks, creamy whites, and touches of apricot. With her vision in mind, I curated a selection of premium blooms, including:
--
-
-**Premium roses** for timeless romance, including the cream Candlelight roses, the peach Tip Top roses, and dreamy pink Constance roses.
--
-
-**Pale and Mid-Pink Ranunculus** for soft layers of texture
--
-
-**Iceland poppies** for a delicate yet striking touch
--
-
-**Sweet peas** for a whimsical, airy finish
+- **Premium roses** for timeless romance, including the cream Candlelight roses, the peach Tip Top roses, and dreamy pink Constance roses.
+- **Pale and Mid-Pink Ranunculus** for soft layers of texture
+- **Iceland poppies** for a delicate yet striking touch
+- **Sweet peas** for a whimsical, airy finish
 - **Serruria florida (Blushing Bride)** for a rare and romantic touch
 
 ![A Joyful Custom Bridal Bouquet — florals by Willow & Peony](/images/custom-bridal-bouquet-auckland-wedding-new-zealand-auckland-wedding-photographer-cbd-emma-443)
@@ -40,11 +32,9 @@ The bouquet looked stunning against the bride’s flowing white gown and added a
 
 ![A Joyful Custom Bridal Bouquet — florals by Willow & Peony](/images/custom-bridal-bouquet-auckland-wedding-new-zealand-auckland-wedding-photographer-cbd-271)
 
-###
 
 ![A Joyful Custom Bridal Bouquet — florals by Willow & Peony](/images/custom-bridal-bouquet-auckland-wedding-new-zealand-auckland-wedding-photographer-cbd-emma-452)
 
-###
 
 ![A Joyful Custom Bridal Bouquet — florals by Willow & Peony](/images/custom-bridal-bouquet-auckland-wedding-new-zealand-auckland-wedding-photographer-cbd-49)
 
@@ -58,4 +48,4 @@ At Willow & Peony, our focus is on **romantic, dreamy, and modern floral design*
 
 ![A Joyful Custom Bridal Bouquet — florals by Willow & Peony](/images/custom-bridal-bouquet-auckland-wedding-new-zealand-auckland-wedding-photographer-cbd-77)
 
-✨ **Planning your wedding in Auckland?** Get in touch with us to design your custom bridal bouquet and wedding flowers.
+**Planning your wedding in Auckland?** [Get in touch](/contact/) and we’ll design your custom bridal bouquet and wedding flowers.
