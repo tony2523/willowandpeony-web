@@ -47,7 +47,7 @@ export default function HomePage() {
   return (
     <>
       {/* Hero — full-viewport image, transparent header floats over it */}
-      <section className="relative h-svh w-full overflow-hidden">
+      <section className="relative h-svh min-h-[640px] w-full overflow-hidden">
         <Pic
           name="auckland-bridal-party-blush-bouquets-hero"
           alt="Bridal party holding blush and ivory bouquets by Willow & Peony, Auckland"
@@ -57,7 +57,7 @@ export default function HomePage() {
         />
         <div
           aria-hidden
-          className="absolute inset-0 bg-gradient-to-t from-[rgba(20,18,16,0.55)] via-[rgba(20,18,16,0.05)] to-[rgba(20,18,16,0.15)]"
+          className="absolute inset-0 bg-gradient-to-t from-[rgba(20,18,16,0.72)] via-[rgba(20,18,16,0.3)] to-[rgba(20,18,16,0.15)] md:from-[rgba(20,18,16,0.55)] md:via-[rgba(20,18,16,0.05)]"
         />
         <div className="absolute inset-x-0 bottom-0">
           <div className="mx-auto max-w-[1280px] px-5 pb-16 sm:px-6 md:pb-24">
