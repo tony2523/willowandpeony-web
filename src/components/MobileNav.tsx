@@ -76,6 +76,7 @@ export default function MobileNav({ light = false }: { light?: boolean }) {
             <nav
               id="mobile-drawer"
               aria-label="Mobile"
+              inert={!open}
               className={`fixed inset-y-0 left-0 z-[65] flex w-[85%] max-w-sm flex-col bg-white shadow-2xl transition-transform duration-300 ease-out ${
                 open ? "translate-x-0" : "-translate-x-full"
               }`}

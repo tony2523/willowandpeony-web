@@ -189,7 +189,7 @@ export default function HomePage() {
               Cloud-like arrangements of white roses, hydrangeas and baby&rsquo;s breath for Amanda
               and Bryan&rsquo;s city celebration.
             </p>
-            <div className="mt-9 flex gap-3">
+            <div className="mt-9 grid max-w-[414px] grid-cols-3 gap-3">
               {[
                 "amandas-white-rose-hydrangea-and-babys-breath-bridal-bouquet",
                 "intimate-hotel-britomart-wedding-aisle-with-ivory-ribbon-bows",
@@ -201,7 +201,7 @@ export default function HomePage() {
                   alt=""
                   sizes="130px"
                   aspect="4/5"
-                  className="h-auto w-[110px] object-cover sm:w-[130px]"
+                  className="h-auto w-full object-cover"
                 />
               ))}
             </div>
