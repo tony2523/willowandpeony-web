@@ -5,38 +5,62 @@ import { googleRating, sliderReviews } from "../../content/reviews";
 
 /**
  * Testimonial slider — fades through the studio's Google reviews.
- * Auto-advances; arrows and dots for manual control; pauses on hover.
+ * Auto-advances only while on screen; pauses on hover or keyboard focus and
+ * stops for good once the visitor uses the arrows or dots. Screen readers
+ * hear a new review only when the visitor changes it.
  */
 export default function TestimonialSlider({ kind }: { kind?: "wedding" | "event" }) {
   const items = sliderReviews(kind);
   const [index, setIndex] = useState(0);
-  const timer = useRef<ReturnType<typeof setInterval> | null>(null);
+  const [manual, setManual] = useState(false);
+  const [onScreen, setOnScreen] = useState(false);
+  const root = useRef<HTMLDivElement>(null);
   const paused = useRef(false);
 
-  const next = useCallback(() => setIndex((i) => (i + 1) % items.length), [items.length]);
-  const prev = useCallback(
-    () => setIndex((i) => (i - 1 + items.length) % items.length),
-    [items.length],
-  );
+  const advance = useCallback(() => setIndex((i) => (i + 1) % items.length), [items.length]);
+  const next = useCallback(() => {
+    setManual(true);
+    advance();
+  }, [advance]);
+  const prev = useCallback(() => {
+    setManual(true);
+    setIndex((i) => (i - 1 + items.length) % items.length);
+  }, [items.length]);
+  const goTo = (i: number) => {
+    setManual(true);
+    setIndex(i);
+  };
 
   useEffect(() => {
-    timer.current = setInterval(() => {
-      if (!paused.current) next();
+    const el = root.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([entry]) => setOnScreen(entry.isIntersecting), {
+      threshold: 0.4,
+    });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (manual || !onScreen) return;
+    const timer = setInterval(() => {
+      if (!paused.current) advance();
     }, 7000);
-    return () => {
-      if (timer.current) clearInterval(timer.current);
-    };
-  }, [next]);
+    return () => clearInterval(timer);
+  }, [manual, onScreen, advance]);
 
   const review = items[index];
 
   return (
     <div
+      ref={root}
       className="mx-auto max-w-[860px] text-center"
       onMouseEnter={() => (paused.current = true)}
       onMouseLeave={() => (paused.current = false)}
+      onFocus={() => (paused.current = true)}
+      onBlur={() => (paused.current = false)}
     >
-      <div aria-live="polite" className="relative">
+      <div aria-live={manual ? "polite" : "off"} className="relative">
         <blockquote key={index} className="animate-[fadein_0.6s_ease]">
           <p className="font-serif text-[clamp(19px,2vw,26px)] leading-[1.55] font-light text-ink italic">
             &ldquo;{review.short ?? review.text}&rdquo;
@@ -64,7 +88,7 @@ export default function TestimonialSlider({ kind }: { kind?: "wedding" | "event"
             <button
               key={i}
               type="button"
-              onClick={() => setIndex(i)}
+              onClick={() => goTo(i)}
               aria-label={`Review ${i + 1}`}
               aria-current={i === index}
               className="group flex h-6 w-6 items-center justify-center"
