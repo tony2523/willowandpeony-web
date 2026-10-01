@@ -20,9 +20,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/about/", priority: 0.6, changeFrequency: "yearly" },
     { path: "/contact/", priority: 0.7, changeFrequency: "yearly" },
     { path: "/faq/", priority: 0.6, changeFrequency: "monthly" },
-    { path: "/flower-delivery-auckland/", priority: 0.6, changeFrequency: "monthly" },
     { path: "/wedding-flower-calendar/", priority: 0.6, changeFrequency: "yearly" },
-    { path: "/refund-policy/", priority: 0.2, changeFrequency: "yearly" },
     { path: "/privacy-policy/", priority: 0.1, changeFrequency: "yearly" },
     { path: "/terms-of-service/", priority: 0.1, changeFrequency: "yearly" },
   ];

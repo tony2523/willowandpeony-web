@@ -25,6 +25,9 @@
     // Unknown URLs get the site's 404 page with a real 404 status.
     "not_found_handling": "404-page"
   },
+  // Keep variables added in the Cloudflare dashboard (e.g. RESEND_API_KEY
+  // if saved as plain text) instead of resetting them on every deploy.
+  "keep_vars": true,
   "vars": {
     // All website email is sent from hello@ (the only address customers see
     // or reply to). Notifications and copies go to Ivy's own inbox.

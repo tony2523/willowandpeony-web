@@ -11,7 +11,6 @@ const cols = [
       { label: "Wedding Packages", href: "/wedding-flower-packages/" },
       { label: "Event Flowers", href: "/event-flowers-auckland/" },
       { label: "Gallery", href: "/gallery/" },
-      { label: "Delivery", href: "/flower-delivery-auckland/" },
     ],
   },
   {
@@ -31,7 +30,6 @@ const cols = [
       { label: "Instagram", href: site.instagram, external: true },
       { label: "Privacy Policy", href: "/privacy-policy/" },
       { label: "Terms & Conditions", href: "/terms-of-service/" },
-      { label: "Refund Policy", href: "/refund-policy/" },
     ],
   },
 ];

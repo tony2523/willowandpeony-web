@@ -1,6 +1,6 @@
 import { getPosts } from "@/lib/journal";
 import { getArticles } from "@/lib/blog";
-import { site, weddingPackages, faqs, delivery } from "../../../content/site";
+import { site, weddingPackages, faqs } from "../../../content/site";
 import { venues } from "../../../content/venues";
 import { googleRating } from "../../../content/reviews";
 
@@ -33,8 +33,6 @@ export async function GET() {
       (p) => `  - ${p.name} package, ${p.price} NZD: ${p.ideal}`,
     ),
     `- Corporate and private event flowers: ${site.domain}/event-flowers-auckland/`,
-    `- Custom flower orders and Auckland delivery: ${site.domain}/flower-delivery-auckland/`,
-    `  - ${delivery.summary} Flat rate $15, free over $150.`,
     "",
     "## Key pages",
     "",

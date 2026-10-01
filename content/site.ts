@@ -193,23 +193,6 @@ export const faqs: Faq[] = [
   },
 ];
 
-export const delivery = {
-  summary:
-    "Same-day flower delivery across Auckland, Monday to Saturday, for orders placed before 12pm.",
-  points: [
-    "Flat-rate delivery: $15 across our Auckland delivery area",
-    "Free delivery on orders over $150 (excluding rural areas)",
-    "Next-day delivery available for all orders",
-    "For Saturday delivery, place your order by 9am that day",
-    "No Sunday delivery, with the exception of Mother's Day",
-  ],
-  boundaries: [
-    { compass: "North", to: "Hatfields Beach" },
-    { compass: "South", to: "Tuakau" },
-    { compass: "West", to: "Muriwai" },
-    { compass: "East", to: "Clevedon & Maraetai" },
-  ],
-} as const;
 
 /** Map of legacy Shopify URLs → new URLs. Edit content/redirects.json. */
 export const redirects: Record<string, string> = redirectsJson;

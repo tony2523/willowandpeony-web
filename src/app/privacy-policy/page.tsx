@@ -5,7 +5,7 @@ import { pageMetadata } from "@/lib/seo";
 export const metadata: Metadata = pageMetadata({
   title: "Privacy Policy",
   description:
-    "How Willow & Peony collects, uses and protects your personal information when you use our website and services.",
+    "How Willow & Peony, Auckland wedding and event florist, collects, uses and protects your personal information under the New Zealand Privacy Act 2020.",
   path: "/privacy-policy/",
 });
 

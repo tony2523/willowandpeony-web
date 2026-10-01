@@ -41,35 +41,34 @@ export default function AboutPage() {
         ])}
       />
 
-      {/* Hero split — portrait + the founding story */}
-      <section className="bg-white pt-14 md:pt-0">
-        <div className="grid md:min-h-[700px] md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
-          <Pic
-            name="willow-and-peony-bouquet-ivy-willow-peony-copy-a677a82d-5fc6-4fcd-b72d-c0884402c2e5"
-            alt="Ivy Diao, founder of Willow & Peony, boutique florist in Auckland"
-            sizes="(max-width: 768px) 100vw, 50vw"
-            priority
-            className="h-full max-h-[760px] w-full object-cover"
-          />
-          <div className="flex flex-col justify-center px-5 py-14 sm:px-10 md:px-16 md:py-24">
-            <p className="eyebrow text-muted">Our story</p>
-            <h1 className="display-2 mt-4 max-w-[520px] text-ink">
-              It began with a single rose called <em>Blue Moon</em>
-            </h1>
-            <div className="mt-7 max-w-[500px] space-y-4 text-[15px] leading-[1.75] font-light text-ink-soft">
-              <p>
-                Ivy&rsquo;s passion for flowers blossomed back in 2012 with her first rose, the
-                beautiful <em>Blue Moon</em>, planted in a small garden that quickly became a
-                sanctuary. From that moment on, flowers were more than just decoration — they were
-                a way to celebrate life&rsquo;s most meaningful moments.
-              </p>
-              <p>
-                From classic blooms to artistic arrangements, Willow &amp; Peony offers more than
-                just flowers — an experience tailored to you, making every moment truly special.
-              </p>
-            </div>
+      {/* Hero split: the founding story beside Ivy's portrait (per design) */}
+      <section className="mx-auto grid max-w-[1440px] md:grid-cols-[minmax(0,1fr)_minmax(0,620px)]">
+        <div className="flex flex-col justify-center px-5 pt-14 pb-12 sm:px-10 md:px-16 md:py-24 lg:px-[90px]">
+          <p className="eyebrow text-muted">Our story</p>
+          <h1 className="display-1 mt-5 max-w-[560px] text-ink">
+            It began with a single rose called <em>Blue Moon</em>
+          </h1>
+          <div className="mt-7 max-w-[480px] space-y-4 text-[15.5px] leading-[1.75] font-light text-ink-soft">
+            <p>
+              Ivy&rsquo;s passion for flowers blossomed back in 2012 with her first rose, the
+              beautiful <em>Blue Moon</em>, planted in a small garden that quickly became a
+              sanctuary. From that moment on, flowers were more than just decoration — they were
+              a way to celebrate life&rsquo;s most meaningful moments.
+            </p>
+            <p>
+              From classic blooms to artistic arrangements, Willow &amp; Peony offers more than
+              just flowers — an experience tailored to you, making every moment truly special.
+            </p>
           </div>
         </div>
+        {/* Portrait: face sits just above centre, so anchor the crop there */}
+        <Pic
+          name="willow-and-peony-bouquet-ivy-willow-peony-copy-a677a82d-5fc6-4fcd-b72d-c0884402c2e5"
+          alt="Ivy Diao, founder of Willow & Peony, boutique florist in Auckland"
+          sizes="(max-width: 768px) 100vw, 620px"
+          priority
+          className="aspect-[4/5] h-auto w-full object-cover object-[60%_25%] md:aspect-auto md:h-[780px]"
+        />
       </section>
 
       {/* Founder quote — paper band */}
