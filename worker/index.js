@@ -396,6 +396,11 @@ async function handleInstagram(request, env, ctx) {
 const worker = {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
+    // One canonical host: www (attached as a custom domain) 301s to the apex.
+    if (url.hostname === "www.willowandpeony.co.nz") {
+      url.hostname = "willowandpeony.co.nz";
+      return Response.redirect(url.toString(), 301);
+    }
     if (url.pathname === "/api/enquiry") {
       if (request.method === "POST") return handleEnquiry(request, env);
       return new Response("Method not allowed", { status: 405 });
