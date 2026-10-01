@@ -42,8 +42,8 @@ export default function AboutPage() {
       />
 
       {/* Hero split: the founding story beside Ivy's portrait (per design) */}
-      <section className="mx-auto grid max-w-[1440px] md:grid-cols-[minmax(0,1fr)_minmax(0,620px)] md:pt-20">
-        <div className="flex flex-col justify-center px-5 pt-14 pb-12 sm:px-10 md:px-16 md:py-24 lg:px-[90px]">
+      <section className="mx-auto grid max-w-[1440px] md:grid-cols-2 md:pt-20 xl:grid-cols-[minmax(0,1fr)_minmax(0,620px)]">
+        <div className="flex flex-col justify-center px-5 pt-14 pb-12 sm:px-10 md:py-24 lg:px-16 xl:px-[90px]">
           <p className="eyebrow text-muted">Our story</p>
           <h1 className="display-1 mt-5 max-w-[560px] text-ink">
             It began with a single rose called <em>Blue Moon</em>
@@ -65,9 +65,9 @@ export default function AboutPage() {
         <Pic
           name="willow-and-peony-bouquet-ivy-willow-peony-copy-a677a82d-5fc6-4fcd-b72d-c0884402c2e5"
           alt="Ivy Diao, founder of Willow & Peony, boutique florist in Auckland"
-          sizes="(max-width: 768px) 100vw, 620px"
+          sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 620px"
           priority
-          className="aspect-[4/5] h-auto w-full object-cover object-[60%_25%] md:aspect-auto md:h-[780px]"
+          className="aspect-[4/5] h-auto w-full object-cover object-[60%_25%] md:aspect-auto md:h-[680px] lg:h-[780px]"
         />
       </section>
 

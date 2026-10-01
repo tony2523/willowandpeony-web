@@ -29,7 +29,7 @@ export default function MobileNav({ light = false }: { light?: boolean }) {
   }, [open]);
 
   return (
-    <div className="md:hidden">
+    <div className="lg:hidden">
       <button
         type="button"
         aria-expanded={open}
@@ -77,8 +77,8 @@ export default function MobileNav({ light = false }: { light?: boolean }) {
               id="mobile-drawer"
               aria-label="Mobile"
               inert={!open}
-              className={`fixed inset-y-0 left-0 z-[65] flex w-[85%] max-w-sm flex-col bg-white shadow-2xl transition-transform duration-300 ease-out ${
-                open ? "translate-x-0" : "-translate-x-full"
+              className={`fixed inset-y-0 left-0 z-[65] flex w-[85%] max-w-sm flex-col bg-white transition-[translate,box-shadow] duration-300 ease-out ${
+                open ? "translate-x-0 shadow-2xl" : "-translate-x-full shadow-none"
               }`}
             >
               <div className="flex items-center justify-between border-b border-hairline px-6 py-5">
