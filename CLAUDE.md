@@ -128,6 +128,11 @@ is retired. The system:
   content/venues.ts — facts researched from venue sites, photos are W&P's
   own work at each venue). Journal posts render as story pages (details
   rail, credits band, keep-reading, category-flavoured CTA).
+- Header clearance: on pages with the solid white header (everything except
+  the photo-hero pages: home, weddings, events, packages, venue guides),
+  content must start at least 56px below the header line; desktop split
+  heroes use `md:pt-20`. Never place a photo flush against the header line
+  (Tony, 2026-10-01).
 - Never redesign the logo (public/brand/ PNGs are the originals — keep as is).
 - Reviews: content/reviews.ts holds the 14 Google reviews verbatim + the
   profile URL. Update by re-reading the Google Business Profile.

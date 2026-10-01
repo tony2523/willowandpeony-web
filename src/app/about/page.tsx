@@ -42,7 +42,7 @@ export default function AboutPage() {
       />
 
       {/* Hero split: the founding story beside Ivy's portrait (per design) */}
-      <section className="mx-auto grid max-w-[1440px] md:grid-cols-[minmax(0,1fr)_minmax(0,620px)]">
+      <section className="mx-auto grid max-w-[1440px] md:grid-cols-[minmax(0,1fr)_minmax(0,620px)] md:pt-20">
         <div className="flex flex-col justify-center px-5 pt-14 pb-12 sm:px-10 md:px-16 md:py-24 lg:px-[90px]">
           <p className="eyebrow text-muted">Our story</p>
           <h1 className="display-1 mt-5 max-w-[560px] text-ink">
