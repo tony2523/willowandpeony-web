@@ -95,7 +95,7 @@ async function handleEnquiry(request, env) {
   if (data._gotcha) return json({ ok: true });
 
   const email = clean(data.email, MAX.email);
-  const message = String(data.message ?? "").trim().slice(0, MAX.message);
+  const message = cleanBlock(data.message, MAX.message);
   if (!isEmail(email) || !message) {
     return json({ error: "email and message are required" }, 400);
   }
@@ -105,45 +105,147 @@ async function handleEnquiry(request, env) {
   if (!env.RESEND_API_KEY) return json({ error: "email not configured yet" }, 503);
 
   const name = clean(data.name, MAX.name);
-  const kind = clean(data.kind, 20) || "general";
-  const subjectBits = {
-    wedding: "Wedding enquiry",
-    event: "Event enquiry",
-    general: "Website enquiry",
-  };
-  const subject = `${subjectBits[kind] ?? subjectBits.general}${name ? ` — ${name}` : ""}`;
-
-  const lines = [
-    name && `Name: ${name}`,
-    data.company && `Company: ${clean(data.company, MAX.other)}`,
-    `Email: ${email}`,
-    data.phone && `Phone: ${clean(data.phone, MAX.other)}`,
-    data.date && `Date: ${clean(data.date, MAX.other)}`,
-    data.venue && `Venue: ${clean(data.venue, MAX.other)}`,
-    data.event_type && `Event type: ${clean(data.event_type, MAX.other)}`,
-    data.guests && `Guests: ${clean(data.guests, MAX.other)}`,
-    data.budget && `Budget: ${clean(data.budget, MAX.other)}`,
-    data.requirements && `Floral requirements: ${clean(data.requirements, MAX.message)}`,
-    data.found_us && `Found us via: ${clean(data.found_us, MAX.other)}`,
-    "",
-    "Message:",
-    message,
-    data.comments && "",
-    data.comments && `Additional comments: ${clean(data.comments, MAX.message)}`,
-  ].filter((l) => l !== undefined && l !== null && l !== false);
+  const kind = ["wedding", "event"].includes(data.kind) ? data.kind : "general";
+  const { subject, text, html } = enquiryEmail(data, { name, email, message, kind });
 
   try {
     await sendEmail(env, {
       from: `Willow & Peony Website <${env.EMAIL_FROM}>`,
       to: [env.NOTIFY_TO],
-      reply_to: name ? `${name.replace(/[<>"]/g, "")} <${email}>` : email,
+      // Replying in Ivy's inbox goes straight to the customer.
+      reply_to: name ? `${name.replace(/[<>",]/g, "")} <${email}>` : email,
       subject,
-      text: lines.join("\n"),
+      text,
+      html,
     });
   } catch (e) {
     return json({ error: `send failed: ${e.message}` }, 502);
   }
   return json({ ok: true });
+}
+
+/** Multi-line user text: keep line breaks, trim, cap. */
+function cleanBlock(value, cap) {
+  return String(value ?? "")
+    .replace(/\r\n?/g, "\n")
+    .trim()
+    .slice(0, cap);
+}
+
+const PAGE_NAMES = {
+  "/contact/": "Contact page",
+  "/wedding-flowers-auckland/": "Weddings page",
+  "/event-flowers-auckland/": "Events page",
+};
+
+/** Formatted notification for Ivy: who, how to reach them, what they asked. */
+function enquiryEmail(data, { name, email, message, kind }) {
+  const typeLabel = { wedding: "Wedding enquiry", event: "Event enquiry", general: "General enquiry" }[kind];
+  const date = clean(data.date, MAX.other);
+  const page = clean(data.page, 100);
+  const pageName = PAGE_NAMES[page] || (page ? page : "Website");
+  const received = new Date().toLocaleString("en-NZ", {
+    timeZone: "Pacific/Auckland",
+    dateStyle: "medium",
+    timeStyle: "short",
+  });
+  const firstName = name.split(" ")[0] || "them";
+
+  const phone = clean(data.phone, MAX.other);
+  const details = [];
+  const add = (label, value) => {
+    const v = clean(value, MAX.other);
+    if (v) details.push([label, v]);
+  };
+  if (kind === "wedding") {
+    add("Wedding date", data.date);
+    add("Venue", data.venue);
+    add("Budget", data.budget);
+    add("Guests", data.guests);
+    add("Found us via", data.found_us);
+  } else if (kind === "event") {
+    add("Company", data.company);
+    add("Event date", data.date);
+    add("Event type", data.event_type);
+    add("Budget", data.budget);
+  }
+
+  const requirements = (Array.isArray(data.requirements)
+    ? data.requirements
+    : String(data.requirements ?? "").split(/,\s*/)
+  )
+    .map((r) => clean(r, 100))
+    .filter(Boolean)
+    .slice(0, 30);
+
+  const messageLabel = kind === "wedding" ? "Additional comments" : "Their message";
+  const blocks = [[messageLabel, message]];
+  const comments = cleanBlock(data.comments, MAX.message);
+  if (comments) blocks.push(["Additional comments", comments]);
+
+  const subject = `${typeLabel}: ${name || email}${date ? ` · ${date}` : ""}`.replace(/[\r\n]/g, " ");
+
+  // ---- plain text ----
+  const text = [
+    `${typeLabel.toUpperCase()} — from the ${pageName}`,
+    "",
+    `Name:   ${name || "(not given)"}`,
+    `Email:  ${email}`,
+    ...(phone ? [`Phone:  ${phone}`] : []),
+    "",
+    ...details.map(([l, v]) => `${l}: ${v}`),
+    ...(requirements.length
+      ? ["", "Floral requirements:", ...requirements.map((r) => `  - ${r}`)]
+      : []),
+    ...blocks.flatMap(([l, v]) => ["", `${l}:`, v]),
+    "",
+    "———",
+    `Reply to this email to respond to ${firstName} directly (${email}).`,
+    `Received ${received} (NZ time) via willowandpeony.co.nz${page ? page : ""}`,
+  ].join("\n");
+
+  // ---- HTML ----
+  const e = escapeHtml;
+  const label = (t) =>
+    `<p style="margin:0 0 6px;font-family:Arial,sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#8a847b">${t}</p>`;
+  const rows = details
+    .map(
+      ([l, v]) =>
+        `<tr><td style="padding:10px 16px 10px 0;border-top:1px solid #e6e2da;font-family:Arial,sans-serif;font-size:13px;color:#8a847b;white-space:nowrap;vertical-align:top;width:120px">${e(l)}</td><td style="padding:10px 0;border-top:1px solid #e6e2da;font-family:Arial,sans-serif;font-size:14px;color:#1a1815">${e(v)}</td></tr>`,
+    )
+    .join("");
+  const reqHtml = requirements.length
+    ? `<tr><td style="padding:22px 32px 0">${label(`Floral requirements (${requirements.length})`)}<p style="margin:0;font-family:Arial,sans-serif;font-size:14px;line-height:1.9;color:#1a1815">${requirements.map((r) => `&#10003;&nbsp;${e(r)}`).join("<br>")}</p></td></tr>`
+    : "";
+  const blockHtml = blocks
+    .map(
+      ([l, v]) =>
+        `<tr><td style="padding:22px 32px 0">${label(e(l))}<div style="background:#f7f5f0;border-left:3px solid #1a1815;padding:14px 16px;font-family:Arial,sans-serif;font-size:14px;line-height:1.65;color:#1a1815;white-space:pre-wrap">${e(v)}</div></td></tr>`,
+    )
+    .join("");
+  const replySubject = encodeURIComponent(
+    kind === "wedding" ? "Your wedding flowers" : kind === "event" ? "Flowers for your event" : "Your enquiry",
+  );
+
+  const html = `<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${e(subject)}</title></head>
+<body style="margin:0;padding:0;background:#f7f5f0">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f7f5f0"><tr><td align="center" style="padding:24px 12px">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:600px;background:#ffffff;border:1px solid #e6e2da">
+<tr><td style="padding:26px 32px 0">
+${label(`${e(typeLabel)} · ${e(pageName)}`)}
+<h1 style="margin:4px 0 0;font-family:Georgia,'Times New Roman',serif;font-weight:normal;font-size:26px;line-height:1.25;color:#1a1815">${e(name || email)}</h1>
+<p style="margin:10px 0 0;font-family:Arial,sans-serif;font-size:14px;line-height:1.7"><a href="mailto:${e(email)}" style="color:#1a1815">${e(email)}</a>${phone ? `<br><a href="tel:${e(phone.replace(/[^+\d]/g, ""))}" style="color:#1a1815">${e(phone)}</a>` : ""}</p>
+<p style="margin:18px 0 0"><a href="mailto:${e(email)}?subject=${replySubject}" style="display:inline-block;background:#1a1815;color:#ffffff;text-decoration:none;font-family:Arial,sans-serif;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;padding:12px 20px">Reply to ${e(firstName)}</a></p>
+</td></tr>
+${rows ? `<tr><td style="padding:24px 32px 0"><table role="presentation" width="100%" cellpadding="0" cellspacing="0">${rows}</table></td></tr>` : ""}
+${reqHtml}
+${blockHtml}
+<tr><td style="padding:26px 32px 26px"><p style="margin:0;padding-top:16px;border-top:1px solid #e6e2da;font-family:Arial,sans-serif;font-size:12px;line-height:1.7;color:#8a847b">Hitting reply sends your answer straight to ${e(firstName)} at ${e(email)}.<br>Received ${e(received)} (NZ time) via the ${e(pageName.toLowerCase())}.</p></td></tr>
+</table></td></tr></table>
+</body></html>`;
+
+  return { subject, text, html };
 }
 
 /* ---------- Wedding Flower Calendar ---------- */

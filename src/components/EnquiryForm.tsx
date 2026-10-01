@@ -118,7 +118,12 @@ export default function EnquiryForm({ kind = "general", selector = false, compac
       const res = await fetch("/api/enquiry", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...fields, kind: mode }),
+        body: JSON.stringify({
+          ...fields,
+          ...(requirements.length ? { requirements } : {}),
+          kind: mode,
+          page: window.location.pathname,
+        }),
       });
       if (res.ok) {
         setStatus("sent");
