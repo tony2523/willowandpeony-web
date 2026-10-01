@@ -38,8 +38,8 @@ a new descriptive name.
 1. Add `willowandpeony.co.nz` as a zone in the t@tonyhou.com Cloudflare
    account; update the nameservers at the registrar to the ones Cloudflare
    assigns (this moves DNS off Shopify).
-1b. **Email (Resend, free tier)** makes the enquiry form and calendar
-   email live: verify `willowandpeony.co.nz` in Resend (its "Sign in to
+1b. **Email (Resend, free tier) is LIVE** (domain verified, key set,
+   tested 2026-10-01). For reference, it was set up like this: verify `willowandpeony.co.nz` in Resend (its "Sign in to
    Cloudflare" button adds three records on subdomains only), create a
    sending-only API key, and add it as the `RESEND_API_KEY` secret on the
    worker. Test with a real submission. NEVER enable Cloudflare Email
