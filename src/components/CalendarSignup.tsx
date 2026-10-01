@@ -1,76 +1,107 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { site } from "../../content/site";
 
 /**
- * Wedding Flower Calendar signup. Subscribes the email to the studio's
- * Klaviyo list (client-side, no tracking script), then sends the visitor to
- * the download page. If Klaviyo is unreachable the visitor still gets the
- * calendar — the email is only used for the list.
+ * Wedding Flower Calendar signup (same fields as the original Shopify form).
+ * Posts to the Worker (/api/calendar), which emails the PDF to the visitor,
+ * then sends them to the download page. The visitor always reaches the
+ * download page, even if email isn't configured or the request fails.
  */
 export default function CalendarSignup() {
   const router = useRouter();
-  const [sending, setSending] = useState(false);
+  const [status, setStatus] = useState<"idle" | "sending" | "error">("idle");
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const form = e.currentTarget;
-    const email = (new FormData(form).get("email") as string) || "";
-    setSending(true);
+    const fd = new FormData(e.currentTarget);
+    setStatus("sending");
+    let emailed = false;
     try {
-      // Klaviyo "client subscription" endpoint — no API key needed, safe in browser.
-      await fetch(
-        `https://a.klaviyo.com/client/subscriptions/?company_id=${site.klaviyoCompanyId}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            revision: "2024-10-15",
-          },
-          body: JSON.stringify({
-            data: {
-              type: "subscription",
-              attributes: {
-                profile: {
-                  data: {
-                    type: "profile",
-                    attributes: { email, properties: { source: "Wedding Flower Calendar" } },
-                  },
-                },
-              },
-            },
-          }),
-        },
-      );
+      const res = await fetch("/api/calendar", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          firstName: fd.get("firstName"),
+          lastName: fd.get("lastName"),
+          email: fd.get("email"),
+          consult: fd.get("consult") === "on",
+          _gotcha: fd.get("_gotcha"),
+        }),
+      });
+      if (res.status === 400) {
+        setStatus("error");
+        return;
+      }
+      if (res.ok) emailed = !!(await res.json()).emailed;
     } catch {
-      // Non-blocking — the calendar download proceeds regardless.
+      // Network or preview-host failure: still hand over the calendar.
     }
-    router.push("/wedding-flower-calendar/download/");
+    router.push(`/wedding-flower-calendar/download/${emailed ? "?sent=1" : ""}`);
   }
 
   return (
-    <form onSubmit={onSubmit} className="flex flex-col gap-2.5">
-      <label htmlFor="cal-email" className="sr-only">
-        Email address
-      </label>
+    <form onSubmit={onSubmit} className="grid gap-4">
       <input
-        id="cal-email"
-        name="email"
-        type="email"
-        required
-        placeholder="Your email address"
-        autoComplete="email"
-        className="input-wp"
+        type="text"
+        name="_gotcha"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        className="hidden"
       />
-      <button
-        type="submit"
-        disabled={sending}
-        className="btn-wp disabled:opacity-50"
-      >
-        {sending ? "One moment…" : "Get the calendar"}
-      </button>
+      <div className="grid gap-4 sm:grid-cols-2">
+        <label className="block">
+          <span className="mb-1.5 block text-[12px] tracking-[0.06em] text-muted uppercase">
+            First name
+          </span>
+          <input name="firstName" required autoComplete="given-name" className="input-wp" />
+        </label>
+        <label className="block">
+          <span className="mb-1.5 block text-[12px] tracking-[0.06em] text-muted uppercase">
+            Last name
+          </span>
+          <input name="lastName" autoComplete="family-name" className="input-wp" />
+        </label>
+      </div>
+      <label className="block">
+        <span className="mb-1.5 block text-[12px] tracking-[0.06em] text-muted uppercase">
+          Email
+        </span>
+        <input name="email" type="email" required autoComplete="email" className="input-wp" />
+      </label>
+      <label className="flex cursor-pointer items-start gap-3 text-[13px] leading-relaxed text-ink-soft">
+        <input type="checkbox" name="consult" className="check-wp mt-[3px]" />
+        <span>
+          Willow &amp; Peony offers an obligation-free wedding flower consultation via Google Meet.
+          Tick this box if you&rsquo;d like Ivy to email you to arrange yours.
+        </span>
+      </label>
+
+      {status === "error" && (
+        <p className="text-[13px] text-ink" role="alert">
+          Please check your email address and try again.
+        </p>
+      )}
+
+      <div className="mt-1">
+        <button
+          type="submit"
+          disabled={status === "sending"}
+          className="btn-solid w-full disabled:opacity-60 sm:w-auto"
+        >
+          {status === "sending" ? "One moment…" : "Get my free calendar"}
+        </button>
+      </div>
+      <p className="text-[12px] leading-relaxed text-muted">
+        Your calendar is free whether or not you request a consultation. We&rsquo;ll email you a
+        copy and won&rsquo;t add you to any mailing list without asking.{" "}
+        <Link href="/privacy-policy/" className="underline underline-offset-2 hover:text-ink">
+          Privacy policy
+        </Link>
+      </p>
     </form>
   );
 }

@@ -1,18 +1,22 @@
 // The site's only server code, running on Cloudflare Workers:
 //
-//  1. POST /api/enquiry — receives the enquiry forms and emails them to the
-//     studio via Cloudflare Email Routing's free send_email binding
-//     (100% Cloudflare, no third-party services). Until the zone is active
-//     and the binding works it returns 503 and the frontend falls back to a
-//     pre-filled mail draft, so no enquiry is ever lost.
-//  2. Next.js navigation data files (`__next.journal.$d$slug...`): static
+//  1. POST /api/enquiry  — enquiry forms, emailed to the studio.
+//  2. POST /api/calendar — Wedding Flower Calendar signups: emails the PDF
+//     to the visitor, tells Ivy when a consultation is requested, and records
+//     the signup in Klaviyo.
+//  3. GET /api/instagram — live Instagram feed (see below).
+//  4. Next.js navigation data files (`__next.journal.$d$slug...`): static
 //     assets answer a literal "$" with a 307 to "%24" which Safari rejects,
-//     so we fetch the encoded path directly. Everything else is served
-//     straight from static assets (see run_worker_first in wrangler.jsonc).
-
-import { EmailMessage } from "cloudflare:email";
+//     so we fetch the encoded path directly.
+//
+// Email goes out through Resend (resend.com, free tier) and needs the
+// RESEND_API_KEY secret, with willowandpeony.co.nz verified in Resend.
+// Without it the enquiry endpoint answers 503 (the form falls back to a
+// pre-filled mail draft) and the calendar endpoint answers emailed:false
+// (the visitor still downloads it on the next page), so nothing is lost.
 
 const MAX = { name: 200, email: 254, message: 5000, other: 300 };
+const CALENDAR_PDF = "/downloads/willow-and-peony-wedding-flower-calendar.pdf";
 
 function clean(value, cap) {
   return String(value ?? "")
@@ -21,13 +25,62 @@ function clean(value, cap) {
     .slice(0, cap);
 }
 
-async function handleEnquiry(request, env) {
-  const json = (body, status = 200) =>
-    new Response(JSON.stringify(body), {
-      status,
-      headers: { "Content-Type": "application/json" },
-    });
+function escapeHtml(s) {
+  return String(s)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
 
+function json(body, status = 200) {
+  return new Response(JSON.stringify(body), {
+    status,
+    headers: { "Content-Type": "application/json" },
+  });
+}
+
+function isEmail(value) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+}
+
+/** Canonical origin for links in emails; preview hosts link to themselves. */
+function siteOrigin(request) {
+  const url = new URL(request.url);
+  if (url.hostname === "willowandpeony.co.nz" || url.hostname === "www.willowandpeony.co.nz") {
+    return "https://willowandpeony.co.nz";
+  }
+  return url.origin;
+}
+
+async function sendEmail(env, message) {
+  const r = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${env.RESEND_API_KEY}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(message),
+  });
+  if (!r.ok) throw new Error(`Resend ${r.status}: ${(await r.text()).slice(0, 300)}`);
+  return r.json();
+}
+
+async function verifyTurnstile(request, env, token) {
+  if (!env.TURNSTILE_SECRET) return true;
+  const verify = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      secret: env.TURNSTILE_SECRET,
+      response: token ?? "",
+      remoteip: request.headers.get("CF-Connecting-IP") ?? undefined,
+    }),
+  }).then((r) => r.json());
+  return !!verify.success;
+}
+
+async function handleEnquiry(request, env) {
   let data;
   try {
     data = await request.json();
@@ -40,25 +93,13 @@ async function handleEnquiry(request, env) {
 
   const email = clean(data.email, MAX.email);
   const message = String(data.message ?? "").trim().slice(0, MAX.message);
-  if (!email.includes("@") || !message) {
+  if (!isEmail(email) || !message) {
     return json({ error: "email and message are required" }, 400);
   }
-
-  // Turnstile (optional hardening): enforced once TURNSTILE_SECRET is set.
-  if (env.TURNSTILE_SECRET) {
-    const verify = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        secret: env.TURNSTILE_SECRET,
-        response: data.turnstileToken ?? "",
-        remoteip: request.headers.get("CF-Connecting-IP") ?? undefined,
-      }),
-    }).then((r) => r.json());
-    if (!verify.success) return json({ error: "verification failed" }, 400);
+  if (!(await verifyTurnstile(request, env, data.turnstileToken))) {
+    return json({ error: "verification failed" }, 400);
   }
-
-  if (!env.SEND_EMAIL) return json({ error: "email not configured yet" }, 503);
+  if (!env.RESEND_API_KEY) return json({ error: "email not configured yet" }, 503);
 
   const name = clean(data.name, MAX.name);
   const kind = clean(data.kind, 20) || "general";
@@ -88,27 +129,160 @@ async function handleEnquiry(request, env) {
     data.comments && `Additional comments: ${clean(data.comments, MAX.message)}`,
   ].filter((l) => l !== undefined && l !== null && l !== false);
 
-  const from = env.ENQUIRY_FROM;
-  const to = env.ENQUIRY_TO;
-  const raw = [
-    `From: Willow & Peony Website <${from}>`,
-    `To: <${to}>`,
-    `Reply-To: ${name ? `"${name.replace(/"/g, "")}" ` : ""}<${email}>`,
-    `Subject: ${subject.replace(/[\r\n]/g, " ")}`,
-    `Message-ID: <${Date.now()}.${crypto.randomUUID()}@${from.split("@")[1]}>`,
-    "MIME-Version: 1.0",
-    "Content-Type: text/plain; charset=utf-8",
-    `Date: ${new Date().toUTCString()}`,
-    "",
-    lines.join("\r\n"),
-  ].join("\r\n");
-
   try {
-    await env.SEND_EMAIL.send(new EmailMessage(from, to, raw));
+    await sendEmail(env, {
+      from: `Willow & Peony Website <${env.ENQUIRY_FROM}>`,
+      to: [env.ENQUIRY_TO],
+      reply_to: name ? `${name.replace(/[<>"]/g, "")} <${email}>` : email,
+      subject,
+      text: lines.join("\n"),
+    });
   } catch (e) {
     return json({ error: `send failed: ${e.message}` }, 502);
   }
   return json({ ok: true });
+}
+
+/* ---------- Wedding Flower Calendar ---------- */
+
+function calendarEmail({ firstName, consult, origin }) {
+  const hi = firstName ? `Hi ${escapeHtml(firstName)},` : "Hello,";
+  const pdfUrl = `${origin}${CALENDAR_PDF}`;
+  const consultLine = consult
+    ? "You asked about a free consultation, so I’ll be in touch personally within a couple of business days."
+    : "When you’re ready to talk flowers, simply reply to this email. I’d love to hear your date, your venue and the feeling you want to create.";
+
+  const text = [
+    firstName ? `Hi ${firstName},` : "Hello,",
+    "",
+    "Thank you for downloading the Willow & Peony Wedding Flower Calendar. Your copy is attached, and you can download it again any time here:",
+    pdfUrl,
+    "",
+    "Start with your wedding month: you’ll find twelve flowers at their best in that season, followed by the flowers available all year round and a few of my personal favourites.",
+    "",
+    consultLine,
+    "",
+    "With love,",
+    "Ivy",
+    "Willow & Peony · Auckland",
+    `${origin}/`,
+  ].join("\n");
+
+  const p = (body) =>
+    `<p style="margin:0 0 18px;font-family:Georgia,'Times New Roman',serif;font-size:16px;line-height:1.7;color:#57524b">${body}</p>`;
+  const html = `<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Your Wedding Flower Calendar</title></head>
+<body style="margin:0;padding:0;background:#f7f5f0">
+<div style="display:none;max-height:0;overflow:hidden">A year of New Zealand wedding flowers, month by month.</div>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f7f5f0"><tr><td align="center" style="padding:32px 16px">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;background:#ffffff;border:1px solid #e6e2da">
+<tr><td align="center" style="padding:36px 32px 8px"><img src="${origin}/brand/willow-and-peony-logo.png" width="200" alt="Willow &amp; Peony" style="display:block;width:200px;height:auto;border:0"></td></tr>
+<tr><td style="padding:28px 40px 0">
+<p style="margin:0 0 10px;font-family:Arial,sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#8a847b">Your free calendar</p>
+<h1 style="margin:0 0 24px;font-family:Georgia,'Times New Roman',serif;font-weight:normal;font-size:30px;line-height:1.2;color:#1a1815">Your Wedding Flower Calendar is here</h1>
+${p(hi)}
+${p("Thank you for downloading the Willow &amp; Peony Wedding Flower Calendar. Your copy is attached, and you can download it again any time with the button below.")}
+</td></tr>
+<tr><td align="center" style="padding:8px 40px 28px"><img src="${origin}/email/wedding-flower-calendar-cover.jpg" width="240" alt="The Willow &amp; Peony Wedding Flower Calendar" style="display:block;width:240px;height:auto;border:1px solid #e6e2da"></td></tr>
+<tr><td align="center" style="padding:0 40px 32px"><a href="${pdfUrl}" style="display:inline-block;background:#1a1815;color:#ffffff;text-decoration:none;font-family:Arial,sans-serif;font-size:12px;letter-spacing:2px;text-transform:uppercase;padding:16px 30px">Download your calendar</a></td></tr>
+<tr><td style="padding:0 40px 8px">
+${p("Start with your wedding month: you&rsquo;ll find twelve flowers at their best in that season, followed by the flowers available all year round and a few of my personal favourites.")}
+${p(escapeHtml(consultLine))}
+${p("With love,<br><span style=\"font-style:italic;color:#1a1815\">Ivy</span>")}
+</td></tr>
+<tr><td style="padding:20px 40px 32px;border-top:1px solid #e6e2da">
+<p style="margin:0;font-family:Arial,sans-serif;font-size:12px;line-height:1.7;color:#8a847b">Willow &amp; Peony · Wedding &amp; event florist, Auckland<br><a href="${origin}/" style="color:#8a847b">willowandpeony.co.nz</a> · <a href="https://www.instagram.com/willowandpeony.nz" style="color:#8a847b">Instagram</a><br>You&rsquo;re receiving this one-off email because you requested the calendar on our website.</p>
+</td></tr>
+</table></td></tr></table>
+</body></html>`;
+  return { text, html, pdfUrl };
+}
+
+function recordInKlaviyo(env, { email, firstName, lastName, consult }) {
+  if (!env.KLAVIYO_COMPANY_ID) return Promise.resolve();
+  return fetch(`https://a.klaviyo.com/client/events/?company_id=${env.KLAVIYO_COMPANY_ID}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", revision: "2024-10-15" },
+    body: JSON.stringify({
+      data: {
+        type: "event",
+        attributes: {
+          properties: { source: "Wedding Flower Calendar", consultation_requested: consult },
+          metric: { data: { type: "metric", attributes: { name: "Requested Wedding Flower Calendar" } } },
+          profile: {
+            data: {
+              type: "profile",
+              attributes: { email, first_name: firstName || undefined, last_name: lastName || undefined },
+            },
+          },
+        },
+      },
+    }),
+  }).catch(() => {});
+}
+
+async function handleCalendar(request, env, ctx) {
+  let data;
+  try {
+    data = await request.json();
+  } catch {
+    return json({ error: "invalid request" }, 400);
+  }
+  if (data._gotcha) return json({ ok: true, emailed: true });
+
+  const email = clean(data.email, MAX.email);
+  if (!isEmail(email)) return json({ error: "a valid email is required" }, 400);
+  if (!(await verifyTurnstile(request, env, data.turnstileToken))) {
+    return json({ error: "verification failed" }, 400);
+  }
+
+  const firstName = clean(data.firstName, MAX.name);
+  const lastName = clean(data.lastName, MAX.name);
+  const consult = data.consult === true || data.consult === "on" || data.consult === "true";
+  const origin = siteOrigin(request);
+
+  ctx.waitUntil(recordInKlaviyo(env, { email, firstName, lastName, consult }));
+
+  if (!env.RESEND_API_KEY) return json({ ok: true, emailed: false });
+
+  const { text, html, pdfUrl } = calendarEmail({ firstName, consult, origin });
+  let emailed = false;
+  try {
+    await sendEmail(env, {
+      from: `Ivy at Willow & Peony <${env.CALENDAR_FROM}>`,
+      to: [email],
+      reply_to: env.ENQUIRY_TO,
+      subject: "Your Wedding Flower Calendar is here",
+      text,
+      html,
+      attachments: [{ path: pdfUrl, filename: "Willow-and-Peony-Wedding-Flower-Calendar.pdf" }],
+    });
+    emailed = true;
+  } catch (e) {
+    console.log("calendar email failed", e.message);
+  }
+
+  if (consult) {
+    const name = [firstName, lastName].filter(Boolean).join(" ");
+    ctx.waitUntil(
+      sendEmail(env, {
+        from: `Willow & Peony Website <${env.ENQUIRY_FROM}>`,
+        to: [env.ENQUIRY_TO],
+        reply_to: name ? `${name.replace(/[<>"]/g, "")} <${email}>` : email,
+        subject: `Consultation request (calendar)${name ? ` — ${name}` : ""}`,
+        text: [
+          "Someone downloaded the Wedding Flower Calendar and would like a free consultation.",
+          "",
+          ...(name ? [`Name: ${name}`] : []),
+          `Email: ${email}`,
+          "",
+          "Reply to this email to contact them directly.",
+        ].join("\n"),
+      }).catch((e) => console.log("consult notify failed", e.message)),
+    );
+  }
+
+  return json({ ok: true, emailed });
 }
 
 // Live Instagram feed for the home page grid. Requires the INSTAGRAM_TOKEN
@@ -158,6 +332,10 @@ const worker = {
     const url = new URL(request.url);
     if (url.pathname === "/api/enquiry") {
       if (request.method === "POST") return handleEnquiry(request, env);
+      return new Response("Method not allowed", { status: 405 });
+    }
+    if (url.pathname === "/api/calendar") {
+      if (request.method === "POST") return handleCalendar(request, env, ctx);
       return new Response("Method not allowed", { status: 405 });
     }
     if (url.pathname === "/api/instagram") {

@@ -38,11 +38,13 @@ a new descriptive name.
 1. Add `willowandpeony.co.nz` as a zone in the t@tonyhou.com Cloudflare
    account; update the nameservers at the registrar to the ones Cloudflare
    assigns (this moves DNS off Shopify).
-1b. **Email Routing** (makes the enquiry form live): zone → Email → Email
-   Routing → enable; add `hello@willowandpeony.co.nz` as a destination
-   address and click the verification email; create a route or catch-all so
-   hello@ forwards wherever Ivy reads mail. The form then sends via the
-   Worker with zero third parties. Test with a real submission.
+1b. **Email (Resend, free tier)** makes the enquiry form and calendar
+   email live: verify `willowandpeony.co.nz` in Resend (its "Sign in to
+   Cloudflare" button adds three records on subdomains only), create a
+   sending-only API key, and add it as the `RESEND_API_KEY` secret on the
+   worker. Test with a real submission. NEVER enable Cloudflare Email
+   Routing on this zone: it rewrites the apex MX and breaks Ivy's Google
+   Workspace inbox.
 2. Workers & Pages → willowandpeony → Settings → Domains & Routes → add
    custom domains `willowandpeony.co.nz` and `www.willowandpeony.co.nz`.
 3. Verify the 52 legacy Shopify URLs 301 correctly on the live domain.
@@ -135,16 +137,27 @@ is retired. The system:
 - **Static export** (`output: "export"`) — no server code, no API routes
   (route handlers must stay `force-static`), no next/image optimizer. GitHub
   Pages serves flat files.
-- Forms: `EnquiryForm` posts JSON to the site's own Worker
-  (`POST /api/enquiry` in `worker/index.js`), which emails the studio via
-  Cloudflare Email Routing's free `send_email` binding (wrangler.jsonc:
-  `SEND_EMAIL`, vars `ENQUIRY_TO`/`ENQUIRY_FROM`). 100% Cloudflare, $0.
-  Until the zone + Email Routing are live the Worker answers 503 and the
-  form falls back to a pre-filled mail draft. Optional hardening once live:
-  create a Turnstile widget (free) and `wrangler secret put TURNSTILE_SECRET`
-  — the Worker enforces it automatically when the secret exists.
-- Calendar signup posts the email to Klaviyo (company id in `content/site.ts`)
-  client-side, then routes to the download page. No Klaviyo JS is loaded.
+- Email: one Resend helper in `worker/index.js` sends everything
+  (`RESEND_API_KEY` secret; vars `ENQUIRY_TO`, `ENQUIRY_FROM`,
+  `CALENDAR_FROM` in wrangler.jsonc).
+  - `POST /api/enquiry` (EnquiryForm) emails the studio. Without the key it
+    answers 503 and the form falls back to a pre-filled mail draft.
+  - `POST /api/calendar` (CalendarSignup: first/last name, email,
+    consultation tickbox) emails the calendar PDF to the visitor (attached +
+    download button, template in `calendarEmail()`), notifies hello@ when a
+    consultation is requested, and records a "Requested Wedding Flower
+    Calendar" event in Klaviyo (`KLAVIYO_COMPANY_ID`, public id; no list
+    subscription, so no marketing consent is implied). The visitor is then
+    sent to `/wedding-flower-calendar/download/` (`?sent=1` shows the
+    "emailed you a copy" note). Without the key: `emailed:false`, download
+    page only.
+  - Optional hardening: a free Turnstile widget + `TURNSTILE_SECRET`; both
+    endpoints enforce it automatically when the secret exists.
+  - The calendar PDF (`public/downloads/`) was recompressed, visually identical,
+    from 9.3 MB to 4.5 MB (PyMuPDF `rewrite_images` quality 85, no
+    downsampling; downsampling broke the circular flower images). Preview
+    images in `assets/img-src/wedding-flower-calendar-*.png` are rendered
+    from the PDF; re-render them if Ivy updates the calendar.
 - Keep third-party scripts at zero. Page speed is a feature.
 
 ## Commands

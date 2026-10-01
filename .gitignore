@@ -42,3 +42,6 @@ next-env.d.ts
 
 # local preview config
 /.claude/launch.json
+
+# local wrangler dev state
+.wrangler/

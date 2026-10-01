@@ -27,22 +27,16 @@
   },
   "vars": {
     "ENQUIRY_TO": "hello@willowandpeony.co.nz",
-    // From lives on the mail. subdomain: Email Routing is enabled ONLY for
-    // that subdomain, so the apex MX (Google Workspace — Ivy's real inbox)
-    // is never touched. Do not enable Email Routing on the apex domain.
-    "ENQUIRY_FROM": "enquiries@mail.willowandpeony.co.nz"
-  },
-  // Free Cloudflare Email Routing sending. Requires (dashboard, one-time):
-  //  1. Zone → Email Routing → Settings → Subdomains → add "mail"
-  //     (Cloudflare adds MX/SPF for mail.willowandpeony.co.nz only).
-  //  2. Destination addresses → add hello@willowandpeony.co.nz → Ivy clicks
-  //     the verification link (arrives in her Google mailbox).
-  // Until then the Worker returns an error and the form falls back to a
-  // pre-filled mail draft, so no enquiry is ever lost.
-  "send_email": [
-    {
-      "name": "SEND_EMAIL",
-      "allowed_destination_addresses": ["hello@willowandpeony.co.nz"]
-    }
-  ]
+    "ENQUIRY_FROM": "enquiries@willowandpeony.co.nz",
+    "CALENDAR_FROM": "hello@willowandpeony.co.nz",
+    // Klaviyo public site id (safe to expose): calendar signups are recorded
+    // as a "Requested Wedding Flower Calendar" event on the visitor's profile.
+    "KLAVIYO_COMPANY_ID": "UDXJCc"
+  }
+  // Email is sent through Resend (free tier): set the RESEND_API_KEY secret
+  // in the Cloudflare dashboard after verifying willowandpeony.co.nz in
+  // Resend. Resend's DNS records live on subdomains only (send.,
+  // resend._domainkey), so the Google Workspace MX on the apex is untouched.
+  // Do NOT enable Cloudflare Email Routing on this zone: it rewrites the apex
+  // MX and would break Ivy's Gmail inbox.
 }
