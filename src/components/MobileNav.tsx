@@ -60,6 +60,9 @@ export default function MobileNav({ light = false }: { light?: boolean }) {
         </span>
       </button>
 
+      {/* Drawer links don't prefetch: the closed drawer sits just off-canvas,
+          inside Next's prefetch margin, so every phone visit would otherwise
+          fetch every page (and its hero image) before this page's own LCP. */}
       {/* Backdrop + drawer are portalled to <body> — the blurred sticky
           header would otherwise become their containing block. */}
       {mounted &&
@@ -82,7 +85,7 @@ export default function MobileNav({ light = false }: { light?: boolean }) {
               }`}
             >
               <div className="flex items-center justify-between border-b border-hairline px-6 py-5">
-                <Link href="/" onClick={() => setOpen(false)} aria-label="Willow & Peony — home">
+                <Link href="/" prefetch={false} onClick={() => setOpen(false)} aria-label="Willow & Peony — home">
                   <img
                     src={withBase("/brand/willow-and-peony-logo.png")}
                     alt="Willow & Peony"
@@ -105,6 +108,7 @@ export default function MobileNav({ light = false }: { light?: boolean }) {
                   <Link
                     key={item.href}
                     href={item.href}
+                    prefetch={false}
                     onClick={() => setOpen(false)}
                     className="block border-b border-hairline py-4 font-serif text-[17px] font-light tracking-[-0.01em] text-ink"
                   >
@@ -113,6 +117,7 @@ export default function MobileNav({ light = false }: { light?: boolean }) {
                 ))}
                 <Link
                   href="/wedding-flower-calendar/"
+                  prefetch={false}
                   onClick={() => setOpen(false)}
                   className="mt-5 block text-sm text-ink-soft underline underline-offset-4 hover:text-ink"
                 >
@@ -120,6 +125,7 @@ export default function MobileNav({ light = false }: { light?: boolean }) {
                 </Link>
                 <Link
                   href="/contact/"
+                  prefetch={false}
                   onClick={() => setOpen(false)}
                   className="btn-solid mt-6 block text-center"
                 >
