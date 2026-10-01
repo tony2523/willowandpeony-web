@@ -4,7 +4,7 @@ import { pageMetadata, faqJsonLd, breadcrumbJsonLd } from "@/lib/seo";
 import { faqs } from "../../../content/site";
 
 export const metadata: Metadata = pageMetadata({
-  title: "FAQ — Wedding & Event Flower Questions",
+  title: "FAQ: Wedding & Event Flower Questions",
   description:
     "Answers to common questions about Willow & Peony's wedding and event florals in Auckland: pricing, booking, setup and seasonal flowers.",
   path: "/faq/",

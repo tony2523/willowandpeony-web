@@ -37,7 +37,7 @@ export default function LatestWork({
               <div className="overflow-hidden bg-paper">
                 <Pic
                   name={post.cover}
-                  alt={post.title}
+                  alt=""
                   sizes="(max-width: 768px) 100vw, 50vw"
                   aspect="4/3"
                   className="h-auto w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02]"

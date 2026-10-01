@@ -17,6 +17,8 @@ export type Venue = {
   website: string;
   /** Short intro for the index card + guide opening. */
   intro: string;
+  /** Search-result description (≤155 characters). */
+  metaDescription: string;
   /** What works beautifully here — florist's perspective. */
   whatWorks: string;
   floristNotes: string[];
@@ -39,6 +41,8 @@ export type Venue = {
 export const venues: Venue[] = [
   {
     slug: "allely-estate",
+    metaDescription:
+      "Wedding flowers at Allely Estate, Kumeū: a florist's guide to the heritage villa, marquee and gardens, with a real wedding and what works beautifully there.",
     name: "Allely Estate",
     area: "Kumeū · garden estate",
     location: "Kumeū, West Auckland",
@@ -85,6 +89,8 @@ export const venues: Venue[] = [
   },
   {
     slug: "the-hotel-britomart",
+    metaDescription:
+      "Wedding flowers at The Hotel Britomart: a florist's guide to its intimate city event spaces, with a real all-white wedding and what works beautifully there.",
     name: "The Hotel Britomart",
     area: "CBD · modern hotel",
     location: "Britomart, Auckland CBD",
@@ -131,6 +137,8 @@ export const venues: Venue[] = [
   },
   {
     slug: "rydges-formosa",
+    metaDescription:
+      "Wedding flowers at Rydges Formosa, Beachlands: a florist's guide to its Hauraki Gulf views and event spaces, with a real winter wedding and styling ideas.",
     name: "Rydges Formosa",
     area: "Beachlands · golf resort",
     location: "Beachlands, South-East Auckland",
@@ -177,6 +185,8 @@ export const venues: Venue[] = [
   },
   {
     slug: "the-officers-mess",
+    metaDescription:
+      "Wedding flowers at The Officers Mess, Fort Takapuna: a florist's guide to this heritage venue above Narrow Neck Beach, with a real coastal wedding.",
     name: "The Officers Mess",
     area: "Takapuna · coastal heritage",
     location: "Fort Takapuna, between Takapuna and Devonport",
@@ -223,6 +233,8 @@ export const venues: Venue[] = [
   },
   {
     slug: "bridgewater-estate",
+    metaDescription:
+      "Wedding flowers at Bridgewater Estate, Kaukapakapa: a florist's guide to its native forest ceremony space and lawns, with a real wedding and styling notes.",
     name: "Bridgewater Estate",
     area: "Kaukapakapa · country",
     location: "Kaukapakapa, North-West Auckland",
@@ -269,6 +281,8 @@ export const venues: Venue[] = [
   },
   {
     slug: "the-brigham",
+    metaDescription:
+      "Wedding flowers at The Brigham, Whenuapai: a florist's guide to its garden ceremony and indoor reception spaces, with a real garden wedding and ideas.",
     name: "The Brigham",
     area: "Whenuapai · garden restaurant",
     location: "Whenuapai, North-West Auckland",

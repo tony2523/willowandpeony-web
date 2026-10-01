@@ -8,7 +8,7 @@
  *   npm run images
  *
  * Outputs (committed to the repo so CI builds stay fast):
- *   public/images/<name>-{480,960,1600}w.webp
+ *   public/images/<name>-{480,768,960,1200,1600}w.webp
  *   public/images/<name>-og.jpg
  *   src/lib/image-manifest.json
  */
@@ -19,8 +19,9 @@ import sharp from "sharp";
 const SRC = "assets/img-src";
 const OUT = "public/images";
 const MANIFEST = "src/lib/image-manifest.json";
-const WIDTHS = [480, 960, 1600];
-const QUALITY = { 480: 70, 960: 72, 1600: 74 };
+// 768 and 1200 match 2x/3x phone screens, so phones don't jump to 960/1600.
+const WIDTHS = [480, 768, 960, 1200, 1600];
+const QUALITY = { 480: 70, 768: 72, 960: 72, 1200: 73, 1600: 74 };
 
 fs.mkdirSync(OUT, { recursive: true });
 const manifest = fs.existsSync(MANIFEST) ? JSON.parse(fs.readFileSync(MANIFEST, "utf8")) : {};
@@ -44,30 +45,35 @@ async function processOne(file) {
   if (sizes.length === 0) sizes.push(Math.min(w, 480) || 480);
 
   const existing = manifest[name];
-  const allExist =
-    existing &&
-    existing.w === w &&
-    sizes.every((s) => fs.existsSync(path.join(OUT, `${name}-${s}w.webp`))) &&
-    fs.existsSync(path.join(OUT, `${name}-og.jpg`));
-  if (allExist) {
+  // Only encode what's missing; keep any extra hand-made sizes (e.g. the
+  // home hero's 1800w/2400w) that are already on disk and in the manifest.
+  const missing = sizes.filter((s) => !fs.existsSync(path.join(OUT, `${name}-${s}w.webp`)));
+  const ogMissing = !fs.existsSync(path.join(OUT, `${name}-og.jpg`));
+  if (existing && existing.w === w && missing.length === 0 && !ogMissing) {
     skipped++;
     return;
   }
 
-  for (const size of sizes) {
+  for (const size of missing) {
     await sharp(srcPath, { failOn: "none" })
       .rotate()
       .resize({ width: size, withoutEnlargement: true })
       .webp({ quality: QUALITY[size] ?? 72 })
       .toFile(path.join(OUT, `${name}-${size}w.webp`));
   }
-  await sharp(srcPath, { failOn: "none" })
-    .rotate()
-    .resize({ width: 1200, height: 630, fit: "cover", position: "attention" })
-    .jpeg({ quality: 76, mozjpeg: true })
-    .toFile(path.join(OUT, `${name}-og.jpg`));
+  if (ogMissing) {
+    await sharp(srcPath, { failOn: "none" })
+      .rotate()
+      .resize({ width: 1200, height: 630, fit: "cover", position: "attention" })
+      .jpeg({ quality: 76, mozjpeg: true })
+      .toFile(path.join(OUT, `${name}-og.jpg`));
+  }
 
-  manifest[name] = { w, h, sizes };
+  const kept = (existing?.w === w ? existing.sizes : []).filter((s) =>
+    fs.existsSync(path.join(OUT, `${name}-${s}w.webp`)),
+  );
+  const merged = [...new Set([...kept, ...sizes])].sort((a, b) => a - b);
+  manifest[name] = { w, h, sizes: merged };
   done++;
 }
 

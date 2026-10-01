@@ -1,10 +1,11 @@
 ---
 title: "Sculptural Event Flowers for Unified Commerce Assembly 2026"
-description: "For Unified Commerce Assembly 2026, hosted by Moustache Republic in partnership with NZ Post, we created two contemporary floral arrangements designed to bring colour, texture and a little of the unexpected into the event space."
+description: "Two contemporary floral arrangements for Unified Commerce Assembly 2026, hosted by Moustache Republic with NZ Post, bringing colour and texture to the room."
 date: "2026-09-08"
 category: "events"
 venue: "Auckland"
 cover: "sculptural-event-flowers-for-unified-commerce-assembly-2026-cover"
+seoTitle: "Event Flowers for Unified Commerce Assembly 2026"
 ---
 
 A look inside the sculptural floral styling we created for Moustache Republic’s Unified Commerce Assembly 2026, featuring an unexpected combination of anthuriums, orchids, spider gerberas, limes and cascading red radishes.

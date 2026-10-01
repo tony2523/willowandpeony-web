@@ -1,6 +1,6 @@
 ---
 title: "Scarlet Styled Shoot at The Narrows Landing"
-description: "Scarlet Reverie: A Bold &amp; Moody Styled Shoot at The Narrows Landing Set against the elegant backdrop of The Narrows Landing in Hamilton, Waikato, this styled shoot was a celebration of opulence, romance, and fearless colour."
+description: "Scarlet Reverie: a bold, moody styled shoot at The Narrows Landing in Hamilton, Waikato, celebrating opulence, romance and fearless colour in flowers."
 date: "2025-07-30"
 category: "weddings"
 venue: "The Narrows Landing, Hamilton"

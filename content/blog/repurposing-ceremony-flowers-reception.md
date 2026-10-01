@@ -4,6 +4,8 @@ description: "How a florist moves your ceremony flowers into the reception: what
 date: "2026-07-10"
 tag: "Behind the design"
 cover: "ceremony-flowers-repurposed-in-front-of-the-sweetheart-table"
+seoTitle: "Repurposing Ceremony Flowers at Your Reception"
+seoDescription: "How a florist moves your ceremony flowers into the reception: what repurposes well, how the timing works, and why nothing should be seen only once."
 ---
 
 There is a moment at almost every wedding I style that guests never see. The ceremony ends, everyone drifts toward champagne, and I slip back into the empty room to carry the flowers to their second life.

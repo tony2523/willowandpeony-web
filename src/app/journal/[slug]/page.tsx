@@ -23,8 +23,8 @@ export async function generateMetadata({
   const article = getArticle(slug);
   if (!article) return {};
   return pageMetadata({
-    title: article.title,
-    description: article.description,
+    title: article.seoTitle ?? article.title,
+    description: article.seoDescription ?? article.description,
     path: `/journal/${article.slug}/`,
     ogImage: article.cover,
     type: "article",
@@ -142,7 +142,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
                   <div className="overflow-hidden bg-paper">
                     <Pic
                       name={a.cover}
-                      alt={a.title}
+                      alt=""
                       sizes="(max-width: 640px) 100vw, 50vw"
                       aspect="4/3"
                       className="h-auto w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02]"

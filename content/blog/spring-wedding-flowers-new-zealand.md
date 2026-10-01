@@ -4,6 +4,8 @@ description: "A florist's guide to spring wedding flowers in New Zealand: what b
 date: "2026-09-15"
 tag: "Seasonal"
 cover: "garden-ceremony-flowers-at-the-brigham-auckland-with-delphiniums-white"
+seoTitle: "Spring Wedding Flowers NZ: What's in Season"
+seoDescription: "A florist's guide to spring wedding flowers in New Zealand: what blooms from September to November, and why seasonal flowers look better and cost less."
 ---
 
 Spring is my favourite season in the studio. The first sweet peas arrive smelling like childhood, the ranunculus open a little more every morning, and suddenly every bucket in the cool room looks like a celebration waiting to happen.

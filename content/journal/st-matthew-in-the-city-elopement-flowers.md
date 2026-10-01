@@ -1,10 +1,11 @@
 ---
 title: "A Romantic New Zealand Elopement at St Matthew-in-the-City"
-description: "For Kaelan and Tongtong, their wedding was more than a single day. It was the beginning of a journey through New Zealand—starting with an intimate elopement ceremony at St Matthew-in-the-City in Auckland before continuing to the South Island for travel and more gorgeous photographs. Beneath the church’s soaring neo-Got"
+description: "Kaelan and Tongtong's intimate elopement at St Matthew-in-the-City, Auckland, the first chapter of a wedding journey through New Zealand."
 date: "2026-08-24"
 category: "weddings"
 venue: "St Matthew-in-the-City, Auckland"
 cover: "a-romantic-new-zealand-elopement-at-st-matthew-in-the-city-cover"
+seoTitle: "Elopement Flowers at St Matthew-in-the-City"
 ---
 
 For Kaelan and Tongtong, their wedding was more than a single day. It was the beginning of a journey through New Zealand—starting with an intimate elopement ceremony at St Matthew-in-the-City in Auckland before continuing to the South Island for travel and more gorgeous photographs.

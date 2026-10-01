@@ -10,9 +10,9 @@ import { pageMetadata, serviceJsonLd, breadcrumbJsonLd } from "@/lib/seo";
 import { getPostsByCategory } from "@/lib/journal";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Corporate & Event Florist Auckland | Event Flowers",
+  title: "Corporate & Event Florist Auckland",
   description:
-    "Impactful event florals in Auckland — corporate events, product launches, gala dinners and private celebrations. Boutique floral styling designed to transform spaces and leave a lasting impression.",
+    "Event flowers in Auckland for corporate events, product launches, gala dinners and private celebrations. Boutique floral styling that transforms a room.",
   path: "/event-flowers-auckland/",
   ogImage: "event-flowers-auckland-uca-17",
 });
@@ -151,9 +151,7 @@ export default function EventsPage() {
             {offers.map((o) => (
               <div key={o.number} className="border border-hairline bg-white px-6 py-5">
                 <div className="flex items-baseline gap-4">
-                  <span className="font-serif text-[24px] font-light text-hairline" aria-hidden>
-                    {o.number}
-                  </span>
+                  <span aria-hidden data-n={o.number} className="font-serif text-[24px] font-light text-hairline before:content-[attr(data-n)]" />
                   <h3 className="font-serif text-[19px] font-normal text-ink">{o.title}</h3>
                 </div>
                 <p className="mt-2 pl-11 text-[13.5px] leading-relaxed text-ink-soft">{o.body}</p>

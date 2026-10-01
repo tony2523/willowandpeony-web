@@ -5,12 +5,16 @@ import Pic from "@/components/Pic";
 import Hero from "@/components/Hero";
 import JsonLd from "@/components/JsonLd";
 import { pageMetadata, breadcrumbJsonLd } from "@/lib/seo";
+import { imageOgUrl } from "@/lib/images";
 import { venues, getVenue } from "../../../../content/venues";
 import { site } from "../../../../content/site";
 
 export function generateStaticParams() {
   return venues.map((v) => ({ slug: v.slug }));
 }
+
+/** Venue facts were researched and the guides published on this date. */
+const VENUE_GUIDES_PUBLISHED = "2026-10-01";
 
 export async function generateMetadata({
   params,
@@ -21,8 +25,8 @@ export async function generateMetadata({
   const venue = getVenue(slug);
   if (!venue) return {};
   return pageMetadata({
-    title: `Wedding Flowers at ${venue.name} | Venue Guide`,
-    description: `${venue.intro} Florist's notes, real weddings and what works beautifully at ${venue.name} — from Willow & Peony, Auckland wedding florist.`,
+    title: `Wedding Flowers at ${venue.name}`,
+    description: venue.metaDescription,
     path: `/venues/${venue.slug}/`,
     ogImage: venue.hero,
     type: "article",
@@ -55,6 +59,10 @@ export default async function VenueGuidePage({
             headline: `Wedding flowers at ${venue.name}`,
             description: venue.intro,
             url: `${site.domain}/venues/${venue.slug}/`,
+            image: imageOgUrl(venue.hero, site.domain),
+            datePublished: VENUE_GUIDES_PUBLISHED,
+            dateModified: VENUE_GUIDES_PUBLISHED,
+            inLanguage: "en-NZ",
             author: { "@type": "Person", name: site.founder },
             publisher: { "@id": `${site.domain}/#florist` },
             about: {
@@ -190,7 +198,7 @@ export default async function VenueGuidePage({
         <div className="mx-auto grid max-w-[1280px] items-center gap-10 px-5 py-16 sm:px-6 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:gap-16 md:py-20">
           <Pic
             name={venue.post.cover}
-            alt={venue.post.title}
+            alt={`Wedding flowers from ${venue.post.couple}'s day at ${venue.name}`}
             sizes="(max-width: 768px) 100vw, 50vw"
             aspect="4/3"
             className="h-auto w-full object-cover"

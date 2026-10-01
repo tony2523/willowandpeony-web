@@ -8,6 +8,8 @@ import { redirects } from "../../content/site";
 export type Post = {
   slug: string;
   title: string;
+  /** Shorter search-result title when the display title is long. */
+  seoTitle?: string;
   description: string;
   date: string; // ISO yyyy-mm-dd
   category: "weddings" | "events";
@@ -68,6 +70,7 @@ export function getPosts(): Post[] {
     return {
       slug,
       title: data.title as string,
+      seoTitle: (data.seoTitle as string) || undefined,
       description: data.description as string,
       date: data.date as string,
       category: data.category as "weddings" | "events",

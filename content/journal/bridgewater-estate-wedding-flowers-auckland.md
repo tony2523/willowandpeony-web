@@ -1,10 +1,11 @@
 ---
 title: "A Soft and Sculptural Wedding at Bridgewater Estate Auckland"
-description: "A soft and sculptural wedding at Bridgewater Estate Auckland, featuring blush and ivory wedding flowers, a modern bridal bouquet with roses, anthuriums and orchids, and romantic reception styling by Willow & Peony."
+description: "A soft, sculptural Bridgewater Estate wedding: blush and ivory flowers, a modern bouquet of roses, anthuriums and orchids, and romantic reception styling."
 date: "2025-06-24"
 category: "weddings"
 venue: "Bridgewater Country Estate, Auckland"
 cover: "a-soft-and-sculptural-wedding-at-bridgewater-estate-auckland-cover"
+seoTitle: "Soft, Sculptural Wedding at Bridgewater Estate"
 ---
 
 Yue and Vern’s wedding at Bridgewater Estate Auckland was soft, modern and quietly elegant. Their floral design featured blush and ivory roses, sculptural anthuriums, delicate Phalaenopsis orchids, clustered bud vases and romantic candlelit reception styling.

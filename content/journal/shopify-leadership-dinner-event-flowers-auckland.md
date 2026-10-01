@@ -1,10 +1,11 @@
 ---
 title: "Shopify x Moustache Republic - E-commerce Leadership Dinner"
-description: "Venue: The French Café, Auckland For this exclusive E-commerce Leadership Dinner co-hosted by Shopify and Moustache Republic, Willow &amp; Peony was commissioned to craft a floral styling concept that was elegant, original, and brand-aligned."
+description: "Floral styling for an e-commerce leadership dinner co-hosted by Shopify and Moustache Republic at The French Café, Auckland: elegant, original, on-brand."
 date: "2025-04-07"
 category: "events"
 venue: "The French Café, Auckland"
 cover: "shopify-x-moustache-republic-e-commerce-leadership-dinner-cover"
+seoTitle: "Shopify x Moustache Republic Leadership Dinner"
 ---
 
 ![Shopify x Moustache Republic - E-commerce Leadership Dinner — florals by Willow & Peony](/images/shopify-leadership-dinner-event-flowers--dsc03581)
@@ -17,7 +18,7 @@ Set in the refined ambience of The French Café, the floral design was thoughtfu
 
 ![Shopify x Moustache Republic - E-commerce Leadership Dinner — florals by Willow & Peony](/images/shopify-leadership-dinner-event-flowers--dsc03596)
 
-### Floral Styling with Layers of Intent
+## Floral Styling with Layers of Intent
 
 At the heart of each table sat a lush centrepiece arrangement composed of:
 - White lisianthus
@@ -38,7 +39,7 @@ Flanking this centrepiece on both sides were Ikebana-style arrangements, designe
 
 Their asymmetrical forms and deliberate use of space paid homage to traditional Ikebana principles, introducing a quiet drama that encouraged guests to pause and appreciate the art of floral storytelling.
 
-### A Sensory Layer: Fresh Fruit Meets Florals
+## A Sensory Layer: Fresh Fruit Meets Florals
 
 To further enhance the table’s sensory appeal and deepen the visual narrative, we incorporated fresh seasonal fruits—limes, lemons, green grapes, figs, and pears—nestled among the florals. These elements added natural texture, warmth, and abundance, creating a setting that felt both inviting and indulgent.
 
@@ -50,7 +51,7 @@ A subtle but thoughtful branding detail: each pear was finished with a black rib
 
 ![Shopify x Moustache Republic - E-commerce Leadership Dinner — florals by Willow & Peony](/images/shopify-leadership-dinner-event-flowers--img-2587)
 
-### Design that Evokes, Connects, and Elevates
+## Design that Evokes, Connects, and Elevates
 
 This floral styling project was a beautiful example of our approach at Willow & Peony: crafting florals that do more than decorate—they evoke, connect, and elevate. From intentional flower choices to meaningful visual cues, every detail was designed to enrich the guest experience and reflect the values of the brands at the table.
 

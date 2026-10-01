@@ -5,7 +5,7 @@ import { pageMetadata } from "@/lib/seo";
 export const metadata: Metadata = pageMetadata({
   title: "Terms & Conditions",
   description:
-    "The terms for booking wedding and event flowers with Willow & Peony, Auckland florist: proposals, payment, changes, seasonal flowers, delivery, setup and hire items.",
+    "The terms for booking wedding and event flowers with Willow & Peony, Auckland florist: proposals, payments, changes, seasonal flowers, setup and hire.",
   path: "/terms-of-service/",
 });
 

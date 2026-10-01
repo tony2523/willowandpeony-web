@@ -8,7 +8,7 @@
   --color-paper: #f7f5f0;
   --color-ink: #1a1815;
   --color-ink-soft: #57524b;
-  --color-muted: #8a847b;
+  --color-muted: #756f66; /* AA: 4.97:1 on white, 4.57:1 on paper */
   --color-hairline: #e6e2da;
   --color-rose: #1a1815;
   --color-rose-deep: #1a1815;

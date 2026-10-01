@@ -7,6 +7,9 @@ import { getImage, imageSrc, imageSrcSet } from "./images";
 export type Article = {
   slug: string;
   title: string;
+  /** Search-result title/description when the display ones run long. */
+  seoTitle?: string;
+  seoDescription?: string;
   description: string;
   date: string; // ISO yyyy-mm-dd
   tag: string; // e.g. "Seasonal", "Planning", "Behind the design"
@@ -55,6 +58,8 @@ export function getArticles(): Article[] {
     return {
       slug,
       title: data.title as string,
+      seoTitle: (data.seoTitle as string) || undefined,
+      seoDescription: (data.seoDescription as string) || undefined,
       description: data.description as string,
       date: data.date as string,
       tag: (data.tag as string) || "Journal",

@@ -47,7 +47,7 @@ export default function TestimonialSlider({ kind }: { kind?: "wedding" | "event"
         </blockquote>
       </div>
 
-      <div className="mt-8 flex items-center justify-center gap-6">
+      <div className="mt-8 flex items-center justify-center gap-4">
         <button
           type="button"
           onClick={prev}
@@ -56,7 +56,10 @@ export default function TestimonialSlider({ kind }: { kind?: "wedding" | "event"
         >
           <span aria-hidden>←</span>
         </button>
-        <div className="flex gap-2" role="tablist" aria-label="Reviews">
+        <p className="min-w-[3.5rem] text-center text-[12px] tracking-[0.14em] text-muted sm:hidden">
+          {index + 1} / {items.length}
+        </p>
+        <div className="hidden sm:flex" role="group" aria-label="Choose a review">
           {items.map((_, i) => (
             <button
               key={i}
@@ -64,10 +67,15 @@ export default function TestimonialSlider({ kind }: { kind?: "wedding" | "event"
               onClick={() => setIndex(i)}
               aria-label={`Review ${i + 1}`}
               aria-current={i === index}
-              className={`h-1.5 w-1.5 rounded-full transition-colors ${
-                i === index ? "bg-ink" : "bg-hairline"
-              }`}
-            />
+              className="group flex h-6 w-6 items-center justify-center"
+            >
+              <span
+                aria-hidden
+                className={`h-1.5 w-1.5 rounded-full transition-colors ${
+                  i === index ? "bg-ink" : "bg-hairline group-hover:bg-muted"
+                }`}
+              />
+            </button>
           ))}
         </div>
         <button

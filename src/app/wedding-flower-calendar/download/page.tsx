@@ -82,9 +82,7 @@ export default function CalendarDownloadPage() {
         <div className="mt-12 grid gap-6 sm:grid-cols-3">
           {next.map((n, i) => (
             <div key={n.title} className="border border-hairline p-7">
-              <span className="font-serif text-[30px] leading-none font-light text-hairline" aria-hidden>
-                {String(i + 1).padStart(2, "0")}
-              </span>
+              <span aria-hidden data-n={String(i + 1).padStart(2, "0")} className="font-serif text-[30px] leading-none font-light text-hairline before:content-[attr(data-n)]" />
               <h3 className="mt-3 font-serif text-[21px] font-light text-ink">{n.title}</h3>
               <p className="mt-2 text-[13.5px] leading-relaxed text-ink-soft">{n.body}</p>
               <Link href={n.link.href} className="t-link mt-6 inline-block text-ink">

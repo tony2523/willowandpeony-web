@@ -7,9 +7,9 @@ import { pageMetadata, breadcrumbJsonLd } from "@/lib/seo";
 import { site } from "../../../content/site";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Free Wedding Flower Calendar — NZ Seasonal Blooms",
+  title: "Free NZ Wedding Flower Calendar",
   description:
-    "Download the free Willow & Peony Wedding Flower Calendar: a month-by-month guide to New Zealand's seasonal wedding flowers, so you know exactly what will be in bloom on your date.",
+    "Download our free Wedding Flower Calendar: a month-by-month guide to New Zealand's seasonal wedding flowers, so you know what will bloom on your date.",
   path: "/wedding-flower-calendar/",
   ogImage: "wedding-flower-calendar-cover",
 });

@@ -1,6 +1,6 @@
 ---
 title: "Elevating Others Dinner Event by The Gut Group"
-description: "Elevating Others — A night of beauty, purpose, and impact.Willow &amp; Peony was honoured to provide the florals for Elevating Others, a powerful fundraising event by The Gut Group at the stunning Park Haytt Auckland Hotel."
+description: "Florals for Elevating Others, a fundraising gala dinner by The Gut Group at Park Hyatt Auckland: a night of beauty, purpose and impact."
 date: "2025-07-30"
 category: "events"
 venue: "Park Hyatt Auckland"
@@ -9,7 +9,7 @@ cover: "elevating-others-dinner-event-by-the-gut-group-cover"
 
 Elevating Others — A night of beauty, purpose, and impact.
 
-Willow & Peony was honoured to provide the florals for Elevating Others, a powerful fundraising event by The Gut Group at the stunning Park Haytt Auckland Hotel.
+Willow & Peony was honoured to provide the florals for Elevating Others, a powerful fundraising event by The Gut Group at the stunning Park Hyatt Auckland Hotel.
 
 ![Elevating Others Dinner Event by The Gut Group — florals by Willow & Peony](/images/elevating-others-gala-dinner-flowers-par-elevating-others-4)
 

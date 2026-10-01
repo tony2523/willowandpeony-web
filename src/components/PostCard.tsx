@@ -16,7 +16,7 @@ export default function PostCard({ post, priority = false }: { post: Post; prior
         <div className="overflow-hidden bg-paper">
           <Pic
             name={post.cover}
-            alt={post.title}
+            alt=""
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             aspect="4/5"
             priority={priority}

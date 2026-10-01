@@ -8,9 +8,9 @@ import { getPosts } from "@/lib/journal";
 import { site } from "../../../content/site";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Our Story — Ivy, Boutique Florist in Auckland",
+  title: "Our Story: Ivy, Boutique Auckland Florist",
   description:
-    "Meet Ivy, founder of Willow & Peony. A boutique Auckland floral studio crafting romantic, modern and impactful floral design for weddings, events and special occasions.",
+    "Meet Ivy, founder of Willow & Peony, a boutique Auckland floral studio creating romantic, modern floral design for weddings, events and occasions.",
   path: "/about/",
   ogImage: "willow-and-peony-bouquet-ivy-willow-peony-copy-a677a82d-5fc6-4fcd-b72d-c0884402c2e5",
 });

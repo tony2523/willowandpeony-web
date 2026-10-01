@@ -11,9 +11,7 @@ export default function ProcessSteps() {
       <ol className="mt-10 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
         {processSteps.map((step, i) => (
           <li key={step.title}>
-            <div className="font-serif text-[52px] leading-none font-light text-hairline" aria-hidden>
-              {String(i + 1).padStart(2, "0")}
-            </div>
+            <div aria-hidden data-n={String(i + 1).padStart(2, "0")} className="font-serif text-[52px] leading-none font-light text-hairline before:content-[attr(data-n)]" />
             <h3 className="mt-3 font-serif text-[20px] font-normal text-ink">{step.title}</h3>
             <p className="mt-2 text-[13.5px] leading-relaxed text-ink-soft">{step.body}</p>
           </li>

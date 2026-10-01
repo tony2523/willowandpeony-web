@@ -11,7 +11,7 @@ import { googleRating } from "../../content/reviews";
 export const metadata: Metadata = pageMetadata({
   title: "Wedding & Event Florist Auckland | Willow & Peony",
   description:
-    "Willow & Peony is a boutique florist on Auckland's North Shore creating romantic, artful floral styling for weddings, corporate events and celebrations across Auckland.",
+    "Boutique Auckland florist on the North Shore, creating romantic, artful flowers for weddings, corporate events and celebrations across Auckland.",
   path: "/",
 });
 

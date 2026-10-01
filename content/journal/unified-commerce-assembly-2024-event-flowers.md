@@ -1,6 +1,6 @@
 ---
 title: "Unified Commerce Assembly 2024"
-description: "Unified Commerce Assembly 2024 — floral design and styling by Willow & Peony, boutique florist in Auckland."
+description: "Event flowers for Unified Commerce Assembly 2024 in Auckland, with floral design and styling by Willow & Peony, boutique wedding and event florist."
 date: "2025-04-07"
 category: "events"
 venue: "Auckland"

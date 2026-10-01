@@ -88,15 +88,15 @@ export default function WorkGrid({
                   sizes="(max-width: 768px) 100vw, 50vw"
                   width={item.w}
                   height={item.h}
-                  alt={item.title}
+                  alt=""
                   loading="lazy"
                   decoding="async"
                   className="aspect-[4/3] h-auto w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02]"
                 />
               </div>
-              <h3 className="mt-4 font-serif text-[21px] leading-[1.3] font-light text-ink group-hover:underline group-hover:decoration-[1px] group-hover:underline-offset-[5px] md:text-[23px]">
+              <h2 className="mt-4 font-serif text-[21px] leading-[1.3] font-light text-ink group-hover:underline group-hover:decoration-[1px] group-hover:underline-offset-[5px] md:text-[23px]">
                 {item.title}
-              </h3>
+              </h2>
             </Link>
             <p className="mt-2 text-[10.5px] tracking-[0.14em] text-muted uppercase">{item.meta}</p>
           </article>

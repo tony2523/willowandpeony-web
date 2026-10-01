@@ -1,10 +1,11 @@
 ---
 title: "An Intimate All-White Wedding at The Hotel Britomart, Auckland"
-description: "Amanda and Bryan celebrated their intimate Auckland city wedding at The Hotel Britomart, surrounded by cloud-like arrangements of white roses, hydrangeas and delicate baby’s breath. There is something so special about an intimate city wedding."
+description: "Amanda and Bryan's intimate city wedding at The Hotel Britomart, Auckland, with cloud-like white roses, hydrangeas and baby's breath by Willow & Peony."
 date: "2026-08-26"
 category: "weddings"
 venue: "The Hotel Britomart, Auckland"
 cover: "an-intimate-all-white-wedding-at-the-hotel-britomart-auckland-cover"
+seoTitle: "All-White Wedding at The Hotel Britomart"
 ---
 
 Amanda and Bryan celebrated their intimate Auckland city wedding at The Hotel Britomart, surrounded by cloud-like arrangements of white roses, hydrangeas and delicate baby’s breath.

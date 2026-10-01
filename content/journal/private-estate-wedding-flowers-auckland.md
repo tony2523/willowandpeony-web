@@ -5,6 +5,7 @@ date: "2026-05-13"
 category: "weddings"
 venue: "Private family estate, Auckland"
 cover: "timeless-white-wedding-flowers-for-a-private-family-estate-wedding-cov"
+seoTitle: "White Wedding Flowers for a Private Estate Wedding"
 ---
 
 Leah and Riley celebrated their wedding at Riley’s family estate — a beautiful private setting that felt personal, relaxed and full of meaning.

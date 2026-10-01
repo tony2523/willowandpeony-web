@@ -9,7 +9,7 @@ import { site } from "../../../content/site";
 export const metadata: Metadata = pageMetadata({
   title: "Gallery | Wedding & Event Flowers Auckland",
   description:
-    "A portfolio of Willow & Peony's wedding and event floral design across Auckland — bridal bouquets, ceremony installations, reception styling and corporate florals.",
+    "A portfolio of Willow & Peony wedding and event flowers in Auckland: bridal bouquets, ceremony installations, reception styling and corporate florals.",
   path: "/gallery/",
 });
 

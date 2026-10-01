@@ -7,9 +7,9 @@ import { getArticles } from "@/lib/blog";
 import { site } from "../../../content/site";
 
 export const metadata: Metadata = pageMetadata({
-  title: "The Journal — Notes from the Studio",
+  title: "The Journal: Notes from the Studio",
   description:
-    "Florist's notes from Willow & Peony: seasonal flower guides, honest planning advice and behind-the-design stories from Auckland weddings and events, written by Ivy Diao.",
+    "Florist's notes from Willow & Peony: seasonal flower guides, honest planning advice and the stories behind Auckland weddings and events, by Ivy Diao.",
   path: "/journal/",
 });
 
@@ -72,7 +72,7 @@ export default function JournalPage() {
             <div className="overflow-hidden bg-paper">
               <Pic
                 name={featured.cover}
-                alt={featured.title}
+                alt=""
                 sizes="(max-width: 768px) 100vw, 620px"
                 aspect="4/3"
                 priority
@@ -109,7 +109,7 @@ export default function JournalPage() {
               <div className="overflow-hidden bg-paper">
                 <Pic
                   name={a.cover}
-                  alt={a.title}
+                  alt=""
                   sizes="(max-width: 640px) 100vw, 240px"
                   aspect="4/3"
                   className="h-auto w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02]"

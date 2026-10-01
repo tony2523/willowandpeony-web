@@ -7,9 +7,9 @@ import { venues } from "../../../content/venues";
 import { site } from "../../../content/site";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Auckland Wedding Venue Guides | Flowers by Venue",
+  title: "Auckland Wedding Venue Flower Guides",
   description:
-    "Wedding flowers, venue by venue — what works beautifully at Auckland's loveliest wedding venues, with florist's notes, real weddings and honest advice from days we've styled there.",
+    "What works beautifully at Auckland's loveliest wedding venues, with florist's notes, real weddings and honest advice from the days we've styled there.",
   path: "/venues/",
 });
 

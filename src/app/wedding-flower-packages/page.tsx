@@ -9,7 +9,7 @@ import { weddingPackages, faqs } from "../../../content/site";
 export const metadata: Metadata = pageMetadata({
   title: "Wedding Flower Packages & Pricing Auckland",
   description:
-    "Curated wedding flower packages from a boutique Auckland florist: Petite $500, Classic $2,500 and Luxe $5,000. Bouquets, ceremony and reception styling — transparent pricing, stress-free planning.",
+    "Wedding flower packages from a boutique Auckland florist: Petite $500, Classic $2,500 and Luxe $5,000. Bouquets, ceremony and reception styling.",
   path: "/wedding-flower-packages/",
   ogImage: "wedding-flower-package-auckland-image-41-copy",
 });

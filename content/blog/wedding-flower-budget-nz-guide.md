@@ -4,6 +4,8 @@ description: "An honest guide to wedding flower costs in New Zealand from an Auc
 date: "2026-08-12"
 tag: "Planning"
 cover: "reception-table-flowers-with-bud-vases-and-candles-for-sarah-and-samue"
+seoTitle: "Wedding Flower Budget NZ: Where the Money Goes"
+seoDescription: "An honest guide to wedding flower costs in New Zealand from an Auckland florist: what drives the price, where to spend, where to save, and how to brief us."
 ---
 
 The question I am asked most often, usually with a slightly nervous laugh, is: how much should we budget for wedding flowers?

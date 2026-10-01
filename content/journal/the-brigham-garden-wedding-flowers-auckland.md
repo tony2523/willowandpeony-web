@@ -1,10 +1,11 @@
 ---
 title: "A Romantic Garden Wedding at The Brigham Auckland"
-description: "A romantic garden wedding at The Brigham Auckland, featuring soft blush, white and peach wedding flowers, a graceful bridal bouquet, garden ceremony arrangements and reception table styling by Willow & Peony."
+description: "A romantic garden wedding at The Brigham, Auckland: soft blush, white and peach flowers, a graceful bouquet, garden ceremony pieces and reception styling."
 date: "2025-04-07"
 category: "weddings"
 venue: "The Brigham, Auckland"
 cover: "a-romantic-garden-wedding-at-the-brigham-auckland-cover"
+seoTitle: "Romantic Garden Wedding at The Brigham"
 ---
 
 Xenia and Daniel’s wedding at The Brigham Auckland was soft, romantic and beautifully suited to its garden setting. Their floral design featured a refined palette of white, blush pink and peach, with a graceful bridal bouquet, garden-inspired ceremony flowers and romantic reception table styling.

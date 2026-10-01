@@ -12,9 +12,9 @@ import { getPostsByCategory } from "@/lib/journal";
 import { weddingPackages } from "../../../content/site";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Wedding Florist Auckland | Bespoke Wedding Flowers",
+  title: "Wedding Florist Auckland | Bridal Flowers",
   description:
-    "Boutique wedding florist on Auckland's North Shore. Romantic, timeless bridal bouquets, ceremony and reception flowers — curated packages from $500 or fully bespoke design.",
+    "Boutique Auckland wedding florist. Romantic bridal bouquets, ceremony and reception flowers, with curated packages from $500 or fully bespoke design.",
   path: "/wedding-flowers-auckland/",
   ogImage: "wedding-flowers-auckland-new-zealand-auckland-wedding-photographer-cbd-271",
 });

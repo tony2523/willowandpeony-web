@@ -24,8 +24,10 @@ export function pageMetadata({
   publishedTime,
 }: PageSeo): Metadata {
   const url = `${site.domain}${path}`;
+  // Google shows ~60 characters; keep the brand suffix only when it fits.
+  const fitsWithBrand = `${title} | ${site.name}`.length <= 60;
   return {
-    title,
+    title: fitsWithBrand ? title : { absolute: title },
     description,
     alternates: { canonical: url },
     robots: noindex || IS_PREVIEW ? { index: false, follow: false } : { index: true, follow: true },

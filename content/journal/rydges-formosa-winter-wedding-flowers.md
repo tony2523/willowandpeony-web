@@ -1,10 +1,11 @@
 ---
 title: "A Soft Pastel Winter Wedding at Rydges Formosa Auckland"
-description: "A soft pastel winter wedding at Rydges Formosa Auckland, featuring blush and white wedding flowers, a flower-only bridal bouquet, romantic ceremony plinth arrangements and candlelit reception styling by Willow & Peony."
+description: "A soft pastel winter wedding at Rydges Formosa: blush and white flowers, a flower-only bridal bouquet, ceremony plinths and candlelit reception styling."
 date: "2026-01-16"
 category: "weddings"
 venue: "Rydges Formosa, Auckland"
 cover: "a-soft-pastel-winter-wedding-at-rydges-formosa-auckland-cover"
+seoTitle: "Pastel Winter Wedding at Rydges Formosa"
 ---
 
 ## A Soft and Romantic August Wedding at Rydges Formosa Auckland
