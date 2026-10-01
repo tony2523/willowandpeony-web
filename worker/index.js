@@ -2,8 +2,11 @@
 //
 //  1. POST /api/enquiry  — enquiry forms, emailed to the studio.
 //  2. POST /api/calendar — Wedding Flower Calendar signups: emails the
-//     download link to the visitor, with Ivy (hello@) BCC'd on every one so
+//     download link to the visitor, with Ivy (ivy@) BCC'd on every one so
 //     she can see who downloaded.
+//
+// Every email is sent from hello@ (the only address customers see or reply
+// to); enquiries and calendar copies are delivered to ivy@.
 //  3. GET /api/instagram — live Instagram feed (see below).
 //  4. Next.js navigation data files (`__next.journal.$d$slug...`): static
 //     assets answer a literal "$" with a 307 to "%24" which Safari rejects,
@@ -131,8 +134,8 @@ async function handleEnquiry(request, env) {
 
   try {
     await sendEmail(env, {
-      from: `Willow & Peony Website <${env.ENQUIRY_FROM}>`,
-      to: [env.ENQUIRY_TO],
+      from: `Willow & Peony Website <${env.EMAIL_FROM}>`,
+      to: [env.NOTIFY_TO],
       reply_to: name ? `${name.replace(/[<>"]/g, "")} <${email}>` : email,
       subject,
       text: lines.join("\n"),
@@ -225,11 +228,11 @@ async function handleCalendar(request, env) {
   let emailed = false;
   try {
     await sendEmail(env, {
-      from: `Ivy at Willow & Peony <${env.CALENDAR_FROM}>`,
+      from: `Ivy at Willow & Peony <${env.EMAIL_FROM}>`,
       // Full name on the To line so Ivy's BCC copy shows who downloaded.
       to: [fullName ? `${fullName.replace(/[<>",]/g, "")} <${email}>` : email],
-      bcc: [env.ENQUIRY_TO],
-      reply_to: env.ENQUIRY_TO,
+      bcc: [env.NOTIFY_TO],
+      reply_to: env.EMAIL_FROM,
       subject: "Your Wedding Flower Calendar is here",
       text,
       html,

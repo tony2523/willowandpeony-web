@@ -26,9 +26,10 @@
     "not_found_handling": "404-page"
   },
   "vars": {
-    "ENQUIRY_TO": "hello@willowandpeony.co.nz",
-    "ENQUIRY_FROM": "enquiries@willowandpeony.co.nz",
-    "CALENDAR_FROM": "hello@willowandpeony.co.nz"
+    // All website email is sent from hello@ (the only address customers see
+    // or reply to). Notifications and copies go to Ivy's own inbox.
+    "EMAIL_FROM": "hello@willowandpeony.co.nz",
+    "NOTIFY_TO": "ivy@willowandpeony.co.nz"
   }
   // Email is sent through Resend (free tier): set the RESEND_API_KEY secret
   // in the Cloudflare dashboard after verifying willowandpeony.co.nz in

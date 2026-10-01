@@ -138,13 +138,16 @@ is retired. The system:
   (route handlers must stay `force-static`), no next/image optimizer. GitHub
   Pages serves flat files.
 - Email: one Resend helper in `worker/index.js` sends everything
-  (`RESEND_API_KEY` secret; vars `ENQUIRY_TO`, `ENQUIRY_FROM`,
-  `CALENDAR_FROM` in wrangler.jsonc).
-  - `POST /api/enquiry` (EnquiryForm) emails the studio. Without the key it
+  (`RESEND_API_KEY` secret; vars in wrangler.jsonc: `EMAIL_FROM` =
+  hello@, `NOTIFY_TO` = ivy@). Rule (Tony, 2026-10-01): every email is
+  sent from hello@, the only address customers see or reply to; all
+  notifications and copies go to ivy@. There is no enquiries@ mailbox,
+  never use it.
+  - `POST /api/enquiry` (EnquiryForm) emails ivy@, reply-to the customer. Without the key it
     answers 503 and the form falls back to a pre-filled mail draft.
   - `POST /api/calendar` (CalendarSignup: first/last name, email,
     consultation tickbox) emails the visitor the download link (template in
-    `calendarEmail()`; no attachment) with hello@ BCC'd on every one, the
+    `calendarEmail()`; no attachment), reply-to hello@, with ivy@ BCC'd on every one, the
     visitor's full name on the To line so Ivy sees who downloaded. The
     consultation tick adds a line to that email. Klaviyo is deliberately not
     involved (Tony, 2026-10-01). The visitor is then sent to
