@@ -12,8 +12,8 @@ export default function CalendarSentNote() {
   if (!sent) return null;
   return (
     <p className="mt-5 max-w-[460px] border-l border-hairline pl-4 text-[13.5px] leading-relaxed text-ink-soft">
-      We&rsquo;ve also emailed a copy to you. If it isn&rsquo;t in your inbox within a few
-      minutes, check your promotions or spam folder.
+      We&rsquo;ve also emailed you the download link. If it isn&rsquo;t in your inbox within
+      a few minutes, check your promotions or spam folder.
     </p>
   );
 }

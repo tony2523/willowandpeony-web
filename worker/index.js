@@ -1,9 +1,9 @@
 // The site's only server code, running on Cloudflare Workers:
 //
 //  1. POST /api/enquiry  — enquiry forms, emailed to the studio.
-//  2. POST /api/calendar — Wedding Flower Calendar signups: emails the PDF
-//     to the visitor, tells Ivy when a consultation is requested, and records
-//     the signup in Klaviyo.
+//  2. POST /api/calendar — Wedding Flower Calendar signups: emails the
+//     download link to the visitor, with Ivy (hello@) BCC'd on every one so
+//     she can see who downloaded.
 //  3. GET /api/instagram — live Instagram feed (see below).
 //  4. Next.js navigation data files (`__next.journal.$d$slug...`): static
 //     assets answer a literal "$" with a 307 to "%24" which Safari rejects,
@@ -155,7 +155,7 @@ function calendarEmail({ firstName, consult, origin }) {
   const text = [
     firstName ? `Hi ${firstName},` : "Hello,",
     "",
-    "Thank you for downloading the Willow & Peony Wedding Flower Calendar. Your copy is attached, and you can download it again any time here:",
+    "Thank you for requesting the Willow & Peony Wedding Flower Calendar. You can download it any time here:",
     pdfUrl,
     "",
     "Start with your wedding month: you’ll find twelve flowers at their best in that season, followed by the flowers available all year round and a few of my personal favourites.",
@@ -181,7 +181,7 @@ function calendarEmail({ firstName, consult, origin }) {
 <p style="margin:0 0 10px;font-family:Arial,sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#8a847b">Your free calendar</p>
 <h1 style="margin:0 0 24px;font-family:Georgia,'Times New Roman',serif;font-weight:normal;font-size:30px;line-height:1.2;color:#1a1815">Your Wedding Flower Calendar is here</h1>
 ${p(hi)}
-${p("Thank you for downloading the Willow &amp; Peony Wedding Flower Calendar. Your copy is attached, and you can download it again any time with the button below.")}
+${p("Thank you for requesting the Willow &amp; Peony Wedding Flower Calendar. Download it with the button below, and keep this email to download it again any time.")}
 </td></tr>
 <tr><td align="center" style="padding:8px 40px 28px"><img src="${origin}/email/wedding-flower-calendar-cover.jpg" width="240" alt="The Willow &amp; Peony Wedding Flower Calendar" style="display:block;width:240px;height:auto;border:1px solid #e6e2da"></td></tr>
 <tr><td align="center" style="padding:0 40px 32px"><a href="${pdfUrl}" style="display:inline-block;background:#1a1815;color:#ffffff;text-decoration:none;font-family:Arial,sans-serif;font-size:12px;letter-spacing:2px;text-transform:uppercase;padding:16px 30px">Download your calendar</a></td></tr>
@@ -198,30 +198,7 @@ ${p("With love,<br><span style=\"font-style:italic;color:#1a1815\">Ivy</span>")}
   return { text, html, pdfUrl };
 }
 
-function recordInKlaviyo(env, { email, firstName, lastName, consult }) {
-  if (!env.KLAVIYO_COMPANY_ID) return Promise.resolve();
-  return fetch(`https://a.klaviyo.com/client/events/?company_id=${env.KLAVIYO_COMPANY_ID}`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json", revision: "2024-10-15" },
-    body: JSON.stringify({
-      data: {
-        type: "event",
-        attributes: {
-          properties: { source: "Wedding Flower Calendar", consultation_requested: consult },
-          metric: { data: { type: "metric", attributes: { name: "Requested Wedding Flower Calendar" } } },
-          profile: {
-            data: {
-              type: "profile",
-              attributes: { email, first_name: firstName || undefined, last_name: lastName || undefined },
-            },
-          },
-        },
-      },
-    }),
-  }).catch(() => {});
-}
-
-async function handleCalendar(request, env, ctx) {
+async function handleCalendar(request, env) {
   let data;
   try {
     data = await request.json();
@@ -239,47 +216,27 @@ async function handleCalendar(request, env, ctx) {
   const firstName = clean(data.firstName, MAX.name);
   const lastName = clean(data.lastName, MAX.name);
   const consult = data.consult === true || data.consult === "on" || data.consult === "true";
+  const fullName = [firstName, lastName].filter(Boolean).join(" ");
   const origin = siteOrigin(request);
-
-  ctx.waitUntil(recordInKlaviyo(env, { email, firstName, lastName, consult }));
 
   if (!env.RESEND_API_KEY) return json({ ok: true, emailed: false });
 
-  const { text, html, pdfUrl } = calendarEmail({ firstName, consult, origin });
+  const { text, html } = calendarEmail({ firstName, consult, origin });
   let emailed = false;
   try {
     await sendEmail(env, {
       from: `Ivy at Willow & Peony <${env.CALENDAR_FROM}>`,
-      to: [email],
+      // Full name on the To line so Ivy's BCC copy shows who downloaded.
+      to: [fullName ? `${fullName.replace(/[<>",]/g, "")} <${email}>` : email],
+      bcc: [env.ENQUIRY_TO],
       reply_to: env.ENQUIRY_TO,
       subject: "Your Wedding Flower Calendar is here",
       text,
       html,
-      attachments: [{ path: pdfUrl, filename: "Willow-and-Peony-Wedding-Flower-Calendar.pdf" }],
     });
     emailed = true;
   } catch (e) {
     console.log("calendar email failed", e.message);
-  }
-
-  if (consult) {
-    const name = [firstName, lastName].filter(Boolean).join(" ");
-    ctx.waitUntil(
-      sendEmail(env, {
-        from: `Willow & Peony Website <${env.ENQUIRY_FROM}>`,
-        to: [env.ENQUIRY_TO],
-        reply_to: name ? `${name.replace(/[<>"]/g, "")} <${email}>` : email,
-        subject: `Consultation request (calendar)${name ? ` — ${name}` : ""}`,
-        text: [
-          "Someone downloaded the Wedding Flower Calendar and would like a free consultation.",
-          "",
-          ...(name ? [`Name: ${name}`] : []),
-          `Email: ${email}`,
-          "",
-          "Reply to this email to contact them directly.",
-        ].join("\n"),
-      }).catch((e) => console.log("consult notify failed", e.message)),
-    );
   }
 
   return json({ ok: true, emailed });
@@ -335,7 +292,7 @@ const worker = {
       return new Response("Method not allowed", { status: 405 });
     }
     if (url.pathname === "/api/calendar") {
-      if (request.method === "POST") return handleCalendar(request, env, ctx);
+      if (request.method === "POST") return handleCalendar(request, env);
       return new Response("Method not allowed", { status: 405 });
     }
     if (url.pathname === "/api/instagram") {

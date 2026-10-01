@@ -96,8 +96,8 @@ export default function CalendarSignup() {
         </button>
       </div>
       <p className="text-[12px] leading-relaxed text-muted">
-        Your calendar is free whether or not you request a consultation. We&rsquo;ll email you a
-        copy and won&rsquo;t add you to any mailing list without asking.{" "}
+        Your calendar is free whether or not you request a consultation. We&rsquo;ll email you the
+        download link and won&rsquo;t add you to any mailing list.{" "}
         <Link href="/privacy-policy/" className="underline underline-offset-2 hover:text-ink">
           Privacy policy
         </Link>

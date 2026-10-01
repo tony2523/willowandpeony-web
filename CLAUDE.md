@@ -143,14 +143,13 @@ is retired. The system:
   - `POST /api/enquiry` (EnquiryForm) emails the studio. Without the key it
     answers 503 and the form falls back to a pre-filled mail draft.
   - `POST /api/calendar` (CalendarSignup: first/last name, email,
-    consultation tickbox) emails the calendar PDF to the visitor (attached +
-    download button, template in `calendarEmail()`), notifies hello@ when a
-    consultation is requested, and records a "Requested Wedding Flower
-    Calendar" event in Klaviyo (`KLAVIYO_COMPANY_ID`, public id; no list
-    subscription, so no marketing consent is implied). The visitor is then
-    sent to `/wedding-flower-calendar/download/` (`?sent=1` shows the
-    "emailed you a copy" note). Without the key: `emailed:false`, download
-    page only.
+    consultation tickbox) emails the visitor the download link (template in
+    `calendarEmail()`; no attachment) with hello@ BCC'd on every one, the
+    visitor's full name on the To line so Ivy sees who downloaded. The
+    consultation tick adds a line to that email. Klaviyo is deliberately not
+    involved (Tony, 2026-10-01). The visitor is then sent to
+    `/wedding-flower-calendar/download/` (`?sent=1` shows the "emailed you
+    the link" note). Without the key: `emailed:false`, download page only.
   - Optional hardening: a free Turnstile widget + `TURNSTILE_SECRET`; both
     endpoints enforce it automatically when the secret exists.
   - The calendar PDF (`public/downloads/`) was recompressed, visually identical,
