@@ -9,6 +9,7 @@ const cols = [
     links: [
       { label: "Wedding Flowers", href: "/wedding-flowers-auckland/" },
       { label: "Wedding Packages", href: "/wedding-flower-packages/" },
+      { label: "Flower Calculator", href: "/wedding-flower-calculator/" },
       { label: "Event Flowers", href: "/event-flowers-auckland/" },
       { label: "Gallery", href: "/gallery/" },
     ],

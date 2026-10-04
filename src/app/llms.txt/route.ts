@@ -3,6 +3,7 @@ import { getArticles } from "@/lib/blog";
 import { site, weddingPackages, faqs } from "../../../content/site";
 import { venues } from "../../../content/venues";
 import { googleRating } from "../../../content/reviews";
+import { SERVICES, TIERS, VISIBLE_SECTIONS, money, unitLabel } from "@/lib/estimate";
 
 export const dynamic = "force-static";
 
@@ -33,6 +34,23 @@ export async function GET() {
       (p) => `  - ${p.name} package, ${p.price} NZD: ${p.ideal}`,
     ),
     `- Corporate and private event flowers: ${site.domain}/event-flowers-auckland/`,
+    `- Wedding flower cost calculator (itemised estimate, emailed or sent as an enquiry): ${site.domain}/wedding-flower-calculator/`,
+    "",
+    "## Wedding flower starting prices (NZD, excluding GST)",
+    "",
+    `Styles: ${TIERS.map((t) => `${t.name} (${t.note.toLowerCase()})`).join(", ")}. Final quotes are confirmed after a consultation.`,
+    "",
+    ...VISIBLE_SECTIONS.flatMap((s) => [
+      `### ${s.title}`,
+      ...s.items.map((it) =>
+        it.tiers
+          ? `- ${it.name}: ${it.tiers.map((p, i) => (p == null ? null : `${TIERS[i].name} from ${money(p)}`)).filter(Boolean).join(", ")} ${unitLabel(it)}`
+          : `- ${it.name}: from ${money(it.price ?? it.from ?? 0)} ${unitLabel(it)}`,
+      ),
+      "",
+    ]),
+    "### Delivery & services",
+    ...SERVICES.map((sv) => `- ${sv.name}: ${sv.quote ? "quoted by venue location" : `from ${money(sv.price ?? sv.from ?? 0)}`}`),
     "",
     "## Key pages",
     "",

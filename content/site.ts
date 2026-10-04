@@ -57,6 +57,7 @@ export const nav = [
 export const drawerNav = [
   { label: "Weddings", href: "/wedding-flowers-auckland/" },
   { label: "Wedding Packages", href: "/wedding-flower-packages/" },
+  { label: "Flower Calculator", href: "/wedding-flower-calculator/" },
   { label: "Events", href: "/event-flowers-auckland/" },
   { label: "Gallery", href: "/gallery/" },
   { label: "Our Work", href: "/work/" },

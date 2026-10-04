@@ -8,6 +8,10 @@
 // Every email is sent from hello@ (the only address customers see or reply
 // to); enquiries and calendar copies are delivered to ivy@.
 //  3. GET /api/instagram — live Instagram feed (see below).
+//  5. POST /api/estimate — wedding flower calculator: "email" sends the
+//     couple their estimate (Ivy BCC'd), "enquire" sends it to Ivy with the
+//     couple's details. Totals are recomputed here from content/calculator.ts
+//     (bundled via src/lib/estimate.ts), never trusted from the browser.
 //  4. Next.js navigation data files (`__next.journal.$d$slug...`): static
 //     assets answer a literal "$" with a 307 to "%24" which Safari rejects,
 //     so we fetch the encoded path directly.
@@ -17,6 +21,18 @@
 // Without it the enquiry endpoint answers 503 (the form falls back to a
 // pre-filled mail draft) and the calendar endpoint answers emailed:false
 // (the visitor still downloads it on the next page), so nothing is lost.
+
+import {
+  GST,
+  TIERS,
+  anyTiered,
+  compareTotals,
+  compute,
+  decodeSelection,
+  encodeSelection,
+  money,
+  quotedExtras,
+} from "../src/lib/estimate";
 
 const MAX = { name: 200, email: 254, message: 5000, other: 300 };
 const CALENDAR_PDF = "/downloads/willow-and-peony-wedding-flower-calendar.pdf";
@@ -393,6 +409,252 @@ async function handleInstagram(request, env, ctx) {
   }
 }
 
+/* ---------- Wedding flower calculator ---------- */
+
+function summariseEstimate(sel, origin) {
+  const r = compute(sel);
+  return {
+    r,
+    tier: TIERS[sel.tier].name,
+    from: r.hasFrom ? "from " : "",
+    extras: quotedExtras(r),
+    compare: anyTiered(sel) ? compareTotals(sel) : null,
+    link: `${origin}/wedding-flower-calculator/?e=${encodeURIComponent(encodeSelection(sel))}`,
+  };
+}
+
+/** The estimate as email HTML (two tables) plus a plain-text version. */
+function estimateBlocks(est) {
+  const e = escapeHtml;
+  const r = est.r;
+  const cell = "font-family:Arial,sans-serif;color:#1a1815;vertical-align:top";
+  const row = (l) =>
+    `<tr><td style="padding:9px 12px 9px 0;border-top:1px solid #e6e2da;${cell};font-size:14px">${e(l.name)}<br><span style="font-size:12px;color:#756f66">${e(l.detail)}</span></td><td style="padding:9px 0;border-top:1px solid #e6e2da;${cell};font-size:14px;text-align:right;white-space:nowrap">${e(l.value)}</td></tr>`;
+  const head = (t) =>
+    `<tr><td colspan="2" style="padding:16px 0 6px;font-family:Arial,sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#756f66">${t}</td></tr>`;
+  const sum = (k, v, big) =>
+    `<tr><td style="padding:5px 12px 5px 0;font-family:Arial,sans-serif;font-size:${big ? 16 : 13}px;color:${big ? "#1a1815" : "#57524b"}">${k}</td><td style="padding:5px 0;text-align:right;font-family:Arial,sans-serif;font-size:${big ? 16 : 13}px;color:#1a1815;white-space:nowrap">${v}</td></tr>`;
+  const compareLine = est.compare
+    ? `Same pieces, all ${TIERS.map((t, i) => `${t.name} from ${money(est.compare[i])}`).join(" · ")}`
+    : "";
+  const html = `<table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+${head(`Florals · ${e(est.tier)} style overall`)}
+${r.lines.length ? r.lines.map(row).join("") : `<tr><td colspan="2" style="padding:9px 0;border-top:1px solid #e6e2da;${cell};font-size:14px;color:#756f66">No pieces selected</td></tr>`}
+${r.svcLines.length ? head("Delivery &amp; services") + r.svcLines.map(row).join("") : ""}
+</table>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:10px;border-top:1px solid #1a1815">
+<tr><td colspan="2" style="height:8px"></td></tr>
+${sum("Florals", r.florals ? "from " + money(r.florals) : "—")}
+${sum("Delivery &amp; services", r.services ? est.from + money(r.services) : "—")}
+${sum("<strong>Estimated total</strong> · excl. GST", `<strong>${est.from}${money(r.total)}</strong>`, true)}
+${sum("Including 15% GST", est.from + money(r.total * (1 + GST)))}
+</table>
+${est.extras ? `<p style="margin:8px 0 0;font-family:Arial,sans-serif;font-size:12px;color:#756f66">${e(est.extras)}</p>` : ""}
+${compareLine ? `<p style="margin:6px 0 0;font-family:Arial,sans-serif;font-size:12px;line-height:1.6;color:#756f66">${e(compareLine)}</p>` : ""}`;
+  const text = [
+    `Overall style: ${est.tier}`,
+    "",
+    ...(r.lines.length ? r.lines.map((l) => `- ${l.name} (${l.detail}): ${l.value}`) : ["No pieces selected"]),
+    ...(r.svcLines.length ? ["", "Delivery & services:", ...r.svcLines.map((l) => `- ${l.name}: ${l.value}`)] : []),
+    "",
+    `Florals: ${r.florals ? "from " + money(r.florals) : "-"}`,
+    `Delivery & services: ${r.services ? est.from + money(r.services) : "-"}`,
+    `Estimated total (excl. GST): ${est.from}${money(r.total)}${est.extras ? " " + est.extras : ""}`,
+    `Including 15% GST: ${est.from}${money(r.total * (1 + GST))}`,
+    ...(compareLine ? [compareLine] : []),
+  ].join("\n");
+  return { html, text };
+}
+
+const ESTIMATE_FINE_PRINT = [
+  "All prices are in NZD and exclude GST. Your final quote is confirmed after a consultation.",
+  "All prices are starting prices. Travel beyond Auckland is quoted by venue.",
+  "Photos show past work as a guide. Every design is made to order around the season’s best blooms.",
+];
+
+/** The couple's copy: their estimate, a link to reopen it, and Ivy's sign-off. */
+function estimateEmail(est, origin) {
+  const e = escapeHtml;
+  const blocks = estimateBlocks(est);
+  const subject = "Your Willow & Peony wedding flower estimate";
+  const p = (body) =>
+    `<p style="margin:0 0 16px;font-family:Georgia,'Times New Roman',serif;font-size:16px;line-height:1.7;color:#57524b">${body}</p>`;
+  const next =
+    "When it feels right, reply to this email or send it to me from the calculator, and I’ll shape it into a personal proposal. Every enquiring couple is offered a complimentary 30-minute video chat, with no obligation.";
+  const text = [
+    "Hello,",
+    "",
+    "Thank you for building your wedding flower estimate. Here’s a copy to keep, or to share with your partner.",
+    "",
+    blocks.text,
+    "",
+    `Open and adjust your estimate: ${est.link}`,
+    "",
+    next,
+    "",
+    ...ESTIMATE_FINE_PRINT.map((l) => `* ${l}`),
+    "",
+    "With love,",
+    "Ivy",
+    "Willow & Peony · Auckland",
+    `${origin}/`,
+  ].join("\n");
+  const html = `<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${e(subject)}</title></head>
+<body style="margin:0;padding:0;background:#f7f5f0">
+<div style="display:none;max-height:0;overflow:hidden">${e(`${est.from}${money(est.r.total)} excl. GST · ${est.tier} style`)}</div>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f7f5f0"><tr><td align="center" style="padding:32px 16px">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:600px;background:#ffffff;border:1px solid #e6e2da">
+<tr><td align="center" style="padding:36px 32px 8px"><img src="${origin}/brand/willow-and-peony-logo.png" width="200" alt="Willow &amp; Peony" style="display:block;width:200px;height:auto;border:0"></td></tr>
+<tr><td style="padding:28px 40px 0">
+<p style="margin:0 0 10px;font-family:Arial,sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#756f66">Your floral estimate</p>
+<h1 style="margin:0 0 22px;font-family:Georgia,'Times New Roman',serif;font-weight:normal;font-size:28px;line-height:1.25;color:#1a1815">Here&rsquo;s your wedding flower estimate</h1>
+${p("Thank you for building your estimate with us. Here&rsquo;s a copy to keep, or to share with your partner.")}
+${blocks.html}
+</td></tr>
+<tr><td align="center" style="padding:30px 40px 30px"><a href="${e(est.link)}" style="display:inline-block;background:#1a1815;color:#ffffff;text-decoration:none;font-family:Arial,sans-serif;font-size:12px;letter-spacing:2px;text-transform:uppercase;padding:16px 28px">Open and adjust your estimate</a></td></tr>
+<tr><td style="padding:0 40px 4px">
+${p(e(next))}
+<ul style="margin:0 0 22px;padding-left:18px;font-family:Arial,sans-serif;font-size:12px;line-height:1.7;color:#756f66">${ESTIMATE_FINE_PRINT.map((l) => `<li>${e(l)}</li>`).join("")}</ul>
+${p('With love,<br><span style="font-style:italic;color:#1a1815">Ivy</span>')}
+</td></tr>
+<tr><td style="padding:20px 40px 32px;border-top:1px solid #e6e2da">
+<p style="margin:0;font-family:Arial,sans-serif;font-size:12px;line-height:1.7;color:#756f66">Willow &amp; Peony · Wedding &amp; event florist, Auckland<br><a href="${origin}/" style="color:#756f66">willowandpeony.co.nz</a> · <a href="https://www.instagram.com/willowandpeony.nz" style="color:#756f66">Instagram</a><br>You&rsquo;re receiving this one-off email because you requested your estimate on our website.</p>
+</td></tr>
+</table></td></tr></table>
+</body></html>`;
+  return { subject, text, html };
+}
+
+/** Ivy's copy of a calculator enquiry: labelled contact details, the estimate, reply-to the couple. */
+function estimateEnquiryEmail(data, { names, email }, est) {
+  const e = escapeHtml;
+  const phone = clean(data.phone, MAX.other);
+  const date = clean(data.date, MAX.other);
+  const venue = clean(data.venue, MAX.other);
+  const inspoRaw = clean(data.inspo, 500);
+  const inspo = /^https?:\/\/\S+$/i.test(inspoRaw) ? inspoRaw : "";
+  const notes = cleanBlock(data.notes, MAX.message);
+  const who = names.length <= 32 ? names : names.split(" ")[0];
+  const received = new Date().toLocaleString("en-NZ", { timeZone: "Pacific/Auckland", dateStyle: "medium", timeStyle: "short" });
+  const blocks = est ? estimateBlocks(est) : null;
+  const total = est && est.r.total ? ` · ${est.from}${money(est.r.total)}` : "";
+  const subject = `Calculator enquiry: ${names}${date ? ` · ${date}` : ""}${total}`.replace(/[\r\n]/g, " ");
+
+  const label = (t) =>
+    `<p style="margin:0 0 6px;font-family:Arial,sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#756f66">${t}</p>`;
+  const row = (l, v) =>
+    `<tr><td style="padding:10px 16px 10px 0;border-top:1px solid #e6e2da;font-family:Arial,sans-serif;font-size:13px;color:#756f66;white-space:nowrap;vertical-align:top;width:120px">${e(l)}</td><td style="padding:10px 0;border-top:1px solid #e6e2da;font-family:Arial,sans-serif;font-size:14px;color:#1a1815">${v}</td></tr>`;
+  const contact = [
+    row("Names", `<strong>${e(names)}</strong>`),
+    row("Email", `<a href="mailto:${e(email)}" style="color:#1a1815">${e(email)}</a>`),
+    phone ? row("Phone", `<a href="tel:${e(phone.replace(/[^+\d]/g, ""))}" style="color:#1a1815">${e(phone)}</a>`) : "",
+  ].join("");
+  const details = [
+    date && row("Wedding date", e(date)),
+    venue && row("Venue", e(venue)),
+    inspo && row("Inspiration", `<a href="${e(inspo)}" style="color:#1a1815;word-break:break-all">${e(inspo)}</a>`),
+  ]
+    .filter(Boolean)
+    .join("");
+
+  const text = [
+    "NEW CALCULATOR ENQUIRY · via the wedding flower calculator",
+    "",
+    `Names:  ${names}`,
+    `Email:  ${email}`,
+    ...(phone ? [`Phone:  ${phone}`] : []),
+    ...(date ? [`Wedding date: ${date}`] : []),
+    ...(venue ? [`Venue: ${venue}`] : []),
+    ...(inspo ? [`Inspiration: ${inspo}`] : []),
+    "",
+    "THEIR ESTIMATE",
+    blocks ? blocks.text : "No pieces selected",
+    ...(est ? ["", `Open this estimate: ${est.link}`] : []),
+    ...(notes ? ["", "Their notes:", notes] : []),
+    "",
+    "----",
+    `Reply to this email to respond to ${who} directly (${email}).`,
+    `Received ${received} (NZ time).`,
+  ].join("\n");
+
+  const html = `<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${e(subject)}</title></head>
+<body style="margin:0;padding:0;background:#f7f5f0">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f7f5f0"><tr><td align="center" style="padding:24px 12px">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:600px;background:#ffffff;border:1px solid #e6e2da">
+<tr><td style="padding:26px 32px 0">
+${label("Via the wedding flower calculator")}
+<h1 style="margin:4px 0 0;font-family:Georgia,'Times New Roman',serif;font-weight:normal;font-size:26px;line-height:1.25;color:#1a1815">New calculator enquiry</h1>
+</td></tr>
+<tr><td style="padding:22px 32px 0">${label("Contact")}<table role="presentation" width="100%" cellpadding="0" cellspacing="0">${contact}</table>
+<p style="margin:18px 0 0"><a href="mailto:${e(email)}?subject=${encodeURIComponent("Your wedding flowers")}" style="display:inline-block;background:#1a1815;color:#ffffff;text-decoration:none;font-family:Arial,sans-serif;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;padding:12px 20px">Reply to ${e(who)}</a></p>
+</td></tr>
+${details ? `<tr><td style="padding:26px 32px 0">${label("Wedding details")}<table role="presentation" width="100%" cellpadding="0" cellspacing="0">${details}</table></td></tr>` : ""}
+<tr><td style="padding:26px 32px 0">${label("Their estimate")}${blocks ? blocks.html : `<p style="margin:0;font-family:Arial,sans-serif;font-size:14px;color:#756f66">No pieces selected.</p>`}
+${est ? `<p style="margin:14px 0 0;font-family:Arial,sans-serif;font-size:13px"><a href="${e(est.link)}" style="color:#1a1815">Open this estimate in the calculator</a></p>` : ""}</td></tr>
+${notes ? `<tr><td style="padding:22px 32px 0">${label("Their notes")}<div style="background:#f7f5f0;border-left:3px solid #1a1815;padding:14px 16px;font-family:Arial,sans-serif;font-size:14px;line-height:1.65;color:#1a1815;white-space:pre-wrap">${e(notes)}</div></td></tr>` : ""}
+<tr><td style="padding:26px 32px 26px"><p style="margin:0;padding-top:16px;border-top:1px solid #e6e2da;font-family:Arial,sans-serif;font-size:12px;line-height:1.7;color:#756f66">Hitting reply sends your answer straight to ${e(who)} at ${e(email)}.<br>Received ${e(received)} (NZ time) via the wedding flower calculator.</p></td></tr>
+</table></td></tr></table>
+</body></html>`;
+  return { subject, text, html };
+}
+
+async function handleEstimate(request, env) {
+  let data;
+  try {
+    data = await request.json();
+  } catch {
+    return json({ error: "invalid request" }, 400);
+  }
+  if (data._gotcha) return json({ ok: true });
+  const action = data.action === "email" || data.action === "enquire" ? data.action : null;
+  if (!action) return json({ error: "unknown action" }, 400);
+  const email = clean(data.email, MAX.email);
+  if (!isEmail(email)) return json({ error: "a valid email is required" }, 400);
+  const names = clean(data.names, MAX.name);
+  if (action === "enquire" && !names) return json({ error: "names are required" }, 400);
+  // Only catalogue pieces can appear in the email: the selection is a code
+  // that is decoded and priced here, so the form can't relay arbitrary text.
+  const sel = decodeSelection(clean(data.estimate, 2000));
+  if (action === "email" && !sel) return json({ error: "empty estimate" }, 400);
+  if (!(await verifyTurnstile(request, env, data.turnstileToken))) {
+    return json({ error: "verification failed" }, 400);
+  }
+  if (!env.RESEND_API_KEY) return json({ error: "email not configured yet" }, 503);
+
+  const origin = siteOrigin(request);
+  const est = sel ? summariseEstimate(sel, origin) : null;
+  try {
+    if (action === "email") {
+      const { subject, text, html } = estimateEmail(est, origin);
+      await sendEmail(env, {
+        from: `Ivy at Willow & Peony <${env.EMAIL_FROM}>`,
+        to: [email],
+        // Ivy sees every estimate that goes out.
+        bcc: [env.NOTIFY_TO],
+        reply_to: env.EMAIL_FROM,
+        subject,
+        text,
+        html,
+      });
+    } else {
+      const { subject, text, html } = estimateEnquiryEmail(data, { names, email }, est);
+      await sendEmail(env, {
+        from: `Willow & Peony Website <${env.EMAIL_FROM}>`,
+        to: [env.NOTIFY_TO],
+        reply_to: `${names.replace(/[<>",]/g, "")} <${email}>`,
+        subject,
+        text,
+        html,
+      });
+    }
+  } catch (e) {
+    return json({ error: `send failed: ${e.message}` }, 502);
+  }
+  return json({ ok: true });
+}
+
 const worker = {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
@@ -407,6 +669,10 @@ const worker = {
     }
     if (url.pathname === "/api/calendar") {
       if (request.method === "POST") return handleCalendar(request, env);
+      return new Response("Method not allowed", { status: 405 });
+    }
+    if (url.pathname === "/api/estimate") {
+      if (request.method === "POST") return handleEstimate(request, env);
       return new Response("Method not allowed", { status: 405 });
     }
     if (url.pathname === "/api/instagram") {

@@ -12,6 +12,8 @@ We only collect what we need to reply to you and to design flowers for your wedd
 
 **When you download our Wedding Flower Calendar.** We ask for your name and email address so we can email you the download link, and whether you'd like Ivy to contact you about a free consultation.
 
+**When you use our wedding flower calculator.** If you ask us to email your estimate, we use your email address to send it, and Ivy receives a copy. If you send your estimate as an enquiry, we receive the details you enter alongside your selections.
+
 **When you book with us.** We keep the details needed to plan and deliver your flowers, such as your proposal, timings, venue and access information, contacts on the day, and payment records.
 
 **When you email or message us.** We keep our correspondence with you.
@@ -23,7 +25,7 @@ We only collect what we need to reply to you and to design flowers for your wedd
 We use your information to:
 
 - reply to your enquiry and prepare a proposal or quote
-- email you the Wedding Flower Calendar you requested
+- email you the Wedding Flower Calendar or the flower estimate you requested
 - plan, prepare, deliver, set up and pack down your flowers
 - invoice you and keep the business and tax records we're required to keep
 - keep our website running securely

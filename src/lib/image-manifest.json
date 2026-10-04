@@ -2444,5 +2444,595 @@
    768,
    960
   ]
+ },
+ "calculator-arch-1-signature-2": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-arch-2-signature-2": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-arch-1-signature-1": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-arch-2-signature-1": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-arch-full-luxe-1": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-arch-2-signature-3": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-bar-essential-2": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-arch-full-signature-1": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-bar-essential-1": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-bar-luxe-1": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-bar-signature-1": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-bar-signature-2": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-bridal-essential-1": {
+  "w": 788,
+  "h": 985,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-bridal-luxe-2": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-bridal-signature-1": {
+  "w": 656,
+  "h": 821,
+  "sizes": [
+   480
+  ]
+ },
+ "calculator-bridal-luxe-3": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-bridal-luxe-1": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-bridal-luxe-4": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-bridal-signature-2": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-bridal-signature-3": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-bridal-signature-4": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-bridesmaid-essential-1": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-bridesmaid-luxe-1": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-bridesmaid-signature-1": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-bud-essential-1": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-bud-essential-2": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-bud-luxe-1": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-bud-luxe-2": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-bud-luxe-3": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-bud-signature-1": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-bud-signature-2": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-buttonhole-2": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-bud-signature-3": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-buttonhole-1": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-buttonhole-3": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-cake-1": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-centre-essential-2": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-centre-essential-1": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-centre-luxe-2": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-centre-luxe-1": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-centre-signature-2": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-centre-signature-1": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-chair-1": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-compote-essential-1": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-compote-essential-2": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-compote-essential-3": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-compote-essential-4": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-compote-luxe-1": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-compote-luxe-2": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-compote-signature-1": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-compote-signature-2": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-compote-signature-3": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-cones-1": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-fg-basket-1": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-ground-luxe-1": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-ground-signature-1": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-hanging-luxe-1": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-hanging-signature-1": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-meadow-signature-1": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-plinth-essential-1": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-meadow-signature-2": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-plinth-luxe-1": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-plinth-luxe-2": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-plinth-signature-2": {
+  "w": 584,
+  "h": 731,
+  "sizes": [
+   480
+  ]
+ },
+ "calculator-plinth-luxe-3": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-plinth-signature-1": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-plinth-luxe-4": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-plinth-luxe-5": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-plinth-signature-3": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-runner-1": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-runner-2": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-runner-3": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-wrist-1": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
+ },
+ "calculator-welcome-1": {
+  "w": 800,
+  "h": 1000,
+  "sizes": [
+   480,
+   768
+  ]
  }
 }
