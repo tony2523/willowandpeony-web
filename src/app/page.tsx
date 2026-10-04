@@ -71,7 +71,7 @@ export default function HomePage() {
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
               <Link href="/wedding-flowers-auckland/" className="btn-white">
-                Plan your wedding flowers
+                Wedding florals
               </Link>
               <Link href="/event-flowers-auckland/" className="btn-ghost-white">
                 Event florals
@@ -87,11 +87,7 @@ export default function HomePage() {
         className="border-b border-hairline bg-white px-5 py-6 sm:px-6"
       >
         <ul className="mx-auto flex max-w-[1280px] flex-wrap items-center justify-center gap-x-10 gap-y-2 text-center text-[11px] tracking-[0.16em] text-ink-soft uppercase">
-          <li>Weddings from $500</li>
-          <li className="hidden sm:block" aria-hidden>
-            ·
-          </li>
-          <li>Auckland-wide delivery &amp; styling</li>
+          <li>Weddings across Auckland &amp; beyond</li>
           <li className="hidden sm:block" aria-hidden>
             ·
           </li>
@@ -108,15 +104,15 @@ export default function HomePage() {
           <li className="hidden sm:block" aria-hidden>
             ·
           </li>
-          <li>Now booking 2026 and 2027</li>
+          <li>Now booking 2027 and 2028</li>
         </ul>
       </section>
 
       {/* Intro */}
       <section className="mx-auto mt-20 grid max-w-[1280px] gap-10 px-5 sm:px-6 md:mt-28 md:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] md:gap-20">
         <h2 className="display-2 text-ink">
-          Romantic, refined and <em>quietly distinctive</em> — designed to complement your venue
-          and elevate the atmosphere.
+          Romantic, sculptural and <em>artful</em> — designed to complement your venue and
+          elevate the atmosphere.
         </h2>
         <div className="max-w-[440px] self-center">
           <p className="text-[14px] leading-[1.75] text-ink-soft">
@@ -221,12 +217,14 @@ export default function HomePage() {
           <p className="eyebrow text-muted">Meet your florist</p>
           <h2 className="display-2 mt-3 text-ink">Ivy, founder of Willow &amp; Peony</h2>
           <p className="mt-7 max-w-[560px] font-serif text-[22px] leading-[1.5] font-light text-ink-soft italic sm:text-[25px]">
-            &ldquo;Her signature style is romantic, artful and quietly distinctive — florals that
-            feel elegant, memorable and deeply considered.&rdquo;
+            &ldquo;I&rsquo;m drawn to romantic flowers, interesting shapes and the occasional
+            unexpected ingredient.&rdquo;
           </p>
           <p className="mt-6 max-w-[540px] text-[15px] leading-[1.7] font-light text-ink-soft">
-            With years of experience across weddings, events and bespoke styling, Ivy brings an
-            intuitive eye for colour, composition and atmosphere to every project.
+            But I also love seeing what each couple brings&mdash;the colours you love, a flower
+            that means something to you, or an idea you&rsquo;re not quite sure how to describe.
+            We&rsquo;ll work from there, combining your taste with my eye for flowers to create
+            something you&rsquo;ll love on the day.
           </p>
           <Link href="/about/" className="t-link mt-8 inline-block text-ink">
             Our story
@@ -253,7 +251,7 @@ export default function HomePage() {
 
       {/* Latest work */}
       <div className="mt-24 md:mt-[140px]">
-        <LatestWork posts={latest} />
+        <LatestWork posts={latest} eyebrow="Real weddings & events" />
       </div>
 
       {/* Instagram — full-bleed strip */}
@@ -264,13 +262,16 @@ export default function HomePage() {
       {/* CTA band — flush against the Instagram strip (two full-bleeds read as one) */}
       <section className="border-t border-hairline bg-paper">
         <div className="mx-auto flex max-w-[900px] flex-col items-center px-5 py-16 text-center sm:py-20">
-          <p className="eyebrow text-muted">Now booking 2026 and 2027 weddings</p>
+          <p className="eyebrow text-muted">Now booking 2027 and 2028 weddings</p>
           <h2 className="display-3 mt-4 text-ink">
             Let&rsquo;s talk about <em>your day</em>
           </h2>
-          <div className="mt-8">
+          <div className="mt-8 flex flex-wrap justify-center gap-4">
             <Link href="/contact/" className="btn-solid">
               Start an enquiry
+            </Link>
+            <Link href="/wedding-flower-calculator/" className="btn-outline">
+              Estimate your flowers
             </Link>
           </div>
         </div>

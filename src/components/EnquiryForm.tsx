@@ -266,6 +266,9 @@ export default function EnquiryForm({ kind = "general", selector = false, compac
               className="input-wp"
             />
           </Field>
+          <Field label="Pinterest board or inspiration link (optional)">
+            <input name="inspo" type="url" inputMode="url" placeholder="https://" className="input-wp" />
+          </Field>
           <Field label="How did you hear about us?">
             <select name="found_us" defaultValue="" className="input-wp">
               <option value="" disabled>
@@ -279,6 +282,9 @@ export default function EnquiryForm({ kind = "general", selector = false, compac
         </div>
       ) : (
         <div className="grid gap-4">
+          <p role="note" className="border border-hairline bg-white px-4 py-3 text-[13px] leading-relaxed text-ink-soft">
+            Event floral styling is currently available across Auckland only.
+          </p>
           <div className="grid gap-4 sm:grid-cols-2">
             <Field label="Key contact name">
               <input name="name" required autoComplete="name" className="input-wp" />
@@ -314,6 +320,9 @@ export default function EnquiryForm({ kind = "general", selector = false, compac
               placeholder="The occasion, the space, the atmosphere you want to create…"
               className="input-wp"
             />
+          </Field>
+          <Field label="Pinterest board or inspiration link (optional)">
+            <input name="inspo" type="url" inputMode="url" placeholder="https://" className="input-wp" />
           </Field>
           <div className="grid gap-4 sm:grid-cols-2">
             <Field label="Budget">

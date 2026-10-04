@@ -6,6 +6,10 @@ category: "weddings"
 venue: "Rydges Formosa, Auckland"
 cover: "a-soft-pastel-winter-wedding-at-rydges-formosa-auckland-cover"
 seoTitle: "Pastel Winter Wedding at Rydges Formosa"
+palette: "Blush · white"
+blooms: "Roses, phalaenopsis orchids, anthuriums"
+photographer: "Forever By Diana"
+photographerUrl: "https://www.instagram.com/foreverbydiana/"
 ---
 
 ## A Soft and Romantic August Wedding at Rydges Formosa Auckland

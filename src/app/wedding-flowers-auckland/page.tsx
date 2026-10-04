@@ -10,11 +10,18 @@ import TestimonialSlider from "@/components/TestimonialSlider";
 import { pageMetadata, serviceJsonLd, breadcrumbJsonLd } from "@/lib/seo";
 import { getPostsByCategory } from "@/lib/journal";
 import { weddingPackages } from "../../../content/site";
+import { TIERS, bridalFrom, money } from "@/lib/estimate";
+
+const calculatorStyles = TIERS.map((t, i) => ({
+  name: t.name,
+  photo: `calculator-bridal-${t.name.toLowerCase()}-1`,
+  from: money(bridalFrom(i) ?? 0),
+}));
 
 export const metadata: Metadata = pageMetadata({
   title: "Wedding Florist Auckland | Bridal Flowers",
   description:
-    "Boutique Auckland wedding florist. Romantic bridal bouquets, ceremony and reception flowers, with curated packages from $500 or fully bespoke design.",
+    "Boutique Auckland wedding florist creating romantic, sculptural and artful wedding flowers. Estimate your bouquets and styling with our flower calculator.",
   path: "/wedding-flowers-auckland/",
   ogImage: "wedding-flowers-auckland-new-zealand-auckland-wedding-photographer-cbd-271",
 });
@@ -62,11 +69,12 @@ export default function WeddingsPage() {
         eyebrow="Wedding florals · Auckland"
         title={
           <>
-            Flowers that feel like <em>the way you love</em>
+            Wedding flowers, <em>designed around you</em>
           </>
         }
-        intro="Romantic, timeless wedding flowers for ceremonies and receptions across Auckland — curated packages or fully bespoke design."
-        cta={{ label: "Check your date", href: "#enquire" }}
+        intro="Romantic, sculptural and artful flowers for your wedding day, from intimate elopements to full ceremony and reception styling."
+        cta={{ label: "Estimate your flowers", href: "/wedding-flower-calculator/" }}
+        secondaryCta={{ label: "Start an enquiry", href: "#enquire" }}
       />
 
       {/* Intro */}
@@ -75,10 +83,9 @@ export default function WeddingsPage() {
           Weddings are deeply personal — <em>your flowers should be too.</em>
         </h2>
         <p className="max-w-[440px] self-center text-[14px] leading-[1.75] text-ink-soft">
-          At Willow &amp; Peony, we believe flowers should feel as magical as the moment you say
-          &ldquo;I do.&rdquo; Based on Auckland&rsquo;s North Shore, we are a boutique wedding
-          florist specialising in romantic, modern arrangements for weddings and intimate
-          celebrations across Auckland.
+          Based on Auckland&rsquo;s North Shore, Willow &amp; Peony is a boutique floral studio
+          creating wedding flowers for couples across Auckland and beyond. We bring together
+          seasonal blooms, unexpected textures and the details that matter to you.
         </p>
       </section>
 
@@ -101,27 +108,52 @@ export default function WeddingsPage() {
         </div>
       </section>
 
-      {/* Curated packages — paper split */}
+      {/* The process — moved up, starts with the calculator */}
+      <section className="mx-auto mt-24 max-w-[1280px] px-5 sm:px-6 md:mt-[140px]">
+        <ProcessSteps />
+      </section>
+
+      {/* Wedding flower calculator — paper split (replaces the packages split) */}
       <section className="mt-24 bg-paper md:mt-[140px]">
         <div className="grid md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
           <div className="order-2 flex flex-col justify-center px-5 py-14 sm:px-10 md:order-1 md:px-16 md:py-20">
-            <p className="eyebrow text-muted">Curated packages</p>
-            <h2 className="display-3 mt-3 text-ink">The essentials, beautifully handled</h2>
+            <p className="eyebrow text-muted">Wedding flower calculator</p>
+            <h2 className="display-3 mt-3 text-ink">
+              See what your flowers <em>could cost</em>
+            </h2>
             <p className="mt-5 max-w-[480px] text-[15px] leading-[1.7] font-light text-ink-soft">
-              Three thoughtfully designed tiers — Petite, Classic and Luxe — covering everything
-              from your bouquet to ceremony and reception styling, from $500 to $5,000. Perfect
-              for couples who want beautiful blooms without the overwhelm.
+              Choose a style, add the pieces you&rsquo;d love and see an itemised estimate as you
+              go, from your bouquet to ceremony and reception flowers. When it feels right, send
+              it to Ivy and she&rsquo;ll shape it into a personal proposal.
             </p>
-            <Link href="/wedding-flower-packages/" className="t-link mt-8 self-start text-ink">
-              Explore packages &amp; pricing
-            </Link>
+            <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-4">
+              <Link href="/wedding-flower-calculator/" className="btn-solid">
+                Estimate your flowers
+              </Link>
+              <Link href="/wedding-flower-packages/" className="t-link text-ink">
+                Prefer a set package?
+              </Link>
+            </div>
           </div>
-          <Pic
-            name="wedding-flower-package-auckland-scarlet-style-shoot22"
-            alt="Curated wedding package styling by Willow & Peony"
-            sizes="(max-width: 768px) 100vw, 50vw"
-            className="order-1 h-full max-h-[700px] w-full object-cover md:order-2"
-          />
+          <div className="order-1 grid grid-cols-3 gap-2 px-5 pt-10 sm:gap-3 sm:px-10 md:order-2 md:px-16 md:py-20">
+            {calculatorStyles.map((t) => (
+              <figure key={t.name}>
+                <Pic
+                  name={t.photo}
+                  alt={`${t.name} style bridal bouquet by Willow & Peony`}
+                  sizes="(max-width: 768px) 33vw, 220px"
+                  aspect="4/5"
+                  className="h-auto w-full object-cover"
+                />
+                <figcaption className="mt-2.5 text-[10.5px] tracking-[0.14em] text-muted uppercase">
+                  {t.name}
+                  <span className="mt-0.5 block text-[12px] tracking-normal normal-case">
+                    Bridal bouquet from {t.from}
+                  </span>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -150,11 +182,6 @@ export default function WeddingsPage() {
         </div>
       </section>
 
-      {/* The process */}
-      <section className="mx-auto mt-24 max-w-[1280px] px-5 sm:px-6 md:mt-[140px]">
-        <ProcessSteps />
-      </section>
-
       {/* Reviews slider */}
       <section
         aria-label="Couples' reviews"
@@ -167,40 +194,63 @@ export default function WeddingsPage() {
       <div className="mt-24 md:mt-[140px]">
         <LatestWork
           posts={posts}
-          eyebrow="The journal"
+          eyebrow="Real weddings"
           title="Recent celebrations"
           href="/work/?type=weddings"
         />
       </div>
 
-      {/* SEO copy — the page's full editorial text, kept content-rich */}
-      <section className="mx-auto mt-24 max-w-[760px] px-5 sm:px-6 md:mt-[140px]">
-        <h2 className="display-3 text-ink">Premium wedding floral styling</h2>
-        <div className="mt-6 space-y-4 text-[15px] leading-[1.75] font-light text-ink-soft">
-          <p>
-            Our work is soft, feminine, and artfully composed — blending premium seasonal blooms
-            with unexpected textural details to create wedding flowers that feel uniquely yours.
-            Thoughtful. Romantic. Timeless.
-          </p>
-          <p>
-            Every couple is different — and so is every wedding we design. We take a boutique,
-            collaborative approach, starting with a deep understanding of your style, vision, and
-            priorities. Our floral designs are created with heart, artistry, and a touch of the
-            unexpected, ensuring your flowers feel as special as the day itself.
-          </p>
-          <p>
-            Whether you choose one of our{" "}
-            <Link href="/wedding-flower-packages/" className="underline underline-offset-2">
-              wedding flower packages
-            </Link>{" "}
-            or a fully bespoke design, each commission includes Ivy&rsquo;s design time and premium
-            seasonal sourcing — and our Classic and Luxe packages add consultation, a full design
-            proposal, delivery, setup and next-day pack-out anywhere in Auckland. Browse our{" "}
-            <Link href="/venues/" className="underline underline-offset-2">
-              venue guides
-            </Link>{" "}
-            to see what works beautifully at Auckland&rsquo;s loveliest wedding venues.
-          </p>
+      {/* Editorial copy — two columns, as on the design */}
+      <section className="mx-auto mt-24 grid max-w-[1080px] gap-14 px-5 sm:px-6 md:mt-[140px] md:grid-cols-2 md:gap-20">
+        <div>
+          <h2 className="display-3 text-ink">Premium wedding floral styling</h2>
+          <div className="mt-6 space-y-4 text-[15px] leading-[1.75] font-light text-ink-soft">
+            <p>
+              At Willow &amp; Peony, we believe flowers should feel as magical as the moment you
+              say &ldquo;I do.&rdquo; We create wedding flowers shaped around your ideas and your
+              venue. We love seasonal blooms, interesting textures and an unexpected detail or
+              two. From your bridal bouquet to ceremony and reception flowers, we work with you to
+              bring it all together.
+            </p>
+            <p>
+              Start with our{" "}
+              <Link href="/wedding-flower-calculator/" className="underline underline-offset-2">
+                flower calculator
+              </Link>
+              , choose one of our{" "}
+              <Link href="/wedding-flower-packages/" className="underline underline-offset-2">
+                wedding flower packages
+              </Link>{" "}
+              or go fully bespoke: each commission includes Ivy&rsquo;s design time and premium
+              seasonal sourcing. Browse our{" "}
+              <Link href="/venues/" className="underline underline-offset-2">
+                venue guides
+              </Link>{" "}
+              to see what works beautifully at Auckland&rsquo;s loveliest wedding venues.
+            </p>
+          </div>
+        </div>
+        <div>
+          <h2 className="display-3 text-ink">Why couples choose us</h2>
+          <div className="mt-6 space-y-4 text-[15px] leading-[1.75] font-light text-ink-soft">
+            <p>
+              Every couple is different — and so is every wedding we design. We take a boutique,
+              collaborative approach, starting with a deep understanding of your style, vision,
+              and priorities. Our floral designs are created with heart, artistry, and a touch of
+              the unexpected, ensuring your flowers feel as special as the day itself.
+            </p>
+            <p>
+              Where the designs and timing allow, we also love finding ways to repurpose your
+              flowers wherever possible, helping you make the most of them throughout your day.{" "}
+              <Link
+                href="/journal/repurposing-ceremony-flowers-reception/"
+                className="underline underline-offset-2"
+              >
+                How we repurpose ceremony flowers
+              </Link>
+              .
+            </p>
+          </div>
         </div>
       </section>
 
@@ -208,7 +258,7 @@ export default function WeddingsPage() {
       <section id="enquire" className="mt-24 scroll-mt-24 border-t border-hairline bg-paper md:mt-[140px]">
         <div className="mx-auto max-w-[820px] px-5 py-16 sm:px-6 md:py-24">
           <div className="text-center">
-            <p className="eyebrow text-muted">Check your date</p>
+            <p className="eyebrow text-muted">Start an enquiry</p>
             <h2 className="display-3 mt-3 text-ink">Tell us about your day</h2>
           </div>
           <div className="mt-10">

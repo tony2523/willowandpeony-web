@@ -27,24 +27,25 @@ export const site = {
 } as const;
 
 /** The consultation-to-wedding-day journey, shown on service + contact pages. */
-export const processSteps = [
+export const processSteps: { title: string; body: string; link?: { label: string; href: string } }[] = [
   {
-    title: "Enquire",
-    body: "Tell us your date, venue and the feeling you want to create. We reply within 1–2 business days.",
+    title: "Estimate & enquire",
+    body: "Build an itemised estimate with our flower calculator, or simply tell us your date, venue and the feeling you want to create. We reply within 1–2 business days.",
+    link: { label: "Estimate your flowers", href: "/wedding-flower-calculator/" },
   },
   {
     title: "Consultation",
-    body: "A relaxed chat about your vision, palette and priorities — with your planner or stylist welcome too.",
+    body: "Every enquiring couple is offered a complimentary 30-minute video chat about their vision, palette and priorities, with no obligation attached. Your planner or stylist is welcome too.",
   },
   {
     title: "Design proposal",
-    body: "A tailored proposal with design direction, palette and clear pricing, refined together until it feels right.",
+    body: "An itemised, tailored proposal with design direction, palette and clear pricing, refined together until it feels right.",
   },
   {
     title: "Your day",
     body: "We source, craft, deliver and style everything — then quietly pack it all away the next day.",
   },
-] as const;
+];
 
 export const nav = [
   { label: "Weddings", href: "/wedding-flowers-auckland/" },
@@ -147,7 +148,7 @@ export const faqs: Faq[] = [
   },
   {
     q: "Do you do corporate and private event flowers?",
-    a: "Yes. We create floral styling for corporate events, product launches, gala dinners, conferences and private celebrations across Auckland — from reception styling and stage installations to table arrangements and client gifting.",
+    a: "Yes. We create floral styling for corporate events, product launches, gala dinners, conferences and private celebrations across Auckland — from reception styling and stage installations to table arrangements, shop windows and in-store flowers for retail and brand spaces.",
   },
   {
     q: "How much do wedding flowers cost in Auckland?",

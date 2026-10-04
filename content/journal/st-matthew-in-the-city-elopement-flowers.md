@@ -6,6 +6,10 @@ category: "weddings"
 venue: "St Matthew-in-the-City, Auckland"
 cover: "a-romantic-new-zealand-elopement-at-st-matthew-in-the-city-cover"
 seoTitle: "Elopement Flowers at St Matthew-in-the-City"
+palette: "White · champagne"
+blooms: "Orchids, roses, tulips, lisianthus"
+photographer: "一帧"
+photographerUrl: "https://xhslink.cn/m/AuF8FJ9JdpN"
 ---
 
 For Kaelan and Tongtong, their wedding was more than a single day. It was the beginning of a journey through New Zealand—starting with an intimate elopement ceremony at St Matthew-in-the-City in Auckland before continuing to the South Island for travel and more gorgeous photographs.

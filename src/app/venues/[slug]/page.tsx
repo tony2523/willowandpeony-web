@@ -252,7 +252,7 @@ export default async function VenueGuidePage({
           </h2>
           <div className="mt-8">
             <Link href="/contact/" className="btn-solid">
-              Check your date
+              Start an enquiry
             </Link>
           </div>
         </div>

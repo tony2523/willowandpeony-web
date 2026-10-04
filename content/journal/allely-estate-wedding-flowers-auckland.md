@@ -6,6 +6,10 @@ category: "weddings"
 venue: "Allely Estate, Auckland"
 cover: "organic-and-sculptural-allely-estate-wedding-flowers-cover"
 seoTitle: "Organic, Sculptural Wedding Flowers at Allely Estate"
+palette: "Pink · white · green"
+blooms: "Nursia anthuriums, Pastini gerberas, orchids, amaranthus"
+photographer: "Zara Staples"
+photographerUrl: "https://zarastaples.com/"
 ---
 
 Claire and Dan’s garden wedding at Allely Estate featured sculptural Nursia anthuriums, cascading orchids, flowing bear grass and meaningful soft pink Pastini gerberas. Their organic ceremony arrangement was later repurposed in front of the sweetheart table, creating two distinct floral moments from one thoughtful design.

@@ -14,6 +14,11 @@ export type Post = {
   date: string; // ISO yyyy-mm-dd
   category: "weddings" | "events";
   venue: string;
+  /** Details rail extras (Ivy's feedback #28, #29); optional per story. */
+  palette?: string;
+  blooms?: string;
+  photographer?: string;
+  photographerUrl?: string;
   cover: string; // image manifest name
   images: string[]; // manifest names of every inline image, in order
   html: string;
@@ -75,6 +80,10 @@ export function getPosts(): Post[] {
       date: data.date as string,
       category: data.category as "weddings" | "events",
       venue: (data.venue as string) || "",
+      palette: (data.palette as string) || undefined,
+      blooms: (data.blooms as string) || undefined,
+      photographer: (data.photographer as string) || undefined,
+      photographerUrl: (data.photographerUrl as string) || undefined,
       cover: data.cover as string,
       images,
       html,

@@ -35,8 +35,8 @@ const offers = [
   },
   {
     number: "04",
-    title: "Client gifting",
-    body: "Custom arrangements and curated gift bundles that impress your guests or show appreciation in style.",
+    title: "Retail & brand spaces",
+    body: "Floral arrangements and installations for shop windows, boutiques and brand spaces, from seasonal displays to regular in-store flowers.",
   },
 ];
 
@@ -173,7 +173,7 @@ export default function EventsPage() {
       <div className="mt-24 md:mt-[140px]">
         <LatestWork
           posts={posts}
-          eyebrow="The journal"
+          eyebrow="Real events"
           title="Recent events"
           href="/work/?type=events"
         />

@@ -5,6 +5,10 @@ date: "2025-07-30"
 category: "weddings"
 venue: "The Narrows Landing, Hamilton"
 cover: "scarlet-styled-shoot-at-the-narrows-landing-cover"
+palette: "Scarlet · crimson · blush"
+blooms: "Garden roses, anemones, sweet peas, anthuriums"
+photographer: "Tuhi Photography"
+photographerUrl: "https://www.instagram.com/tuhiphotography/"
 ---
 
 ## Scarlet Reverie: A Bold & Moody Styled Shoot at The Narrows Landing

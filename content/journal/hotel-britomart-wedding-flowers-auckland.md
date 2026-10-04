@@ -6,6 +6,8 @@ category: "weddings"
 venue: "The Hotel Britomart, Auckland"
 cover: "an-intimate-all-white-wedding-at-the-hotel-britomart-auckland-cover"
 seoTitle: "All-White Wedding at The Hotel Britomart"
+palette: "White · ivory · soft green"
+blooms: "Roses, hydrangeas, baby’s breath"
 ---
 
 Amanda and Bryan celebrated their intimate Auckland city wedding at The Hotel Britomart, surrounded by cloud-like arrangements of white roses, hydrangeas and delicate baby’s breath.

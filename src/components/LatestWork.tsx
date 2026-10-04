@@ -10,7 +10,7 @@ import type { Post } from "@/lib/journal";
  */
 export default function LatestWork({
   posts,
-  eyebrow = "The journal",
+  eyebrow = "Real weddings & events",
   title = "Our latest work",
   href = "/work/",
 }: {

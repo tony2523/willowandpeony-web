@@ -5,6 +5,7 @@ date: "2025-07-30"
 category: "events"
 venue: "Park Hyatt Auckland"
 cover: "elevating-others-dinner-event-by-the-gut-group-cover"
+blooms: "Cymbidium orchids, anthuriums"
 ---
 
 Elevating Others — A night of beauty, purpose, and impact.

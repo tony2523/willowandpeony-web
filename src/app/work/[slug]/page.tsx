@@ -109,6 +109,37 @@ export default async function WorkStoryPage({ params }: { params: Promise<{ slug
                 <dt className="text-muted">Date</dt>
                 <dd>{nice}</dd>
               </div>
+              {post.palette && (
+                <div>
+                  <dt className="text-muted">Palette</dt>
+                  <dd>{post.palette}</dd>
+                </div>
+              )}
+              {post.blooms && (
+                <div>
+                  <dt className="text-muted">Signature blooms</dt>
+                  <dd>{post.blooms}</dd>
+                </div>
+              )}
+              {post.photographer && (
+                <div>
+                  <dt className="text-muted">Photography</dt>
+                  <dd>
+                    {post.photographerUrl ? (
+                      <a
+                        href={post.photographerUrl}
+                        target="_blank"
+                        rel="noopener"
+                        className="underline underline-offset-2 hover:text-ink"
+                      >
+                        {post.photographer}
+                      </a>
+                    ) : (
+                      post.photographer
+                    )}
+                  </dd>
+                </div>
+              )}
               <div>
                 <dt className="text-muted">Flowers</dt>
                 <dd>{site.name}</dd>
@@ -121,27 +152,6 @@ export default async function WorkStoryPage({ params }: { params: Promise<{ slug
             dangerouslySetInnerHTML={{ __html: post.html }}
           />
         </div>
-
-        {/* Credits band */}
-        <section className="mt-24 border-t border-hairline bg-paper md:mt-[140px]">
-          <div className="mx-auto max-w-[1080px] px-5 py-14 sm:px-6">
-            <p className="eyebrow text-muted">The people who made it</p>
-            <div className="mt-6 flex flex-wrap gap-x-14 gap-y-5 text-[13px] leading-[1.9] text-ink-soft">
-              {post.venue && (
-                <div>
-                  <span className="text-muted">Venue</span>
-                  <br />
-                  {post.venue.split(",")[0]}
-                </div>
-              )}
-              <div>
-                <span className="text-muted">Flowers</span>
-                <br />
-                {site.name}
-              </div>
-            </div>
-          </div>
-        </section>
 
         {/* Keep reading */}
         {(older || newer) && (
@@ -216,7 +226,7 @@ export default async function WorkStoryPage({ params }: { params: Promise<{ slug
             </h2>
             <div className="mt-8">
               <Link href="/contact/" className="btn-solid">
-                {isWedding ? "Check your date" : "Start an enquiry"}
+                Start an enquiry
               </Link>
             </div>
           </div>

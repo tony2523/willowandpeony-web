@@ -179,11 +179,13 @@ function enquiryEmail(data, { name, email, message, kind }) {
     add("Budget", data.budget);
     add("Guests", data.guests);
     add("Found us via", data.found_us);
+    add("Inspiration", data.inspo);
   } else if (kind === "event") {
     add("Company", data.company);
     add("Event date", data.date);
     add("Event type", data.event_type);
     add("Budget", data.budget);
+    add("Inspiration", data.inspo);
   }
 
   const requirements = (Array.isArray(data.requirements)
@@ -231,7 +233,12 @@ function enquiryEmail(data, { name, email, message, kind }) {
     row("Email", `<a href="mailto:${e(email)}" style="color:#1a1815">${e(email)}</a>`),
     phone ? row("Phone", `<a href="tel:${e(phone.replace(/[^+\d]/g, ""))}" style="color:#1a1815">${e(phone)}</a>`) : "",
   ].join("");
-  const rows = details.map(([l, v]) => row(l, e(v))).join("");
+  const isUrl = (v) => /^https?:\/\/\S+$/i.test(v);
+  const rows = details
+    .map(([l, v]) =>
+      row(l, l === "Inspiration" && isUrl(v) ? `<a href="${e(v)}" style="color:#1a1815;word-break:break-all">${e(v)}</a>` : e(v)),
+    )
+    .join("");
   const detailsLabel = kind === "wedding" ? "Wedding details" : kind === "event" ? "Event details" : "Details";
   const reqHtml = requirements.length
     ? `<tr><td style="padding:22px 32px 0">${label(`Floral requirements (${requirements.length})`)}<p style="margin:0;font-family:Arial,sans-serif;font-size:14px;line-height:1.9;color:#1a1815">${requirements.map((r) => `&#10003;&nbsp;${e(r)}`).join("<br>")}</p></td></tr>`

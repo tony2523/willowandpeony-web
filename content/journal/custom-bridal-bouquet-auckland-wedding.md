@@ -6,6 +6,8 @@ category: "weddings"
 venue: "Auckland CBD"
 cover: "a-joyful-custom-bridal-bouquet-auckland-city-wedding-cover"
 seoTitle: "Custom Bridal Bouquet for an Auckland Wedding"
+palette: "Peach · pink · apricot"
+blooms: "Roses, ranunculus, sweet peas, poppies"
 ---
 
 At Willow & Peony, I love creating bespoke bridal bouquets that reflect each bride’s unique vision. For this beautiful Auckland city wedding, our bride Emma shared her inspiration photos with a preferred colour palette and bouquet style. She dreamed of something joyful, romantic, and airy — and the final bouquet exceeded her expectations.

@@ -117,6 +117,9 @@ export default function InstagramFeed() {
           @{site.instagramHandle}
         </a>
         <p className="mt-3 text-[12px] text-muted">Tap any tile to preview</p>
+        <a href={site.instagram} target="_blank" rel="noopener" className="btn-outline mt-6">
+          Follow along
+        </a>
       </div>
       {/* Full-bleed, flush tiles: 2 across mobile, 3 tablet, 6 desktop */}
       <div className="mt-9 grid w-full grid-cols-2 sm:grid-cols-3 lg:grid-cols-6">
