@@ -311,6 +311,11 @@ export default function FloralCalculator() {
                         n.items[it.id].qty = Math.max(0, Math.min(999, Math.floor(q)));
                       })
                     }
+                    onStep={(d) =>
+                      edit((n) => {
+                        n.items[it.id].qty = Math.max(0, Math.min(999, n.items[it.id].qty + d));
+                      })
+                    }
                     onTier={(t) =>
                       edit((n) => {
                         n.items[it.id].tier = t;

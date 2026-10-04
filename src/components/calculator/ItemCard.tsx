@@ -92,16 +92,19 @@ export function Stepper({
   name,
   qty,
   onChange,
+  onStep,
 }: {
   name: string;
   qty: number;
   onChange: (q: number) => void;
+  /** ± buttons step from the latest state, so quick taps never get lost. */
+  onStep: (delta: number) => void;
 }) {
   const [draft, setDraft] = useState<string | null>(null);
   const btn = "flex h-9 w-9 items-center justify-center text-[17px] text-ink disabled:opacity-30";
   return (
     <div className="inline-flex items-center border border-hairline bg-white">
-      <button type="button" className={btn} disabled={qty <= 0} onClick={() => onChange(qty - 1)} aria-label={`Fewer ${name}`}>
+      <button type="button" className={btn} disabled={qty <= 0} onClick={() => onStep(-1)} aria-label={`Fewer ${name}`}>
         −
       </button>
       <input
@@ -117,7 +120,7 @@ export function Stepper({
         onBlur={() => setDraft(null)}
         className="h-9 w-11 border-x border-hairline bg-transparent text-center text-[14px] text-ink tabular-nums focus:outline-1 focus:outline-ink"
       />
-      <button type="button" className={btn} onClick={() => onChange(qty + 1)} aria-label={`More ${name}`}>
+      <button type="button" className={btn} onClick={() => onStep(1)} aria-label={`More ${name}`}>
         +
       </button>
     </div>
@@ -128,11 +131,13 @@ export default function ItemCard({
   it,
   sel,
   onQty,
+  onStep,
   onTier,
 }: {
   it: CalcItem;
   sel: Selection;
   onQty: (q: number) => void;
+  onStep: (delta: number) => void;
   onTier: (t: number) => void;
 }) {
   const qty = sel.items[it.id]?.qty ?? 0;
@@ -194,7 +199,7 @@ export default function ItemCard({
           <span className="text-[11.5px] tracking-[0.14em] text-muted uppercase">
             {it.unit === "metre" ? "Metres" : "Quantity"}
           </span>
-          <Stepper name={it.name} qty={qty} onChange={onQty} />
+          <Stepper name={it.name} qty={qty} onChange={onQty} onStep={onStep} />
         </div>
       </div>
     </article>
