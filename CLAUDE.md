@@ -69,6 +69,34 @@ a new descriptive name.
 - `content/redirects.json` — legacy URL → new URL map. Post-build script
   writes a meta-refresh stub for every entry.
 - `content/legal/*.md` — privacy policy & terms (rendered by LegalPage).
+- `content/calculator.ts` — wedding flower calculator prices, services,
+  styles and photos (single source of truth for the page AND the Worker's
+  estimate emails). See "Wedding flower calculator" below.
+
+## Wedding flower calculator (/wedding-flower-calculator/)
+
+Ivy's itemised estimator (built from her handoff, Oct 2026). Prices are NZD,
+exclude GST, and display as "from" prices everywhere.
+
+- Change a price: edit `content/calculator.ts`, build, push. The page,
+  JSON-LD price catalogue, llms.txt price list and estimate emails all
+  update from that one file.
+- Add photos: drop `calculator-<id>-<tier>-<n>.jpg` (or
+  `calculator-<id>-<n>.jpg` for untiered items) into `assets/img-src/`, run
+  `npm run images` (calculator photos get no OG card), then list them in
+  `PHOTOS`. An item only shows once it has photos; flower girl bouquet,
+  flower girl crown, hair flowers and aisle petals are waiting on photos.
+- Logic lives in `src/lib/estimate.ts` (pure, relative imports only:
+  wrangler bundles it into the Worker). Regression check: the first-visit
+  example totals from $4,680 (florals $4,090 + services $590); all Essential
+  $3,390, all Luxe $6,330.
+- `?e=<code>` reopens an estimate (used by the emailed link).
+- Worker `POST /api/estimate`: `email` sends the couple their estimate from
+  hello@ with ivy@ BCC'd; `enquire` sends Ivy the estimate plus the couple's
+  details, reply-to the couple. Totals are recomputed server-side from the
+  share code, so the form can't relay arbitrary content.
+- Open questions with Ivy (from her handoff): vase/plinth hire line,
+  minimum spend, confirming the three style descriptions.
 
 ## Adding a new journal post (the most common task)
 
