@@ -424,7 +424,8 @@ export default function FloralCalculator() {
             <div className="mt-4 border-t border-hairline pt-5" aria-live="polite">
               <p className="eyebrow text-muted">Estimated total · excl. GST</p>
               <p className="mt-2 font-serif text-[44px] leading-none font-light tracking-[-0.02em] text-ink tabular-nums">
-                {r.hasFrom && <span className="mr-1.5 font-sans text-[13px] tracking-normal text-muted">from</span>}
+                {r.hasFrom && <span className="mr-1 font-sans text-[13px] tracking-normal text-muted">from</span>}
+                {r.hasFrom && " "}
                 {money(r.total)}
               </p>
               {extras && <p className="mt-1.5 text-[12.5px] text-muted">{extras}</p>}
