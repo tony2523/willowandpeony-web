@@ -56,9 +56,9 @@ export default function WeddingsPage() {
       />
 
       <Hero
-        image="auckland-bridal-party-blush-bouquets-hero"
-        position="object-[50%_62%] md:object-center"
-        alt="Bridal party with blush and ivory wedding bouquets by Willow & Peony"
+        image="wedding-flowers-auckland-hero-bouquet-and-rings"
+        position="object-[55%_center] md:object-[50%_60%]"
+        alt="Newlyweds' hands with wedding rings beside a pink, peach and ivory bridal bouquet by Willow & Peony"
         eyebrow="Wedding florals · Auckland"
         title={
           <>
