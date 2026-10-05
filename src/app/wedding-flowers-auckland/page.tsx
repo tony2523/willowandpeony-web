@@ -11,6 +11,8 @@ import { pageMetadata, serviceJsonLd, breadcrumbJsonLd } from "@/lib/seo";
 import { getPostsByCategory } from "@/lib/journal";
 import { TIERS, bridalFrom, money } from "@/lib/estimate";
 import { FULL_SERVICE_FROM } from "../../../content/calculator";
+import GalleryFeature from "@/components/GalleryFeature";
+import { featureImages } from "@/lib/gallery";
 
 const calculatorStyles = TIERS.map((t, i) => ({
   name: t.name,
@@ -25,17 +27,6 @@ export const metadata: Metadata = pageMetadata({
   path: "/wedding-flowers-auckland/",
   ogImage: "wedding-flowers-auckland-new-zealand-auckland-wedding-photographer-cbd-271",
 });
-
-const gallery = [
-  { name: "wedding-flowers-auckland-new-zealand-auckland-wedding-photographer-cbd-271", alt: "Bridal bouquet with soft peach and cream roses, Auckland wedding" },
-  { name: "wedding-flowers-auckland-img-3926", alt: "Romantic ceremony arrangement with garden roses and orchids" },
-  { name: "wedding-flowers-auckland-new-zealand-auckland-wedding-photographer-cbd-emma-443", alt: "Bride holding a joyful pastel bouquet in Auckland city" },
-  { name: "wedding-flowers-auckland-dsc03988", alt: "Sculptural white and blush wedding flowers on a plinth" },
-  { name: "wedding-flowers-auckland-willowandpeony-1-13", alt: "Bud vases and candles styled for a wedding reception" },
-  { name: "wedding-flowers-auckland-scarlet-style-shoot20", alt: "Rich crimson wedding styling at The Narrows Landing" },
-  { name: "wedding-flowers-auckland-80bdd7b3b17e99d8a7325420cb8fb9c7", alt: "Garden-inspired ceremony flowers in blush and white" },
-  { name: "wedding-flowers-auckland-dsc02433-4", alt: "Textural bridal bouquet with premium seasonal blooms" },
-];
 
 export default function WeddingsPage() {
   const posts = getPostsByCategory("weddings").slice(0, 3);
@@ -91,24 +82,24 @@ export default function WeddingsPage() {
         </p>
       </section>
 
-      {/* Gallery strip */}
-      <section aria-label="Wedding flowers gallery" className="mt-24 md:mt-[8.75rem]">
-        <p className="eyebrow px-5 text-center text-muted sm:px-6">
-          Bouquets · Ceremony · Reception · Installations
-        </p>
-        <div className="carousel mt-8 gap-3 px-5 sm:px-6">
-          {gallery.map((g) => (
-            <Pic
-              key={g.name}
-              name={g.name}
-              alt={g.alt}
-              sizes="(max-width: 640px) 78vw, 380px"
-              aspect="4/5"
-              className="h-auto w-[78vw] object-cover sm:w-[23.75rem]"
-            />
-          ))}
-        </div>
-      </section>
+      {/* Gallery — editorial teaser linking to the wedding gallery */}
+      <GalleryFeature
+        eyebrow="Wedding gallery"
+        title={
+          <>
+            Bouquets, ceremonies and <em>receptions</em>
+          </>
+        }
+        href="/gallery/"
+        linkLabel="View the wedding gallery"
+        images={featureImages([
+          "gallery-kate-ben-the-officers-mess-01",
+          "gallery-amanda-bryan-hotel-britomart-02",
+          "gallery-claire-dan-allely-estate-01",
+          "gallery-claire-dan-allely-estate-11",
+          "gallery-auckland-city-wedding-08",
+        ])}
+      />
 
       {/* The process — moved up, starts with the calculator */}
       <section className="mx-auto mt-24 max-w-[80rem] px-5 sm:px-6 md:mt-[8.75rem]">

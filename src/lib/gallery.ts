@@ -60,3 +60,13 @@ export function getGalleryItems(): GalleryItem[] {
 
   return [...weddings.flat(), ...events.flat()];
 }
+
+export type FeatureImage = { name: string; alt: string };
+
+/** Photos for a GalleryFeature, with the same alt text the gallery uses. */
+export function featureImages(names: string[]): FeatureImage[] {
+  return names.map((name) => {
+    const wedding = WEDDING_GALLERY.find((g) => name.startsWith(`gallery-${g.slug}-`));
+    return { name, alt: wedding ? wedding.alt : altFromName(name) };
+  });
+}

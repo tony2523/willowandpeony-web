@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState, useSyncExternalStore } from "react";
 import type { GalleryItem } from "@/lib/gallery";
 import ArrowButton, { CloseIcon, iconButton } from "./ArrowButton";
 
@@ -21,7 +21,19 @@ const FILTERS: { value: Filter; label: string }[] = [
  * The active filter carries into the lightbox sequence.
  */
 export default function GalleryLightbox({ items }: { items: GalleryItem[] }) {
-  const [filter, setFilter] = useState<Filter>("weddings");
+  // ?type=events (the Events page links here) opens on Events; otherwise Weddings.
+  const urlType = useSyncExternalStore(
+    () => () => {},
+    () => new URLSearchParams(window.location.search).get("type"),
+    () => null,
+  );
+  const [override, setOverride] = useState<Filter | null>(null);
+  const filter: Filter = override ?? (urlType === "events" ? "events" : "weddings");
+  const setFilter = (f: Filter) => {
+    setOverride(f);
+    // Keep the address in step so a refresh or a shared link shows the same filter.
+    window.history.replaceState(null, "", f === "events" ? "?type=events" : window.location.pathname);
+  };
   const [open, setOpen] = useState<number | null>(null);
   const [shown, setShown] = useState(PAGE);
 

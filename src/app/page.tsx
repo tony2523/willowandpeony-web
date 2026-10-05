@@ -7,6 +7,8 @@ import InstagramFeed from "@/components/InstagramFeed";
 import TestimonialSlider from "@/components/TestimonialSlider";
 import LatestWork from "@/components/LatestWork";
 import { googleRating } from "../../content/reviews";
+import GalleryFeature from "@/components/GalleryFeature";
+import { featureImages } from "@/lib/gallery";
 
 export const metadata: Metadata = pageMetadata({
   title: "Wedding & Event Florist Auckland | Willow & Peony",
@@ -167,49 +169,24 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Featured wedding — paper band */}
-      <section className="mt-24 bg-paper md:mt-[8.75rem]">
-        <div className="grid md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] 2xl:mx-auto 2xl:max-w-[80rem] 2xl:items-center 2xl:gap-16 2xl:px-6 2xl:py-24">
-          <Pic
-            name="an-intimate-all-white-wedding-at-the-hotel-britomart-auckland"
-            alt="All-white intimate wedding ceremony at The Hotel Britomart, Auckland"
-            sizes="(max-width: 768px) 100vw, 50vw"
-            className="h-full max-h-[45rem] w-full object-cover"
-          />
-          <div className="flex flex-col justify-center px-5 py-14 sm:px-10 md:px-16 md:py-20 2xl:px-0 2xl:py-0">
-            <p className="eyebrow text-muted">Featured wedding</p>
-            <h2 className="display-3 mt-4 text-ink">
-              An intimate all-white wedding at The Hotel Britomart
-            </h2>
-            <p className="mt-5 max-w-[30rem] text-[0.9375rem] leading-[1.7] font-light text-ink-soft">
-              Cloud-like arrangements of white roses, hydrangeas and baby&rsquo;s breath for Amanda
-              and Bryan&rsquo;s city celebration.
-            </p>
-            <div className="mt-9 grid max-w-[25.875rem] grid-cols-3 gap-3">
-              {[
-                "amandas-white-rose-hydrangea-and-babys-breath-bridal-bouquet",
-                "intimate-hotel-britomart-wedding-aisle-with-ivory-ribbon-bows",
-                "repurposed-all-white-flowers-surrounding-the-wedding-head-table",
-              ].map((name) => (
-                <Pic
-                  key={name}
-                  name={name}
-                  alt=""
-                  sizes="130px"
-                  aspect="4/5"
-                  className="h-auto w-full object-cover"
-                />
-              ))}
-            </div>
-            <Link
-              href="/work/hotel-britomart-wedding-flowers-auckland/"
-              className="t-link mt-10 self-start text-ink"
-            >
-              Read their story
-            </Link>
-          </div>
-        </div>
-      </section>
+      {/* Gallery — editorial teaser linking to the wedding gallery */}
+      <GalleryFeature
+        eyebrow="From the gallery"
+        title={
+          <>
+            Weddings in <em>full bloom</em>
+          </>
+        }
+        href="/gallery/"
+        linkLabel="View the wedding gallery"
+        images={featureImages([
+          "gallery-auckland-city-wedding-02",
+          "gallery-amanda-bryan-hotel-britomart-05",
+          "gallery-kaelan-tongtong-st-matthew-in-the-city-08",
+          "gallery-leah-riley-private-venue-04",
+          "gallery-yue-vern-bridgewater-estate-01",
+        ])}
+      />
 
       {/* Meet your florist */}
       <section className="mx-auto mt-24 grid max-w-[80rem] gap-12 px-5 sm:px-6 md:mt-[8.75rem] md:grid-cols-[minmax(0,1fr)_25rem] md:gap-24">

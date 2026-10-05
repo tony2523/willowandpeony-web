@@ -8,6 +8,8 @@ import LatestWork from "@/components/LatestWork";
 import TestimonialSlider from "@/components/TestimonialSlider";
 import { pageMetadata, serviceJsonLd, breadcrumbJsonLd } from "@/lib/seo";
 import { getPostsByCategory } from "@/lib/journal";
+import GalleryFeature from "@/components/GalleryFeature";
+import { featureImages } from "@/lib/gallery";
 
 export const metadata: Metadata = pageMetadata({
   title: "Corporate & Event Florist Auckland",
@@ -160,6 +162,25 @@ export default function EventsPage() {
           />
         </div>
       </section>
+
+      {/* Gallery — editorial teaser linking to the event gallery */}
+      <GalleryFeature
+        eyebrow="Event gallery"
+        title={
+          <>
+            Installations, tables and <em>statement</em> pieces
+          </>
+        }
+        href="/gallery/?type=events"
+        linkLabel="View the event gallery"
+        images={featureImages([
+          "unified-commerce-assembly-2026-event-flo-uca-2026-by-w-p-3",
+          "shopify-leadership-dinner-event-flowers--dsc03581",
+          "elevating-others-gala-dinner-flowers-par-elevating-others-4",
+          "elevating-others-gala-dinner-flowers-par-elevating-others-2",
+          "elevating-others-gala-dinner-flowers-par-elevating-others-5",
+        ])}
+      />
 
       {/* Reviews slider */}
       <section

@@ -255,3 +255,9 @@ is retired. The system:
 - One continuous gallery per filter (Tony, 6 Oct 2026): each wedding's or event's
   photos sit side by side, no labels or sections; weddings in `content/gallery.ts`
   order, events newest story first. Justified rows sized to each photo's shape; 48 per page.
+- Gallery teasers (`GalleryFeature`): an editorial five-photo mosaic on the home page
+  and the Weddings page (wedding photos, link to `/gallery/`) and the Events page
+  (event photos, link to `/gallery/?type=events`, which opens the gallery on Events).
+  Photos are picked by name in each page; slot shapes are portrait, landscape,
+  portrait, landscape, landscape. It replaced the home featured wedding and the
+  Weddings photo strip (Tony, 6 Oct 2026).
