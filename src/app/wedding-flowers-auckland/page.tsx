@@ -162,7 +162,7 @@ export default function WeddingsPage() {
             name="wedding-flowers-auckland-scarlet-style-shoot4"
             alt="Bespoke crimson and blush bridal bouquet by Willow & Peony"
             sizes="(max-width: 768px) 100vw, 50vw"
-            className="h-full max-h-[43.75rem] w-full object-cover"
+            className="h-full max-h-[43.75rem] w-full object-cover max-md:aspect-[4/5] max-md:h-auto max-md:mx-auto max-md:w-[calc(100%-2.5rem)] sm:max-md:w-[calc(100%-5rem)]"
           />
           <div className="flex flex-col justify-center px-5 py-14 sm:px-10 md:px-16 md:py-20 2xl:px-0">
             <p className="eyebrow text-muted">Fully bespoke</p>

@@ -100,6 +100,29 @@ export default function EventsPage() {
         </p>
       </section>
 
+      {/* Gallery — editorial teaser linking to the event gallery */}
+      <GalleryFeature
+        eyebrow="Event gallery"
+        title={
+          <>
+            Installations, tables and <em>statement</em> pieces
+          </>
+        }
+        href="/gallery/?type=events"
+        linkLabel="View the event gallery"
+        images={featureImages([
+          "unified-commerce-assembly-2026-event-flo-uca-2026-by-w-p-3",
+          "shopify-leadership-dinner-event-flowers--dsc03581",
+          "elevating-others-gala-dinner-flowers-par-elevating-others-2",
+          "elevating-others-gala-dinner-flowers-par-elevating-others-4",
+          "shopify-leadership-dinner-event-flowers--dsc03511",
+          "unified-commerce-assembly-2026-event-flo-uca-2026-by-w-p-5",
+          "elevating-others-gala-dinner-flowers-par-elevating-others-5",
+          "shopify-leadership-dinner-event-flowers--img-2587",
+          "shopify-leadership-dinner-event-flowers--dsc03547",
+        ])}
+      />
+
       {/* What we create — paper band */}
       <section className="mt-24 border-y border-hairline bg-paper md:mt-[8.75rem]">
         <div className="mx-auto max-w-(--site-column) px-5 py-16 sm:px-6 md:py-24">
@@ -162,29 +185,6 @@ export default function EventsPage() {
           />
         </div>
       </section>
-
-      {/* Gallery — editorial teaser linking to the event gallery */}
-      <GalleryFeature
-        eyebrow="Event gallery"
-        title={
-          <>
-            Installations, tables and <em>statement</em> pieces
-          </>
-        }
-        href="/gallery/?type=events"
-        linkLabel="View the event gallery"
-        images={featureImages([
-          "unified-commerce-assembly-2026-event-flo-uca-2026-by-w-p-3",
-          "shopify-leadership-dinner-event-flowers--dsc03581",
-          "elevating-others-gala-dinner-flowers-par-elevating-others-2",
-          "elevating-others-gala-dinner-flowers-par-elevating-others-4",
-          "shopify-leadership-dinner-event-flowers--dsc03511",
-          "unified-commerce-assembly-2026-event-flo-uca-2026-by-w-p-5",
-          "elevating-others-gala-dinner-flowers-par-elevating-others-5",
-          "shopify-leadership-dinner-event-flowers--img-2587",
-          "shopify-leadership-dinner-event-flowers--dsc03547",
-        ])}
-      />
 
       {/* Reviews slider */}
       <section

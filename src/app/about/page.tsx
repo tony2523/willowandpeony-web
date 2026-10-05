@@ -67,7 +67,7 @@ export default function AboutPage() {
           alt="Ivy Diao, founder of Willow & Peony, boutique florist in Auckland"
           sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 620px"
           priority
-          className="aspect-[4/5] h-auto w-full object-cover object-[60%_25%] md:aspect-auto md:h-[42.5rem] lg:h-[48.75rem]"
+          className="aspect-[4/5] h-auto w-full object-cover object-[60%_25%] md:aspect-auto md:h-[42.5rem] lg:h-[48.75rem] max-md:mx-auto max-md:w-[calc(100%-2.5rem)] sm:max-md:w-[calc(100%-5rem)]"
         />
       </section>
 

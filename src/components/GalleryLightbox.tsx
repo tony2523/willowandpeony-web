@@ -1,8 +1,9 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState, useSyncExternalStore } from "react";
+import { useCallback, useMemo, useState, useSyncExternalStore } from "react";
 import type { GalleryItem } from "@/lib/gallery";
-import ArrowButton, { CloseIcon, iconButton } from "./ArrowButton";
+import Lightbox from "./Lightbox";
+import { MOSAIC, MOSAIC_MIRROR, MOSAIC_SHAPES, MOSAIC_VW } from "./mosaic";
 
 type Filter = "weddings" | "events";
 
@@ -16,8 +17,9 @@ const FILTERS: { value: Filter; label: string }[] = [
 
 /**
  * Weddings / Events portfolio (Weddings by default, no All), each wedding's
- * or event's photos side by side, with a plain full-screen lightbox:
- * tap an image, flick or arrow through, close with × or Escape.
+ * or event's photos side by side in the editorial mosaic shared with the
+ * home and Weddings teasers, with a plain full-screen lightbox:
+ * tap an image, swipe or arrow through, close with × or Escape.
  * The active filter carries into the lightbox sequence.
  */
 export default function GalleryLightbox({ items }: { items: GalleryItem[] }) {
@@ -43,27 +45,30 @@ export default function GalleryLightbox({ items }: { items: GalleryItem[] }) {
   );
   const visible = filtered.slice(0, shown);
 
-  const close = useCallback(() => setOpen(null), []);
-  const step = useCallback(
-    (dir: 1 | -1) =>
-      setOpen((i) => (i === null ? null : (i + dir + filtered.length) % filtered.length)),
-    [filtered.length],
-  );
+  // Blocks of nine in the editorial mosaic, alternate blocks mirrored. Within
+  // a block portrait photos take the portrait slots and landscape photos the
+  // landscape ones, in order; i stays each photo's place in the filtered list,
+  // which the lightbox steps through. A last partial block uses plain rows.
+  const blocks = useMemo(() => {
+    const tiles = visible.map((item, i) => ({ item, i }));
+    const out: { full: boolean; tiles: { item: GalleryItem; i: number }[] }[] = [];
+    for (let k = 0; k < tiles.length; k += MOSAIC_SHAPES.length) {
+      const chunk = tiles.slice(k, k + MOSAIC_SHAPES.length);
+      if (chunk.length < MOSAIC_SHAPES.length) {
+        out.push({ full: false, tiles: chunk });
+        break;
+      }
+      const portraits = chunk.filter((t) => t.item.h >= t.item.w);
+      const landscapes = chunk.filter((t) => t.item.w > t.item.h);
+      const placed = MOSAIC_SHAPES.map(
+        (shape) => ((shape === "P" ? portraits : landscapes).shift() ?? portraits.shift() ?? landscapes.shift())!,
+      );
+      out.push({ full: true, tiles: placed });
+    }
+    return out;
+  }, [visible]);
 
-  useEffect(() => {
-    if (open === null) return;
-    document.body.style.overflow = "hidden";
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") close();
-      if (e.key === "ArrowRight") step(1);
-      if (e.key === "ArrowLeft") step(-1);
-    };
-    window.addEventListener("keydown", onKey);
-    return () => {
-      document.body.style.overflow = "";
-      window.removeEventListener("keydown", onKey);
-    };
-  }, [open, close, step]);
+  const close = useCallback(() => setOpen(null), []);
 
   return (
     <div>
@@ -89,40 +94,73 @@ export default function GalleryLightbox({ items }: { items: GalleryItem[] }) {
         ))}
       </div>
 
-      {/*
-        Justified rows: each image's share of a row is its own width-to-height
-        ratio, so every row fills the width at one height and nothing is
-        cropped. --row is the target row height: big enough that phones show
-        one image per row, tablets about three, laptops and up three to five.
-      */}
-      <div className="mt-10 flex flex-wrap gap-2 [--row:22rem] sm:gap-3 sm:[--row:18rem] md:[--row:20rem] lg:[--row:26rem] 2xl:[--row:28rem]">
-        {visible.map((item, i) => {
-          const ar = item.w / item.h;
-          return (
-            <button
-              key={item.name}
-              type="button"
-              onClick={() => setOpen(i)}
-              style={{ flexGrow: ar, flexBasis: `calc(var(--row) * ${ar.toFixed(4)})`, aspectRatio: `${item.w} / ${item.h}` }}
-              className="group relative block min-w-0 cursor-zoom-in overflow-hidden bg-paper"
-              aria-label={`View larger: ${item.alt}`}
+      <div className="mt-10 flex flex-col gap-1.5 sm:gap-3">
+        {blocks.map((block, b) =>
+          block.full ? (
+            // Phones: three columns, the lead photo two by two (on the right in
+            // alternate blocks). Tablets and up: the 12 by 6 mosaic.
+            <div
+              key={b}
+              className="grid aspect-[3/4] grid-cols-3 grid-rows-4 gap-1.5 sm:gap-3 md:aspect-[2/1] md:grid-cols-12 md:grid-rows-6"
             >
-              <img
-                src={item.src}
-                srcSet={item.srcSet}
-                sizes={`(max-width: 639px) 100vw, (min-width: 1760px) ${Math.round(ar * 620)}px, ${Math.round(ar * 440)}px`}
-                width={item.w}
-                height={item.h}
-                alt={item.alt}
-                loading={i < 12 ? "eager" : "lazy"}
-                decoding="async"
-                className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
-              />
-            </button>
-          );
-        })}
-        {/* Keeps the last row at the target height instead of stretching it. */}
-        <span aria-hidden className="h-0 grow-[100000] basis-0" />
+              {block.tiles.map(({ item, i }, slot) => (
+                <button
+                  key={item.name}
+                  type="button"
+                  onClick={() => setOpen(i)}
+                  className={`group relative block min-w-0 cursor-zoom-in overflow-hidden bg-paper ${
+                    slot === 0 ? `col-span-2 row-span-2 ${b % 2 ? "max-md:col-start-2" : ""}` : ""
+                  } ${(b % 2 ? MOSAIC_MIRROR : MOSAIC)[slot]}`}
+                  aria-label={`View larger: ${item.alt}`}
+                >
+                  <img
+                    src={item.src}
+                    srcSet={item.srcSet}
+                    sizes={`(max-width: 767px) ${slot === 0 ? "67vw" : "33vw"}, ${MOSAIC_VW[slot]}`}
+                    width={item.w}
+                    height={item.h}
+                    alt={item.alt}
+                    loading={i < 9 ? "eager" : "lazy"}
+                    decoding="async"
+                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                  />
+                </button>
+              ))}
+            </div>
+          ) : (
+            // Leftover photos: justified rows at the mosaic's scale, each photo's
+            // share of the row its own width-to-height ratio, nothing cropped.
+            <div key={b} className="flex flex-wrap gap-1.5 [--row:9rem] sm:gap-3 sm:[--row:12rem] lg:[--row:19rem]">
+              {block.tiles.map(({ item, i }) => {
+                const ar = item.w / item.h;
+                return (
+                  <button
+                    key={item.name}
+                    type="button"
+                    onClick={() => setOpen(i)}
+                    style={{ flexGrow: ar, flexBasis: `calc(var(--row) * ${ar.toFixed(4)})`, aspectRatio: `${item.w} / ${item.h}` }}
+                    className="group relative block min-w-0 cursor-zoom-in overflow-hidden bg-paper"
+                    aria-label={`View larger: ${item.alt}`}
+                  >
+                    <img
+                      src={item.src}
+                      srcSet={item.srcSet}
+                      sizes={`(max-width: 767px) 50vw, ${Math.round(ar * 320)}px`}
+                      width={item.w}
+                      height={item.h}
+                      alt={item.alt}
+                      loading="lazy"
+                      decoding="async"
+                      className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                    />
+                  </button>
+                );
+              })}
+              {/* Keeps the last row at the target height instead of stretching it. */}
+              <span aria-hidden className="h-0 grow-[100000] basis-0" />
+            </div>
+          ),
+        )}
       </div>
 
       {shown < filtered.length && (
@@ -136,56 +174,7 @@ export default function GalleryLightbox({ items }: { items: GalleryItem[] }) {
         </div>
       )}
 
-      {open !== null && filtered[open] && (
-        <div
-          className="fixed inset-0 z-[90] flex animate-[fadein_0.25s_ease] items-center justify-center bg-[rgba(15,13,11,0.96)]"
-          role="dialog"
-          aria-modal="true"
-          aria-label="Image viewer"
-          onClick={close}
-        >
-          <button
-            type="button"
-            onClick={close}
-            aria-label="Close viewer"
-            className={`absolute top-4 right-4 z-10 sm:right-5 ${iconButton("dark")}`}
-          >
-            <CloseIcon />
-          </button>
-          <ArrowButton
-            dir="prev"
-            tone="dark"
-            label="Previous image"
-            onClick={(e) => {
-              e.stopPropagation();
-              step(-1);
-            }}
-            className="absolute left-3 z-10 sm:left-5"
-          />
-          <img
-            key={filtered[open].name}
-            src={filtered[open].src}
-            srcSet={filtered[open].srcSet}
-            sizes="100vw"
-            alt={filtered[open].alt}
-            className="max-h-[92vh] max-w-[94vw] object-contain"
-            onClick={(e) => e.stopPropagation()}
-          />
-          <ArrowButton
-            dir="next"
-            tone="dark"
-            label="Next image"
-            onClick={(e) => {
-              e.stopPropagation();
-              step(1);
-            }}
-            className="absolute right-3 z-10 sm:right-5"
-          />
-          <p className="absolute bottom-5 left-1/2 -translate-x-1/2 text-[0.75rem] tracking-[0.14em] text-white/70">
-            {open + 1} / {filtered.length}
-          </p>
-        </div>
-      )}
+      <Lightbox images={filtered} index={open} onClose={close} onIndex={setOpen} />
     </div>
   );
 }

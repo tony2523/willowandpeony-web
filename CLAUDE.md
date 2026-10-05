@@ -266,3 +266,10 @@ is retired. The system:
   2240px (24" iMac) and stays there; wider screens only widen the content column,
   `--site-column: max(80rem, 62.3vw)` in globals.css, used as `max-w-(--site-column)`
   everywhere the site column was 80rem (Tony, 6 Oct 2026). Nothing changes below 2240px.
+- The full gallery uses the same nine-photo mosaic as the teasers (`src/components/mosaic.ts`):
+  blocks of nine, alternate blocks mirrored, photos slotted by shape within a block, a
+  last partial block as justified rows. Teaser photos open the shared `Lightbox`
+  (also used by the gallery page) instead of linking away; only the heading link goes to
+  the gallery (Tony, 6 Oct 2026).
+- Phones: an image that sits inside the column on large desktops must not go edge to
+  edge on phones (pad it like the text). Full-bleed heroes and strips stay full width.
