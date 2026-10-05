@@ -63,9 +63,9 @@ export const unitLabel = (it: CalcItem) => (it.unit === "each" ? "each" : `per $
  * If that style isn't offered, step up to the next one that is (or down if
  * none above), so Essential-overall prices a Signature-only piece at Signature.
  */
-export function tierFor(it: CalcItem, sel: Selection, force?: number): number {
+export function tierFor(it: CalcItem, sel: Selection): number {
   const tiers = it.tiers!;
-  let t = force ?? sel.items[it.id]?.tier ?? sel.tier;
+  let t = sel.items[it.id]?.tier ?? sel.tier;
   if (tiers[t] == null) {
     const up = tiers.findIndex((p, i) => i > t && p != null);
     if (up >= 0) t = up;
@@ -74,8 +74,8 @@ export function tierFor(it: CalcItem, sel: Selection, force?: number): number {
   return t;
 }
 
-export function unitPrice(it: CalcItem, sel: Selection, force?: number): number {
-  if (it.tiers) return it.tiers[tierFor(it, sel, force)] as number;
+export function unitPrice(it: CalcItem, sel: Selection): number {
+  if (it.tiers) return it.tiers[tierFor(it, sel)] as number;
   return (it.price ?? it.from ?? 0) as number;
 }
 
@@ -94,7 +94,7 @@ export type Estimate = {
   pieces: number;
 };
 
-export function compute(sel: Selection, force?: number): Estimate {
+export function compute(sel: Selection): Estimate {
   let florals = 0;
   let hasFrom = false;
   let custom = false;
@@ -117,11 +117,11 @@ export function compute(sel: Selection, force?: number): Estimate {
     }
     const q = sel.items[it.id]?.qty ?? 0;
     if (!q) continue;
-    const p = unitPrice(it, sel, force);
+    const p = unitPrice(it, sel);
     florals += p * q;
     pieces += q;
     hasFrom = true;
-    const style = it.tiers ? TIERS[tierFor(it, sel, force)].name + " · " : "";
+    const style = it.tiers ? TIERS[tierFor(it, sel)].name + " · " : "";
     lines.push({
       id: it.id,
       name: it.name,
@@ -148,12 +148,22 @@ export function compute(sel: Selection, force?: number): Estimate {
   return { florals, services, total: florals + services, hasFrom, custom, travelQuote, lines, svcLines, pieces };
 }
 
-/** Totals for the same pieces in each style: "all Essential from $… · Signature from $…". */
-export function compareTotals(sel: Selection): number[] {
-  return TIERS.map((_, i) => compute(sel, i).total);
+export const anyTiered = (sel: Selection) => ITEMS.some((it) => it.tiers && (sel.items[it.id]?.qty ?? 0) > 0);
+
+/** The tier every chosen tiered piece was set to, or null when they differ (or none are chosen). */
+export function commonTier(sel: Selection): number | null {
+  const chosen = new Set(
+    ITEMS.filter((it) => it.tiers && (sel.items[it.id]?.qty ?? 0) > 0).map((it) => sel.items[it.id].tier ?? sel.tier),
+  );
+  return chosen.size === 1 ? [...chosen][0] : null;
 }
 
-export const anyTiered = (sel: Selection) => ITEMS.some((it) => it.tiers && (sel.items[it.id]?.qty ?? 0) > 0);
+/** "Signature tier", "Mixed tiers", or "" when no tiered piece is chosen. */
+export function tierSummary(sel: Selection): string {
+  if (!anyTiered(sel)) return "";
+  const t = commonTier(sel);
+  return t == null ? "Mixed tiers" : `${TIERS[t].name} tier`;
+}
 
 /** "+ aisle petals & travel quoted" suffix, or "". */
 export function quotedExtras(r: Estimate): string {

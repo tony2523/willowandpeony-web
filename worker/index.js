@@ -24,14 +24,12 @@
 
 import {
   GST,
-  TIERS,
-  anyTiered,
-  compareTotals,
   compute,
   decodeSelection,
   encodeSelection,
   money,
   quotedExtras,
+  tierSummary,
 } from "../src/lib/estimate";
 import { FULL_SERVICE_FROM } from "../content/calculator";
 import { site } from "../content/site";
@@ -425,10 +423,9 @@ function summariseEstimate(sel, origin) {
   const r = compute(sel);
   return {
     r,
-    tier: TIERS[sel.tier].name,
+    tier: tierSummary(sel),
     from: r.hasFrom ? "from " : "",
     extras: quotedExtras(r),
-    compare: anyTiered(sel) ? compareTotals(sel) : null,
     link: `${origin}/wedding-flower-calculator/?e=${encodeURIComponent(encodeSelection(sel))}`,
   };
 }
@@ -444,11 +441,8 @@ function estimateBlocks(est) {
     `<tr><td colspan="2" style="padding:16px 0 6px;font-family:Arial,sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#756f66">${t}</td></tr>`;
   const sum = (k, v, big) =>
     `<tr><td style="padding:5px 12px 5px 0;font-family:Arial,sans-serif;font-size:${big ? 16 : 13}px;color:${big ? "#1a1815" : "#57524b"}">${k}</td><td style="padding:5px 0;text-align:right;font-family:Arial,sans-serif;font-size:${big ? 16 : 13}px;color:#1a1815;white-space:nowrap">${v}</td></tr>`;
-  const compareLine = est.compare
-    ? `Same pieces, all ${TIERS.map((t, i) => `${t.name} from ${money(est.compare[i])}`).join(" 路 ")}`
-    : "";
   const html = `<table role="presentation" width="100%" cellpadding="0" cellspacing="0">
-${head(`Florals 路 ${e(est.tier)} tier`)}
+${head(est.tier ? `Florals 路 ${e(est.tier)}` : "Florals")}
 ${r.lines.length ? r.lines.map(row).join("") : `<tr><td colspan="2" style="padding:9px 0;border-top:1px solid #e6e2da;${cell};font-size:14px;color:#756f66">No pieces selected</td></tr>`}
 ${r.svcLines.length ? head("Delivery &amp; services") + r.svcLines.map(row).join("") : ""}
 </table>
@@ -459,11 +453,9 @@ ${sum("Delivery &amp; services", r.services ? est.from + money(r.services) : "鈥
 ${sum("<strong>Estimated total</strong> 路 excl. GST", `<strong>${est.from}${money(r.total)}</strong>`, true)}
 ${sum("Including 15% GST", est.from + money(r.total * (1 + GST)))}
 </table>
-${est.extras ? `<p style="margin:8px 0 0;font-family:Arial,sans-serif;font-size:12px;color:#756f66">${e(est.extras)}</p>` : ""}
-${compareLine ? `<p style="margin:6px 0 0;font-family:Arial,sans-serif;font-size:12px;line-height:1.6;color:#756f66">${e(compareLine)}</p>` : ""}`;
+${est.extras ? `<p style="margin:8px 0 0;font-family:Arial,sans-serif;font-size:12px;color:#756f66">${e(est.extras)}</p>` : ""}`;
   const text = [
-    `Floral tier: ${est.tier}`,
-    "",
+    ...(est.tier ? [`Florals: ${est.tier}`, ""] : []),
     ...(r.lines.length ? r.lines.map((l) => `- ${l.name} (${l.detail}): ${l.value}`) : ["No pieces selected"]),
     ...(r.svcLines.length ? ["", "Delivery & services:", ...r.svcLines.map((l) => `- ${l.name}: ${l.value}`)] : []),
     "",
@@ -471,7 +463,6 @@ ${compareLine ? `<p style="margin:6px 0 0;font-family:Arial,sans-serif;font-size
     `Delivery & services: ${r.services ? est.from + money(r.services) : "-"}`,
     `Estimated total (excl. GST): ${est.from}${money(r.total)}${est.extras ? " " + est.extras : ""}`,
     `Including 15% GST: ${est.from}${money(r.total * (1 + GST))}`,
-    ...(compareLine ? [compareLine] : []),
   ].join("\n");
   return { html, text };
 }
@@ -514,7 +505,7 @@ function estimateEmail(est, origin) {
   const html = `<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${e(subject)}</title></head>
 <body style="margin:0;padding:0;background:#f7f5f0">
-<div style="display:none;max-height:0;overflow:hidden">${e(`${est.from}${money(est.r.total)} excl. GST 路 ${est.tier} style`)}</div>
+<div style="display:none;max-height:0;overflow:hidden">${e(`${est.from}${money(est.r.total)} excl. GST${est.tier ? ` 路 ${est.tier}` : ""}`)}</div>
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f7f5f0"><tr><td align="center" style="padding:32px 16px">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:600px;background:#ffffff;border:1px solid #e6e2da">
 <tr><td align="center" style="padding:36px 32px 8px"><img src="${origin}/brand/willow-and-peony-logo.png" width="200" alt="Willow &amp; Peony" style="display:block;width:200px;height:auto;border:0"></td></tr>

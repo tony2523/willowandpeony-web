@@ -12,7 +12,7 @@ import {
   type Selection,
 } from "@/lib/estimate";
 
-const CARD_SIZES = "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 300px";
+const CARD_SIZES = "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 420px";
 
 /** 4:5 photo with a "Signature shown" tag, arrows, dots and swipe when there are several. */
 function Slides({ name, list, tier }: { name: string; list: string[]; tier: number | null }) {
@@ -104,7 +104,7 @@ export function Stepper({
   const btn = "flex h-9 w-9 items-center justify-center text-[17px] text-ink disabled:opacity-30";
   return (
     <div className="inline-flex items-center border border-hairline bg-white">
-      <button type="button" className={btn} disabled={qty <= 0} onClick={() => onStep(-1)} aria-label={`Fewer ${name}`}>
+      <button type="button" className={btn} onClick={() => onStep(-1)} aria-label={qty <= 1 ? `Remove ${name}` : `Fewer ${name}`}>
         −
       </button>
       <input
@@ -115,9 +115,13 @@ export function Stepper({
         onChange={(e) => {
           const digits = e.target.value.replace(/\D/g, "").slice(0, 3);
           setDraft(digits);
-          onChange(Number(digits) || 0);
+          // Zero (or an empty box) only removes the piece on blur, so retyping never hides the box mid-entry.
+          if (Number(digits) > 0) onChange(Number(digits));
         }}
-        onBlur={() => setDraft(null)}
+        onBlur={() => {
+          if (draft != null && !(Number(draft) > 0)) onChange(0);
+          setDraft(null);
+        }}
         className="h-9 w-11 border-x border-hairline bg-transparent text-center text-[14px] text-ink tabular-nums focus:outline-1 focus:outline-ink"
       />
       <button type="button" className={btn} onClick={() => onStep(1)} aria-label={`More ${name}`}>
@@ -127,80 +131,127 @@ export function Stepper({
   );
 }
 
+/** One choice in a card: a radio-style row with the tier's name, its meaning and price. */
+function Option({
+  label,
+  note,
+  price,
+  active,
+  disabled,
+  onClick,
+}: {
+  label: string;
+  note?: string;
+  price?: React.ReactNode;
+  active: boolean;
+  disabled?: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      aria-pressed={active}
+      disabled={disabled}
+      onClick={onClick}
+      className={`grid w-full grid-cols-[auto_minmax(0,1fr)_auto] items-baseline gap-x-3 border px-3 py-2.5 text-left transition-colors disabled:cursor-not-allowed disabled:opacity-45 ${
+        active ? "border-ink bg-paper" : "border-hairline bg-white enabled:hover:border-ink"
+      }`}
+    >
+      <span
+        aria-hidden
+        className={`grid h-3.5 w-3.5 translate-y-[2px] place-items-center rounded-full border ${active ? "border-ink" : "border-ink/30"}`}
+      >
+        {active && <span className="h-[7px] w-[7px] rounded-full bg-ink" />}
+      </span>
+      <span className="font-serif text-[16.5px] leading-snug text-ink">{label}</span>
+      {price != null ? (
+        <span className="text-[13px] whitespace-nowrap text-ink tabular-nums">{price}</span>
+      ) : (
+        <span />
+      )}
+      {note && <span className="col-span-2 col-start-2 text-[12px] leading-snug text-muted">{note}</span>}
+    </button>
+  );
+}
+
+const fromPrice = (p: number, unit?: string) => (
+  <>
+    <span className="text-[11px] text-muted">from </span>
+    {money(p)}
+    {unit && <span className="text-[11px] text-muted"> {unit}</span>}
+  </>
+);
+
 export default function ItemCard({
   it,
   sel,
   onQty,
   onStep,
   onTier,
+  onAdd,
 }: {
   it: CalcItem;
   sel: Selection;
   onQty: (q: number) => void;
   onStep: (delta: number) => void;
+  /** Choose a tier for a tiered piece (adds one if it wasn't chosen yet). */
   onTier: (t: number) => void;
+  /** Choose an untiered piece, shown as its single Signature option (adds one). */
+  onAdd: () => void;
 }) {
   const qty = sel.items[it.id]?.qty ?? 0;
+  const chosen = qty > 0;
   const photos = photosFor(it, sel);
-  const current = it.tiers ? tierFor(it, sel) : null;
+  const current = it.tiers && chosen ? tierFor(it, sel) : null;
 
   return (
     <article
       className={`flex min-w-0 flex-col border bg-white transition-colors duration-200 ${
-        qty > 0 ? "border-ink" : "border-hairline"
+        chosen ? "border-ink" : "border-hairline"
       }`}
     >
       {photos && <Slides key={photos.list.join(",")} name={it.name} list={photos.list} tier={photos.tier} />}
       <div className="flex flex-1 flex-col gap-4 p-4 sm:p-5">
         <div>
-          <h3 className="font-serif text-[19px] leading-[1.25] font-normal tracking-[-0.01em] text-ink">
+          <h3 className="font-serif text-[20px] leading-[1.25] font-normal tracking-[-0.01em] text-ink">
             {it.name}
           </h3>
           {it.note && <p className="mt-1 text-[12.5px] leading-snug text-muted">{it.note}</p>}
         </div>
 
-        {it.tiers ? (
-          <div role="group" aria-label={`Tier for ${it.name}`} className="grid grid-cols-3 gap-1">
-            {it.tiers.map((p, t) => {
-              const on = current === t;
-              return (
-                <button
-                  key={t}
-                  type="button"
-                  disabled={p == null}
-                  aria-pressed={on}
-                  onClick={() => onTier(t)}
-                  className={`flex min-w-0 flex-col items-center border px-1 py-2 text-center tabular-nums transition-colors disabled:cursor-not-allowed disabled:line-through disabled:opacity-40 ${
-                    on ? "border-ink bg-ink text-white" : "border-hairline text-ink hover:border-ink"
-                  }`}
-                >
-                  <span className={`text-[9.5px] tracking-[0.14em] uppercase ${on ? "text-white/75" : "text-muted"}`}>
-                    {TIERS[t].name}
-                  </span>
-                  {p == null ? (
-                    <span className="text-[13px]">—</span>
-                  ) : (
-                    <span className="text-[13px] leading-tight">
-                      <span className={`text-[10px] ${on ? "text-white/75" : "text-muted"}`}>from </span>
-                      {money(p)}
-                    </span>
-                  )}
-                </button>
-              );
-            })}
-          </div>
-        ) : (
-          <p className="text-[13px] text-ink-soft tabular-nums">
-            From <span className="font-medium text-ink">{money(it.price ?? it.from ?? 0)}</span> {unitLabel(it)}
-          </p>
-        )}
-
-        <div className="mt-auto flex items-center justify-between gap-3">
-          <span className="text-[11.5px] tracking-[0.14em] text-muted uppercase">
-            {it.unit === "metre" ? "Metres" : "Quantity"}
-          </span>
-          <Stepper name={it.name} qty={qty} onChange={onQty} onStep={onStep} />
+        <div role="group" aria-label={`Options for ${it.name}`} className="flex flex-col gap-1.5">
+          <Option label="Not required" active={!chosen} onClick={() => onQty(0)} />
+          {it.tiers ? (
+            it.tiers.map((p, t) => (
+              <Option
+                key={t}
+                label={TIERS[t].name}
+                note={TIERS[t].note}
+                price={p == null ? <span className="text-[12px] text-muted">Not offered</span> : fromPrice(p)}
+                active={current === t}
+                disabled={p == null}
+                onClick={() => onTier(t)}
+              />
+            ))
+          ) : (
+            <Option
+              label={TIERS[1].name}
+              note={TIERS[1].note}
+              price={fromPrice(it.price ?? it.from ?? 0, unitLabel(it))}
+              active={chosen}
+              onClick={onAdd}
+            />
+          )}
         </div>
+
+        {chosen && (
+          <div className="mt-auto flex items-center justify-between gap-3">
+            <span className="text-[11.5px] tracking-[0.14em] text-muted uppercase">
+              {it.unit === "metre" ? "Metres" : "Quantity"}
+            </span>
+            <Stepper name={it.name} qty={qty} onChange={onQty} onStep={onStep} />
+          </div>
+        )}
       </div>
     </article>
   );

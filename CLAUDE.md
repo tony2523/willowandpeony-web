@@ -89,16 +89,22 @@ exclude GST, and display as "from" prices everywhere.
   flower girl crown, hair flowers and aisle petals are waiting on photos.
 - Guided journey (Tony, 5 Oct 2026): one category at a time as numbered
   accordion steps (Bridal party, Ceremony, Reception, Details & petals,
-  Delivery & services, Review & send). Starts EMPTY at step 1; every piece
-  defaults to Signature; the floral tier is compared and switched at Review
-  & send, not chosen first. Finished steps collapse to "N pieces · from $X"
+  Delivery & services, Review & send). Starts EMPTY at step 1. Every card
+  lists its options as radio-style rows: "Not required" (selected by
+  default), then Essential / Signature / Luxe, each with its tier note and
+  price ("Not offered" when a tier isn't available). Untiered pieces show
+  "Not required" and a single "Signature" option. Choosing an option adds
+  one and only then shows the quantity box; stepping down past 1 (or
+  clearing the box) returns the piece to Not required. Cards are two
+  columns from sm up so the tier notes fit. No separate tier explainer and
+  no tier comparison at Review (Tony, 5 Oct 2026: each piece carries its
+  own tier). Finished steps collapse to "N pieces · from $X"
   or "Skipped". Collapsed steps stay in the DOM (hidden) so every price is
   crawlable. Desktop keeps a sticky running estimate; phones a bottom bar.
 - Logic lives in `src/lib/estimate.ts` (pure, relative imports only:
   wrangler bundles it into the Worker). Regression check: Ivy's typical
   Signature wedding (`exampleSelection()`, shown on step 1 "for scale")
-  totals from $4,680 (florals $4,090 + services $590); all Essential
-  $3,390, all Luxe $6,330.
+  totals from $4,680 (florals $4,090 + services $590).
 - `?e=<code>` reopens an estimate at Review & send (used by the emailed link).
 - Worker `POST /api/estimate`: `email` sends the couple their estimate from
   hello@ with ivy@ BCC'd; `enquire` sends Ivy the estimate plus the couple's

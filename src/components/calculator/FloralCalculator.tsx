@@ -1,16 +1,10 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
-import { imageSrc } from "@/lib/images";
 import {
   GST,
-  ITEMS,
   SERVICES,
-  TIERS,
   VISIBLE_SECTIONS,
-  anyTiered,
-  bridalFrom,
-  compareTotals,
   compute,
   decodeSelection,
   emptySelection,
@@ -18,17 +12,18 @@ import {
   exampleSelection,
   money,
   quotedExtras,
+  tierSummary,
   type Selection,
 } from "@/lib/estimate";
 import { site } from "../../../content/site";
 import { FULL_SERVICE_FROM } from "../../../content/calculator";
 import ItemCard from "./ItemCard";
 
-/** Guided journey: one category at a time, then Review & send. Every piece starts at Signature. */
+/** Guided journey: one category at a time, then Review & send. Every piece starts as Not required. */
 const STEPS = [
   ...VISIBLE_SECTIONS.map((s) => ({ id: s.id, title: s.title, sub: s.sub })),
   { id: "services", title: "Delivery & services", sub: "Getting everything to your venue, and away again" },
-  { id: "review", title: "Review & send", sub: "Compare floral tiers, then email it to yourself or send it to Ivy" },
+  { id: "review", title: "Review & send", sub: "Check your selections, then email them to yourself or send them to Ivy" },
 ];
 const EMPTY = emptySelection(1);
 /** For scale on the first step: Ivy's typical Signature wedding (from $4,680). */
@@ -84,11 +79,9 @@ export default function FloralCalculator() {
     });
 
   const r = useMemo(() => compute(sel), [sel]);
-  const compare = useMemo(() => (anyTiered(sel) ? compareTotals(sel) : null), [sel]);
   const from = r.hasFrom ? "from " : "";
   const extras = quotedExtras(r);
   const hasAnything = r.lines.length > 0 || r.svcLines.length > 0;
-  const mixed = ITEMS.some((it) => (sel.items[it.id]?.qty ?? 0) > 0 && sel.items[it.id]?.tier != null);
 
   /* ---------- Steps ---------- */
   // "" = every step closed; null = the default (step 1, or Review for a shared estimate).
@@ -167,7 +160,7 @@ export default function FloralCalculator() {
 
   function estimateText() {
     return [
-      `Floral tier: ${mixed ? "Mixed" : TIERS[sel.tier].name}`,
+      ...(tierSummary(sel) ? [`Florals: ${tierSummary(sel)}`] : []),
       ...r.lines.map((l) => `- ${l.name} (${l.detail}): ${l.value}`),
       ...(r.svcLines.length ? ["Delivery & services:", ...r.svcLines.map((l) => `- ${l.name}: ${l.value}`)] : []),
       `Estimated total (excl. GST): ${from}${money(r.total)} ${extras}`.trim(),
@@ -325,8 +318,8 @@ export default function FloralCalculator() {
         {id === STEPS[0].id && (
           <div className="mb-8 max-w-[680px] border-l-2 border-hairline pl-4 text-[13.5px] leading-relaxed text-ink-soft">
             <p>
-              Every piece starts at Signature. Change a piece&rsquo;s tier as you go, or switch
-              everything at the end.
+              Everything starts as Not required. Choose a tier for any piece you&rsquo;d like and
+              it&rsquo;s added as one, then set how many.
             </p>
             <p className="mt-1.5 text-muted">
               For scale: a typical Signature wedding, with a bride and three bridesmaids, two
@@ -335,7 +328,7 @@ export default function FloralCalculator() {
             </p>
           </div>
         )}
-        <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+        <div className="grid gap-5 sm:grid-cols-2">
           {section.items.map((it) => (
             <ItemCard
               key={it.id}
@@ -344,16 +337,23 @@ export default function FloralCalculator() {
               onQty={(q) =>
                 edit((n) => {
                   n.items[it.id].qty = Math.max(0, Math.min(999, Math.floor(q)));
+                  if (!n.items[it.id].qty) n.items[it.id].tier = null;
                 })
               }
               onStep={(d) =>
                 edit((n) => {
                   n.items[it.id].qty = Math.max(0, Math.min(999, n.items[it.id].qty + d));
+                  if (!n.items[it.id].qty) n.items[it.id].tier = null;
                 })
               }
               onTier={(t) =>
                 edit((n) => {
                   n.items[it.id].tier = t;
+                  if (!n.items[it.id].qty) n.items[it.id].qty = 1;
+                })
+              }
+              onAdd={() =>
+                edit((n) => {
                   if (!n.items[it.id].qty) n.items[it.id].qty = 1;
                 })
               }
@@ -380,7 +380,7 @@ export default function FloralCalculator() {
     }
     return (
       <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-16">
-        {/* Estimate + floral tiers */}
+        {/* Estimate */}
         <div className="min-w-0">
           <div className="border border-hairline bg-paper p-6 xl:p-7">
             <div className="mb-5 flex items-baseline justify-between gap-4">
@@ -391,43 +391,6 @@ export default function FloralCalculator() {
             </div>
             {breakdown(false)}
           </div>
-
-          {compare && (
-            <div className="mt-8">
-              <h3 className="eyebrow text-muted">Try another floral tier</h3>
-              <p className="mt-2 text-[13px] text-ink-soft">
-                {mixed
-                  ? "You've mixed tiers across your pieces. Switching sets every piece to one tier."
-                  : "The same pieces in each tier. Switch to see your estimate change."}
-              </p>
-              <div className="mt-4 grid gap-3 sm:grid-cols-3" role="group" aria-label="Floral tier">
-                {TIERS.map((t, i) => {
-                  const on = !mixed && sel.tier === i;
-                  return (
-                    <button
-                      key={t.name}
-                      type="button"
-                      aria-pressed={on}
-                      onClick={() =>
-                        edit((s) => {
-                          s.tier = i;
-                          for (const k in s.items) s.items[k].tier = null;
-                        })
-                      }
-                      className={`border p-4 text-left transition-colors ${on ? "border-ink bg-paper" : "border-hairline bg-white hover:border-ink"}`}
-                    >
-                      <span className="block font-serif text-[20px] leading-tight font-light text-ink">{t.name}</span>
-                      <span className="mt-0.5 block text-[11.5px] text-muted">{t.note}</span>
-                      <span className="mt-3 block text-[14px] text-ink tabular-nums">from {money(compare[i])}</span>
-                      <span className="mt-1 block text-[10.5px] tracking-[0.14em] text-muted uppercase">
-                        {on ? "Your selection" : `Switch to ${t.name}`}
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          )}
 
           <ul className="mt-8 list-disc space-y-1.5 pl-4 text-[12px] leading-relaxed text-muted">
             <li>All prices are in NZD and exclude GST. Your final quote is confirmed after a consultation.</li>
@@ -554,45 +517,15 @@ export default function FloralCalculator() {
     <div>
       {/* Intro */}
       <section className="mx-auto max-w-[1280px] px-5 pt-16 sm:px-6 md:pt-24">
-        <div className="grid gap-10 md:grid-cols-[minmax(0,1fr)_minmax(0,420px)] md:items-end md:gap-16">
-          <div>
-            <p className="eyebrow text-muted">Wedding flower calculator</p>
-            <h1 className="display-1 mt-3 text-ink">
-              Build your <em>floral estimate</em>
-            </h1>
-            <p className="mt-5 max-w-[560px] text-[15px] leading-[1.7] font-light text-ink-soft">
-              Choose a floral tier, add the pieces you&rsquo;d love, and see your estimate as you go.
-              Send me your selections when you&rsquo;re ready, and we&rsquo;ll work through the
-              details together.
-            </p>
-          </div>
-          <div>
-            <p className="eyebrow text-muted">Floral tiers</p>
-            <ul className="mt-3 divide-y divide-hairline border-y border-hairline">
-              {TIERS.map((t, i) => (
-                <li key={t.name} className="flex items-center gap-4 py-3">
-                  <img
-                    src={imageSrc(`calculator-bridal-${t.name.toLowerCase()}-1`, 480)}
-                    alt=""
-                    width={40}
-                    height={50}
-                    loading="lazy"
-                    className="h-[50px] w-[40px] shrink-0 object-cover"
-                  />
-                  <span className="min-w-0">
-                    <span className="font-serif text-[18px] leading-tight font-light text-ink">{t.name}</span>
-                    <span className="block text-[12.5px] text-ink-soft">{t.note}</span>
-                  </span>
-                  <span className="ml-auto shrink-0 text-right text-[11.5px] text-muted">
-                    Bouquet
-                    <br />
-                    from {money(bridalFrom(i) ?? 0)}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
+        <p className="eyebrow text-muted">Wedding flower calculator</p>
+        <h1 className="display-1 mt-3 text-ink">
+          Build your <em>floral estimate</em>
+        </h1>
+        <p className="mt-5 max-w-[560px] text-[15px] leading-[1.7] font-light text-ink-soft">
+          Go one category at a time, choose the pieces you&rsquo;d love, and see your estimate as you go.
+          Send me your selections when you&rsquo;re ready, and we&rsquo;ll work through the
+          details together.
+        </p>
       </section>
 
       {/* Steps + running estimate */}
@@ -680,7 +613,7 @@ export default function FloralCalculator() {
               <button type="button" onClick={() => goTo("review")} className="btn-solid mt-6 w-full text-center">
                 Review &amp; send
               </button>
-              <p className="mt-3 text-[12px] text-muted">Compare floral tiers and send it on at the last step.</p>
+              <p className="mt-3 text-[12px] text-muted">Check it over and send it on at the last step.</p>
             </div>
           </aside>
         )}
