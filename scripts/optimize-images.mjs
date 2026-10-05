@@ -22,6 +22,10 @@ const MANIFEST = "src/lib/image-manifest.json";
 // 768 and 1200 match 2x/3x phone screens, so phones don't jump to 960/1600.
 const WIDTHS = [480, 768, 960, 1200, 1600];
 const QUALITY = { 480: 70, 768: 72, 960: 72, 1200: 73, 1600: 74 };
+// Full-screen banners are enlarged on retina screens, so they get higher
+// quality and an extra size at the photo's full width (up to 2400px).
+const HERO = new Set(["auckland-bridal-party-blush-bouquets-hero", "wedding-flowers-auckland-hero-bouquet-and-rings"]);
+const HERO_QUALITY = 86;
 
 fs.mkdirSync(OUT, { recursive: true });
 const manifest = fs.existsSync(MANIFEST) ? JSON.parse(fs.readFileSync(MANIFEST, "utf8")) : {};
@@ -43,6 +47,7 @@ async function processOne(file) {
   const h = meta.height ?? 0;
   const sizes = WIDTHS.filter((x) => x <= w);
   if (sizes.length === 0) sizes.push(Math.min(w, 480) || 480);
+  if (HERO.has(name) && w > sizes[sizes.length - 1]) sizes.push(Math.min(w, 2400));
 
   const existing = manifest[name];
   // Only encode what's missing; keep any extra hand-made sizes (e.g. the
@@ -60,7 +65,7 @@ async function processOne(file) {
     await sharp(srcPath, { failOn: "none" })
       .rotate()
       .resize({ width: size, withoutEnlargement: true })
-      .webp({ quality: QUALITY[size] ?? 72 })
+      .webp({ quality: HERO.has(name) ? HERO_QUALITY : (QUALITY[size] ?? 72) })
       .toFile(path.join(OUT, `${name}-${size}w.webp`));
   }
   if (ogMissing) {

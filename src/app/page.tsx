@@ -53,7 +53,9 @@ export default function HomePage() {
         <Pic
           name="auckland-bridal-party-blush-bouquets-hero"
           alt="Bridal party holding blush and ivory bouquets by Willow & Peony, Auckland"
-          sizes="100vw"
+          // Full-screen cover: on screens taller than 3:2 the photo is drawn
+          // 1.5 x the screen height wide, so phones need the big file.
+          sizes="(max-aspect-ratio: 3/2) 150vh, 100vw"
           priority
           className="absolute inset-0 h-full w-full object-cover object-[50%_62%] md:object-center"
         />

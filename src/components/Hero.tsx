@@ -30,13 +30,19 @@ export default function Hero({
   position?: string;
 }) {
   const entry = getImage(image);
+  // object-cover fills a fixed-height banner, so on narrow screens a landscape
+  // photo is drawn wider than the screen: tell the browser the drawn width.
+  const ar = entry ? entry.w / entry.h : 1;
+  const coverPhone = Math.max(768, Math.round((compact ? 480 : 560) * ar));
+  const coverMd = Math.round((compact ? 480 : 640) * ar);
+  const sizes = `(max-width: 767px) ${coverPhone}px, (max-width: ${Math.max(coverMd, 768)}px) ${Math.max(coverMd, 768)}px, 100vw`;
   return (
     <section className={`relative ${compact ? "h-[30rem]" : "h-[35rem] md:h-[40rem]"}`}>
       {entry && (
         <img
           src={imageSrc(image, 1600)}
           srcSet={imageSrcSet(image)}
-          sizes="100vw"
+          sizes={sizes}
           width={entry.w}
           height={entry.h}
           alt={alt}
