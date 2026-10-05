@@ -72,7 +72,7 @@ export default function Header() {
 
   return (
     <header className={headerCls}>
-      <div className="relative mx-auto grid max-w-[1440px] grid-cols-[1fr_auto_1fr] items-center gap-4 px-5 sm:px-8">
+      <div className="relative mx-auto grid max-w-[90rem] grid-cols-[1fr_auto_1fr] items-center gap-4 px-5 sm:px-8">
         {/* Left: desktop nav / mobile burger */}
         <nav aria-label="Main" className="hidden items-center gap-7 lg:flex">
           {nav.map((item) => (
@@ -86,7 +86,7 @@ export default function Header() {
             </Link>
           ))}
         </nav>
-        <div className="-ml-2 py-[15px] lg:hidden">
+        <div className="-ml-2 py-[0.9375rem] lg:hidden">
           <MobileNav light={transparent} />
         </div>
 
@@ -97,14 +97,14 @@ export default function Header() {
             alt="Willow & Peony"
             width={250}
             height={30}
-            className={`h-[19px] w-auto sm:h-[28px] ${transparent ? "block group-hover:hidden" : "hidden"}`}
+            className={`h-[1.1875rem] w-auto sm:h-[1.75rem] ${transparent ? "block group-hover:hidden" : "hidden"}`}
           />
           <img
             src={withBase("/brand/willow-and-peony-logo.png")}
             alt="Willow & Peony"
             width={250}
             height={30}
-            className={`h-[19px] w-auto sm:h-[28px] ${transparent ? "hidden group-hover:block" : "block"}`}
+            className={`h-[1.1875rem] w-auto sm:h-[1.75rem] ${transparent ? "hidden group-hover:block" : "block"}`}
           />
         </Link>
 
@@ -112,7 +112,7 @@ export default function Header() {
         <div className="flex items-center justify-end">
           <Link
             href="/contact/"
-            className={`hidden border px-5 py-2.5 text-[13px] tracking-[0.02em] transition-colors lg:inline-block ${
+            className={`hidden border px-5 py-2.5 text-[0.8125rem] tracking-[0.02em] transition-colors lg:inline-block ${
               transparent
                 ? "border-white/85 text-white group-hover:border-ink group-hover:text-ink hover:bg-white hover:text-ink"
                 : "border-ink text-ink hover:bg-ink hover:text-white"

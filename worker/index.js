@@ -32,6 +32,7 @@ import {
   tierSummary,
 } from "../src/lib/estimate";
 import { FULL_SERVICE_FROM } from "../content/calculator";
+import { formatDate } from "../src/lib/dates";
 import { site } from "../content/site";
 
 const MAX = { name: 200, email: 254, message: 5000, other: 300 };
@@ -158,7 +159,7 @@ const PAGE_NAMES = {
 /** Formatted notification for Ivy: who, how to reach them, what they asked. */
 function enquiryEmail(data, { name, email, message, kind }) {
   const typeLabel = { wedding: "Wedding enquiry", event: "Event enquiry", general: "General enquiry" }[kind];
-  const date = clean(data.date, MAX.other);
+  const date = formatDate(clean(data.date, MAX.other));
   const page = clean(data.page, 100);
   const pageName = PAGE_NAMES[page] || (page ? page : "Website");
   const received = new Date().toLocaleString("en-NZ", {
@@ -175,7 +176,7 @@ function enquiryEmail(data, { name, email, message, kind }) {
     if (v) details.push([label, v]);
   };
   if (kind === "wedding") {
-    add("Wedding date", data.date);
+    add("Wedding date", data.date && formatDate(String(data.date)));
     add("Venue", data.venue);
     add("Budget", data.budget);
     add("Guests", data.guests);
@@ -183,7 +184,8 @@ function enquiryEmail(data, { name, email, message, kind }) {
     add("Inspiration", data.inspo);
   } else if (kind === "event") {
     add("Company", data.company);
-    add("Event date", data.date);
+    add("Event date", data.date && formatDate(String(data.date)));
+    add("Venue", data.venue);
     add("Event type", data.event_type);
     add("Budget", data.budget);
     add("Inspiration", data.inspo);
@@ -595,7 +597,7 @@ ${p('With love,<br><span style="font-style:italic;color:#1a1815">Ivy</span>')}
 function estimateEnquiryEmail(data, { names, email }, est) {
   const e = escapeHtml;
   const phone = clean(data.phone, MAX.other);
-  const date = clean(data.date, MAX.other);
+  const date = formatDate(clean(data.date, MAX.other));
   const venue = clean(data.venue, MAX.other);
   const inspoRaw = clean(data.inspo, 500);
   const inspo = /^https?:\/\/\S+$/i.test(inspoRaw) ? inspoRaw : "";

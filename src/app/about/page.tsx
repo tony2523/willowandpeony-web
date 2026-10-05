@@ -42,13 +42,13 @@ export default function AboutPage() {
       />
 
       {/* Hero split: the founding story beside Ivy's portrait (per design) */}
-      <section className="mx-auto grid max-w-[1440px] md:grid-cols-2 md:pt-20 xl:grid-cols-[minmax(0,1fr)_minmax(0,620px)]">
-        <div className="flex flex-col justify-center px-5 pt-14 pb-12 sm:px-10 md:py-24 lg:px-16 xl:px-[90px]">
+      <section className="mx-auto grid max-w-[90rem] md:grid-cols-2 md:pt-20 xl:grid-cols-[minmax(0,1fr)_minmax(0,38.75rem)]">
+        <div className="flex flex-col justify-center px-5 pt-14 pb-12 sm:px-10 md:py-24 lg:px-16 xl:px-[5.625rem]">
           <p className="eyebrow text-muted">Our story</p>
-          <h1 className="display-1 mt-5 max-w-[560px] text-ink">
+          <h1 className="display-1 mt-5 max-w-[35rem] text-ink">
             It began with a single rose called <em>Blue Moon</em>
           </h1>
-          <div className="mt-7 max-w-[480px] space-y-4 text-[15.5px] leading-[1.75] font-light text-ink-soft">
+          <div className="mt-7 max-w-[30rem] space-y-4 text-[0.96875rem] leading-[1.75] font-light text-ink-soft">
             <p>
               Ivy&rsquo;s passion for flowers blossomed back in 2012 with her first rose, the
               beautiful <em>Blue Moon</em>, planted in a small garden that quickly became a
@@ -67,15 +67,15 @@ export default function AboutPage() {
           alt="Ivy Diao, founder of Willow & Peony, boutique florist in Auckland"
           sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 620px"
           priority
-          className="aspect-[4/5] h-auto w-full object-cover object-[60%_25%] md:aspect-auto md:h-[680px] lg:h-[780px]"
+          className="aspect-[4/5] h-auto w-full object-cover object-[60%_25%] md:aspect-auto md:h-[42.5rem] lg:h-[48.75rem]"
         />
       </section>
 
       {/* Founder quote — paper band */}
-      <section className="mt-24 border-t border-hairline bg-paper md:mt-[140px]">
-        <div className="mx-auto max-w-[860px] px-5 py-16 text-center sm:px-6 md:py-24">
+      <section className="mt-24 border-t border-hairline bg-paper md:mt-[8.75rem]">
+        <div className="mx-auto max-w-[53.75rem] px-5 py-16 text-center sm:px-6 md:py-24">
           <blockquote>
-            <p className="font-serif text-[clamp(20px,2.2vw,28px)] leading-[1.55] font-light text-ink italic">
+            <p className="font-serif text-[clamp(1.25rem,2.2vw,1.75rem)] leading-[1.55] font-light text-ink italic">
               &ldquo;I&rsquo;m dedicated to crafting premium, bespoke floral designs that are as
               unique and refined as the people they&rsquo;re made for — not only visually
               stunning, but deeply personal and meaningful.&rdquo;
@@ -86,19 +86,19 @@ export default function AboutPage() {
       </section>
 
       {/* How we work */}
-      <section className="mx-auto mt-24 max-w-[1280px] px-5 sm:px-6 md:mt-[140px]">
+      <section className="mx-auto mt-24 max-w-[80rem] px-5 sm:px-6 md:mt-[8.75rem]">
         <p className="eyebrow text-muted">How we work</p>
         <div className="mt-10 grid gap-x-12 gap-y-10 md:grid-cols-3">
           {values.map((v) => (
             <div key={v.title}>
-              <h2 className="font-serif text-[24px] font-light text-ink">{v.title}</h2>
-              <p className="mt-3 max-w-[340px] text-[14px] leading-[1.7] text-ink-soft">
+              <h2 className="font-serif text-[1.5rem] font-light text-ink">{v.title}</h2>
+              <p className="mt-3 max-w-[21.25rem] text-[0.875rem] leading-[1.7] text-ink-soft">
                 {v.body}
               </p>
             </div>
           ))}
         </div>
-        <p className="mt-12 max-w-[720px] text-[15px] leading-[1.75] font-light text-ink-soft">
+        <p className="mt-12 max-w-[45rem] text-[0.9375rem] leading-[1.75] font-light text-ink-soft">
           With a focus on luxury and personalised service, Ivy&rsquo;s mission is to create floral
           designs that bring joy and beauty to every occasion — whether that&rsquo;s a wedding, a
           corporate event, or a custom arrangement made for someone special. Email{" "}
@@ -110,13 +110,13 @@ export default function AboutPage() {
       </section>
 
       {/* Latest work */}
-      <div className="mt-24 md:mt-[140px]">
+      <div className="mt-24 md:mt-[8.75rem]">
         <LatestWork posts={latest} />
       </div>
 
       {/* CTA */}
-      <section className="mt-24 border-t border-hairline bg-paper md:mt-[140px]">
-        <div className="mx-auto flex max-w-[900px] flex-col items-center px-5 py-16 text-center sm:py-20">
+      <section className="mt-24 border-t border-hairline bg-paper md:mt-[8.75rem]">
+        <div className="mx-auto flex max-w-[56.25rem] flex-col items-center px-5 py-16 text-center sm:py-20">
           <p className="eyebrow text-muted">Auckland · New Zealand</p>
           <h2 className="display-3 mt-4 text-ink">
             Let&rsquo;s make something <em>beautiful</em> together

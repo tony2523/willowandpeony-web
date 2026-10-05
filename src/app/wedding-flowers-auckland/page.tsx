@@ -80,11 +80,11 @@ export default function WeddingsPage() {
       />
 
       {/* Intro */}
-      <section className="mx-auto mt-20 grid max-w-[1280px] gap-10 px-5 sm:px-6 md:mt-28 md:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] md:gap-20">
+      <section className="mx-auto mt-20 grid max-w-[80rem] gap-10 px-5 sm:px-6 md:mt-28 md:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] md:gap-20">
         <h2 className="display-2 text-ink">
           Weddings are deeply personal — <em>your flowers should be too.</em>
         </h2>
-        <p className="max-w-[440px] self-center text-[14px] leading-[1.75] text-ink-soft">
+        <p className="max-w-[27.5rem] self-center text-[0.875rem] leading-[1.75] text-ink-soft">
           Based on Auckland&rsquo;s North Shore, Willow &amp; Peony is a boutique floral studio
           creating wedding flowers for couples across Auckland and beyond. We bring together
           seasonal blooms, unexpected textures and the details that matter to you.
@@ -92,7 +92,7 @@ export default function WeddingsPage() {
       </section>
 
       {/* Gallery strip */}
-      <section aria-label="Wedding flowers gallery" className="mt-24 md:mt-[140px]">
+      <section aria-label="Wedding flowers gallery" className="mt-24 md:mt-[8.75rem]">
         <p className="eyebrow px-5 text-center text-muted sm:px-6">
           Bouquets · Ceremony · Reception · Installations
         </p>
@@ -104,26 +104,26 @@ export default function WeddingsPage() {
               alt={g.alt}
               sizes="(max-width: 640px) 78vw, 380px"
               aspect="4/5"
-              className="h-auto w-[78vw] object-cover sm:w-[380px]"
+              className="h-auto w-[78vw] object-cover sm:w-[23.75rem]"
             />
           ))}
         </div>
       </section>
 
       {/* The process — moved up, starts with the calculator */}
-      <section className="mx-auto mt-24 max-w-[1280px] px-5 sm:px-6 md:mt-[140px]">
+      <section className="mx-auto mt-24 max-w-[80rem] px-5 sm:px-6 md:mt-[8.75rem]">
         <ProcessSteps />
       </section>
 
       {/* Wedding flower calculator — paper split (replaces the packages split) */}
-      <section className="mt-24 bg-paper md:mt-[140px]">
-        <div className="grid md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
-          <div className="order-2 flex flex-col justify-center px-5 py-14 sm:px-10 md:order-1 md:px-16 md:py-20">
+      <section className="mt-24 bg-paper md:mt-[8.75rem]">
+        <div className="grid md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] 2xl:mx-auto 2xl:max-w-[80rem] 2xl:gap-16 2xl:px-6">
+          <div className="order-2 flex flex-col justify-center px-5 py-14 sm:px-10 md:order-1 md:px-16 md:py-20 2xl:px-0">
             <p className="eyebrow text-muted">Wedding flower calculator</p>
             <h2 className="display-3 mt-3 text-ink">
               See what your flowers <em>could cost</em>
             </h2>
-            <p className="mt-5 max-w-[480px] text-[15px] leading-[1.7] font-light text-ink-soft">
+            <p className="mt-5 max-w-[30rem] text-[0.9375rem] leading-[1.7] font-light text-ink-soft">
               Choose a floral tier, add the pieces you&rsquo;d love and see an itemised estimate as
               you go, from your bouquet to ceremony and reception flowers. When it feels right,
               send it to Ivy and she&rsquo;ll shape it into a personal proposal.
@@ -133,12 +133,12 @@ export default function WeddingsPage() {
                 Estimate your flowers
               </Link>
             </div>
-            <p className="mt-5 text-[13px] text-muted">
+            <p className="mt-5 text-[0.8125rem] text-muted">
               Full-service wedding design starts from {money(FULL_SERVICE_FROM)}. Vase and plinth
               hire is included.
             </p>
           </div>
-          <div className="order-1 grid grid-cols-3 gap-2 px-5 pt-10 sm:gap-3 sm:px-10 md:order-2 md:px-16 md:py-20">
+          <div className="order-1 grid grid-cols-3 gap-2 px-5 pt-10 sm:gap-3 sm:px-10 md:order-2 md:px-16 md:py-20 2xl:px-0">
             {calculatorStyles.map((t) => (
               <figure key={t.name}>
                 <Pic
@@ -148,9 +148,9 @@ export default function WeddingsPage() {
                   aspect="4/5"
                   className="h-auto w-full object-cover"
                 />
-                <figcaption className="mt-2.5 text-[10.5px] tracking-[0.14em] text-muted uppercase">
+                <figcaption className="mt-2.5 text-[0.65625rem] tracking-[0.14em] text-muted uppercase">
                   {t.name}
-                  <span className="mt-0.5 block text-[12px] tracking-normal normal-case">
+                  <span className="mt-0.5 block text-[0.75rem] tracking-normal normal-case">
                     Bridal bouquet from {t.from}
                   </span>
                 </figcaption>
@@ -161,18 +161,18 @@ export default function WeddingsPage() {
       </section>
 
       {/* Fully bespoke — split */}
-      <section className="mt-24 md:mt-[140px]">
-        <div className="grid md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+      <section className="mt-24 md:mt-[8.75rem]">
+        <div className="grid md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] 2xl:mx-auto 2xl:max-w-[80rem] 2xl:items-center 2xl:gap-16 2xl:px-6">
           <Pic
             name="wedding-flowers-auckland-scarlet-style-shoot4"
             alt="Bespoke crimson and blush bridal bouquet by Willow & Peony"
             sizes="(max-width: 768px) 100vw, 50vw"
-            className="h-full max-h-[700px] w-full object-cover"
+            className="h-full max-h-[43.75rem] w-full object-cover"
           />
-          <div className="flex flex-col justify-center px-5 py-14 sm:px-10 md:px-16 md:py-20">
+          <div className="flex flex-col justify-center px-5 py-14 sm:px-10 md:px-16 md:py-20 2xl:px-0">
             <p className="eyebrow text-muted">Fully bespoke</p>
             <h2 className="display-3 mt-3 text-ink">Designed entirely around you</h2>
-            <p className="mt-5 max-w-[480px] text-[15px] leading-[1.7] font-light text-ink-soft">
+            <p className="mt-5 max-w-[30rem] text-[0.9375rem] leading-[1.7] font-light text-ink-soft">
               For couples dreaming of something entirely unique, our bespoke service offers a
               fully customised floral experience. We work closely with you — and your planner or
               stylist — to design intentional, artful arrangements tailored to your vision, venue
@@ -188,13 +188,13 @@ export default function WeddingsPage() {
       {/* Reviews slider */}
       <section
         aria-label="Couples' reviews"
-        className="mt-24 border-t border-hairline bg-paper px-5 py-16 sm:px-6 md:mt-[140px] md:py-24"
+        className="mt-24 border-t border-hairline bg-paper px-5 py-16 sm:px-6 md:mt-[8.75rem] md:py-24"
       >
         <TestimonialSlider kind="wedding" />
       </section>
 
       {/* Recent celebrations */}
-      <div className="mt-24 md:mt-[140px]">
+      <div className="mt-24 md:mt-[8.75rem]">
         <LatestWork
           posts={posts}
           eyebrow="Real weddings"
@@ -204,10 +204,10 @@ export default function WeddingsPage() {
       </div>
 
       {/* Editorial copy — two columns, as on the design */}
-      <section className="mx-auto mt-24 grid max-w-[1080px] gap-14 px-5 sm:px-6 md:mt-[140px] md:grid-cols-2 md:gap-20">
+      <section className="mx-auto mt-24 grid max-w-[67.5rem] gap-14 px-5 sm:px-6 md:mt-[8.75rem] md:grid-cols-2 md:gap-20">
         <div>
           <h2 className="display-3 text-ink">Premium wedding floral styling</h2>
-          <div className="mt-6 space-y-4 text-[15px] leading-[1.75] font-light text-ink-soft">
+          <div className="mt-6 space-y-4 text-[0.9375rem] leading-[1.75] font-light text-ink-soft">
             <p>
               At Willow &amp; Peony, we believe flowers should feel as magical as the moment you
               say &ldquo;I do.&rdquo; We create wedding flowers shaped around your ideas and your
@@ -232,7 +232,7 @@ export default function WeddingsPage() {
         </div>
         <div>
           <h2 className="display-3 text-ink">Why couples choose us</h2>
-          <div className="mt-6 space-y-4 text-[15px] leading-[1.75] font-light text-ink-soft">
+          <div className="mt-6 space-y-4 text-[0.9375rem] leading-[1.75] font-light text-ink-soft">
             <p>
               Every couple is different — and so is every wedding we design. We take a boutique,
               collaborative approach, starting with a deep understanding of your style, vision,
@@ -255,8 +255,8 @@ export default function WeddingsPage() {
       </section>
 
       {/* Enquiry — paper band with the full wedding form */}
-      <section id="enquire" className="mt-24 scroll-mt-24 border-t border-hairline bg-paper md:mt-[140px]">
-        <div className="mx-auto max-w-[820px] px-5 py-16 sm:px-6 md:py-24">
+      <section id="enquire" className="mt-24 scroll-mt-24 border-t border-hairline bg-paper md:mt-[8.75rem]">
+        <div className="mx-auto max-w-[51.25rem] px-5 py-16 sm:px-6 md:py-24">
           <div className="text-center">
             <p className="eyebrow text-muted">Start an enquiry</p>
             <h2 className="display-3 mt-3 text-ink">Tell us about your day</h2>

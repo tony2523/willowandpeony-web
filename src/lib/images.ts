@@ -15,6 +15,13 @@ export function withBase(path: string): string {
   return `${BASE}${path}`;
 }
 
+/** Every manifest image whose name starts with `prefix`, in natural number order. */
+export function imageNames(prefix: string): string[] {
+  return Object.keys(entries)
+    .filter((n) => n.startsWith(prefix))
+    .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+}
+
 export function getImage(name: string): ImageEntry | undefined {
   return entries[name.replace(/^\/images\//, "")];
 }

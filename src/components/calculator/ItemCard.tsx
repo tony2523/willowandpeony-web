@@ -13,7 +13,7 @@ import {
   type Selection,
 } from "@/lib/estimate";
 
-const CARD_SIZES = "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 420px";
+const CARD_SIZES = "(max-width: 639px) 100vw, (min-width: 1760px) 18vw, 320px";
 
 /** 4:5 photo with a "Signature shown" tag, arrows, dots and swipe when there are several. */
 function Slides({ name, list, tier }: { name: string; list: string[]; tier: number | null }) {
@@ -26,7 +26,7 @@ function Slides({ name, list, tier }: { name: string; list: string[]; tier: numb
 
   return (
     <div
-      className="group/ph relative aspect-[4/5] overflow-hidden bg-paper"
+      className="group/ph relative h-[clamp(8rem,100svh-28rem,66vw)] w-full shrink-0 overflow-hidden bg-paper sm:aspect-[4/5] sm:h-auto sm:w-[40%] sm:max-w-[20rem]"
       onTouchStart={(e) => (touchX.current = e.touches[0].clientX)}
       onTouchEnd={(e) => {
         if (touchX.current == null || n < 2) return;
@@ -45,7 +45,7 @@ function Slides({ name, list, tier }: { name: string; list: string[]; tier: numb
         className="h-full w-full object-cover"
       />
       {label && (
-        <span className="absolute top-2.5 left-2.5 bg-white/90 px-2 py-1 text-[10px] tracking-[0.14em] text-ink uppercase">
+        <span className="absolute top-2.5 left-2.5 bg-white/90 px-2 py-1 text-[0.625rem] tracking-[0.14em] text-ink uppercase">
           {label} shown
         </span>
       )}
@@ -101,7 +101,7 @@ export function Stepper({
   onStep: (delta: number) => void;
 }) {
   const [draft, setDraft] = useState<string | null>(null);
-  const btn = "flex h-9 w-9 items-center justify-center text-[17px] text-ink disabled:opacity-30";
+  const btn = "flex h-9 w-9 items-center justify-center text-[1.0625rem] text-ink disabled:opacity-30";
   return (
     <div className="inline-flex items-center border border-hairline bg-white">
       <button type="button" className={btn} onClick={() => onStep(-1)} aria-label={qty <= 1 ? `Remove ${name}` : `Fewer ${name}`}>
@@ -122,7 +122,7 @@ export function Stepper({
           if (draft != null && !(Number(draft) > 0)) onChange(0);
           setDraft(null);
         }}
-        className="h-9 w-11 border-x border-hairline bg-transparent text-center text-[14px] text-ink tabular-nums focus:outline-1 focus:outline-ink"
+        className="h-9 w-11 border-x border-hairline bg-transparent text-center text-[0.875rem] text-ink tabular-nums focus:outline-1 focus:outline-ink"
       />
       <button type="button" className={btn} onClick={() => onStep(1)} aria-label={`More ${name}`}>
         +
@@ -153,7 +153,7 @@ function Option({
       aria-pressed={active}
       disabled={disabled}
       onClick={onClick}
-      className={`grid w-full grid-cols-[auto_minmax(0,1fr)_auto] items-baseline gap-x-3 border px-3 py-2.5 text-left transition-colors disabled:cursor-not-allowed disabled:opacity-45 ${
+      className={`grid w-full grid-cols-[auto_minmax(0,1fr)_auto] items-baseline gap-x-3 border px-3 py-[0.4375rem] text-left sm:py-2.5 [@media(max-height:600px)]:py-1 transition-colors disabled:cursor-not-allowed disabled:opacity-45 ${
         active ? "border-ink bg-paper" : "border-hairline bg-white enabled:hover:border-ink"
       }`}
     >
@@ -161,24 +161,24 @@ function Option({
         aria-hidden
         className={`grid h-3.5 w-3.5 translate-y-[2px] place-items-center rounded-full border ${active ? "border-ink" : "border-ink/30"}`}
       >
-        {active && <span className="h-[7px] w-[7px] rounded-full bg-ink" />}
+        {active && <span className="h-[0.4375rem] w-[0.4375rem] rounded-full bg-ink" />}
       </span>
-      <span className="font-serif text-[16.5px] leading-snug text-ink">{label}</span>
+      <span className="font-serif text-[1.03125rem] leading-snug text-ink">{label}</span>
       {price != null ? (
-        <span className="text-[13px] whitespace-nowrap text-ink tabular-nums">{price}</span>
+        <span className="text-[0.8125rem] whitespace-nowrap text-ink tabular-nums">{price}</span>
       ) : (
         <span />
       )}
-      {note && <span className="col-span-2 col-start-2 text-[12px] leading-snug text-muted">{note}</span>}
+      {note && <span className="col-span-2 col-start-2 text-[0.75rem] leading-snug text-muted">{note}</span>}
     </button>
   );
 }
 
 const fromPrice = (p: number, unit?: string) => (
   <>
-    <span className="text-[11px] text-muted">from </span>
+    <span className="text-[0.6875rem] text-muted">from </span>
     {money(p)}
-    {unit && <span className="text-[11px] text-muted"> {unit}</span>}
+    {unit && <span className="text-[0.6875rem] text-muted"> {unit}</span>}
   </>
 );
 
@@ -206,20 +206,24 @@ export default function ItemCard({
 
   return (
     <article
-      className={`flex min-w-0 flex-col border bg-white transition-colors duration-200 ${
+      className={`flex min-w-0 flex-col border bg-white transition-colors duration-200 sm:flex-row ${
         chosen ? "border-ink" : "border-hairline"
       }`}
     >
       {photos && <Slides key={photos.list.join(",")} name={it.name} list={photos.list} tier={photos.tier} />}
-      <div className="flex flex-1 flex-col gap-4 p-4 sm:p-5">
-        <div>
-          <h3 className="font-serif text-[20px] leading-[1.25] font-normal tracking-[-0.01em] text-ink">
-            {it.name}
-          </h3>
-          {it.note && <p className="mt-1 text-[12.5px] leading-snug text-muted">{it.note}</p>}
+      <div className="flex min-w-0 flex-1 flex-col gap-3 p-4 sm:gap-4 sm:p-5 lg:p-6 [@media(max-height:600px)]:p-3">
+        {/* The quantity sits beside the name once a piece is chosen, so a whole card fits on one screen. */}
+        <div className="flex min-h-10 items-center justify-between gap-3">
+          <div className="min-w-0">
+            <h3 className="font-serif text-[1.125rem] leading-[1.25] font-normal tracking-[-0.01em] text-ink sm:text-[1.25rem]">
+              {it.name}
+            </h3>
+            {it.note && <p className="mt-1 text-[0.78125rem] leading-snug text-muted">{it.note}</p>}
+          </div>
+          {chosen && <Stepper name={it.name} qty={qty} onChange={onQty} onStep={onStep} />}
         </div>
 
-        <div role="group" aria-label={`Options for ${it.name}`} className="flex flex-col gap-1.5">
+        <div role="group" aria-label={`Options for ${it.name}`} className="flex flex-col gap-1 sm:gap-1.5">
           <Option label="Not required" active={!chosen} onClick={() => onQty(0)} />
           {it.tiers ? (
             it.tiers.map((p, t) => (
@@ -227,7 +231,7 @@ export default function ItemCard({
                 key={t}
                 label={TIERS[t].name}
                 note={TIERS[t].note}
-                price={p == null ? <span className="text-[12px] text-muted">Not offered</span> : fromPrice(p)}
+                price={p == null ? <span className="text-[0.75rem] text-muted">Not offered</span> : fromPrice(p)}
                 active={current === t}
                 disabled={p == null}
                 onClick={() => onTier(t)}
@@ -244,14 +248,6 @@ export default function ItemCard({
           )}
         </div>
 
-        {chosen && (
-          <div className="mt-auto flex items-center justify-between gap-3">
-            <span className="text-[11.5px] tracking-[0.14em] text-muted uppercase">
-              {it.unit === "metre" ? "Metres" : "Quantity"}
-            </span>
-            <Stepper name={it.name} qty={qty} onChange={onQty} onStep={onStep} />
-          </div>
-        )}
       </div>
     </article>
   );

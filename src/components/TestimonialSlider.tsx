@@ -55,7 +55,7 @@ export default function TestimonialSlider({ kind }: { kind?: "wedding" | "event"
   return (
     <div
       ref={root}
-      className="mx-auto max-w-[860px] text-center"
+      className="mx-auto max-w-[53.75rem] text-center"
       onMouseEnter={() => (paused.current = true)}
       onMouseLeave={() => (paused.current = false)}
       onFocus={() => (paused.current = true)}
@@ -63,7 +63,7 @@ export default function TestimonialSlider({ kind }: { kind?: "wedding" | "event"
     >
       <div aria-live={manual ? "polite" : "off"} className="relative">
         <blockquote key={index} className="animate-[fadein_0.6s_ease]">
-          <p className="font-serif text-[clamp(19px,2vw,26px)] leading-[1.55] font-light text-ink italic">
+          <p className="font-serif text-[clamp(1.1875rem,2vw,1.625rem)] leading-[1.55] font-light text-ink italic">
             &ldquo;{review.short ?? review.text}&rdquo;
           </p>
           <footer className="eyebrow mt-6 text-muted">
@@ -74,7 +74,7 @@ export default function TestimonialSlider({ kind }: { kind?: "wedding" | "event"
 
       <div className="mt-8 flex items-center justify-center gap-4">
         <ArrowButton dir="prev" label="Previous review" onClick={prev} />
-        <p className="min-w-[3.5rem] text-center text-[12px] tracking-[0.14em] text-muted sm:hidden">
+        <p className="min-w-[3.5rem] text-center text-[0.75rem] tracking-[0.14em] text-muted sm:hidden">
           {index + 1} / {items.length}
         </p>
         <div className="hidden sm:flex" role="group" aria-label="Choose a review">
@@ -99,7 +99,7 @@ export default function TestimonialSlider({ kind }: { kind?: "wedding" | "event"
         <ArrowButton dir="next" label="Next review" onClick={next} />
       </div>
 
-      <p className="mt-6 text-[12.5px] text-muted">
+      <p className="mt-6 text-[0.78125rem] text-muted">
         <span aria-hidden>★★★★★</span>{" "}
         <a
           href={googleRating.url}

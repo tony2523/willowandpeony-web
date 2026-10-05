@@ -9,7 +9,6 @@ import {
   decodeSelection,
   emptySelection,
   encodeSelection,
-  exampleSelection,
   money,
   quotedExtras,
   tierSummary,
@@ -18,6 +17,8 @@ import {
 import { site } from "../../../content/site";
 import { FULL_SERVICE_FROM } from "../../../content/calculator";
 import ItemCard from "./ItemCard";
+import DateInput from "../DateInput";
+import { formatDate } from "@/lib/dates";
 
 /** Guided journey: one category at a time, then Review & send. Every piece starts as Not required. */
 const STEPS = [
@@ -27,7 +28,6 @@ const STEPS = [
 ];
 const EMPTY = emptySelection(1);
 /** For scale on the first step: Ivy's typical Signature wedding (from $4,680). */
-const TYPICAL_TOTAL = compute(exampleSelection()).total;
 const isEmail = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
 const noop = () => () => {};
 const plural = (n: number, word: string) => `${n} ${word}${n === 1 ? "" : "s"}`;
@@ -45,7 +45,7 @@ function Field({
 }) {
   return (
     <label className={`block ${className}`}>
-      <span className="mb-1.5 block text-[12px] tracking-[0.06em] text-muted uppercase">
+      <span className="mb-1.5 block text-[0.75rem] tracking-[0.06em] text-muted uppercase">
         {label}
         {required && <span aria-hidden className="text-ink"> *</span>}
       </span>
@@ -182,8 +182,8 @@ export default function FloralCalculator() {
     e.preventDefault();
     const form = e.currentTarget;
     const fields = Object.fromEntries(new FormData(form).entries()) as Record<string, string>;
-    if (!fields.names?.trim() || !isEmail(fields.email?.trim() ?? "")) {
-      setEnqErr("Please add your names and a valid email address.");
+    if (!fields.names?.trim() || !isEmail(fields.email?.trim() ?? "") || !fields.phone?.trim() || !fields.date?.trim() || !fields.venue?.trim()) {
+      setEnqErr("Please add your names, a valid email, your phone, wedding date and venue.");
       return;
     }
     setEnqErr("");
@@ -205,7 +205,7 @@ export default function FloralCalculator() {
           `Names: ${fields.names}`,
           `Email: ${fields.email}`,
           fields.phone && `Phone: ${fields.phone}`,
-          fields.date && `Wedding date: ${fields.date}`,
+          fields.date && `Wedding date: ${formatDate(fields.date)}`,
           fields.venue && `Venue: ${fields.venue}`,
           fields.inspo && `Inspiration: ${fields.inspo}`,
           "",
@@ -238,7 +238,7 @@ export default function FloralCalculator() {
     <div key={l.id} className="flex justify-between gap-4">
       <div className="min-w-0">
         <p className="text-ink">{l.name}</p>
-        <p className="text-[12px] text-muted">{l.detail}</p>
+        <p className="text-[0.75rem] text-muted">{l.detail}</p>
       </div>
       <p className="shrink-0 text-ink">{l.value}</p>
     </div>
@@ -247,7 +247,7 @@ export default function FloralCalculator() {
   const breakdown = (compact: boolean) => (
     <>
       <div
-        className={`space-y-3 text-[13px] tabular-nums ${compact ? "lg:max-h-[max(8rem,calc(100vh-30rem))] lg:overflow-y-auto lg:pr-1" : ""}`}
+        className={`space-y-3 text-[0.8125rem] tabular-nums ${compact ? "lg:max-h-[max(8rem,calc(100vh-30rem))] lg:overflow-y-auto lg:pr-1" : ""}`}
       >
         {r.lines.length ? (
           r.lines.map(lineRow)
@@ -256,14 +256,14 @@ export default function FloralCalculator() {
         )}
         {r.svcLines.length > 0 && (
           <>
-            <p className="border-t border-hairline pt-3 text-[11px] tracking-[0.16em] text-muted uppercase">
+            <p className="border-t border-hairline pt-3 text-[0.6875rem] tracking-[0.16em] text-muted uppercase">
               Delivery &amp; services
             </p>
             {r.svcLines.map(lineRow)}
           </>
         )}
       </div>
-      <div className="mt-4 space-y-1.5 border-t border-hairline pt-4 text-[13px] tabular-nums">
+      <div className="mt-4 space-y-1.5 border-t border-hairline pt-4 text-[0.8125rem] tabular-nums">
         <div className="flex justify-between gap-3">
           <span className="text-ink-soft">Florals total</span>
           <span className="whitespace-nowrap text-ink">{r.florals ? "from " + money(r.florals) : "—"}</span>
@@ -275,13 +275,13 @@ export default function FloralCalculator() {
       </div>
       <div className="mt-4 border-t border-hairline pt-5" aria-live="polite">
         <p className="eyebrow text-muted">Estimated total · excl. GST</p>
-        <p className="mt-2 font-serif text-[44px] leading-none font-light tracking-[-0.02em] text-ink tabular-nums">
-          {r.hasFrom && <span className="mr-1 font-sans text-[13px] tracking-normal text-muted">from</span>}
+        <p className="mt-2 font-serif text-[2.75rem] leading-none font-light tracking-[-0.02em] text-ink tabular-nums">
+          {r.hasFrom && <span className="mr-1 font-sans text-[0.8125rem] tracking-normal text-muted">from</span>}
           {r.hasFrom && " "}
           {money(r.total)}
         </p>
-        {extras && <p className="mt-1.5 text-[12.5px] text-muted">{extras}</p>}
-        <p className="mt-2 text-[12.5px] text-muted tabular-nums">
+        {extras && <p className="mt-1.5 text-[0.78125rem] text-muted">{extras}</p>}
+        <p className="mt-2 text-[0.78125rem] text-muted tabular-nums">
           {from}
           {money(r.total * (1 + GST))} including 15% GST
         </p>
@@ -310,11 +310,11 @@ export default function FloralCalculator() {
                 }
               />
               <span>
-                <span className="block font-serif text-[18px] leading-snug text-ink">{sv.name}</span>
-                {sv.note && <span className="block text-[12.5px] text-muted">{sv.note}</span>}
+                <span className="block font-serif text-[1.125rem] leading-snug text-ink">{sv.name}</span>
+                {sv.note && <span className="block text-[0.78125rem] text-muted">{sv.note}</span>}
               </span>
               <span
-                className={`text-[13px] whitespace-nowrap tabular-nums ${sel.services[sv.id] ? "font-medium text-ink" : "text-ink-soft"}`}
+                className={`text-[0.8125rem] whitespace-nowrap tabular-nums ${sel.services[sv.id] ? "font-medium text-ink" : "text-ink-soft"}`}
               >
                 {sv.quote ? "Quoted" : `From ${money(sv.price ?? sv.from ?? 0)}`}
               </span>
@@ -327,7 +327,7 @@ export default function FloralCalculator() {
     const section = VISIBLE_SECTIONS.find((s) => s.id === id)!;
     return (
       <>
-        <div className="grid gap-5 sm:grid-cols-2">
+        <div className="grid gap-4 sm:gap-5">
           {section.items.map((it) => (
             <ItemCard
               key={it.id}
@@ -366,9 +366,9 @@ export default function FloralCalculator() {
   function reviewContent() {
     if (!hasAnything) {
       return (
-        <div className="max-w-[560px] border border-hairline bg-paper p-6">
-          <p className="font-serif text-[22px] font-light text-ink">Your estimate is empty</p>
-          <p className="mt-2 text-[14px] leading-relaxed text-ink-soft">
+        <div className="max-w-[35rem] border border-hairline bg-paper p-6">
+          <p className="font-serif text-[1.375rem] font-light text-ink">Your estimate is empty</p>
+          <p className="mt-2 text-[0.875rem] leading-relaxed text-ink-soft">
             Add the pieces you&rsquo;d love in the steps above, and your estimate will appear here.
           </p>
           <button type="button" onClick={() => goTo(STEPS[0].id)} className="btn-solid mt-6">
@@ -383,15 +383,15 @@ export default function FloralCalculator() {
         <div className="min-w-0">
           <div className="border border-hairline bg-paper p-6 xl:p-7">
             <div className="mb-5 flex items-baseline justify-between gap-4">
-              <h3 className="font-serif text-[26px] leading-tight font-light text-ink">Your estimate</h3>
-              <button type="button" onClick={clearAll} className="text-[12px] text-muted underline underline-offset-2 hover:text-ink">
+              <h3 className="font-serif text-[1.625rem] leading-tight font-light text-ink">Your estimate</h3>
+              <button type="button" onClick={clearAll} className="text-[0.75rem] text-muted underline underline-offset-2 hover:text-ink">
                 Clear all
               </button>
             </div>
             {breakdown(false)}
           </div>
 
-          <ul className="mt-8 list-disc space-y-1.5 pl-4 text-[12px] leading-relaxed text-muted">
+          <ul className="mt-8 list-disc space-y-1.5 pl-4 text-[0.75rem] leading-relaxed text-muted">
             <li>All prices are in NZD and exclude GST. Your final quote is confirmed after a consultation.</li>
             <li>
               Full-service wedding design starts from {money(FULL_SERVICE_FROM)}. Vase and plinth hire is
@@ -405,9 +405,9 @@ export default function FloralCalculator() {
         {/* Send it on */}
         <div className="min-w-0">
           <div className="border border-hairline p-6">
-            <h3 className="font-serif text-[22px] font-light text-ink">Email me my estimate</h3>
+            <h3 className="font-serif text-[1.375rem] font-light text-ink">Email me my estimate</h3>
             {saveState === "sent" ? (
-              <p className="mt-3 text-[13.5px] text-ink-soft">
+              <p className="mt-3 text-[0.84375rem] text-ink-soft">
                 <span className="text-ink">Sent to {saveEmail.trim()}.</span> It should arrive in a minute or
                 two, with a link to reopen and adjust your estimate.
               </p>
@@ -430,9 +430,9 @@ export default function FloralCalculator() {
                 </button>
               </form>
             )}
-            {saveErr && <p className="mt-3 text-[12.5px] text-ink">{saveErr}</p>}
+            {saveErr && <p className="mt-3 text-[0.78125rem] text-ink">{saveErr}</p>}
             {saveState === "error" && (
-              <p className="mt-3 text-[12.5px] text-ink">
+              <p className="mt-3 text-[0.78125rem] text-ink">
                 We couldn&rsquo;t send that just now. Please try again, or email{" "}
                 <a href={`mailto:${site.email}`} className="underline">
                   {site.email}
@@ -441,35 +441,35 @@ export default function FloralCalculator() {
               </p>
             )}
             {saveState !== "sent" && (
-              <p className="mt-3 text-[12.5px] text-muted">
+              <p className="mt-3 text-[0.78125rem] text-muted">
                 A copy of your selections to keep or share with your partner.
               </p>
             )}
           </div>
 
           <div id="enquire" ref={enqBox} className="mt-6 scroll-mt-24 border border-hairline bg-paper p-6">
-            <h3 className="font-serif text-[22px] font-light text-ink">
+            <h3 className="font-serif text-[1.375rem] font-light text-ink">
               Ready to talk it <em>through?</em>
             </h3>
             {enqState === "sent" ? (
               <div aria-live="polite">
-                <p ref={enqDone} tabIndex={-1} className="mt-4 flex items-center gap-3 font-serif text-[19px] leading-snug text-ink outline-none">
-                  <span aria-hidden className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-ink text-[12px] text-white">
+                <p ref={enqDone} tabIndex={-1} className="mt-4 flex items-center gap-3 font-serif text-[1.1875rem] leading-snug text-ink outline-none">
+                  <span aria-hidden className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-ink text-[0.75rem] text-white">
                     ✓
                   </span>
                   Thank you, your details have been sent to Ivy.
                 </p>
                 <div className="mt-6 border-t border-hairline pt-6">
                   <p className="eyebrow text-muted">Next step</p>
-                  <p className="mt-2 font-serif text-[22px] font-light text-ink">Book your consultation</p>
-                  <p className="mt-2 max-w-[520px] text-[14px] leading-[1.7] text-ink-soft">
+                  <p className="mt-2 font-serif text-[1.375rem] font-light text-ink">Book your consultation</p>
+                  <p className="mt-2 max-w-[32.5rem] text-[0.875rem] leading-[1.7] text-ink-soft">
                     Choose a time for your complimentary 30-minute video chat with Ivy. There&rsquo;s no
                     obligation.
                   </p>
                   <a href={site.consultationUrl} target="_blank" rel="noopener" className="btn-solid mt-5">
                     Book your consultation
                   </a>
-                  <p className="mt-4 text-[12.5px] leading-relaxed text-muted">
+                  <p className="mt-4 text-[0.78125rem] leading-relaxed text-muted">
                     We&rsquo;ve emailed this link to {enqTo || "you"} too, so you can book later. Ivy
                     will be in touch personally within 1–2 business days.
                   </p>
@@ -477,16 +477,16 @@ export default function FloralCalculator() {
               </div>
             ) : (
               <>
-                <ol className="mt-4 grid gap-3 text-[14px] leading-snug sm:grid-cols-2">
+                <ol className="mt-4 grid gap-3 text-[0.875rem] leading-snug sm:grid-cols-2">
                   {[
                     ["Send your details to Ivy", "Your estimate is attached automatically."],
                     ["Book your consultation", "Once it’s sent, pick a time for a free 30-minute video chat."],
                   ].map(([title, sub], i) => (
                     <li key={title} className="flex gap-3">
-                      <span className="font-serif text-[15px] text-muted tabular-nums">0{i + 1}</span>
+                      <span className="font-serif text-[0.9375rem] text-muted tabular-nums">0{i + 1}</span>
                       <span>
                         <span className="block text-ink">{title}</span>
-                        <span className="block text-[12.5px] text-muted">{sub}</span>
+                        <span className="block text-[0.78125rem] text-muted">{sub}</span>
                       </span>
                     </li>
                   ))}
@@ -499,14 +499,14 @@ export default function FloralCalculator() {
                   <Field label="Email" required>
                     <input name="email" type="email" required autoComplete="email" className="input-wp" />
                   </Field>
-                  <Field label="Phone">
-                    <input name="phone" type="tel" autoComplete="tel" className="input-wp" />
+                  <Field label="Phone" required>
+                    <input name="phone" type="tel" required autoComplete="tel" className="input-wp" />
                   </Field>
-                  <Field label="Wedding date">
-                    <input name="date" placeholder="DD/MM/YYYY" className="input-wp" />
+                  <Field label="Wedding date" required>
+                    <DateInput name="date" required className="input-wp" />
                   </Field>
-                  <Field label="Venue" className="sm:col-span-2">
-                    <input name="venue" placeholder="Venue name, Auckland" className="input-wp" />
+                  <Field label="Venue" required className="sm:col-span-2">
+                    <input name="venue" required placeholder="Venue name, Auckland" className="input-wp" />
                   </Field>
                   <Field label="Pinterest board or inspiration link" className="sm:col-span-2">
                     <input name="inspo" type="url" inputMode="url" placeholder="https://" className="input-wp" />
@@ -515,11 +515,11 @@ export default function FloralCalculator() {
                     <textarea name="notes" rows={4} className="input-wp" />
                   </Field>
                   <div className="sm:col-span-2">
-                    {enqErr && <p className="mb-3 text-[13px] text-ink">{enqErr}</p>}
+                    {enqErr && <p className="mb-3 text-[0.8125rem] text-ink">{enqErr}</p>}
                     <button type="submit" disabled={enqState === "sending"} className="btn-solid disabled:opacity-60">
                       {enqState === "sending" ? "Sending…" : "Send to Ivy"}
                     </button>
-                    <p className="mt-3 text-[12.5px] text-muted">
+                    <p className="mt-3 text-[0.78125rem] text-muted">
                       * Required. We reply personally within 1–2 business days.
                     </p>
                   </div>
@@ -535,27 +535,22 @@ export default function FloralCalculator() {
   return (
     <div>
       {/* Intro */}
-      <section className="mx-auto max-w-[1280px] px-5 pt-16 sm:px-6 md:pt-24">
+      <section className="mx-auto max-w-[80rem] px-5 pt-16 sm:px-6 md:pt-24">
         <p className="eyebrow text-muted">Wedding flower calculator</p>
         <h1 className="display-1 mt-3 text-ink">
           Build your <em>floral estimate</em>
         </h1>
-        <p className="mt-5 max-w-[600px] text-[15px] leading-[1.7] font-light text-ink-soft">
+        <p className="mt-5 max-w-[37.5rem] text-[0.9375rem] leading-[1.7] font-light text-ink-soft">
           Go one category at a time: choose a tier for each piece you&rsquo;d love, set how many,
           and watch your estimate build as you go. Send me your selections when you&rsquo;re ready,
           and we&rsquo;ll work through the details together.
-        </p>
-        <p className="mt-4 max-w-[600px] text-[13px] leading-relaxed text-muted">
-          For scale, a typical Signature wedding is from {money(TYPICAL_TOTAL)} excl. GST: a bride and
-          three bridesmaids, two ceremony plinths, eight tables with bud vases, a bar arrangement,
-          delivery and pack-down.
         </p>
       </section>
 
       {/* Steps + running estimate */}
       <div
-        className={`mx-auto mt-12 grid max-w-[1280px] gap-14 px-5 sm:px-6 md:mt-16 lg:items-start ${
-          reviewOpen ? "" : "lg:grid-cols-[minmax(0,1fr)_340px] lg:gap-10 xl:gap-14"
+        className={`mx-auto mt-12 grid max-w-[80rem] gap-14 px-5 sm:px-6 md:mt-16 lg:items-start ${
+          reviewOpen ? "" : "lg:grid-cols-[minmax(0,1fr)_21.25rem] lg:gap-10 xl:gap-14"
         }`}
       >
         {/* The closing rule only frames a collapsed last step; under the open Review panel it doubled the footer's. */}
@@ -576,19 +571,19 @@ export default function FloralCalculator() {
                     onClick={() => (open ? setOpenStep("") : goTo(st.id))}
                     className="group flex w-full items-center gap-5 py-5 text-left md:py-6"
                   >
-                    <span className="w-7 shrink-0 font-serif text-[15px] text-muted tabular-nums">
+                    <span className="w-7 shrink-0 font-serif text-[0.9375rem] text-muted tabular-nums">
                       {String(i + 1).padStart(2, "0")}
                     </span>
                     <span className="min-w-0 flex-1">
-                      <span className="block font-serif text-[24px] leading-tight font-light text-ink md:text-[28px]">
+                      <span className="block font-serif text-[1.5rem] leading-tight font-light text-ink md:text-[1.75rem]">
                         {st.title}
                       </span>
-                      <span className="mt-1 block font-sans text-[12.5px] font-normal text-muted">
+                      <span className="mt-1 block font-sans text-[0.78125rem] font-normal text-muted">
                         {open ? `Step ${i + 1} of ${STEPS.length} · ${st.sub}` : (sum ?? st.sub)}
                       </span>
                     </span>
                     {!open && (
-                      <span className="shrink-0 font-sans text-[11px] font-normal tracking-[0.14em] text-ink uppercase group-hover:underline">
+                      <span className="shrink-0 font-sans text-[0.6875rem] font-normal tracking-[0.14em] text-ink uppercase group-hover:underline">
                         {done ? "Edit" : "Open"}
                       </span>
                     )}
@@ -602,7 +597,7 @@ export default function FloralCalculator() {
                         Next: {next.title}
                       </button>
                       {sum && sum !== "Skipped" && sum !== "None selected" && (
-                        <span className="text-[13px] text-muted tabular-nums sm:ml-auto">{sum}</span>
+                        <span className="text-[0.8125rem] text-muted tabular-nums sm:ml-auto">{sum}</span>
                       )}
                     </div>
                   )}
@@ -617,11 +612,11 @@ export default function FloralCalculator() {
           <aside id="estimate" aria-labelledby="h-estimate" className="hidden lg:sticky lg:top-24 lg:block">
             <div className="border border-hairline bg-paper p-6 xl:p-7">
               <div className="mb-5 flex items-baseline justify-between gap-4">
-                <h2 id="h-estimate" className="font-serif text-[26px] leading-tight font-light text-ink">
+                <h2 id="h-estimate" className="font-serif text-[1.625rem] leading-tight font-light text-ink">
                   Your estimate
                 </h2>
                 {hasAnything && (
-                  <button type="button" onClick={clearAll} className="text-[12px] text-muted underline underline-offset-2 hover:text-ink">
+                  <button type="button" onClick={clearAll} className="text-[0.75rem] text-muted underline underline-offset-2 hover:text-ink">
                     Clear all
                   </button>
                 )}
@@ -630,7 +625,7 @@ export default function FloralCalculator() {
               <button type="button" onClick={() => goTo("review")} className="btn-solid mt-6 w-full text-center">
                 Review &amp; send
               </button>
-              <p className="mt-3 text-[12px] text-muted">Check it over and send it on at the last step.</p>
+              <p className="mt-3 text-[0.75rem] text-muted">Check it over and send it on at the last step.</p>
             </div>
           </aside>
         )}
@@ -644,8 +639,8 @@ export default function FloralCalculator() {
         }`}
       >
         <div>
-          <span className="block text-[10px] tracking-[0.14em] whitespace-nowrap text-muted uppercase">Estimate · excl. GST</span>
-          <span className="font-serif text-[24px] leading-tight font-light text-ink tabular-nums">
+          <span className="block text-[0.625rem] tracking-[0.14em] whitespace-nowrap text-muted uppercase">Estimate · excl. GST</span>
+          <span className="font-serif text-[1.5rem] leading-tight font-light text-ink tabular-nums">
             {from}
             {money(r.total)}
           </span>
@@ -654,7 +649,7 @@ export default function FloralCalculator() {
           type="button"
           tabIndex={barHidden ? -1 : 0}
           onClick={() => goTo("review")}
-          className="shrink-0 border border-ink bg-ink px-4 py-3 text-[11px] tracking-[0.16em] whitespace-nowrap text-white uppercase"
+          className="shrink-0 border border-ink bg-ink px-4 py-3 text-[0.6875rem] tracking-[0.16em] whitespace-nowrap text-white uppercase"
         >
           Review &amp; send
         </button>

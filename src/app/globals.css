@@ -21,13 +21,24 @@
 /* No smooth scrolling on <html>: page navigations must show the top of the
    new page instantly (a smooth default animates Next's scroll reset). */
 
+/* Large screens (24" and 27" monitors): every size on the site is in rem, so
+   raising the root size scales the whole design in proportion: type,
+   spacing, the 80rem content column and images. Up to 1760px wide (13" and
+   15" laptops) the root stays at the browser default and nothing changes.
+   1760px → 16px, 1920px → 17.5px, 2240px → 20.4px, 2560px and up → 22px. */
+@media (min-width: 1760px) {
+  html {
+    font-size: clamp(100%, 0.909vw, 137.5%);
+  }
+}
+
 /* Base type: Chivo 300, 15px, warm ink. */
 body {
   background: var(--color-ivory);
   color: var(--color-ink);
   font-family: var(--font-sans);
   font-weight: 300;
-  font-size: 15px;
+  font-size: 0.9375rem;
   line-height: 1.6;
   text-rendering: optimizeLegibility;
 }
@@ -54,42 +65,42 @@ h3 {
 .display-hero {
   font-family: var(--font-serif);
   font-weight: 300;
-  font-size: clamp(38px, 4.6vw, 64px);
+  font-size: clamp(2.375rem, 4.6vw, 4rem);
   line-height: 1.06;
   letter-spacing: -0.02em;
 }
 .display-1 {
   font-family: var(--font-serif);
   font-weight: 300;
-  font-size: clamp(32px, 3.8vw, 54px);
+  font-size: clamp(2rem, 3.8vw, 3.375rem);
   line-height: 1.1;
   letter-spacing: -0.02em;
 }
 .display-2 {
   font-family: var(--font-serif);
   font-weight: 300;
-  font-size: clamp(27px, 3.1vw, 44px);
+  font-size: clamp(1.6875rem, 3.1vw, 2.75rem);
   line-height: 1.18;
   letter-spacing: -0.02em;
 }
 .display-3 {
   font-family: var(--font-serif);
   font-weight: 300;
-  font-size: clamp(24px, 2.8vw, 40px);
+  font-size: clamp(1.5rem, 2.8vw, 2.5rem);
   line-height: 1.18;
   letter-spacing: -0.02em;
 }
 .h-page {
   font-family: var(--font-serif);
   font-weight: 300;
-  font-size: clamp(27px, 3.1vw, 44px);
+  font-size: clamp(1.6875rem, 3.1vw, 2.75rem);
   line-height: 1.18;
   letter-spacing: -0.02em;
 }
 .h-card {
   font-family: var(--font-serif);
   font-weight: 300;
-  font-size: 21px;
+  font-size: 1.3125rem;
   line-height: 1.3;
   letter-spacing: -0.01em;
 }
@@ -97,7 +108,7 @@ h3 {
 .label {
   font-family: var(--font-sans);
   font-weight: 400;
-  font-size: 11.5px;
+  font-size: 0.71875rem;
   line-height: 1.3;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -107,12 +118,12 @@ h3 {
   display: inline-block;
   font-family: var(--font-sans);
   font-weight: 400;
-  font-size: 12px;
+  font-size: 0.75rem;
   line-height: 1.4;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   border-bottom: 1px solid currentColor;
-  padding-bottom: 3px;
+  padding-bottom: 0.1875rem;
   text-decoration: none;
   transition: opacity 0.2s;
 }
@@ -126,10 +137,10 @@ h3 {
   display: inline-block;
   background: var(--color-ink);
   color: #ffffff;
-  padding: 16px 32px;
+  padding: 1rem 2rem;
   font-family: var(--font-sans);
   font-weight: 400;
-  font-size: 12.5px;
+  font-size: 0.78125rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   cursor: pointer;
@@ -147,10 +158,10 @@ h3 {
   background: #ffffff;
   color: var(--color-ink);
   border: 1px solid #ffffff;
-  padding: 16px 32px;
+  padding: 1rem 2rem;
   font-family: var(--font-sans);
   font-weight: 400;
-  font-size: 12.5px;
+  font-size: 0.78125rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   cursor: pointer;
@@ -167,10 +178,10 @@ h3 {
   background: transparent;
   color: #ffffff;
   border: 1px solid rgba(255, 255, 255, 0.85);
-  padding: 15px 31px;
+  padding: 0.9375rem 1.9375rem;
   font-family: var(--font-sans);
   font-weight: 400;
-  font-size: 12.5px;
+  font-size: 0.78125rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   cursor: pointer;
@@ -187,10 +198,10 @@ h3 {
   display: inline-block;
   border: 1px solid var(--color-ink);
   background: transparent;
-  padding: 15px 31px;
+  padding: 0.9375rem 1.9375rem;
   font-family: var(--font-sans);
   font-weight: 400;
-  font-size: 12px;
+  font-size: 0.75rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--color-ink);
@@ -208,24 +219,24 @@ h3 {
 /* Form controls: hairline borders, generous height. */
 .input-wp {
   width: 100%;
-  height: 46px;
+  height: 2.875rem;
   border: 1px solid var(--color-hairline);
   background: #fff;
-  padding: 0 16px;
-  font-size: 14px;
+  padding: 0 1rem;
+  font-size: 0.875rem;
   font-weight: 300;
   color: var(--color-ink);
 }
 textarea.input-wp {
   height: auto;
-  min-height: 96px;
-  padding: 12px 16px;
+  min-height: 6rem;
+  padding: 0.75rem 1rem;
 }
 select.input-wp {
   appearance: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%238a847b' fill='none'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
-  background-position: right 14px center;
+  background-position: right 0.875rem center;
   color: var(--color-ink);
 }
 .input-wp::placeholder {
@@ -237,8 +248,8 @@ select.input-wp {
 }
 .check-wp {
   appearance: none;
-  width: 15px;
-  height: 15px;
+  width: 0.9375rem;
+  height: 0.9375rem;
   border: 1px solid var(--color-muted);
   background: #fff;
   flex-shrink: 0;
@@ -253,7 +264,7 @@ select.input-wp {
 .check-wp:checked::after {
   content: "";
   position: absolute;
-  inset: 3px;
+  inset: 0.1875rem;
   background: #fff;
   clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
 }
@@ -271,7 +282,7 @@ summary {
 
 /* Long-form article prose (journal stories, legal pages). */
 .prose-wp {
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 300;
   line-height: 1.75;
   color: var(--color-ink-soft);
@@ -282,7 +293,7 @@ summary {
 .prose-wp h2 {
   font-family: var(--font-serif);
   font-weight: 300;
-  font-size: 26px;
+  font-size: 1.625rem;
   line-height: 1.25;
   color: var(--color-ink);
   margin: 2.2em 0 0.8em;
@@ -291,7 +302,7 @@ summary {
 .prose-wp h3 {
   font-family: var(--font-serif);
   font-weight: 400;
-  font-size: 19px;
+  font-size: 1.1875rem;
   line-height: 1.3;
   color: var(--color-ink);
   margin: 2em 0 0.7em;
@@ -300,7 +311,7 @@ summary {
 .prose-wp a {
   color: var(--color-ink);
   text-decoration: underline;
-  text-underline-offset: 3px;
+  text-underline-offset: 0.1875rem;
   text-decoration-thickness: 1px;
 }
 .prose-wp a:hover {
@@ -336,7 +347,7 @@ summary {
   height: auto;
 }
 .prose-wp figcaption {
-  font-size: 12px;
+  font-size: 0.75rem;
   color: var(--color-muted);
   margin-top: 0.6em;
   text-align: center;
@@ -348,7 +359,7 @@ summary {
   font-family: var(--font-serif);
   font-style: italic;
   font-weight: 300;
-  font-size: 24px;
+  font-size: 1.5rem;
   line-height: 1.5;
   color: var(--color-ink);
   margin: 2.2em 0;
@@ -360,16 +371,16 @@ summary {
   position: relative;
   font-family: var(--font-sans);
   font-weight: 400;
-  font-size: 13.5px;
+  font-size: 0.84375rem;
   letter-spacing: 0.02em;
   line-height: 1.4;
-  padding: 20px 0;
+  padding: 1.25rem 0;
 }
 .nav-link::after {
   content: "";
   position: absolute;
   left: 0;
-  bottom: 16px;
+  bottom: 1rem;
   height: 1px;
   width: 100%;
   background: currentColor;
@@ -431,4 +442,21 @@ summary {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* Date pickers share the field look; Safari otherwise centres the value and
+   collapses an empty iOS picker. */
+input[type="date"].input-wp {
+  -webkit-appearance: none;
+  appearance: none;
+  display: block;
+  width: 100%;
+  min-width: 0;
+}
+input[type="date"].input-wp::-webkit-date-and-time-value {
+  text-align: left;
+}
+input[type="date"].input-wp::-webkit-calendar-picker-indicator {
+  opacity: 0.55;
+  cursor: pointer;
 }

@@ -19,7 +19,7 @@ export default function CtaBand({
 }) {
   return (
     <section className="border-t border-hairline bg-paper">
-      <div className="mx-auto flex max-w-[900px] flex-col items-center px-5 py-16 text-center sm:py-20">
+      <div className="mx-auto flex max-w-[56.25rem] flex-col items-center px-5 py-16 text-center sm:py-20">
         <p className="eyebrow text-muted">{eyebrow}</p>
         <h2 className="display-3 mt-4 text-ink">{title}</h2>
         <div className="mt-8 flex flex-wrap items-center justify-center gap-4">

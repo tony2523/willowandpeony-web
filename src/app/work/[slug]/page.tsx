@@ -68,13 +68,13 @@ export default async function WorkStoryPage({ params }: { params: Promise<{ slug
 
       <article>
         {/* Title block */}
-        <header className="mx-auto max-w-[980px] px-5 pt-16 text-center sm:px-6 md:pt-24">
+        <header className="mx-auto max-w-[61.25rem] px-5 pt-16 text-center sm:px-6 md:pt-24">
           <p className="eyebrow text-muted">
             {isWedding ? "Real wedding" : "Real event"}
             {venueShort ? ` · ${venueShort}` : ""} · {nice}
           </p>
           <h1 className="display-1 mt-5 text-ink">{post.title}</h1>
-          <p className="mt-5 text-[13px] text-muted">
+          <p className="mt-5 text-[0.8125rem] text-muted">
             {isWedding ? "Words & flowers" : "Flowers"} by {site.founder}
           </p>
         </header>
@@ -86,15 +86,15 @@ export default async function WorkStoryPage({ params }: { params: Promise<{ slug
             alt={post.title}
             sizes="100vw"
             priority
-            className="max-h-[720px] w-full object-cover"
+            className="max-h-[45rem] w-full object-cover"
           />
         </div>
 
         {/* Details rail + story */}
-        <div className="mx-auto mt-16 grid max-w-[1080px] gap-12 px-5 sm:px-6 md:mt-24 md:grid-cols-[280px_minmax(0,1fr)] md:gap-16">
+        <div className="mx-auto mt-16 grid max-w-[67.5rem] gap-12 px-5 sm:px-6 md:mt-24 md:grid-cols-[17.5rem_minmax(0,1fr)] md:gap-16">
           <aside className="h-fit border-t border-hairline pt-6 md:sticky md:top-24">
             <p className="eyebrow text-muted">The details</p>
-            <dl className="mt-5 space-y-4 text-[13px] text-ink-soft">
+            <dl className="mt-5 space-y-4 text-[0.8125rem] text-ink-soft">
               {post.venue && (
                 <div>
                   <dt className="text-muted">Venue</dt>
@@ -148,7 +148,7 @@ export default async function WorkStoryPage({ params }: { params: Promise<{ slug
           </aside>
 
           <div
-            className="prose-wp max-w-[680px]"
+            className="prose-wp max-w-[42.5rem]"
             dangerouslySetInnerHTML={{ __html: post.html }}
           />
         </div>
@@ -157,7 +157,7 @@ export default async function WorkStoryPage({ params }: { params: Promise<{ slug
         {(older || newer) && (
           <nav
             aria-label="More stories"
-            className="mx-auto mt-24 max-w-[1080px] px-5 sm:px-6 md:mt-[140px]"
+            className="mx-auto mt-24 max-w-[67.5rem] px-5 sm:px-6 md:mt-[8.75rem]"
           >
             <div className="mb-8 flex items-end justify-between">
               <p className="eyebrow text-muted">Keep reading</p>
@@ -174,13 +174,13 @@ export default async function WorkStoryPage({ params }: { params: Promise<{ slug
                       alt=""
                       sizes="180px"
                       aspect="9/10"
-                      className="h-auto w-[120px] shrink-0 object-cover sm:w-[160px]"
+                      className="h-auto w-[7.5rem] shrink-0 object-cover sm:w-[10rem]"
                     />
                     <span>
-                      <span className="block text-[10.5px] tracking-[0.14em] text-muted uppercase">
+                      <span className="block text-[0.65625rem] tracking-[0.14em] text-muted uppercase">
                         Previous
                       </span>
-                      <span className="mt-2 block font-serif text-[19px] leading-[1.3] font-light text-ink group-hover:underline group-hover:decoration-[1px] group-hover:underline-offset-[5px]">
+                      <span className="mt-2 block font-serif text-[1.1875rem] leading-[1.3] font-light text-ink group-hover:underline group-hover:decoration-[1px] group-hover:underline-offset-[0.3125rem]">
                         {older.title}
                       </span>
                     </span>
@@ -198,13 +198,13 @@ export default async function WorkStoryPage({ params }: { params: Promise<{ slug
                       alt=""
                       sizes="180px"
                       aspect="9/10"
-                      className="h-auto w-[120px] shrink-0 object-cover sm:w-[160px]"
+                      className="h-auto w-[7.5rem] shrink-0 object-cover sm:w-[10rem]"
                     />
                     <span>
-                      <span className="block text-[10.5px] tracking-[0.14em] text-muted uppercase">
+                      <span className="block text-[0.65625rem] tracking-[0.14em] text-muted uppercase">
                         Next
                       </span>
-                      <span className="mt-2 block font-serif text-[19px] leading-[1.3] font-light text-ink group-hover:underline group-hover:decoration-[1px] group-hover:underline-offset-[5px]">
+                      <span className="mt-2 block font-serif text-[1.1875rem] leading-[1.3] font-light text-ink group-hover:underline group-hover:decoration-[1px] group-hover:underline-offset-[0.3125rem]">
                         {newer.title}
                       </span>
                     </span>
@@ -216,8 +216,8 @@ export default async function WorkStoryPage({ params }: { params: Promise<{ slug
         )}
 
         {/* CTA */}
-        <section className="mt-24 border-t border-hairline bg-paper md:mt-[140px]">
-          <div className="mx-auto flex max-w-[900px] flex-col items-center px-5 py-16 text-center sm:py-20">
+        <section className="mt-24 border-t border-hairline bg-paper md:mt-[8.75rem]">
+          <div className="mx-auto flex max-w-[56.25rem] flex-col items-center px-5 py-16 text-center sm:py-20">
             <p className="eyebrow text-muted">
               {isWedding ? "Dreaming of something like this?" : "Planning an event to remember?"}
             </p>

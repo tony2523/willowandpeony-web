@@ -54,28 +54,28 @@ export default function CalendarSignup() {
       />
       <div className="grid gap-4 sm:grid-cols-2">
         <label className="block">
-          <span className="mb-1.5 block text-[12px] tracking-[0.06em] text-muted uppercase">
-                      <span className="mb-1.5 block text-[12px] tracking-[0.06em] text-muted uppercase">
+          <span className="mb-1.5 block text-[0.75rem] tracking-[0.06em] text-muted uppercase">
+                      <span className="mb-1.5 block text-[0.75rem] tracking-[0.06em] text-muted uppercase">
             First name<span aria-hidden className="text-ink"> *</span>
           </span>          </span>
           <input name="firstName" required autoComplete="given-name" className="input-wp" />
         </label>
         <label className="block">
-          <span className="mb-1.5 block text-[12px] tracking-[0.06em] text-muted uppercase">
+          <span className="mb-1.5 block text-[0.75rem] tracking-[0.06em] text-muted uppercase">
             Last name
           </span>
           <input name="lastName" autoComplete="family-name" className="input-wp" />
         </label>
       </div>
       <label className="block">
-        <span className="mb-1.5 block text-[12px] tracking-[0.06em] text-muted uppercase">
-                  <span className="mb-1.5 block text-[12px] tracking-[0.06em] text-muted uppercase">
+        <span className="mb-1.5 block text-[0.75rem] tracking-[0.06em] text-muted uppercase">
+                  <span className="mb-1.5 block text-[0.75rem] tracking-[0.06em] text-muted uppercase">
           Email<span aria-hidden className="text-ink"> *</span>
         </span>        </span>
         <input name="email" type="email" required autoComplete="email" className="input-wp" />
       </label>
-      <label className="flex cursor-pointer items-start gap-3 text-[13px] leading-relaxed text-ink-soft">
-        <input type="checkbox" name="consult" className="check-wp mt-[3px]" />
+      <label className="flex cursor-pointer items-start gap-3 text-[0.8125rem] leading-relaxed text-ink-soft">
+        <input type="checkbox" name="consult" className="check-wp mt-[0.1875rem]" />
         <span>
           Willow &amp; Peony offers an obligation-free wedding flower consultation via Google Meet.
           Tick this box if you&rsquo;d like Ivy to email you to arrange yours.
@@ -83,7 +83,7 @@ export default function CalendarSignup() {
       </label>
 
       {status === "error" && (
-        <p className="text-[13px] text-ink" role="alert">
+        <p className="text-[0.8125rem] text-ink" role="alert">
           Please check your email address and try again.
         </p>
       )}
@@ -97,7 +97,7 @@ export default function CalendarSignup() {
           {status === "sending" ? "One moment…" : "Get my free calendar"}
         </button>
       </div>
-      <p className="text-[12px] leading-relaxed text-muted">
+      <p className="text-[0.75rem] leading-relaxed text-muted">
         * Required. Your calendar is free whether or not you request a consultation. We&rsquo;ll email you the
         download link and won&rsquo;t add you to any mailing list.{" "}
         <Link href="/privacy-policy/" className="underline underline-offset-2 hover:text-ink">

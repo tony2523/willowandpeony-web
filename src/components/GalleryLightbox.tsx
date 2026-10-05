@@ -4,26 +4,29 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import type { GalleryItem } from "@/lib/gallery";
 import ArrowButton, { CloseIcon, iconButton } from "./ArrowButton";
 
-type Filter = "all" | "weddings" | "events";
+type Filter = "weddings" | "events";
+
+/** Images per page (and per "Load more"). */
+const PAGE = 48;
 
 const FILTERS: { value: Filter; label: string }[] = [
-  { value: "all", label: "All" },
   { value: "weddings", label: "Weddings" },
   { value: "events", label: "Events" },
 ];
 
 /**
- * Filterable portfolio grid with a plain full-screen lightbox:
+ * Weddings / Events portfolio (Weddings by default, no All) with a plain
+ * full-screen lightbox:
  * tap an image, flick or arrow through, close with × or Escape.
  * The active filter carries into the lightbox sequence.
  */
 export default function GalleryLightbox({ items }: { items: GalleryItem[] }) {
-  const [filter, setFilter] = useState<Filter>("all");
+  const [filter, setFilter] = useState<Filter>("weddings");
   const [open, setOpen] = useState<number | null>(null);
-  const [shown, setShown] = useState(24);
+  const [shown, setShown] = useState(PAGE);
 
   const filtered = useMemo(
-    () => (filter === "all" ? items : items.filter((i) => i.cat === filter)),
+    () => items.filter((i) => i.cat === filter),
     [items, filter],
   );
   const visible = filtered.slice(0, shown);
@@ -52,17 +55,18 @@ export default function GalleryLightbox({ items }: { items: GalleryItem[] }) {
 
   return (
     <div>
-      <div className="flex flex-wrap gap-2.5" role="group" aria-label="Filter gallery">
+      {/* Filters line up with the heading's column, not the wider grid. */}
+      <div className="mx-auto flex max-w-[77rem] flex-wrap gap-2.5 px-3 sm:px-2 lg:px-0" role="group" aria-label="Filter gallery">
         {FILTERS.map((f) => (
           <button
             key={f.value}
             type="button"
             onClick={() => {
               setFilter(f.value);
-              setShown(24);
+              setShown(PAGE);
             }}
             aria-pressed={filter === f.value}
-            className={`px-4 py-2.5 text-[11px] tracking-[0.14em] uppercase transition-colors ${
+            className={`px-4 py-2.5 text-[0.6875rem] tracking-[0.14em] uppercase transition-colors ${
               filter === f.value
                 ? "bg-ink text-white"
                 : "border border-hairline text-ink-soft hover:border-ink"
@@ -73,36 +77,48 @@ export default function GalleryLightbox({ items }: { items: GalleryItem[] }) {
         ))}
       </div>
 
-      <div className="mt-10 columns-2 gap-3 md:columns-3 lg:columns-4 [&>button]:mb-3">
-        {visible.map((item, i) => (
-          <button
-            key={item.name}
-            type="button"
-            onClick={() => setOpen(i)}
-            className="block w-full cursor-zoom-in overflow-hidden bg-paper"
-            aria-label={`View larger: ${item.alt}`}
-          >
-            <img
-              src={item.src}
-              srcSet={item.srcSet}
-              sizes="(max-width: 768px) 50vw, 25vw"
-              width={item.w}
-              height={item.h}
-              alt={item.alt}
-              loading={i < 8 ? "eager" : "lazy"}
-              decoding="async"
-              className="h-auto w-full transition-transform duration-700 ease-out hover:scale-[1.02]"
-            />
-          </button>
-        ))}
+      {/*
+        Justified rows: each image's share of a row is its own width-to-height
+        ratio, so every row fills the width at one height and nothing is
+        cropped. --row is the target row height: big enough that phones show
+        one image per row, tablets about three, laptops and up three to five.
+      */}
+      <div className="mt-10 flex flex-wrap gap-2 [--row:22rem] sm:gap-3 sm:[--row:18rem] md:[--row:20rem] lg:[--row:26rem] 2xl:[--row:28rem]">
+        {visible.map((item, i) => {
+          const ar = item.w / item.h;
+          return (
+            <button
+              key={item.name}
+              type="button"
+              onClick={() => setOpen(i)}
+              style={{ flexGrow: ar, flexBasis: `calc(var(--row) * ${ar.toFixed(4)})`, aspectRatio: `${item.w} / ${item.h}` }}
+              className="group relative block min-w-0 cursor-zoom-in overflow-hidden bg-paper"
+              aria-label={`View larger: ${item.alt}`}
+            >
+              <img
+                src={item.src}
+                srcSet={item.srcSet}
+                sizes={`(max-width: 639px) 100vw, (min-width: 1760px) ${Math.round(ar * 620)}px, ${Math.round(ar * 440)}px`}
+                width={item.w}
+                height={item.h}
+                alt={item.alt}
+                loading={i < 12 ? "eager" : "lazy"}
+                decoding="async"
+                className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+              />
+            </button>
+          );
+        })}
+        {/* Keeps the last row at the target height instead of stretching it. */}
+        <span aria-hidden className="h-0 grow-[100000] basis-0" />
       </div>
 
       {shown < filtered.length && (
         <div className="mt-12 text-center">
-          <button type="button" onClick={() => setShown((s) => s + 24)} className="btn-outline">
+          <button type="button" onClick={() => setShown((s) => s + PAGE)} className="btn-outline">
             Load more
           </button>
-          <p className="mt-3.5 text-[12px] text-muted">
+          <p className="mt-3.5 text-[0.75rem] text-muted">
             Showing {visible.length} of {filtered.length} images
           </p>
         </div>
@@ -153,7 +169,7 @@ export default function GalleryLightbox({ items }: { items: GalleryItem[] }) {
             }}
             className="absolute right-3 z-10 sm:right-5"
           />
-          <p className="absolute bottom-5 left-1/2 -translate-x-1/2 text-[12px] tracking-[0.14em] text-white/70">
+          <p className="absolute bottom-5 left-1/2 -translate-x-1/2 text-[0.75rem] tracking-[0.14em] text-white/70">
             {open + 1} / {filtered.length}
           </p>
         </div>

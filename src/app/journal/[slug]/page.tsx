@@ -72,48 +72,48 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
 
       <article>
         {/* Title block */}
-        <header className="mx-auto max-w-[820px] px-5 pt-16 text-center sm:px-6 md:pt-24">
+        <header className="mx-auto max-w-[51.25rem] px-5 pt-16 text-center sm:px-6 md:pt-24">
           <p className="eyebrow text-muted">
             The journal · {article.tag}
           </p>
           <h1 className="display-1 mt-5 text-ink">{article.title}</h1>
-          <p className="mt-5 text-[13px] text-muted">
+          <p className="mt-5 text-[0.8125rem] text-muted">
             By {site.founder} · {nice} · {article.readMinutes} min read
           </p>
         </header>
 
         {/* Cover */}
-        <div className="mx-auto mt-12 max-w-[1080px] px-5 sm:px-6 md:mt-16">
+        <div className="mx-auto mt-12 max-w-[67.5rem] px-5 sm:px-6 md:mt-16">
           <Pic
             name={article.cover}
             alt={article.title}
             sizes="(max-width: 1100px) 100vw, 1032px"
             priority
-            className="max-h-[620px] w-full object-cover"
+            className="max-h-[38.75rem] w-full object-cover"
           />
         </div>
 
         {/* Body */}
         <div
-          className="prose-wp mx-auto mt-12 max-w-[680px] px-5 sm:px-6 md:mt-16"
+          className="prose-wp mx-auto mt-12 max-w-[42.5rem] px-5 sm:px-6 md:mt-16"
           dangerouslySetInnerHTML={{ __html: article.html }}
         />
 
         {/* Author */}
-        <aside className="mx-auto mt-16 max-w-[680px] px-5 sm:px-6 md:mt-20">
+        <aside className="mx-auto mt-16 max-w-[42.5rem] px-5 sm:px-6 md:mt-20">
           <div className="flex items-center gap-5 border-y border-hairline py-7">
             <Pic
               name="willow-and-peony-bouquet-ivy-willow-peony-copy-a677a82d-5fc6-4fcd-b72d-c0884402c2e5"
               alt={`${site.founder}, founder of ${site.name}`}
               sizes="72px"
               aspect="1/1"
-              className="h-[72px] w-[72px] shrink-0 rounded-full object-cover"
+              className="h-[4.5rem] w-[4.5rem] shrink-0 rounded-full object-cover"
             />
             <div>
-              <p className="font-serif text-[17px] font-light text-ink">
+              <p className="font-serif text-[1.0625rem] font-light text-ink">
                 {site.founder} · founder &amp; lead florist
               </p>
-              <p className="mt-1 text-[13px] leading-relaxed text-ink-soft">
+              <p className="mt-1 text-[0.8125rem] leading-relaxed text-ink-soft">
                 Ivy designs romantic, artful flowers for weddings and events across Auckland.{" "}
                 <Link href="/about/" className="underline underline-offset-2">
                   Her story
@@ -129,7 +129,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
 
         {/* Related articles */}
         {related.length > 0 && (
-          <nav aria-label="More from the journal" className="mx-auto mt-20 max-w-[1080px] px-5 sm:px-6 md:mt-28">
+          <nav aria-label="More from the journal" className="mx-auto mt-20 max-w-[67.5rem] px-5 sm:px-6 md:mt-28">
             <div className="mb-8 flex items-end justify-between">
               <p className="eyebrow text-muted">Keep reading</p>
               <Link href="/journal/" className="t-link text-ink">
@@ -148,10 +148,10 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
                       className="h-auto w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02]"
                     />
                   </div>
-                  <p className="mt-4 text-[10.5px] tracking-[0.16em] text-muted uppercase">
+                  <p className="mt-4 text-[0.65625rem] tracking-[0.16em] text-muted uppercase">
                     {a.tag}
                   </p>
-                  <h2 className="mt-1.5 font-serif text-[20px] leading-[1.3] font-light text-ink group-hover:underline group-hover:decoration-[1px] group-hover:underline-offset-[5px]">
+                  <h2 className="mt-1.5 font-serif text-[1.25rem] leading-[1.3] font-light text-ink group-hover:underline group-hover:decoration-[1px] group-hover:underline-offset-[0.3125rem]">
                     {a.title}
                   </h2>
                 </Link>

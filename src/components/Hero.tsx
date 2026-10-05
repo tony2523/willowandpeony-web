@@ -31,7 +31,7 @@ export default function Hero({
 }) {
   const entry = getImage(image);
   return (
-    <section className={`relative ${compact ? "h-[480px]" : "h-[560px] md:h-[640px]"}`}>
+    <section className={`relative ${compact ? "h-[30rem]" : "h-[35rem] md:h-[40rem]"}`}>
       {entry && (
         <img
           src={imageSrc(image, 1600)}
@@ -49,11 +49,11 @@ export default function Hero({
         className="absolute inset-0 bg-gradient-to-t from-[rgba(20,18,16,0.6)] via-[rgba(20,18,16,0.12)] to-[rgba(20,18,16,0.25)]"
       />
       <div className="absolute inset-x-0 bottom-0">
-        <div className="mx-auto max-w-[1280px] px-5 pb-14 sm:px-6 md:pb-20">
+        <div className="mx-auto max-w-[80rem] px-5 pb-14 sm:px-6 md:pb-20">
           <p className="eyebrow text-white/85">{eyebrow}</p>
-          <h1 className="display-1 mt-3 max-w-[820px] text-white">{title}</h1>
+          <h1 className="display-1 mt-3 max-w-[51.25rem] text-white">{title}</h1>
           {intro && (
-            <p className="mt-5 max-w-[560px] text-[15px] leading-relaxed font-light text-white/90">
+            <p className="mt-5 max-w-[35rem] text-[0.9375rem] leading-relaxed font-light text-white/90">
               {intro}
             </p>
           )}

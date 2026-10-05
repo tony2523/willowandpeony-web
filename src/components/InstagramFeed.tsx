@@ -117,7 +117,7 @@ export default function InstagramFeed() {
         >
           @{site.instagramHandle}
         </a>
-        <p className="mt-3 text-[12px] text-muted">Tap any tile to preview</p>
+        <p className="mt-3 text-[0.75rem] text-muted">Tap any tile to preview</p>
         <a href={site.instagram} target="_blank" rel="noopener" className="btn-outline mt-6">
           Follow along
         </a>
@@ -147,7 +147,7 @@ export default function InstagramFeed() {
           aria-label="Instagram post preview"
         >
           <div
-            className="relative max-h-[90vh] w-full max-w-[480px] overflow-hidden bg-white"
+            className="relative max-h-[90vh] w-full max-w-[30rem] overflow-hidden bg-white"
             onClick={(e) => e.stopPropagation()}
           >
             <button
@@ -160,7 +160,7 @@ export default function InstagramFeed() {
             </button>
             <TileImage item={open} sizes="480px" />
             <div className="flex items-center justify-between gap-4 p-4">
-              <p className="line-clamp-2 text-[12.6px] leading-relaxed text-ink-soft">
+              <p className="line-clamp-2 text-[0.7875rem] leading-relaxed text-ink-soft">
                 {open.caption}
               </p>
               <a

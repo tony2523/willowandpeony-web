@@ -37,7 +37,7 @@ const cols = [
 export default function Footer() {
   return (
     <footer className="border-t border-hairline bg-white">
-      <div className="mx-auto grid max-w-[1280px] gap-12 px-5 pt-16 pb-4 sm:px-6 md:grid-cols-[1.5fr_1fr_1fr_1fr] lg:gap-14">
+      <div className="mx-auto grid max-w-[80rem] gap-12 px-5 pt-16 pb-4 sm:px-6 md:grid-cols-[1.5fr_1fr_1fr_1fr] lg:gap-14">
         <div>
           <img
             src={withBase("/brand/willow-and-peony-logo.png")}
@@ -45,12 +45,12 @@ export default function Footer() {
             width={250}
             height={30}
             loading="lazy"
-            className="h-[28px] w-auto"
+            className="h-[1.75rem] w-auto"
           />
-          <p className="mt-5 max-w-[300px] font-serif text-[17px] leading-[1.55] font-light text-ink-soft italic">
+          <p className="mt-5 max-w-[18.75rem] font-serif text-[1.0625rem] leading-[1.55] font-light text-ink-soft italic">
             Crafting premium, bespoke floral designs for every special moment.
           </p>
-          <p className="mt-5 text-[13px] leading-relaxed text-ink-soft">
+          <p className="mt-5 text-[0.8125rem] leading-relaxed text-ink-soft">
             <a href={`mailto:${site.email}`} className="hover:underline">
               {site.email}
             </a>
@@ -71,7 +71,7 @@ export default function Footer() {
                       href={l.href}
                       target="_blank"
                       rel="noopener"
-                      className="text-[13px] leading-[2.1] text-ink-soft hover:text-ink hover:underline"
+                      className="text-[0.8125rem] leading-[2.1] text-ink-soft hover:text-ink hover:underline"
                     >
                       {l.label}
                     </a>
@@ -80,7 +80,7 @@ export default function Footer() {
                   <li key={l.label}>
                     <Link
                       href={l.href}
-                      className="text-[13px] leading-[2.1] text-ink-soft hover:text-ink hover:underline"
+                      className="text-[0.8125rem] leading-[2.1] text-ink-soft hover:text-ink hover:underline"
                     >
                       {l.label}
                     </Link>
@@ -92,8 +92,8 @@ export default function Footer() {
         ))}
       </div>
 
-      <div className="mx-auto max-w-[1280px] px-5 sm:px-6">
-        <div className="mt-12 flex flex-col gap-2 border-t border-hairline py-5 text-[11.5px] text-muted sm:flex-row sm:items-center sm:justify-between">
+      <div className="mx-auto max-w-[80rem] px-5 sm:px-6">
+        <div className="mt-12 flex flex-col gap-2 border-t border-hairline py-5 text-[0.71875rem] text-muted sm:flex-row sm:items-center sm:justify-between">
           <p>
             © {new Date().getFullYear()} {site.name} · Auckland, New Zealand
           </p>

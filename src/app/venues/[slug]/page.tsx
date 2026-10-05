@@ -88,7 +88,7 @@ export default async function VenueGuidePage({
       />
 
       {/* Facts rail */}
-      <section className="mx-auto mt-12 max-w-[1280px] px-5 sm:px-6 md:mt-16">
+      <section className="mx-auto mt-12 max-w-[80rem] px-5 sm:px-6 md:mt-16">
         <dl className="grid gap-x-10 gap-y-6 border-b border-hairline pb-10 sm:grid-cols-2 lg:grid-cols-4">
           {(
             [
@@ -100,19 +100,19 @@ export default async function VenueGuidePage({
           ).map(([k, v]) => (
             <div key={k}>
               <dt className="eyebrow text-muted">{k}</dt>
-              <dd className="mt-2 text-[14px] text-ink-soft">{v}</dd>
+              <dd className="mt-2 text-[0.875rem] text-ink-soft">{v}</dd>
             </div>
           ))}
         </dl>
       </section>
 
       {/* What works beautifully here */}
-      <section className="mx-auto mt-20 grid max-w-[1280px] gap-12 px-5 sm:px-6 md:mt-28 md:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] md:gap-20">
+      <section className="mx-auto mt-20 grid max-w-[80rem] gap-12 px-5 sm:px-6 md:mt-28 md:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] md:gap-20">
         <div>
           <h2 className="display-2 text-ink">
             What works beautifully <em>here</em>
           </h2>
-          <p className="mt-6 max-w-[560px] text-[15px] leading-[1.75] font-light text-ink-soft">
+          <p className="mt-6 max-w-[35rem] text-[0.9375rem] leading-[1.75] font-light text-ink-soft">
             {venue.whatWorks}
           </p>
         </div>
@@ -120,7 +120,7 @@ export default async function VenueGuidePage({
           <p className="eyebrow text-muted">Florist&rsquo;s notes</p>
           <ul className="mt-4 space-y-2.5">
             {venue.floristNotes.map((n) => (
-              <li key={n} className="text-[13.5px] leading-relaxed text-ink-soft">
+              <li key={n} className="text-[0.84375rem] leading-relaxed text-ink-soft">
                 · {n}
               </li>
             ))}
@@ -129,8 +129,8 @@ export default async function VenueGuidePage({
       </section>
 
       {/* Image band */}
-      <section aria-label={`Florals at ${venue.name}`} className="mt-24 md:mt-[140px]">
-        <div className="mx-auto flex max-w-[1280px] items-end gap-4 px-5 sm:gap-6 sm:px-6">
+      <section aria-label={`Florals at ${venue.name}`} className="mt-24 md:mt-[8.75rem]">
+        <div className="mx-auto flex max-w-[80rem] items-end gap-4 px-5 sm:gap-6 sm:px-6">
           <Pic
             name={venue.gallery[0]}
             alt={`${venue.name} wedding flowers by Willow & Peony`}
@@ -147,11 +147,11 @@ export default async function VenueGuidePage({
       </section>
 
       {/* About the venue */}
-      <section className="mx-auto mt-24 grid max-w-[1280px] gap-12 px-5 sm:px-6 md:mt-[140px] md:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] md:gap-20">
+      <section className="mx-auto mt-24 grid max-w-[80rem] gap-12 px-5 sm:px-6 md:mt-[8.75rem] md:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] md:gap-20">
         <div>
           <h2 className="display-3 text-ink">About the venue</h2>
           {venue.about.map((p) => (
-            <p key={p.slice(0, 24)} className="mt-5 max-w-[600px] text-[15px] leading-[1.75] font-light text-ink-soft">
+            <p key={p.slice(0, 24)} className="mt-5 max-w-[37.5rem] text-[0.9375rem] leading-[1.75] font-light text-ink-soft">
               {p}
             </p>
           ))}
@@ -168,7 +168,7 @@ export default async function VenueGuidePage({
           <p className="eyebrow text-muted">Good to know</p>
           <ul className="mt-4 space-y-2.5">
             {venue.goodToKnow.map((n) => (
-              <li key={n} className="text-[13.5px] leading-relaxed text-ink-soft">
+              <li key={n} className="text-[0.84375rem] leading-relaxed text-ink-soft">
                 · {n}
               </li>
             ))}
@@ -177,7 +177,7 @@ export default async function VenueGuidePage({
       </section>
 
       {/* More florals from days at this venue */}
-      <section className="mx-auto mt-24 max-w-[1280px] px-5 sm:px-6 md:mt-[140px]">
+      <section className="mx-auto mt-24 max-w-[80rem] px-5 sm:px-6 md:mt-[8.75rem]">
         <p className="eyebrow text-muted">More florals from days at this venue</p>
         <div className="mt-8 grid grid-cols-2 gap-3 md:grid-cols-4">
           {venue.gallery.slice(2, 6).map((name) => (
@@ -194,8 +194,8 @@ export default async function VenueGuidePage({
       </section>
 
       {/* Real wedding — paper band */}
-      <section className="mt-24 border-t border-hairline bg-paper md:mt-[140px]">
-        <div className="mx-auto grid max-w-[1280px] items-center gap-10 px-5 py-16 sm:px-6 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:gap-16 md:py-20">
+      <section className="mt-24 border-t border-hairline bg-paper md:mt-[8.75rem]">
+        <div className="mx-auto grid max-w-[80rem] items-center gap-10 px-5 py-16 sm:px-6 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:gap-16 md:py-20">
           <Pic
             name={venue.post.cover}
             alt={`Wedding flowers from ${venue.post.couple}'s day at ${venue.name}`}
@@ -206,7 +206,7 @@ export default async function VenueGuidePage({
           <div>
             <p className="eyebrow text-muted">Real wedding at this venue</p>
             <h2 className="display-3 mt-3 text-ink">{venue.post.title}</h2>
-            <p className="mt-4 max-w-[480px] text-[14px] leading-[1.7] text-ink-soft">
+            <p className="mt-4 max-w-[30rem] text-[0.875rem] leading-[1.7] text-ink-soft">
               {venue.post.blurb}
             </p>
             <Link href={`/work/${venue.post.slug}/`} className="t-link mt-7 inline-block text-ink">
@@ -217,7 +217,7 @@ export default async function VenueGuidePage({
       </section>
 
       {/* More venue guides */}
-      <section className="mx-auto mt-24 max-w-[1280px] px-5 sm:px-6 md:mt-[140px]">
+      <section className="mx-auto mt-24 max-w-[80rem] px-5 sm:px-6 md:mt-[8.75rem]">
         <div className="flex items-end justify-between">
           <p className="eyebrow text-muted">More venue guides</p>
           <Link href="/venues/" className="t-link text-ink">
@@ -231,10 +231,10 @@ export default async function VenueGuidePage({
                 href={`/venues/${v.slug}/`}
                 className="group flex items-center justify-between py-4"
               >
-                <span className="font-serif text-[19px] font-light text-ink group-hover:underline group-hover:decoration-[1px] group-hover:underline-offset-[5px]">
+                <span className="font-serif text-[1.1875rem] font-light text-ink group-hover:underline group-hover:decoration-[1px] group-hover:underline-offset-[0.3125rem]">
                   {v.name}
                 </span>
-                <span className="text-[10.5px] tracking-[0.14em] text-muted uppercase">
+                <span className="text-[0.65625rem] tracking-[0.14em] text-muted uppercase">
                   {v.area}
                 </span>
               </Link>
@@ -244,8 +244,8 @@ export default async function VenueGuidePage({
       </section>
 
       {/* CTA */}
-      <section className="mt-24 border-t border-hairline bg-paper md:mt-[140px]">
-        <div className="mx-auto flex max-w-[900px] flex-col items-center px-5 py-16 text-center sm:py-20">
+      <section className="mt-24 border-t border-hairline bg-paper md:mt-[8.75rem]">
+        <div className="mx-auto flex max-w-[56.25rem] flex-col items-center px-5 py-16 text-center sm:py-20">
           <p className="eyebrow text-muted">Getting married at {venue.name}?</p>
           <h2 className="display-3 mt-4 text-ink">
             Let&rsquo;s design flowers that <em>belong there</em>

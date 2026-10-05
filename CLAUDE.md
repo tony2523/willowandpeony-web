@@ -95,8 +95,9 @@ exclude GST, and display as "from" prices everywhere.
   price ("Not offered" when a tier isn't available). Untiered pieces show
   "Not required" and a single "Signature" option. Choosing an option adds
   one and only then shows the quantity box; stepping down past 1 (or
-  clearing the box) returns the piece to Not required. Cards are two
-  columns from sm up so the tier notes fit. No separate tier explainer and
+  clearing the box) returns the piece to Not required. Cards are one
+  per row: photo left and options right from sm up, stacked with a 4:3 photo
+  on phones, so a whole card fits on one screen (Tony, 5 Oct 2026). No separate tier explainer and
   no tier comparison at Review (Tony, 5 Oct 2026: each piece carries its
   own tier). Each step ends with one "Next" button (no skip link: Next
   already moves on). Finished steps collapse to "N pieces · from $X", or
@@ -104,7 +105,7 @@ exclude GST, and display as "from" prices everywhere.
   crawlable. Desktop keeps a sticky running estimate; phones a bottom bar.
 - Logic lives in `src/lib/estimate.ts` (pure, relative imports only:
   wrangler bundles it into the Worker). Regression check: Ivy's typical
-  Signature wedding (`exampleSelection()`, shown in the intro "for scale")
+  Signature wedding (`exampleSelection()`, no longer shown on the page)
   totals from $4,680 (florals $4,090 + services $590).
 - `?e=<code>` reopens an estimate at Review & send (used by the emailed link).
 - Worker `POST /api/estimate`: `email` sends the couple their estimate from
@@ -242,3 +243,14 @@ is retired. The system:
 - `npm run build` — static export to `out/` + postbuild (redirect stubs).
 - `npm run images` — (re)generate image variants after adding photos.
 - `npx serve out -l 4173` — preview the real static output.
+
+## Gallery
+
+- `/gallery/` has two filters, Weddings (default) and Events; no "All" (Tony, 6 Oct 2026).
+- Weddings are Ivy's curated photos, `assets/img-src/gallery-<wedding>-NN.jpg`,
+  grouped in `content/gallery.ts` (one alt text per wedding). Add a photo with the
+  next number and run `npm run images`; gallery photos get no OG card. Imported
+  photos are normalised first: auto-oriented JPEG, max 2400px wide.
+- Events are every inline image from the event stories in `content/journal`.
+- Both lists are interleaved (first photo of each wedding/event, then the second…)
+  and laid out as justified rows sized to each photo's shape; 48 per page.

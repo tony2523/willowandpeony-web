@@ -17,7 +17,7 @@ export default function PageHero({
   intro?: string;
 }) {
   return (
-    <section className="relative h-[65vh] min-h-[400px] w-full overflow-hidden">
+    <section className="relative h-[65vh] min-h-[25rem] w-full overflow-hidden">
       <Pic
         name={image}
         alt={alt}
@@ -27,9 +27,9 @@ export default function PageHero({
       />
       <div className="absolute inset-0 bg-black/10" />
       <div className="absolute inset-0 flex flex-col items-center justify-center px-5 text-center">
-        <h1 className="h-page max-w-[640px] text-white">{title}</h1>
+        <h1 className="h-page max-w-[40rem] text-white">{title}</h1>
         {intro && (
-          <p className="mt-4 max-w-[608px] text-[15px] leading-[1.4] text-white">{intro}</p>
+          <p className="mt-4 max-w-[38rem] text-[0.9375rem] leading-[1.4] text-white">{intro}</p>
         )}
       </div>
     </section>

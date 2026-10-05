@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { site } from "../../content/site";
+import DateInput from "./DateInput";
 
 type Kind = "wedding" | "event" | "general";
 
@@ -54,6 +55,7 @@ const EVENT_TYPES = [
 const FOUND_US = [
   "Google search",
   "Instagram",
+  "Facebook",
   "Referral from a friend",
   "Venue or planner recommendation",
   "Attended an event we flowered",
@@ -74,7 +76,7 @@ function Field({
 }) {
   return (
     <label className={`block ${className}`}>
-      <span className="mb-1.5 block text-[12px] tracking-[0.06em] text-muted uppercase">
+      <span className="mb-1.5 block text-[0.75rem] tracking-[0.06em] text-muted uppercase">
         {label}
         {required && <span aria-hidden className="text-ink"> *</span>}
       </span>
@@ -149,7 +151,7 @@ export default function EnquiryForm({ kind = "general", selector = false, compac
     return (
       <div className="border border-hairline bg-white p-10 text-center">
         <p className="h-card text-ink">Thank you — we&rsquo;ve received your enquiry.</p>
-        <p className="mt-2 text-[14px] text-ink-soft">
+        <p className="mt-2 text-[0.875rem] text-ink-soft">
           We&rsquo;ll be in touch within 1–2 business days.
         </p>
         {mode === "wedding" && (
@@ -189,7 +191,7 @@ export default function EnquiryForm({ kind = "general", selector = false, compac
                 type="button"
                 onClick={() => setMode(value)}
                 aria-pressed={mode === value}
-                className={`px-4 py-2.5 text-[11px] tracking-[0.14em] uppercase transition-colors ${
+                className={`px-4 py-2.5 text-[0.6875rem] tracking-[0.14em] uppercase transition-colors ${
                   mode === value
                     ? "bg-ink text-white"
                     : "border border-hairline text-ink-soft hover:border-ink"
@@ -212,8 +214,8 @@ export default function EnquiryForm({ kind = "general", selector = false, compac
               <input type="email" name="email" required autoComplete="email" className="input-wp" />
             </Field>
           </div>
-          <Field label="Phone">
-            <input type="tel" name="phone" autoComplete="tel" className="input-wp" />
+          <Field label="Phone" required>
+            <input type="tel" name="phone" required autoComplete="tel" className="input-wp" />
           </Field>
           <Field label="Your message" required>
             <textarea name="message" required rows={5} className="input-wp" />
@@ -228,17 +230,17 @@ export default function EnquiryForm({ kind = "general", selector = false, compac
             <Field label="Email" required>
               <input type="email" name="email" required autoComplete="email" className="input-wp" />
             </Field>
-            <Field label="Phone">
-              <input type="tel" name="phone" autoComplete="tel" className="input-wp" />
+            <Field label="Phone" required>
+              <input type="tel" name="phone" required autoComplete="tel" className="input-wp" />
             </Field>
-            <Field label="Wedding date">
-              <input name="date" placeholder="DD/MM/YYYY" className="input-wp" />
+            <Field label="Wedding date" required>
+              <DateInput name="date" required className="input-wp" />
             </Field>
-            <Field label="Venue (or shortlist)">
-              <input name="venue" className="input-wp" />
+            <Field label="Venue (or shortlist)" required>
+              <input name="venue" required className="input-wp" />
             </Field>
-            <Field label="Budget">
-              <select name="budget" defaultValue="" className="input-wp">
+            <Field label="Budget" required>
+              <select name="budget" required defaultValue="" className="input-wp">
                 <option value="" disabled>
                   Select a range
                 </option>
@@ -257,7 +259,7 @@ export default function EnquiryForm({ kind = "general", selector = false, compac
               {REQUIREMENTS.map((r) => (
                 <label
                   key={r}
-                  className="flex cursor-pointer items-center gap-2.5 text-[13px] text-ink-soft"
+                  className="flex cursor-pointer items-center gap-2.5 text-[0.8125rem] text-ink-soft"
                 >
                   <input type="checkbox" name="requirements" value={r} className="check-wp" />
                   {r}
@@ -290,7 +292,7 @@ export default function EnquiryForm({ kind = "general", selector = false, compac
         </div>
       ) : (
         <div className="grid gap-4">
-          <p role="note" className="border border-hairline bg-white px-4 py-3 text-[13px] leading-relaxed text-ink-soft">
+          <p role="note" className="border border-hairline bg-white px-4 py-3 text-[0.8125rem] leading-relaxed text-ink-soft">
             Event floral styling is currently available across Auckland only.
           </p>
           <div className="grid gap-4 sm:grid-cols-2">
@@ -303,11 +305,11 @@ export default function EnquiryForm({ kind = "general", selector = false, compac
             <Field label="Email" required>
               <input type="email" name="email" required autoComplete="email" className="input-wp" />
             </Field>
-            <Field label="Phone">
-              <input type="tel" name="phone" autoComplete="tel" className="input-wp" />
+            <Field label="Phone" required>
+              <input type="tel" name="phone" required autoComplete="tel" className="input-wp" />
             </Field>
-            <Field label="Event date">
-              <input name="date" placeholder="DD/MM/YYYY" className="input-wp" />
+            <Field label="Event date" required>
+              <DateInput name="date" required className="input-wp" />
             </Field>
             <Field label="Event type">
               <select name="event_type" defaultValue="" className="input-wp">
@@ -318,6 +320,12 @@ export default function EnquiryForm({ kind = "general", selector = false, compac
                   <option key={t}>{t}</option>
                 ))}
               </select>
+            </Field>
+            <Field label="Event venue" required>
+              <input name="venue" required className="input-wp" />
+            </Field>
+            <Field label="Budget" required>
+              <input name="budget" required className="input-wp" />
             </Field>
           </div>
           <Field label="Your message" required>
@@ -332,19 +340,11 @@ export default function EnquiryForm({ kind = "general", selector = false, compac
           <Field label="Pinterest board or inspiration link">
             <input name="inspo" type="url" inputMode="url" placeholder="https://" className="input-wp" />
           </Field>
-          <div className="grid gap-4 sm:grid-cols-2">
-            <Field label="Budget">
-              <input name="budget" className="input-wp" />
-            </Field>
-            <Field label="Additional comments">
-              <input name="comments" className="input-wp" />
-            </Field>
-          </div>
         </div>
       )}
 
       {status === "error" && (
-        <p className="mt-4 text-[13px] text-ink" role="alert">
+        <p className="mt-4 text-[0.8125rem] text-ink" role="alert">
           Something wasn&rsquo;t right — please check your email address and message, then try
           again.
         </p>
@@ -354,7 +354,7 @@ export default function EnquiryForm({ kind = "general", selector = false, compac
         <button type="submit" disabled={status === "sending"} className="btn-solid disabled:opacity-60">
           {status === "sending" ? "Sending…" : "Send enquiry"}
         </button>
-        <p className="mt-3.5 text-[12px] text-muted">* Required. We reply within 1–2 business days.</p>
+        <p className="mt-3.5 text-[0.75rem] text-muted">* Required. We reply within 1–2 business days.</p>
       </div>
     </form>
   );

@@ -23,11 +23,11 @@ export default function PostCard({ post, priority = false }: { post: Post; prior
             className="h-auto w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02]"
           />
         </div>
-        <h3 className="h-card mt-4 text-ink group-hover:underline group-hover:decoration-[1px] group-hover:underline-offset-[5px]">
+        <h3 className="h-card mt-4 text-ink group-hover:underline group-hover:decoration-[1px] group-hover:underline-offset-[0.3125rem]">
           {post.title}
         </h3>
       </Link>
-      <p className="mt-2 text-[10.5px] tracking-[0.14em] text-muted uppercase">{postMeta(post)}</p>
+      <p className="mt-2 text-[0.65625rem] tracking-[0.14em] text-muted uppercase">{postMeta(post)}</p>
     </article>
   );
 }

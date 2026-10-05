@@ -22,7 +22,7 @@ const FILTERS: { value: Filter; label: string }[] = [
   { value: "events", label: "Events" },
 ];
 
-const PAGE = 24;
+const PAGE = 48;
 
 /**
  * The unified Our Work grid: every story with All/Weddings/Events filters
@@ -66,7 +66,7 @@ export default function WorkGrid({
               setShown(PAGE);
             }}
             aria-pressed={filter === f.value}
-            className={`px-4 py-2.5 text-[11px] tracking-[0.14em] uppercase transition-colors ${
+            className={`px-4 py-2.5 text-[0.6875rem] tracking-[0.14em] uppercase transition-colors ${
               filter === f.value
                 ? "bg-ink text-white"
                 : "border border-hairline text-ink-soft hover:border-ink"
@@ -94,11 +94,11 @@ export default function WorkGrid({
                   className="aspect-[4/3] h-auto w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02]"
                 />
               </div>
-              <h2 className="mt-4 font-serif text-[21px] leading-[1.3] font-light text-ink group-hover:underline group-hover:decoration-[1px] group-hover:underline-offset-[5px] md:text-[23px]">
+              <h2 className="mt-4 font-serif text-[1.3125rem] leading-[1.3] font-light text-ink group-hover:underline group-hover:decoration-[1px] group-hover:underline-offset-[0.3125rem] md:text-[1.4375rem]">
                 {item.title}
               </h2>
             </Link>
-            <p className="mt-2 text-[10.5px] tracking-[0.14em] text-muted uppercase">{item.meta}</p>
+            <p className="mt-2 text-[0.65625rem] tracking-[0.14em] text-muted uppercase">{item.meta}</p>
           </article>
         ))}
       </div>
@@ -108,7 +108,7 @@ export default function WorkGrid({
           <button type="button" onClick={() => setShown((s) => s + PAGE)} className="btn-outline">
             Load more stories
           </button>
-          <p className="mt-3.5 text-[12px] text-muted">
+          <p className="mt-3.5 text-[0.75rem] text-muted">
             Showing {visible.length} of {filtered.length} stories
           </p>
         </div>

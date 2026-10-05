@@ -48,8 +48,9 @@ async function processOne(file) {
   // Only encode what's missing; keep any extra hand-made sizes (e.g. the
   // home hero's 1800w/2400w) that are already on disk and in the manifest.
   const missing = sizes.filter((s) => !fs.existsSync(path.join(OUT, `${name}-${s}w.webp`)));
-  // Calculator photos are never shared on social, so they get no OG card.
-  const ogMissing = !name.startsWith("calculator-") && !fs.existsSync(path.join(OUT, `${name}-og.jpg`));
+  // Calculator and gallery photos are never shared on social, so they get no OG card.
+  const ogMissing =
+    !name.startsWith("calculator-") && !name.startsWith("gallery-") && !fs.existsSync(path.join(OUT, `${name}-og.jpg`));
   if (existing && existing.w === w && missing.length === 0 && !ogMissing) {
     skipped++;
     return;

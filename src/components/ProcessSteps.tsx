@@ -12,9 +12,9 @@ export default function ProcessSteps() {
       <ol className="mt-10 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
         {processSteps.map((step, i) => (
           <li key={step.title}>
-            <div aria-hidden data-n={String(i + 1).padStart(2, "0")} className="font-serif text-[52px] leading-none font-light text-hairline before:content-[attr(data-n)]" />
-            <h3 className="mt-3 font-serif text-[20px] font-normal text-ink">{step.title}</h3>
-            <p className="mt-2 text-[13.5px] leading-relaxed text-ink-soft">{step.body}</p>
+            <div aria-hidden data-n={String(i + 1).padStart(2, "0")} className="font-serif text-[3.25rem] leading-none font-light text-hairline before:content-[attr(data-n)]" />
+            <h3 className="mt-3 font-serif text-[1.25rem] font-normal text-ink">{step.title}</h3>
+            <p className="mt-2 text-[0.84375rem] leading-relaxed text-ink-soft">{step.body}</p>
             {step.link &&
               (step.link.href.startsWith("http") ? (
                 <a href={step.link.href} target="_blank" rel="noopener" className="t-link mt-4 inline-block text-ink">

@@ -42,19 +42,19 @@ export default function MobileNav({ light = false }: { light?: boolean }) {
           <span
             aria-hidden
             className={`absolute top-0 left-0 h-px w-6 ${light ? "bg-white" : "bg-ink"} transition-transform duration-300 ${
-              open ? "translate-y-[7px] rotate-45" : ""
+              open ? "translate-y-[0.4375rem] rotate-45" : ""
             }`}
           />
           <span
             aria-hidden
-            className={`absolute top-[7px] left-0 h-px w-6 ${light ? "bg-white" : "bg-ink"} transition-opacity duration-200 ${
+            className={`absolute top-[0.4375rem] left-0 h-px w-6 ${light ? "bg-white" : "bg-ink"} transition-opacity duration-200 ${
               open ? "opacity-0" : ""
             }`}
           />
           <span
             aria-hidden
-            className={`absolute top-[14px] left-0 h-px w-6 ${light ? "bg-white" : "bg-ink"} transition-transform duration-300 ${
-              open ? "-translate-y-[7px] -rotate-45" : ""
+            className={`absolute top-[0.875rem] left-0 h-px w-6 ${light ? "bg-white" : "bg-ink"} transition-transform duration-300 ${
+              open ? "-translate-y-[0.4375rem] -rotate-45" : ""
             }`}
           />
         </span>
@@ -91,7 +91,7 @@ export default function MobileNav({ light = false }: { light?: boolean }) {
                     alt="Willow & Peony"
                     width={250}
                     height={30}
-                    className="h-[20px] w-auto"
+                    className="h-[1.25rem] w-auto"
                   />
                 </Link>
                 <button
@@ -110,7 +110,7 @@ export default function MobileNav({ light = false }: { light?: boolean }) {
                     href={item.href}
                     prefetch={false}
                     onClick={() => setOpen(false)}
-                    className="block border-b border-hairline py-4 font-serif text-[17px] font-light tracking-[-0.01em] text-ink"
+                    className="block border-b border-hairline py-4 font-serif text-[1.0625rem] font-light tracking-[-0.01em] text-ink"
                   >
                     {item.label}
                   </Link>

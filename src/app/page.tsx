@@ -47,7 +47,7 @@ export default function HomePage() {
   return (
     <>
       {/* Hero — full-viewport image, transparent header floats over it */}
-      <section className="relative h-svh min-h-[640px] w-full overflow-hidden">
+      <section className="relative h-svh min-h-[40rem] w-full overflow-hidden">
         <Pic
           name="auckland-bridal-party-blush-bouquets-hero"
           alt="Bridal party holding blush and ivory bouquets by Willow & Peony, Auckland"
@@ -60,12 +60,12 @@ export default function HomePage() {
           className="absolute inset-0 bg-gradient-to-t from-[rgba(20,18,16,0.72)] via-[rgba(20,18,16,0.3)] to-[rgba(20,18,16,0.15)] md:from-[rgba(20,18,16,0.55)] md:via-[rgba(20,18,16,0.05)]"
         />
         <div className="absolute inset-x-0 bottom-0">
-          <div className="mx-auto max-w-[1280px] px-5 pb-16 sm:px-6 md:pb-24">
+          <div className="mx-auto max-w-[80rem] px-5 pb-16 sm:px-6 md:pb-24">
             <p className="eyebrow text-white/85">Boutique florist · Auckland</p>
-            <h1 className="display-hero mt-4 max-w-[900px] text-white">
+            <h1 className="display-hero mt-4 max-w-[56.25rem] text-white">
               Artful florals for <em>beautifully considered</em> events
             </h1>
-            <p className="mt-5 max-w-[560px] text-[15px] leading-relaxed font-light text-white/90">
+            <p className="mt-5 max-w-[35rem] text-[0.9375rem] leading-relaxed font-light text-white/90">
               Bespoke wedding and event flowers, designed with premium seasonal blooms, refined
               palettes and an artful eye for detail.
             </p>
@@ -86,7 +86,7 @@ export default function HomePage() {
         aria-label="Highlights"
         className="border-b border-hairline bg-white px-5 py-6 sm:px-6"
       >
-        <ul className="mx-auto flex max-w-[1280px] flex-wrap items-center justify-center gap-x-10 gap-y-2 text-center text-[11px] tracking-[0.16em] text-ink-soft uppercase">
+        <ul className="mx-auto flex max-w-[80rem] flex-wrap items-center justify-center gap-x-10 gap-y-2 text-center text-[0.6875rem] tracking-[0.16em] text-ink-soft uppercase">
           <li>Weddings across Auckland &amp; beyond</li>
           <li className="hidden sm:block" aria-hidden>
             ·
@@ -109,13 +109,13 @@ export default function HomePage() {
       </section>
 
       {/* Intro */}
-      <section className="mx-auto mt-20 grid max-w-[1280px] gap-10 px-5 sm:px-6 md:mt-28 md:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] md:gap-20">
+      <section className="mx-auto mt-20 grid max-w-[80rem] gap-10 px-5 sm:px-6 md:mt-28 md:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] md:gap-20">
         <h2 className="display-2 text-ink">
           Romantic, sculptural and <em>artful</em> — designed to complement your venue and
           elevate the atmosphere.
         </h2>
-        <div className="max-w-[440px] self-center">
-          <p className="text-[14px] leading-[1.75] text-ink-soft">
+        <div className="max-w-[27.5rem] self-center">
+          <p className="text-[0.875rem] leading-[1.75] text-ink-soft">
             Willow &amp; Peony specialises in floral styling for weddings, corporate events and
             beautifully hosted celebrations across Auckland and beyond — thoughtfully curated with
             premium blooms, refined palettes and an artful eye for detail.
@@ -129,7 +129,7 @@ export default function HomePage() {
       {/* Three ways we work */}
       <section
         aria-labelledby="services-heading"
-        className="mx-auto mt-24 max-w-[1280px] px-5 sm:px-6 md:mt-[140px]"
+        className="mx-auto mt-24 max-w-[80rem] px-5 sm:px-6 md:mt-[8.75rem]"
       >
         <p className="eyebrow text-muted">What we do</p>
         <h2 id="services-heading" className="display-2 mt-3 text-ink">
@@ -152,14 +152,14 @@ export default function HomePage() {
                 />
               </div>
               <div className="mt-4 flex items-baseline justify-between">
-                <h3 className="h-card text-ink group-hover:underline group-hover:decoration-[1px] group-hover:underline-offset-[5px]">
+                <h3 className="h-card text-ink group-hover:underline group-hover:decoration-[1px] group-hover:underline-offset-[0.3125rem]">
                   {s.label}
                 </h3>
-                <span className="text-[11px] tracking-[0.14em] text-muted" aria-hidden>
+                <span className="text-[0.6875rem] tracking-[0.14em] text-muted" aria-hidden>
                   {s.number}
                 </span>
               </div>
-              <p className="mt-1.5 max-w-[360px] text-[13.5px] leading-relaxed text-ink-soft">
+              <p className="mt-1.5 max-w-[22.5rem] text-[0.84375rem] leading-relaxed text-ink-soft">
                 {s.copy}
               </p>
             </Link>
@@ -168,24 +168,24 @@ export default function HomePage() {
       </section>
 
       {/* Featured wedding — paper band */}
-      <section className="mt-24 bg-paper md:mt-[140px]">
-        <div className="grid md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+      <section className="mt-24 bg-paper md:mt-[8.75rem]">
+        <div className="grid md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] 2xl:mx-auto 2xl:max-w-[80rem] 2xl:items-center 2xl:gap-16 2xl:px-6 2xl:py-24">
           <Pic
             name="an-intimate-all-white-wedding-at-the-hotel-britomart-auckland"
             alt="All-white intimate wedding ceremony at The Hotel Britomart, Auckland"
             sizes="(max-width: 768px) 100vw, 50vw"
-            className="h-full max-h-[720px] w-full object-cover"
+            className="h-full max-h-[45rem] w-full object-cover"
           />
-          <div className="flex flex-col justify-center px-5 py-14 sm:px-10 md:px-16 md:py-20">
+          <div className="flex flex-col justify-center px-5 py-14 sm:px-10 md:px-16 md:py-20 2xl:px-0 2xl:py-0">
             <p className="eyebrow text-muted">Featured wedding</p>
             <h2 className="display-3 mt-4 text-ink">
               An intimate all-white wedding at The Hotel Britomart
             </h2>
-            <p className="mt-5 max-w-[480px] text-[15px] leading-[1.7] font-light text-ink-soft">
+            <p className="mt-5 max-w-[30rem] text-[0.9375rem] leading-[1.7] font-light text-ink-soft">
               Cloud-like arrangements of white roses, hydrangeas and baby&rsquo;s breath for Amanda
               and Bryan&rsquo;s city celebration.
             </p>
-            <div className="mt-9 grid max-w-[414px] grid-cols-3 gap-3">
+            <div className="mt-9 grid max-w-[25.875rem] grid-cols-3 gap-3">
               {[
                 "amandas-white-rose-hydrangea-and-babys-breath-bridal-bouquet",
                 "intimate-hotel-britomart-wedding-aisle-with-ivory-ribbon-bows",
@@ -212,15 +212,15 @@ export default function HomePage() {
       </section>
 
       {/* Meet your florist */}
-      <section className="mx-auto mt-24 grid max-w-[1280px] gap-12 px-5 sm:px-6 md:mt-[140px] md:grid-cols-[minmax(0,1fr)_400px] md:gap-24">
+      <section className="mx-auto mt-24 grid max-w-[80rem] gap-12 px-5 sm:px-6 md:mt-[8.75rem] md:grid-cols-[minmax(0,1fr)_25rem] md:gap-24">
         <div>
           <p className="eyebrow text-muted">Meet your florist</p>
           <h2 className="display-2 mt-3 text-ink">Ivy, founder of Willow &amp; Peony</h2>
-          <p className="mt-7 max-w-[560px] font-serif text-[22px] leading-[1.5] font-light text-ink-soft italic sm:text-[25px]">
+          <p className="mt-7 max-w-[35rem] font-serif text-[1.375rem] leading-[1.5] font-light text-ink-soft italic sm:text-[1.5625rem]">
             &ldquo;I&rsquo;m drawn to romantic flowers, interesting shapes and the occasional
             unexpected ingredient.&rdquo;
           </p>
-          <p className="mt-6 max-w-[540px] text-[15px] leading-[1.7] font-light text-ink-soft">
+          <p className="mt-6 max-w-[33.75rem] text-[0.9375rem] leading-[1.7] font-light text-ink-soft">
             But I also love seeing what each couple brings&mdash;the colours you love, a flower
             that means something to you, or an idea you&rsquo;re not quite sure how to describe.
             We&rsquo;ll work from there, combining your taste with my eye for flowers to create
@@ -236,7 +236,7 @@ export default function HomePage() {
             alt="Ivy Diao, founder and lead florist of Willow & Peony"
             sizes="(max-width: 768px) 100vw, 400px"
             aspect="4/5"
-            className="h-auto w-full max-w-[400px] object-cover"
+            className="h-auto w-full max-w-[25rem] object-cover"
           />
         </div>
       </section>
@@ -244,24 +244,24 @@ export default function HomePage() {
       {/* Reviews slider — paper band */}
       <section
         aria-label="Client reviews"
-        className="mt-24 border-t border-hairline bg-paper px-5 py-16 sm:px-6 md:mt-[140px] md:py-24"
+        className="mt-24 border-t border-hairline bg-paper px-5 py-16 sm:px-6 md:mt-[8.75rem] md:py-24"
       >
         <TestimonialSlider />
       </section>
 
       {/* Latest work */}
-      <div className="mt-24 md:mt-[140px]">
+      <div className="mt-24 md:mt-[8.75rem]">
         <LatestWork posts={latest} eyebrow="Real weddings & events" />
       </div>
 
       {/* Instagram — full-bleed strip */}
-      <div className="mt-24 md:mt-[140px]">
+      <div className="mt-24 md:mt-[8.75rem]">
         <InstagramFeed />
       </div>
 
       {/* CTA band — flush against the Instagram strip (two full-bleeds read as one) */}
       <section className="border-t border-hairline bg-paper">
-        <div className="mx-auto flex max-w-[900px] flex-col items-center px-5 py-16 text-center sm:py-20">
+        <div className="mx-auto flex max-w-[56.25rem] flex-col items-center px-5 py-16 text-center sm:py-20">
           <p className="eyebrow text-muted">Now booking 2027 and 2028 weddings</p>
           <h2 className="display-3 mt-4 text-ink">
             Let&rsquo;s talk about <em>your day</em>

@@ -65,19 +65,19 @@ export default function CalendarPage() {
       />
 
       {/* Hero: copy + form beside the calendar cover */}
-      <section id="get-calendar" className="mx-auto max-w-[1280px] scroll-mt-24 px-5 pt-14 sm:px-6 md:pt-20">
+      <section id="get-calendar" className="mx-auto max-w-[80rem] scroll-mt-24 px-5 pt-14 sm:px-6 md:pt-20">
         <div className="grid items-center gap-12 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:gap-20">
           <div>
             <p className="eyebrow text-muted">Free download · 17 pages</p>
             <h1 className="display-1 mt-4 text-ink">
               The Wedding Flower <em>Calendar</em>
             </h1>
-            <p className="mt-5 max-w-[500px] text-[15px] leading-[1.7] font-light text-ink-soft">
+            <p className="mt-5 max-w-[31.25rem] text-[0.9375rem] leading-[1.7] font-light text-ink-soft">
               Wondering what will be in bloom on your wedding date? Ivy&rsquo;s free calendar is a
               month-by-month guide to New Zealand&rsquo;s seasonal flowers. Enter your name and
               email, and we&rsquo;ll send it straight to your inbox.
             </p>
-            <div className="mt-9 max-w-[520px]">
+            <div className="mt-9 max-w-[32.5rem]">
               <CalendarSignup />
             </div>
           </div>
@@ -87,21 +87,21 @@ export default function CalendarPage() {
               name="wedding-flower-calendar-intro-page"
               alt=""
               sizes="(max-width: 768px) 60vw, 300px"
-              className="absolute top-10 right-6 hidden h-auto w-[46%] rotate-[4deg] shadow-[0_18px_40px_rgba(26,24,21,0.12)] sm:block"
+              className="absolute top-10 right-6 hidden h-auto w-[46%] rotate-[4deg] shadow-[0_1.125rem_2.5rem_rgba(26,24,21,0.12)] sm:block"
             />
             <Pic
               name="wedding-flower-calendar-cover"
               alt="Cover of the Willow & Peony Wedding Flower Calendar"
               sizes="(max-width: 768px) 75vw, 420px"
               priority
-              className="relative mx-auto h-auto w-[78%] max-w-[420px] shadow-[0_24px_60px_rgba(26,24,21,0.16)] sm:mx-0"
+              className="relative mx-auto h-auto w-[78%] max-w-[26.25rem] shadow-[0_1.5rem_3.75rem_rgba(26,24,21,0.16)] sm:mx-0"
             />
           </div>
         </div>
       </section>
 
       {/* Inside the calendar */}
-      <section className="mx-auto mt-24 max-w-[1280px] px-5 sm:px-6 md:mt-[140px]">
+      <section className="mx-auto mt-24 max-w-[80rem] px-5 sm:px-6 md:mt-[8.75rem]">
         <p className="eyebrow text-muted">Inside the calendar</p>
         <h2 className="display-2 mt-3 text-ink">
           A year of flowers, <em>month by month</em>
@@ -114,11 +114,11 @@ export default function CalendarPage() {
                   name={item.image}
                   alt={`${item.title}, a page from the Wedding Flower Calendar`}
                   sizes="(max-width: 640px) 80vw, 30vw"
-                  className="mx-auto h-auto w-full max-w-[300px] shadow-[0_14px_34px_rgba(26,24,21,0.12)]"
+                  className="mx-auto h-auto w-full max-w-[18.75rem] shadow-[0_0.875rem_2.125rem_rgba(26,24,21,0.12)]"
                 />
               </div>
-              <h3 className="mt-5 font-serif text-[21px] font-light text-ink">{item.title}</h3>
-              <p className="mt-2 max-w-[360px] text-[13.5px] leading-relaxed text-ink-soft">
+              <h3 className="mt-5 font-serif text-[1.3125rem] font-light text-ink">{item.title}</h3>
+              <p className="mt-2 max-w-[22.5rem] text-[0.84375rem] leading-relaxed text-ink-soft">
                 {item.body}
               </p>
             </div>
@@ -127,18 +127,18 @@ export default function CalendarPage() {
       </section>
 
       {/* Why it helps */}
-      <section className="mt-24 border-t border-hairline bg-paper md:mt-[140px]">
-        <div className="mx-auto max-w-[1280px] px-5 py-16 sm:px-6 md:py-24">
+      <section className="mt-24 border-t border-hairline bg-paper md:mt-[8.75rem]">
+        <div className="mx-auto max-w-[80rem] px-5 py-16 sm:px-6 md:py-24">
           <div className="grid gap-x-10 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
             {perks.map((p) => (
               <div key={p.title}>
-                <h3 className="font-serif text-[21px] font-light text-ink">{p.title}</h3>
-                <p className="mt-2 text-[13.5px] leading-relaxed text-ink-soft">{p.body}</p>
+                <h3 className="font-serif text-[1.3125rem] font-light text-ink">{p.title}</h3>
+                <p className="mt-2 text-[0.84375rem] leading-relaxed text-ink-soft">{p.body}</p>
               </div>
             ))}
           </div>
           <div className="mt-14 flex flex-col items-start gap-6 border-t border-hairline pt-10 sm:flex-row sm:items-center sm:justify-between">
-            <p className="max-w-[560px] text-[14px] leading-[1.7] text-ink-soft">
+            <p className="max-w-[35rem] text-[0.875rem] leading-[1.7] text-ink-soft">
               Planning a spring wedding? Read Ivy&rsquo;s{" "}
               <Link
                 href="/journal/spring-wedding-flowers-new-zealand/"

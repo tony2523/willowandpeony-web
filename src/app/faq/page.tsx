@@ -23,7 +23,7 @@ export default function FaqPage() {
         ]}
       />
       {/* Centred title + narrow accordion list, as on the original */}
-      <section className="mx-auto max-w-[860px] px-5 pt-16 sm:px-6 md:pt-24">
+      <section className="mx-auto max-w-[53.75rem] px-5 pt-16 sm:px-6 md:pt-24">
         <p className="eyebrow text-muted">Common questions</p>
         <h1 className="display-1 mt-3 text-ink">FAQ</h1>
 
@@ -31,7 +31,7 @@ export default function FaqPage() {
           {faqs.map((f) => (
             <details key={f.q} className="group py-4">
               <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-left [&::-webkit-details-marker]:hidden">
-                <h2 className="font-serif text-[16.8px] font-normal tracking-[-0.02em] text-ink">
+                <h2 className="font-serif text-[1.05rem] font-normal tracking-[-0.02em] text-ink">
                   {f.q}
                 </h2>
                 <span
@@ -41,7 +41,7 @@ export default function FaqPage() {
                   +
                 </span>
               </summary>
-              <p className="mt-3 max-w-[640px] text-[15px] leading-[1.4] text-ink-soft">{f.a}</p>
+              <p className="mt-3 max-w-[40rem] text-[0.9375rem] leading-[1.4] text-ink-soft">{f.a}</p>
             </details>
           ))}
         </div>

@@ -23,7 +23,7 @@ export default function ContactPage() {
         ])}
       />
 
-      <section className="mx-auto max-w-[1280px] px-5 pt-16 sm:px-6 md:pt-24">
+      <section className="mx-auto max-w-[80rem] px-5 pt-16 sm:px-6 md:pt-24">
         <div className="grid gap-14 md:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] md:gap-20">
           {/* Form column */}
           <div>
@@ -31,7 +31,7 @@ export default function ContactPage() {
             <h1 className="display-2 mt-3 text-ink">
               We&rsquo;d love to hear about <em>your day</em>
             </h1>
-            <p className="mt-5 max-w-[520px] text-[15px] leading-[1.7] font-light text-ink-soft">
+            <p className="mt-5 max-w-[32.5rem] text-[0.9375rem] leading-[1.7] font-light text-ink-soft">
               Tell us what you&rsquo;re dreaming of — a wedding, an event, or something else
               entirely. We reply personally within 1–2 business days.
             </p>
@@ -48,13 +48,7 @@ export default function ContactPage() {
               sizes="(max-width: 768px) 100vw, 480px"
               className="h-auto w-full object-cover"
             />
-            <blockquote className="mt-6">
-              <p className="font-serif text-[19px] leading-[1.5] font-light text-ink italic">
-                &ldquo;We reply to every enquiry personally.&rdquo;
-              </p>
-              <footer className="eyebrow mt-3 text-muted">Ivy · Willow &amp; Peony</footer>
-            </blockquote>
-            <div className="mt-8 space-y-1.5 border-t border-hairline pt-6 text-[13.5px] text-ink-soft">
+            <div className="mt-8 space-y-1.5 border-t border-hairline pt-6 text-[0.84375rem] text-ink-soft">
               <p>
                 <a href={`mailto:${site.email}`} className="hover:text-ink hover:underline">
                   {site.email}
@@ -69,7 +63,7 @@ export default function ContactPage() {
                 </a>{" "}
                 <span className="text-muted">({site.phoneHours})</span>
               </p>
-              <p className="pt-2 text-[12.5px] text-muted">
+              <p className="pt-2 text-[0.78125rem] text-muted">
                 <span aria-hidden>★★★★★</span>{" "}
                 <a
                   href={googleRating.url}

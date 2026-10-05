@@ -50,12 +50,12 @@ export default function JournalPage() {
         ]}
       />
 
-      <section className="mx-auto max-w-[1080px] px-5 pt-16 sm:px-6 md:pt-24">
+      <section className="mx-auto max-w-[67.5rem] px-5 pt-16 sm:px-6 md:pt-24">
         <p className="eyebrow text-muted">The journal</p>
         <h1 className="display-1 mt-3 text-ink">
           Notes from the <em>studio</em>
         </h1>
-        <p className="mt-5 max-w-[560px] text-[15px] leading-[1.7] font-light text-ink-soft">
+        <p className="mt-5 max-w-[35rem] text-[0.9375rem] leading-[1.7] font-light text-ink-soft">
           Seasonal guides, honest planning advice and the thinking behind the designs — written
           by {site.founder}. Looking for real weddings and events? They live in{" "}
           <Link href="/work/" className="underline underline-offset-2">
@@ -67,7 +67,7 @@ export default function JournalPage() {
 
       {/* Featured latest article */}
       {featured && (
-        <section className="mx-auto mt-14 max-w-[1080px] px-5 sm:px-6 md:mt-20">
+        <section className="mx-auto mt-14 max-w-[67.5rem] px-5 sm:px-6 md:mt-20">
           <Link href={`/journal/${featured.slug}/`} className="group grid gap-8 md:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] md:items-center md:gap-12">
             <div className="overflow-hidden bg-paper">
               <Pic
@@ -83,13 +83,13 @@ export default function JournalPage() {
               <p className="eyebrow text-muted">
                 Latest · {featured.tag}
               </p>
-              <h2 className="mt-4 font-serif text-[26px] leading-[1.22] font-light text-ink group-hover:underline group-hover:decoration-[1px] group-hover:underline-offset-[5px] md:text-[32px]">
+              <h2 className="mt-4 font-serif text-[1.625rem] leading-[1.22] font-light text-ink group-hover:underline group-hover:decoration-[1px] group-hover:underline-offset-[0.3125rem] md:text-[2rem]">
                 {featured.title}
               </h2>
-              <p className="mt-4 max-w-[440px] text-[14px] leading-[1.7] text-ink-soft">
+              <p className="mt-4 max-w-[27.5rem] text-[0.875rem] leading-[1.7] text-ink-soft">
                 {featured.description}
               </p>
-              <p className="mt-5 text-[12px] text-muted">
+              <p className="mt-5 text-[0.75rem] text-muted">
                 {nice(featured.date)} · {featured.readMinutes} min read
               </p>
             </div>
@@ -98,13 +98,13 @@ export default function JournalPage() {
       )}
 
       {/* Article rows */}
-      <section className="mx-auto mt-16 max-w-[1080px] px-5 sm:px-6 md:mt-24">
+      <section className="mx-auto mt-16 max-w-[67.5rem] px-5 sm:px-6 md:mt-24">
         <div className="divide-y divide-hairline border-t border-hairline">
           {rest.map((a) => (
             <Link
               key={a.slug}
               href={`/journal/${a.slug}/`}
-              className="group grid gap-6 py-10 sm:grid-cols-[240px_minmax(0,1fr)] sm:items-center"
+              className="group grid gap-6 py-10 sm:grid-cols-[15rem_minmax(0,1fr)] sm:items-center"
             >
               <div className="overflow-hidden bg-paper">
                 <Pic
@@ -116,14 +116,14 @@ export default function JournalPage() {
                 />
               </div>
               <div>
-                <p className="text-[10.5px] tracking-[0.16em] text-muted uppercase">{a.tag}</p>
-                <h2 className="mt-2 font-serif text-[22px] leading-[1.28] font-light text-ink group-hover:underline group-hover:decoration-[1px] group-hover:underline-offset-[5px]">
+                <p className="text-[0.65625rem] tracking-[0.16em] text-muted uppercase">{a.tag}</p>
+                <h2 className="mt-2 font-serif text-[1.375rem] leading-[1.28] font-light text-ink group-hover:underline group-hover:decoration-[1px] group-hover:underline-offset-[0.3125rem]">
                   {a.title}
                 </h2>
-                <p className="mt-2.5 max-w-[560px] text-[13.5px] leading-[1.65] text-ink-soft">
+                <p className="mt-2.5 max-w-[35rem] text-[0.84375rem] leading-[1.65] text-ink-soft">
                   {a.description}
                 </p>
-                <p className="mt-3 text-[12px] text-muted">
+                <p className="mt-3 text-[0.75rem] text-muted">
                   {nice(a.date)} · {a.readMinutes} min read
                 </p>
               </div>

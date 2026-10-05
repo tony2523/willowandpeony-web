@@ -35,23 +35,24 @@ export default function GalleryPage() {
         ]}
       />
 
-      <section className="mx-auto mt-16 max-w-[1280px] px-5 sm:px-6 md:mt-24">
+      <section className="mx-auto mt-16 max-w-[80rem] px-5 sm:px-6 md:mt-24">
         <p className="eyebrow text-muted">Gallery</p>
         <h1 className="display-1 mt-3 text-ink">
           A portfolio of <em>love and light</em>
         </h1>
-        <p className="mt-5 max-w-[560px] text-[15px] leading-[1.7] font-light text-ink-soft">
+        <p className="mt-5 max-w-[35rem] text-[0.9375rem] leading-[1.7] font-light text-ink-soft">
           Every image below is our own work, photographed at real weddings and events across
           Auckland. Tap any image to view it full screen.
         </p>
       </section>
 
-      <section className="mx-auto mt-12 max-w-[1280px] px-5 sm:px-6 md:mt-16">
+      {/* Wider than the site column: the portfolio runs almost edge to edge. */}
+      <section className="mx-auto mt-12 max-w-[120rem] px-2 sm:px-4 md:mt-16 lg:px-6">
         <GalleryLightbox items={items} />
       </section>
 
-      <section className="mt-24 border-t border-hairline bg-paper md:mt-[140px]">
-        <div className="mx-auto flex max-w-[900px] flex-col items-center px-5 py-16 text-center sm:py-20">
+      <section className="mt-24 border-t border-hairline bg-paper md:mt-[8.75rem]">
+        <div className="mx-auto flex max-w-[56.25rem] flex-col items-center px-5 py-16 text-center sm:py-20">
           <p className="eyebrow text-muted">Love what you see?</p>
           <h2 className="display-3 mt-4 text-ink">
             Let&rsquo;s create this for <em>your day</em>
