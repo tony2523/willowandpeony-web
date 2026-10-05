@@ -98,8 +98,9 @@ exclude GST, and display as "from" prices everywhere.
   clearing the box) returns the piece to Not required. Cards are two
   columns from sm up so the tier notes fit. No separate tier explainer and
   no tier comparison at Review (Tony, 5 Oct 2026: each piece carries its
-  own tier). Finished steps collapse to "N pieces · from $X"
-  or "Skipped". Collapsed steps stay in the DOM (hidden) so every price is
+  own tier). Each step ends with one "Next" button (no skip link: Next
+  already moves on). Finished steps collapse to "N pieces · from $X", or
+  "Skipped" when nothing was chosen. Collapsed steps stay in the DOM (hidden) so every price is
   crawlable. Desktop keeps a sticky running estimate; phones a bottom bar.
 - Logic lives in `src/lib/estimate.ts` (pure, relative imports only:
   wrangler bundles it into the Worker). Regression check: Ivy's typical

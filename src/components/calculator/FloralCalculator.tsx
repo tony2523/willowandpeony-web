@@ -608,16 +608,8 @@ export default function FloralCalculator() {
                       <button type="button" onClick={() => goTo(next.id)} className="btn-solid">
                         Next: {next.title}
                       </button>
-                      {sum && sum !== "Skipped" && sum !== "None selected" ? (
+                      {sum && sum !== "Skipped" && sum !== "None selected" && (
                         <span className="text-[13px] text-muted tabular-nums sm:ml-auto">{sum}</span>
-                      ) : (
-                        <button
-                          type="button"
-                          onClick={() => goTo(next.id)}
-                          className="text-[13px] text-ink-soft underline underline-offset-2 hover:text-ink"
-                        >
-                          Skip this step
-                        </button>
                       )}
                     </div>
                   )}
