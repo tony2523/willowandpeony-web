@@ -55,9 +55,10 @@ a new descriptive name.
 
 ## Where content lives (edit these, not the page components, for routine updates)
 
-- `content/site.ts` — business facts: contact details, nav, wedding packages
-  (names/prices/inclusions), FAQs, delivery info. FAQs here are also emitted
-  as FAQPage structured data and into llms.txt automatically.
+- `content/site.ts` — business facts: contact details, nav, the consultation
+  booking link (`site.consultationUrl`, Ivy's Calendly), FAQs. FAQs are also
+  emitted as FAQPage structured data and into llms.txt; the cost and delivery
+  answers read their numbers from content/calculator.ts.
 - `content/journal/*.md` — one file per journal post (real weddings/events).
   Frontmatter: `title`, `description` (meta description, ≤155 chars), `date`
   (YYYY-MM-DD), `category` (`weddings` | `events`), `venue`, `cover` (image
@@ -95,8 +96,11 @@ exclude GST, and display as "from" prices everywhere.
   hello@ with ivy@ BCC'd; `enquire` sends Ivy the estimate plus the couple's
   details, reply-to the couple. Totals are recomputed server-side from the
   share code, so the form can't relay arbitrary content.
-- Open questions with Ivy (from her handoff): vase/plinth hire line,
-  minimum spend, confirming the three style descriptions.
+- Ivy's answers (5 Oct 2026): vase and plinth hire is included; full-service
+  wedding design "starts from $2,500" (`FULL_SERVICE_FROM`, stated in the
+  fine print, emails, FAQ and Weddings page, never enforced); tier notes are
+  "Petite · Balanced · Seasonal" / "Fuller · Layered · Premium" /
+  "Abundant · Luxurious · Statement". She calls the levels "floral tiers".
 
 ## Adding a new journal post (the most common task)
 
@@ -156,8 +160,12 @@ is retired. The system:
 - Nav: Weddings · Events · Our Story · Gallery + Enquire button from 1024px
   (`lg`); below that the burger drawer (four links wrap at tablet widths).
   Drawer carries the extended set (`drawerNav`), is `inert` and shadowless
-  when closed (it's portalled to <body>). "Wedding packages" everywhere —
-  never "wedding investment".
+  when closed (it's portalled to <body>).
+- No wedding packages (Ivy discontinued them, 5 Oct 2026): no packages page,
+  copy or structured data. /wedding-flower-packages/ and the old Shopify
+  /pages/wedding-packages 301 to the calculator. Pricing language is the
+  calculator's "from" prices plus "full-service wedding design starts from
+  $2,500". Required form fields carry an asterisk with a "* Required" note.
 - Reusable modules: `LatestWork` (3 cards → /work/ pre-filtered),
   `TestimonialSlider` (real Google reviews from content/reviews.ts, 5.0/14),
   `ProcessSteps`, `CtaBand`, `WorkGrid` (filters + load more),
@@ -169,7 +177,7 @@ is retired. The system:
   own work at each venue). Journal posts render as story pages (details
   rail, credits band, keep-reading, category-flavoured CTA).
 - Header clearance: on pages with the solid white header (everything except
-  the photo-hero pages: home, weddings, events, packages, venue guides),
+  the photo-hero pages: home, weddings, events, venue guides),
   content must start at least 56px below the header line; desktop split
   heroes use `md:pt-20`. Never place a photo flush against the header line
   (Tony, 2026-10-01).

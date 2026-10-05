@@ -14,9 +14,9 @@
  */
 
 export const TIERS = [
-  { name: "Essential", note: "Delicate and airy" },
-  { name: "Signature", note: "Fuller and layered" },
-  { name: "Luxe", note: "Abundant statement pieces" },
+  { name: "Essential", note: "Petite · Balanced · Seasonal" },
+  { name: "Signature", note: "Fuller · Layered · Premium" },
+  { name: "Luxe", note: "Abundant · Luxurious · Statement" },
 ] as const;
 
 /** [Essential, Signature, Luxe]; null = not offered in that style. */
@@ -116,6 +116,9 @@ export const SERVICES: CalcService[] = [
 ];
 
 export const GST = 0.15;
+
+/** Full-service wedding design starts from this (NZD excl. GST). Stated, not enforced (Ivy, 5 Oct 2026). */
+export const FULL_SERVICE_FROM = 2500;
 
 /**
  * Photos per item (manifest names, without the `calculator-` prefix).

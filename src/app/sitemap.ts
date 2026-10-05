@@ -11,7 +11,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const staticPages: { path: string; priority: number; changeFrequency: "weekly" | "monthly" | "yearly" }[] = [
     { path: "/", priority: 1.0, changeFrequency: "weekly" },
     { path: "/wedding-flowers-auckland/", priority: 0.9, changeFrequency: "monthly" },
-    { path: "/wedding-flower-packages/", priority: 0.9, changeFrequency: "monthly" },
     { path: "/wedding-flower-calculator/", priority: 0.9, changeFrequency: "monthly" },
     { path: "/event-flowers-auckland/", priority: 0.9, changeFrequency: "monthly" },
     { path: "/gallery/", priority: 0.8, changeFrequency: "weekly" },

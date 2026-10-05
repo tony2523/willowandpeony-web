@@ -18,7 +18,6 @@ const OVERLAY_PATHS = new Set([
   "/",
   "/wedding-flowers-auckland",
   "/event-flowers-auckland",
-  "/wedding-flower-packages",
 ]);
 
 function isOverlay(pathname: string): boolean {

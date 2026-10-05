@@ -33,11 +33,11 @@ const REQUIREMENTS = [
 ] as const;
 
 const BUDGETS = [
-  "Under $1,000",
-  "$1,000 – $2,500",
-  "$2,500 – $5,000",
-  "$5,000 – $10,000",
-  "$10,000+",
+  "Personal flowers only",
+  "$2,500 – $4,000",
+  "$4,000 – $6,000",
+  "$6,000 – $8,000",
+  "$8,000+",
   "Not sure yet",
 ] as const;
 
@@ -64,15 +64,19 @@ function Field({
   label,
   children,
   className = "",
+  required = false,
 }: {
   label: string;
   children: React.ReactNode;
   className?: string;
+  /** Shows an asterisk; the input itself carries `required`. */
+  required?: boolean;
 }) {
   return (
     <label className={`block ${className}`}>
       <span className="mb-1.5 block text-[12px] tracking-[0.06em] text-muted uppercase">
         {label}
+        {required && <span aria-hidden className="text-ink"> *</span>}
       </span>
       {children}
     </label>
@@ -148,6 +152,11 @@ export default function EnquiryForm({ kind = "general", selector = false, compac
         <p className="mt-2 text-[14px] text-ink-soft">
           We&rsquo;ll be in touch within 1–2 business days.
         </p>
+        {mode === "wedding" && (
+          <a href={site.consultationUrl} target="_blank" rel="noopener" className="btn-outline mt-6">
+            Book your free 30-minute consultation
+          </a>
+        )}
       </div>
     );
   }
@@ -196,27 +205,27 @@ export default function EnquiryForm({ kind = "general", selector = false, compac
       {compact || mode === "general" ? (
         <div className="grid gap-4">
           <div className="grid gap-4 sm:grid-cols-2">
-            <Field label="Your name">
+            <Field label="Your name" required>
               <input name="name" required autoComplete="name" className="input-wp" />
             </Field>
-            <Field label="Email">
+            <Field label="Email" required>
               <input type="email" name="email" required autoComplete="email" className="input-wp" />
             </Field>
           </div>
-          <Field label="Phone (optional)">
+          <Field label="Phone">
             <input type="tel" name="phone" autoComplete="tel" className="input-wp" />
           </Field>
-          <Field label="Your message">
+          <Field label="Your message" required>
             <textarea name="message" required rows={5} className="input-wp" />
           </Field>
         </div>
       ) : mode === "wedding" ? (
         <div className="grid gap-4">
           <div className="grid gap-4 sm:grid-cols-2">
-            <Field label="Your name">
+            <Field label="Your name" required>
               <input name="name" required autoComplete="name" className="input-wp" />
             </Field>
-            <Field label="Email">
+            <Field label="Email" required>
               <input type="email" name="email" required autoComplete="email" className="input-wp" />
             </Field>
             <Field label="Phone">
@@ -260,13 +269,12 @@ export default function EnquiryForm({ kind = "general", selector = false, compac
           <Field label="Additional comments" className="mt-3">
             <textarea
               name="message"
-              required
               rows={4}
               placeholder="Your style, palette, must-have flowers…"
               className="input-wp"
             />
           </Field>
-          <Field label="Pinterest board or inspiration link (optional)">
+          <Field label="Pinterest board or inspiration link">
             <input name="inspo" type="url" inputMode="url" placeholder="https://" className="input-wp" />
           </Field>
           <Field label="How did you hear about us?">
@@ -286,13 +294,13 @@ export default function EnquiryForm({ kind = "general", selector = false, compac
             Event floral styling is currently available across Auckland only.
           </p>
           <div className="grid gap-4 sm:grid-cols-2">
-            <Field label="Key contact name">
+            <Field label="Key contact name" required>
               <input name="name" required autoComplete="name" className="input-wp" />
             </Field>
             <Field label="Company (if applicable)">
               <input name="company" autoComplete="organization" className="input-wp" />
             </Field>
-            <Field label="Email">
+            <Field label="Email" required>
               <input type="email" name="email" required autoComplete="email" className="input-wp" />
             </Field>
             <Field label="Phone">
@@ -312,7 +320,7 @@ export default function EnquiryForm({ kind = "general", selector = false, compac
               </select>
             </Field>
           </div>
-          <Field label="Your message">
+          <Field label="Your message" required>
             <textarea
               name="message"
               required
@@ -321,7 +329,7 @@ export default function EnquiryForm({ kind = "general", selector = false, compac
               className="input-wp"
             />
           </Field>
-          <Field label="Pinterest board or inspiration link (optional)">
+          <Field label="Pinterest board or inspiration link">
             <input name="inspo" type="url" inputMode="url" placeholder="https://" className="input-wp" />
           </Field>
           <div className="grid gap-4 sm:grid-cols-2">
@@ -346,7 +354,7 @@ export default function EnquiryForm({ kind = "general", selector = false, compac
         <button type="submit" disabled={status === "sending"} className="btn-solid disabled:opacity-60">
           {status === "sending" ? "Sending…" : "Send enquiry"}
         </button>
-        <p className="mt-3.5 text-[12px] text-muted">We reply within 1–2 business days.</p>
+        <p className="mt-3.5 text-[12px] text-muted">* Required. We reply within 1–2 business days.</p>
       </div>
     </form>
   );

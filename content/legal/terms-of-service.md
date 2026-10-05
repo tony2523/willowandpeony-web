@@ -1,4 +1,4 @@
-Last updated: 1 October 2026
+Last updated: 5 October 2026
 
 These terms apply when you use our website or book wedding or event flowers with Willow & Peony, a boutique florist on Auckland's North Shore run by Ivy Diao. Your written proposal or invoice forms part of your agreement with us. If anything in your proposal differs from these terms, your proposal applies.
 
@@ -6,7 +6,7 @@ Nothing in these terms limits your rights under the Consumer Guarantees Act 1993
 
 ## Enquiries and proposals
 
-Sending us an enquiry doesn't create a booking. After we've talked about your day, we'll send a proposal setting out your flowers, styling, delivery and setup, and the price. Prices on our website, including our wedding packages, are starting points. Your proposal confirms the final price for your date, venue and design.
+Sending us an enquiry doesn't create a booking. After we've talked about your day, we'll send a proposal setting out your flowers, styling, delivery and setup, and the price. Prices on our website, including our flower calculator, are starting points. Your proposal confirms the final price for your date, venue and design.
 
 Proposals are valid for the period stated on them. Until you book, your date isn't reserved.
 
@@ -32,13 +32,13 @@ Your deposit secures your date and our time, and flowers and materials ordered f
 
 ## Delivery, setup and pack-down
 
-Our Classic and Luxe packages include delivery, setup and next-day pack-out within Auckland. For other bookings, delivery, setup and pack-down are included in your proposal. Weddings and events outside Auckland are quoted individually and may include travel costs.
+Delivery, setup and next-day pack-down are set out in your proposal. Weddings and events outside Auckland are quoted individually and may include travel costs.
 
 Please make sure we have access to your venue at the times agreed in your proposal, and let us know about any venue rules or restrictions in advance. If access is delayed or restricted for reasons outside our control, we'll do our best to complete your setup, but we can't be responsible for the effect on timing.
 
 ## Hire items
 
-Vases, plinths, stands and other items we supply for your day remain our property and are included in your package or proposal. Please take care of them and let us know about any damage. Items that are lost or damaged beyond normal wear may be charged at replacement cost.
+Vases, plinths, stands and other items we supply for your day remain our property and are included in your proposal. Please take care of them and let us know about any damage. Items that are lost or damaged beyond normal wear may be charged at replacement cost.
 
 ## Flower care and safety
 

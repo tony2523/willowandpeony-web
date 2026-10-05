@@ -8,8 +8,8 @@ cover: "a-soft-and-sculptural-wedding-at-bridgewater-estate-auckland-cover"
 seoTitle: "Soft, Sculptural Wedding at Bridgewater Estate"
 palette: "Blush · ivory · white"
 blooms: "Roses, anthuriums, phalaenopsis orchids, lisianthus"
-photographer: "The Timekeepers Studio"
-photographerUrl: "https://www.instagram.com/timekeepersnz/"
+photographer: "Timekeepers"
+photographerUrl: "https://timekeepers.co.nz/"
 ---
 
 Yue and Vern’s wedding at Bridgewater Estate Auckland was soft, modern and quietly elegant. Their floral design featured blush and ivory roses, sculptural anthuriums, delicate Phalaenopsis orchids, clustered bud vases and romantic candlelit reception styling.

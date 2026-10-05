@@ -9,8 +9,8 @@ import ProcessSteps from "@/components/ProcessSteps";
 import TestimonialSlider from "@/components/TestimonialSlider";
 import { pageMetadata, serviceJsonLd, breadcrumbJsonLd } from "@/lib/seo";
 import { getPostsByCategory } from "@/lib/journal";
-import { weddingPackages } from "../../../content/site";
 import { TIERS, bridalFrom, money } from "@/lib/estimate";
+import { FULL_SERVICE_FROM } from "../../../content/calculator";
 
 const calculatorStyles = TIERS.map((t, i) => ({
   name: t.name,
@@ -46,14 +46,16 @@ export default function WeddingsPage() {
           serviceJsonLd({
             name: "Wedding Floral Design",
             description:
-              "Bespoke wedding flowers and floral styling across Auckland: bridal bouquets, ceremony flowers, reception styling and curated wedding packages.",
+              "Bespoke wedding flowers and floral styling across Auckland: bridal bouquets, ceremony flowers and reception styling, with full-service wedding design from $2,500.",
             path: "/wedding-flowers-auckland/",
             serviceType: "Wedding florist",
-            offers: weddingPackages.map((p) => ({
-              name: `${p.name} Package`,
-              price: p.priceNumber,
-              description: p.ideal,
-            })),
+            offers: [
+              {
+                name: "Full-service wedding floral design",
+                price: FULL_SERVICE_FROM,
+                description: "Starting price in NZD, excluding GST. Vase and plinth hire included.",
+              },
+            ],
           }),
           breadcrumbJsonLd([
             { name: "Home", path: "/" },
@@ -122,25 +124,26 @@ export default function WeddingsPage() {
               See what your flowers <em>could cost</em>
             </h2>
             <p className="mt-5 max-w-[480px] text-[15px] leading-[1.7] font-light text-ink-soft">
-              Choose a style, add the pieces you&rsquo;d love and see an itemised estimate as you
-              go, from your bouquet to ceremony and reception flowers. When it feels right, send
-              it to Ivy and she&rsquo;ll shape it into a personal proposal.
+              Choose a floral tier, add the pieces you&rsquo;d love and see an itemised estimate as
+              you go, from your bouquet to ceremony and reception flowers. When it feels right,
+              send it to Ivy and she&rsquo;ll shape it into a personal proposal.
             </p>
-            <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-4">
+            <div className="mt-8">
               <Link href="/wedding-flower-calculator/" className="btn-solid">
                 Estimate your flowers
               </Link>
-              <Link href="/wedding-flower-packages/" className="t-link text-ink">
-                Prefer a set package?
-              </Link>
             </div>
+            <p className="mt-5 text-[13px] text-muted">
+              Full-service wedding design starts from {money(FULL_SERVICE_FROM)}. Vase and plinth
+              hire is included.
+            </p>
           </div>
           <div className="order-1 grid grid-cols-3 gap-2 px-5 pt-10 sm:gap-3 sm:px-10 md:order-2 md:px-16 md:py-20">
             {calculatorStyles.map((t) => (
               <figure key={t.name}>
                 <Pic
                   name={t.photo}
-                  alt={`${t.name} style bridal bouquet by Willow & Peony`}
+                  alt={`${t.name} tier bridal bouquet by Willow & Peony`}
                   sizes="(max-width: 768px) 33vw, 220px"
                   aspect="4/5"
                   className="h-auto w-full object-cover"
@@ -216,13 +219,10 @@ export default function WeddingsPage() {
               Start with our{" "}
               <Link href="/wedding-flower-calculator/" className="underline underline-offset-2">
                 flower calculator
-              </Link>
-              , choose one of our{" "}
-              <Link href="/wedding-flower-packages/" className="underline underline-offset-2">
-                wedding flower packages
               </Link>{" "}
-              or go fully bespoke: each commission includes Ivy&rsquo;s design time and premium
-              seasonal sourcing. Browse our{" "}
+              for an itemised estimate, or simply tell us about your day. Full-service wedding
+              design starts from {money(FULL_SERVICE_FROM)} and includes Ivy&rsquo;s design time,
+              premium seasonal sourcing and every vase and plinth. Browse our{" "}
               <Link href="/venues/" className="underline underline-offset-2">
                 venue guides
               </Link>{" "}

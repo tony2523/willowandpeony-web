@@ -16,7 +16,7 @@ I would rather answer it properly than politely, so here it is: the honest versi
 
 When you buy wedding flowers, the stems themselves are only part of the story. You are also paying for design time, which starts weeks before your wedding with palettes, proposals and sourcing. You are paying for the flowers to be conditioned, stripped, hydrated and arranged over two or three days in the studio. And you are paying for the day itself: delivery, setup at the venue, and the quiet pack-down the morning after while you are still celebrating.
 
-At Willow and Peony, our Classic and Luxe [packages](/wedding-flower-packages/) include all of that, along with every vase and plinth, because a surprise hire bill three weeks before a wedding helps nobody.
+At Willow and Peony, every vase and plinth is included, because a surprise hire bill three weeks before a wedding helps nobody, and delivery, setup and pack-down are itemised in your proposal from the start.
 
 ## What moves the price up or down
 
@@ -40,6 +40,6 @@ Save by letting your ceremony flowers work twice. Nearly every wedding we style 
 
 ## How to brief your florist on budget
 
-Tell us the number. Truly. A clear budget is not a ceiling we will race to; it is the frame that lets us design honestly for you. Our packages start at $500 for elopements and reach $5,000 for full ceremony and reception styling, and most couples use one as the base of something personal.
+Tell us the number. Truly. A clear budget is not a ceiling we will race to; it is the frame that lets us design honestly for you. Full-service wedding design starts from $2,500, and our [flower calculator](/wedding-flower-calculator/) gives you an itemised starting point before we even talk.
 
 If you are not sure where your number should sit, look at our [recent weddings](/work/), find the one that feels like yours, and [ask me about it](/contact/). I will always tell you plainly what things cost, and where I would put the money if it were my day.

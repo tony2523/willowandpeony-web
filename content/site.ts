@@ -1,8 +1,21 @@
 import redirectsJson from "./redirects.json";
+import { FULL_SERVICE_FROM, SECTIONS as CALC_SECTIONS, SERVICES as CALC_SERVICES } from "./calculator";
+
+const nzd = (n: number) => "$" + n.toLocaleString("en-NZ");
+/** Lowest "from" price of a calculator piece, e.g. calcFrom("bridal") → "$250". */
+const calcFrom = (id: string) => {
+  const it = CALC_SECTIONS.flatMap((x) => x.items).find((i) => i.id === id);
+  const p = it?.tiers ? Math.min(...it.tiers.filter((x): x is number => x != null)) : (it?.price ?? it?.from ?? 0);
+  return nzd(p);
+};
+const svcFrom = (id: string) => {
+  const sv = CALC_SERVICES.find((x) => x.id === id);
+  return nzd(sv?.price ?? sv?.from ?? 0);
+};
 
 /**
  * Willow & Peony — single source of truth for business facts.
- * Edit this file to update contact details, packages and FAQs.
+ * Edit this file to update contact details and FAQs (calculator prices live in calculator.ts).
  * Every page reads from here, so changes propagate site-wide.
  */
 
@@ -10,6 +23,8 @@ export const site = {
   name: "Willow & Peony",
   legalName: "Willow and Peony",
   domain: "https://willowandpeony.co.nz",
+  /** Ivy's Calendly for the complimentary 30-minute consultation. */
+  consultationUrl: "https://calendly.com/ivy-willowandpeony/initial-wedding-consultation",
   tagline: "Artful florals for beautifully considered events",
   description:
     "Willow & Peony is a boutique florist on Auckland's North Shore, creating romantic, artful floral styling for weddings, corporate events and celebrations across Auckland.",
@@ -36,6 +51,7 @@ export const processSteps: { title: string; body: string; link?: { label: string
   {
     title: "Consultation",
     body: "Every enquiring couple is offered a complimentary 30-minute video chat about their vision, palette and priorities, with no obligation attached. Your planner or stylist is welcome too.",
+    link: { label: "Book your consultation", href: "https://calendly.com/ivy-willowandpeony/initial-wedding-consultation" },
   },
   {
     title: "Design proposal",
@@ -57,7 +73,6 @@ export const nav = [
 /** Extended set for the mobile drawer. */
 export const drawerNav = [
   { label: "Weddings", href: "/wedding-flowers-auckland/" },
-  { label: "Wedding Packages", href: "/wedding-flower-packages/" },
   { label: "Flower Calculator", href: "/wedding-flower-calculator/" },
   { label: "Events", href: "/event-flowers-auckland/" },
   { label: "Gallery", href: "/gallery/" },
@@ -68,83 +83,13 @@ export const drawerNav = [
   { label: "FAQ", href: "/faq/" },
 ] as const;
 
-export type WeddingPackage = {
-  name: string;
-  price: string;
-  priceNumber: number;
-  ideal: string;
-  includes: string[];
-  note?: string;
-  options?: { label: string; items: string[] }[];
-  image: string;
-};
-
-export const weddingPackages: WeddingPackage[] = [
-  {
-    name: "Petite",
-    price: "$500",
-    priceNumber: 500,
-    ideal: "Perfect for registry-style weddings, elopements and micro-ceremonies.",
-    includes: [
-      "1 × Bridal bouquet",
-      "1 × Groom's buttonhole",
-      "Choice of 1 × bridesmaid bouquet or 1 × signing table arrangement",
-      "Pickup or local delivery (fees apply)",
-    ],
-    note: "Additional bouquets and buttonholes can be added for an extra fee.",
-    image: "wedding-flowers-auckland-scarlet-style-shoot3",
-  },
-  {
-    name: "Classic",
-    price: "$2,500",
-    priceNumber: 2500,
-    ideal: "A refined package for smaller weddings with personalised design and setup.",
-    includes: [
-      "1 × Bridal bouquet",
-      "2 × Bridesmaids bouquets",
-      "4 × Buttonholes",
-      "1 × Ceremony or reception styling option (choose below)",
-      "Consultation + full design proposal",
-      "Delivery, setup & next-day pack-out (within Auckland)",
-      "All hire included (vases & plinths)",
-    ],
-    options: [
-      { label: "Ceremony + reception", items: ["2 × Medium plinth arrangements", "15 × Bud vases"] },
-      { label: "Ceremony only", items: ["2 × Large plinth arrangements"] },
-      { label: "Reception only", items: ["6 × Table arrangements", "1 × Bar arrangement"] },
-    ],
-    image: "wedding-flower-package-auckland-scarlet-style-shoot22",
-  },
-  {
-    name: "Luxe",
-    price: "$5,000",
-    priceNumber: 5000,
-    ideal: "An elevated floral experience with high-impact styling and premium floral design.",
-    includes: [
-      "1 × Bridal bouquet",
-      "3 × Bridesmaids bouquets",
-      "5 × Buttonholes",
-      "Choice of 1 × large grounded floral meadow or 4 × large plinth arrangements",
-      "1 × Welcome sign florals",
-      "10 × Table centrepieces for reception",
-      "1 × Bar arrangement",
-      "1 × Cake floral",
-      "Rose petals for aisle",
-      "Consultation + full design proposal",
-      "Delivery, setup & next-day pack-out (within Auckland)",
-      "All hire included (vases & plinths)",
-    ],
-    image: "wedding-flowers-auckland-scarlet-style-shoot20",
-  },
-];
-
 export type Faq = { q: string; a: string };
 
 /** FAQs — rendered on /faq/ and emitted as FAQPage structured data. */
 export const faqs: Faq[] = [
   {
     q: "Do you offer wedding florals in Auckland?",
-    a: "Yes — weddings are the heart of what we do. Willow & Peony specialises in bespoke wedding floral design across Auckland, from intimate elopements to full ceremony and reception styling. We offer three curated wedding packages (Petite $500, Classic $2,500 and Luxe $5,000) as well as fully bespoke design.",
+    a: `Yes — weddings are the heart of what we do. Willow & Peony specialises in bespoke wedding floral design across Auckland, from intimate elopements to full ceremony and reception styling. Full-service wedding design starts from ${nzd(FULL_SERVICE_FROM)}, and our flower calculator gives you an itemised estimate in minutes.`,
   },
   {
     q: "Do you do corporate and private event flowers?",
@@ -152,7 +97,7 @@ export const faqs: Faq[] = [
   },
   {
     q: "How much do wedding flowers cost in Auckland?",
-    a: "Our curated packages give you a clear starting point: Petite from $500 for elopements and micro-ceremonies, Classic at $2,500 for smaller weddings with full design and setup, and Luxe at $5,000 for high-impact styling across ceremony and reception. Fully bespoke designs are quoted to your vision and venue — tell us your budget and we'll design to it honestly.",
+    a: `Full-service wedding floral design starts from ${nzd(FULL_SERVICE_FROM)}. Bridal bouquets start from ${calcFrom("bridal")}, bridesmaids' bouquets from ${calcFrom("bridesmaid")} and table centrepieces from ${calcFrom("centre")} (excluding GST), and our flower calculator adds it all up as you go. Every wedding is confirmed in a proposal after your consultation, so tell us your budget and we'll design to it honestly.`,
   },
   {
     q: "How far in advance should I book my wedding flowers?",
@@ -160,7 +105,7 @@ export const faqs: Faq[] = [
   },
   {
     q: "Is delivery, setup and pack-down included?",
-    a: "Yes — our Classic and Luxe packages include delivery, on-the-day setup and next-day pack-out anywhere in Auckland, plus all vase and plinth hire. Petite packages are pickup or local delivery. For bespoke weddings and events, install and pack-down are always quoted as part of the proposal, so there are no surprises.",
+    a: `Wedding-day delivery and setup start from ${svcFrom("delivery")} and next-day pack-down from ${svcFrom("packdown")} within Auckland, and every vase and plinth is included. Waiheke Island weddings add a return ferry from ${svcFrom("ferry")}, and venues beyond Auckland are quoted individually. Everything is itemised in your proposal, so there are no surprises.`,
   },
   {
     q: "Do you do custom flower orders?",

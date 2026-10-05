@@ -38,7 +38,7 @@ function Slides({ name, list, tier }: { name: string; list: string[]; tier: numb
         src={imageSrc(file, 480)}
         srcSet={imageSrcSet(file)}
         sizes={CARD_SIZES}
-        alt={`${name}${label ? `, ${label} style` : ""}, example ${i + 1} of ${n}`}
+        alt={`${name}${label ? `, ${label} tier` : ""}, example ${i + 1} of ${n}`}
         loading="lazy"
         decoding="async"
         className="h-full w-full object-cover"
@@ -160,7 +160,7 @@ export default function ItemCard({
         </div>
 
         {it.tiers ? (
-          <div role="group" aria-label={`Style for ${it.name}`} className="grid grid-cols-3 gap-1">
+          <div role="group" aria-label={`Tier for ${it.name}`} className="grid grid-cols-3 gap-1">
             {it.tiers.map((p, t) => {
               const on = current === t;
               return (

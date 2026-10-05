@@ -8,6 +8,8 @@ cover: "sculptural-event-flowers-for-unified-commerce-assembly-2026-cover"
 seoTitle: "Event Flowers for Unified Commerce Assembly 2026"
 palette: "Burgundy · red · white · green"
 blooms: "Anthuriums, orchids, spider gerberas, with limes and radishes"
+photographer: "Annupam"
+photographerUrl: "https://www.annupam.com/"
 ---
 
 A look inside the sculptural floral styling we created for Moustache Republic’s Unified Commerce Assembly 2026, featuring an unexpected combination of anthuriums, orchids, spider gerberas, limes and cascading red radishes.

@@ -33,6 +33,8 @@ import {
   money,
   quotedExtras,
 } from "../src/lib/estimate";
+import { FULL_SERVICE_FROM } from "../content/calculator";
+import { site } from "../content/site";
 
 const MAX = { name: 200, email: 254, message: 5000, other: 300 };
 const CALENDAR_PDF = "/downloads/willow-and-peony-wedding-flower-calendar.pdf";
@@ -112,7 +114,8 @@ async function handleEnquiry(request, env) {
 
   const email = clean(data.email, MAX.email);
   const message = cleanBlock(data.message, MAX.message);
-  if (!isEmail(email) || !message) {
+  // Wedding comments are optional (date, venue, budget and the checklist carry the brief).
+  if (!isEmail(email) || (!message && data.kind !== "wedding")) {
     return json({ error: "email and message are required" }, 400);
   }
   if (!(await verifyTurnstile(request, env, data.turnstileToken))) {
@@ -197,7 +200,7 @@ function enquiryEmail(data, { name, email, message, kind }) {
     .slice(0, 30);
 
   const messageLabel = kind === "wedding" ? "Additional comments" : "Their message";
-  const blocks = [[messageLabel, message]];
+  const blocks = message ? [[messageLabel, message]] : [];
   const comments = cleanBlock(data.comments, MAX.message);
   if (comments) blocks.push(["Additional comments", comments]);
 
@@ -445,7 +448,7 @@ function estimateBlocks(est) {
     ? `Same pieces, all ${TIERS.map((t, i) => `${t.name} from ${money(est.compare[i])}`).join(" · ")}`
     : "";
   const html = `<table role="presentation" width="100%" cellpadding="0" cellspacing="0">
-${head(`Florals · ${e(est.tier)} style overall`)}
+${head(`Florals · ${e(est.tier)} tier`)}
 ${r.lines.length ? r.lines.map(row).join("") : `<tr><td colspan="2" style="padding:9px 0;border-top:1px solid #e6e2da;${cell};font-size:14px;color:#756f66">No pieces selected</td></tr>`}
 ${r.svcLines.length ? head("Delivery &amp; services") + r.svcLines.map(row).join("") : ""}
 </table>
@@ -459,7 +462,7 @@ ${sum("Including 15% GST", est.from + money(r.total * (1 + GST)))}
 ${est.extras ? `<p style="margin:8px 0 0;font-family:Arial,sans-serif;font-size:12px;color:#756f66">${e(est.extras)}</p>` : ""}
 ${compareLine ? `<p style="margin:6px 0 0;font-family:Arial,sans-serif;font-size:12px;line-height:1.6;color:#756f66">${e(compareLine)}</p>` : ""}`;
   const text = [
-    `Overall style: ${est.tier}`,
+    `Floral tier: ${est.tier}`,
     "",
     ...(r.lines.length ? r.lines.map((l) => `- ${l.name} (${l.detail}): ${l.value}`) : ["No pieces selected"]),
     ...(r.svcLines.length ? ["", "Delivery & services:", ...r.svcLines.map((l) => `- ${l.name}: ${l.value}`)] : []),
@@ -475,6 +478,7 @@ ${compareLine ? `<p style="margin:6px 0 0;font-family:Arial,sans-serif;font-size
 
 const ESTIMATE_FINE_PRINT = [
   "All prices are in NZD and exclude GST. Your final quote is confirmed after a consultation.",
+  `Full-service wedding design starts from ${money(FULL_SERVICE_FROM)}. Vase and plinth hire is included.`,
   "All prices are starting prices. Travel beyond Auckland is quoted by venue.",
   "Photos show past work as a guide. Every design is made to order around the season’s best blooms.",
 ];
@@ -498,6 +502,7 @@ function estimateEmail(est, origin) {
     `Open and adjust your estimate: ${est.link}`,
     "",
     next,
+    `Book your consultation: ${site.consultationUrl}`,
     "",
     ...ESTIMATE_FINE_PRINT.map((l) => `* ${l}`),
     "",
@@ -521,7 +526,7 @@ ${blocks.html}
 </td></tr>
 <tr><td align="center" style="padding:30px 40px 30px"><a href="${e(est.link)}" style="display:inline-block;background:#1a1815;color:#ffffff;text-decoration:none;font-family:Arial,sans-serif;font-size:12px;letter-spacing:2px;text-transform:uppercase;padding:16px 28px">Open and adjust your estimate</a></td></tr>
 <tr><td style="padding:0 40px 4px">
-${p(e(next))}
+${p(`${e(next)} <a href="${e(site.consultationUrl)}" style="color:#1a1815">Book your consultation</a>.`)}
 <ul style="margin:0 0 22px;padding-left:18px;font-family:Arial,sans-serif;font-size:12px;line-height:1.7;color:#756f66">${ESTIMATE_FINE_PRINT.map((l) => `<li>${e(l)}</li>`).join("")}</ul>
 ${p('With love,<br><span style="font-style:italic;color:#1a1815">Ivy</span>')}
 </td></tr>

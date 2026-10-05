@@ -7,6 +7,8 @@ venue: "The French Café, Auckland"
 cover: "shopify-x-moustache-republic-e-commerce-leadership-dinner-cover"
 seoTitle: "Shopify x Moustache Republic Leadership Dinner"
 blooms: "Gerberas, lisianthus, cosmos, anemones, with limes, grapes and figs"
+photographer: "Willow & Peony"
+palette: "White · green · yellow"
 ---
 
 ![Shopify x Moustache Republic - E-commerce Leadership Dinner — florals by Willow & Peony](/images/shopify-leadership-dinner-event-flowers--dsc03581)

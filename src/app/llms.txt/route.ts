@@ -1,6 +1,7 @@
 import { getPosts } from "@/lib/journal";
 import { getArticles } from "@/lib/blog";
-import { site, weddingPackages, faqs } from "../../../content/site";
+import { site, faqs } from "../../../content/site";
+import { FULL_SERVICE_FROM } from "../../../content/calculator";
 import { venues } from "../../../content/venues";
 import { googleRating } from "../../../content/reviews";
 import { SERVICES, TIERS, VISIBLE_SECTIONS, money, unitLabel } from "@/lib/estimate";
@@ -29,16 +30,14 @@ export async function GET() {
     "## Services",
     "",
     `- Wedding flowers and floral styling: ${site.domain}/wedding-flowers-auckland/`,
-    `- Wedding flower packages (fixed pricing): ${site.domain}/wedding-flower-packages/`,
-    ...weddingPackages.map(
-      (p) => `  - ${p.name} package, ${p.price} NZD: ${p.ideal}`,
-    ),
     `- Corporate and private event flowers: ${site.domain}/event-flowers-auckland/`,
     `- Wedding flower cost calculator (itemised estimate, emailed or sent as an enquiry): ${site.domain}/wedding-flower-calculator/`,
     "",
     "## Wedding flower starting prices (NZD, excluding GST)",
     "",
-    `Styles: ${TIERS.map((t) => `${t.name} (${t.note.toLowerCase()})`).join(", ")}. Final quotes are confirmed after a consultation.`,
+    `Full-service wedding floral design starts from ${money(FULL_SERVICE_FROM)}. Vase and plinth hire is included. Final quotes are confirmed after a consultation.`,
+    "",
+    `Floral tiers: ${TIERS.map((t) => `${t.name} (${t.note.toLowerCase()})`).join(", ")}.`,
     "",
     ...VISIBLE_SECTIONS.flatMap((s) => [
       `### ${s.title}`,

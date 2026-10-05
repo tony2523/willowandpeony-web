@@ -140,7 +140,7 @@ export function serviceJsonLd(opts: {
       ? {
           hasOfferCatalog: {
             "@type": "OfferCatalog",
-            name: `${opts.name} packages`,
+            name: `${opts.name} pricing`,
             itemListElement: opts.offers.map((o) => ({
               "@type": "Offer",
               name: o.name,

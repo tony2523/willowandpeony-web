@@ -8,6 +8,8 @@ cover: "a-joyful-coastal-wedding-at-the-officers-mess-auckland-cover"
 seoTitle: "Coastal Wedding Flowers at The Officers Mess"
 palette: "Coral · peach · blush · white"
 blooms: "Garden roses, dahlias, carnations, baby’s breath"
+photographer: "Chris Turner Weddings"
+photographerUrl: "https://www.christurnerphotographer.com/"
 ---
 
 Kate and Ben’s joyful coastal wedding at The Officers Mess in Takapuna was filled with soft white, blush, peach and coral-orange flowers. From Kate’s romantic bridal bouquet to the seaside ceremony flowers and beach portraits, their day was fresh, cheerful and full of personality.

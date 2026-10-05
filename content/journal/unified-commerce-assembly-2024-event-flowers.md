@@ -5,6 +5,7 @@ date: "2025-04-07"
 category: "events"
 venue: "Auckland"
 cover: "unified-commerce-assembly-2024-cover"
+palette: "White · green"
 ---
 
 ![Unified Commerce Assembly 2024 — florals by Willow & Peony](/images/unified-commerce-assembly-2024-event-flo-uca-16)

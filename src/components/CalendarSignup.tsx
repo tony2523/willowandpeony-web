@@ -55,8 +55,9 @@ export default function CalendarSignup() {
       <div className="grid gap-4 sm:grid-cols-2">
         <label className="block">
           <span className="mb-1.5 block text-[12px] tracking-[0.06em] text-muted uppercase">
-            First name
-          </span>
+                      <span className="mb-1.5 block text-[12px] tracking-[0.06em] text-muted uppercase">
+            First name<span aria-hidden className="text-ink"> *</span>
+          </span>          </span>
           <input name="firstName" required autoComplete="given-name" className="input-wp" />
         </label>
         <label className="block">
@@ -68,8 +69,9 @@ export default function CalendarSignup() {
       </div>
       <label className="block">
         <span className="mb-1.5 block text-[12px] tracking-[0.06em] text-muted uppercase">
-          Email
-        </span>
+                  <span className="mb-1.5 block text-[12px] tracking-[0.06em] text-muted uppercase">
+          Email<span aria-hidden className="text-ink"> *</span>
+        </span>        </span>
         <input name="email" type="email" required autoComplete="email" className="input-wp" />
       </label>
       <label className="flex cursor-pointer items-start gap-3 text-[13px] leading-relaxed text-ink-soft">
@@ -96,7 +98,7 @@ export default function CalendarSignup() {
         </button>
       </div>
       <p className="text-[12px] leading-relaxed text-muted">
-        Your calendar is free whether or not you request a consultation. We&rsquo;ll email you the
+        * Required. Your calendar is free whether or not you request a consultation. We&rsquo;ll email you the
         download link and won&rsquo;t add you to any mailing list.{" "}
         <Link href="/privacy-policy/" className="underline underline-offset-2 hover:text-ink">
           Privacy policy

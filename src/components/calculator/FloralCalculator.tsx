@@ -20,16 +20,30 @@ import {
   type Selection,
 } from "@/lib/estimate";
 import { site } from "../../../content/site";
+import { FULL_SERVICE_FROM } from "../../../content/calculator";
 import ItemCard from "./ItemCard";
 
 const EXAMPLE = exampleSelection();
 const isEmail = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
 const noop = () => () => {};
 
-function Field({ label, children, className = "" }: { label: string; children: React.ReactNode; className?: string }) {
+function Field({
+  label,
+  children,
+  className = "",
+  required = false,
+}: {
+  label: string;
+  children: React.ReactNode;
+  className?: string;
+  required?: boolean;
+}) {
   return (
     <label className={`block ${className}`}>
-      <span className="mb-1.5 block text-[12px] tracking-[0.06em] text-muted uppercase">{label}</span>
+      <span className="mb-1.5 block text-[12px] tracking-[0.06em] text-muted uppercase">
+        {label}
+        {required && <span aria-hidden className="text-ink"> *</span>}
+      </span>
       {children}
     </label>
   );
@@ -110,7 +124,7 @@ export default function FloralCalculator() {
 
   function estimateText() {
     return [
-      `Overall style: ${TIERS[sel.tier].name}`,
+      `Floral tier: ${TIERS[sel.tier].name}`,
       ...r.lines.map((l) => `- ${l.name} (${l.detail}): ${l.value}`),
       ...(r.svcLines.length ? ["Delivery & services:", ...r.svcLines.map((l) => `- ${l.name}: ${l.value}`)] : []),
       `Estimated total (excl. GST): ${from}${money(r.total)} ${extras}`.trim(),
@@ -200,12 +214,13 @@ export default function FloralCalculator() {
               Build your <em>floral estimate</em>
             </h1>
             <p className="mt-5 max-w-[560px] text-[15px] leading-[1.7] font-light text-ink-soft">
-              Choose a style, add the pieces you&rsquo;d love, and see an estimate as you go. When
-              it feels right, send it to us and we&rsquo;ll shape it into a personal proposal.
+              Choose a floral tier, add the pieces you&rsquo;d love, and see your estimate as you go.
+              Send me your selections when you&rsquo;re ready, and we&rsquo;ll work through the
+              details together.
             </p>
           </div>
           <ol className="divide-y divide-hairline border-y border-hairline text-[13.5px] text-ink-soft">
-            {["Choose an overall style", "Add the pieces you’d love", "Send it to Ivy for a personal proposal"].map(
+            {["Choose a floral tier", "Add the pieces you’d love", "Send your selections to Ivy"].map(
               (s, i) => (
                 <li key={s} className="flex items-baseline gap-4 py-3">
                   <span className="font-serif text-[15px] text-muted tabular-nums">0{i + 1}</span>
@@ -221,12 +236,12 @@ export default function FloralCalculator() {
       <section className="mx-auto mt-12 max-w-[1280px] px-5 sm:px-6 md:mt-16">
         <div className="border-t border-hairline pt-6">
           <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
-            <p className="eyebrow text-muted">Overall style</p>
+            <p className="eyebrow text-muted">Floral tier</p>
             <p className="text-[12.5px] text-muted">
               Applies to every piece. You can change any piece individually below.
             </p>
           </div>
-          <div role="group" aria-label="Overall style" className="mt-4 grid gap-3 sm:grid-cols-3">
+          <div role="group" aria-label="Floral tier" className="mt-4 grid gap-3 sm:grid-cols-3">
             {TIERS.map((t, i) => {
               const on = sel.tier === i;
               const bp = bridalFrom(i);
@@ -502,6 +517,10 @@ export default function FloralCalculator() {
             </div>
             <ul className="mt-6 list-disc border-t border-hairline pt-5 space-y-1.5 pl-4 text-[12px] leading-relaxed text-muted">
               <li>All prices are in NZD and exclude GST. Your final quote is confirmed after a consultation.</li>
+              <li>
+                Full-service wedding design starts from {money(FULL_SERVICE_FROM)}. Vase and plinth
+                hire is included.
+              </li>
               <li>All prices are starting prices. Travel beyond Auckland is quoted by venue.</li>
               <li>Photos show past work as a guide. Every design is made to order around the season&rsquo;s best blooms.</li>
             </ul>
@@ -547,7 +566,10 @@ export default function FloralCalculator() {
             </p>
             <p className="mt-4 max-w-[440px] text-[15px] leading-[1.7] font-light text-ink-soft">
               Every enquiring couple is offered a complimentary 30-minute video chat, with no
-              obligation.
+              obligation.{" "}
+              <a href={site.consultationUrl} target="_blank" rel="noopener" className="text-ink underline underline-offset-2">
+                Book your consultation
+              </a>
             </p>
             <div className="mt-8 max-w-[440px] border border-hairline bg-white p-5">
               <p className="eyebrow text-muted">Your estimate</p>
@@ -556,7 +578,7 @@ export default function FloralCalculator() {
                 {hasAnything && <span className="ml-2 font-sans text-[12.5px] text-muted">excl. GST</span>}
               </p>
               <p className="mt-2 text-[12.5px] text-muted">
-                {r.pieces} piece{r.pieces === 1 ? "" : "s"} · {TIERS[sel.tier].name} style overall
+                {r.pieces} piece{r.pieces === 1 ? "" : "s"} · {TIERS[sel.tier].name} tier
                 {extras ? ` · ${extras}` : ""}
               </p>
               <button
@@ -575,14 +597,17 @@ export default function FloralCalculator() {
               <p className="mt-3 text-[15px] leading-[1.7] font-light text-ink-soft">
                 Your estimate is with Ivy, who will be in touch personally within 1–2 business days.
               </p>
+              <a href={site.consultationUrl} target="_blank" rel="noopener" className="btn-outline mt-6">
+                Book your free consultation
+              </a>
             </div>
           ) : (
             <form onSubmit={sendEnquiry} noValidate className="grid gap-5 sm:grid-cols-2">
               <input type="text" name="_gotcha" tabIndex={-1} autoComplete="off" aria-hidden className="hidden" />
-              <Field label="Your names">
+              <Field label="Your names" required>
                 <input name="names" required autoComplete="name" placeholder="Ava & James" className="input-wp" />
               </Field>
-              <Field label="Email">
+              <Field label="Email" required>
                 <input name="email" type="email" required autoComplete="email" className="input-wp" />
               </Field>
               <Field label="Phone">
@@ -605,7 +630,9 @@ export default function FloralCalculator() {
                 <button type="submit" disabled={enqState === "sending"} className="btn-solid disabled:opacity-60">
                   {enqState === "sending" ? "Sending…" : "Send enquiry"}
                 </button>
-                <p className="mt-3 text-[12.5px] text-muted">We reply personally within 1–2 business days.</p>
+                <p className="mt-3 text-[12.5px] text-muted">
+                  * Required. We reply personally within 1–2 business days.
+                </p>
               </div>
             </form>
           )}
