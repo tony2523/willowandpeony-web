@@ -15,8 +15,8 @@ const FILTERS: { value: Filter; label: string }[] = [
 ];
 
 /**
- * Weddings / Events portfolio (Weddings by default, no All), grouped by
- * wedding or event, with a plain full-screen lightbox:
+ * Weddings / Events portfolio (Weddings by default, no All), each wedding's
+ * or event's photos side by side, with a plain full-screen lightbox:
  * tap an image, flick or arrow through, close with × or Escape.
  * The active filter carries into the lightbox sequence.
  */
@@ -30,17 +30,6 @@ export default function GalleryLightbox({ items }: { items: GalleryItem[] }) {
     [items, filter],
   );
   const visible = filtered.slice(0, shown);
-  // Consecutive photos of the same wedding or event form one group; i is the
-  // photo's place in the filtered list, which the lightbox steps through.
-  const groups = useMemo(() => {
-    const out: { label: string; tiles: { item: GalleryItem; i: number }[] }[] = [];
-    visible.forEach((item, i) => {
-      const last = out[out.length - 1];
-      if (last && last.label === item.group) last.tiles.push({ item, i });
-      else out.push({ label: item.group, tiles: [{ item, i }] });
-    });
-    return out;
-  }, [visible]);
 
   const close = useCallback(() => setOpen(null), []);
   const step = useCallback(
@@ -89,48 +78,39 @@ export default function GalleryLightbox({ items }: { items: GalleryItem[] }) {
       </div>
 
       {/*
-        One group per wedding or event, under its name. Within a group the
-        photos sit in justified rows: each image's share of a row is its own
-        width-to-height ratio, so every row fills the width at one height and
-        nothing is cropped. --row is the target row height: big enough that
-        phones show one image per row, tablets about three, laptops and up
-        three to five.
+        Justified rows: each image's share of a row is its own width-to-height
+        ratio, so every row fills the width at one height and nothing is
+        cropped. --row is the target row height: big enough that phones show
+        one image per row, tablets about three, laptops and up three to five.
       */}
-      <div className="mt-10 [--row:22rem] sm:[--row:18rem] md:[--row:20rem] lg:[--row:26rem] 2xl:[--row:28rem]">
-        {groups.map((g) => (
-          <section key={g.label} aria-label={g.label} className="mt-12 first:mt-0 md:mt-16">
-            <h2 className="eyebrow mb-4 px-3 text-muted sm:px-0">{g.label}</h2>
-            <div className="flex flex-wrap gap-2 sm:gap-3">
-              {g.tiles.map(({ item, i }) => {
-                const ar = item.w / item.h;
-                return (
-                  <button
-                    key={item.name}
-                    type="button"
-                    onClick={() => setOpen(i)}
-                    style={{ flexGrow: ar, flexBasis: `calc(var(--row) * ${ar.toFixed(4)})`, aspectRatio: `${item.w} / ${item.h}` }}
-                    className="group relative block min-w-0 cursor-zoom-in overflow-hidden bg-paper"
-                    aria-label={`View larger: ${item.alt}`}
-                  >
-                    <img
-                      src={item.src}
-                      srcSet={item.srcSet}
-                      sizes={`(max-width: 639px) 100vw, (min-width: 1760px) ${Math.round(ar * 620)}px, ${Math.round(ar * 440)}px`}
-                      width={item.w}
-                      height={item.h}
-                      alt={item.alt}
-                      loading={i < 12 ? "eager" : "lazy"}
-                      decoding="async"
-                      className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
-                    />
-                  </button>
-                );
-              })}
-              {/* Keeps a group's last row at the target height instead of stretching it. */}
-              <span aria-hidden className="h-0 grow-[100000] basis-0" />
-            </div>
-          </section>
-        ))}
+      <div className="mt-10 flex flex-wrap gap-2 [--row:22rem] sm:gap-3 sm:[--row:18rem] md:[--row:20rem] lg:[--row:26rem] 2xl:[--row:28rem]">
+        {visible.map((item, i) => {
+          const ar = item.w / item.h;
+          return (
+            <button
+              key={item.name}
+              type="button"
+              onClick={() => setOpen(i)}
+              style={{ flexGrow: ar, flexBasis: `calc(var(--row) * ${ar.toFixed(4)})`, aspectRatio: `${item.w} / ${item.h}` }}
+              className="group relative block min-w-0 cursor-zoom-in overflow-hidden bg-paper"
+              aria-label={`View larger: ${item.alt}`}
+            >
+              <img
+                src={item.src}
+                srcSet={item.srcSet}
+                sizes={`(max-width: 639px) 100vw, (min-width: 1760px) ${Math.round(ar * 620)}px, ${Math.round(ar * 440)}px`}
+                width={item.w}
+                height={item.h}
+                alt={item.alt}
+                loading={i < 12 ? "eager" : "lazy"}
+                decoding="async"
+                className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+              />
+            </button>
+          );
+        })}
+        {/* Keeps the last row at the target height instead of stretching it. */}
+        <span aria-hidden className="h-0 grow-[100000] basis-0" />
       </div>
 
       {shown < filtered.length && (

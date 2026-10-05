@@ -10,8 +10,6 @@ export type GalleryItem = {
   h: number;
   alt: string;
   cat: "weddings" | "events";
-  /** The wedding or event it belongs to, shown above its group. */
-  group: string;
 };
 
 /** Turn a manifest slug into readable alt text. */
@@ -26,15 +24,15 @@ function altFromName(name: string): string {
   return words.charAt(0).toUpperCase() + words.slice(1);
 }
 
-function item(name: string, alt: string, cat: GalleryItem["cat"], group: string): GalleryItem | null {
+function item(name: string, alt: string, cat: GalleryItem["cat"]): GalleryItem | null {
   const entry = getImage(name);
   if (!entry) return null;
-  return { name, src: imageSrc(name, 480), srcSet: imageSrcSet(name), w: entry.w, h: entry.h, alt, cat, group };
+  return { name, src: imageSrc(name, 480), srcSet: imageSrcSet(name), w: entry.w, h: entry.h, alt, cat };
 }
 
 /**
- * The gallery portfolio, grouped: each wedding's or event's photos stay
- * together (Tony, 6 Oct 2026). Weddings: the curated photos in
+ * The gallery portfolio, one continuous gallery with each wedding's or
+ * event's photos side by side (Tony, 6 Oct 2026). Weddings: the curated photos in
  * content/gallery.ts, in its order. Events: every inline image from the
  * event stories (covers excluded, they already lead the story cards),
  * newest story first.
@@ -42,7 +40,7 @@ function item(name: string, alt: string, cat: GalleryItem["cat"], group: string)
 export function getGalleryItems(): GalleryItem[] {
   const weddings = WEDDING_GALLERY.map((g) =>
     imageNames(`gallery-${g.slug}-`)
-      .map((name) => item(name, g.alt, "weddings", g.label))
+      .map((name) => item(name, g.alt, "weddings"))
       .filter((x): x is GalleryItem => x !== null),
   );
 
@@ -56,7 +54,7 @@ export function getGalleryItems(): GalleryItem[] {
           seen.add(name);
           return true;
         })
-        .map((name) => item(name, altFromName(name), "events", post.title))
+        .map((name) => item(name, altFromName(name), "events"))
         .filter((x): x is GalleryItem => x !== null),
     );
 

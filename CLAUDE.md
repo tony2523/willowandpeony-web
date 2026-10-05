@@ -252,6 +252,6 @@ is retired. The system:
   next number and run `npm run images`; gallery photos get no OG card. Imported
   photos are normalised first: auto-oriented JPEG, max 2400px wide.
 - Events are every inline image from the event stories in `content/journal`.
-- Both lists are grouped (Tony, 6 Oct 2026): each wedding's or event's photos stay
-  together under a small label, weddings in `content/gallery.ts` order, events newest
-  story first. Justified rows sized to each photo's shape; 48 per page.
+- One continuous gallery per filter (Tony, 6 Oct 2026): each wedding's or event's
+  photos sit side by side, no labels or sections; weddings in `content/gallery.ts`
+  order, events newest story first. Justified rows sized to each photo's shape; 48 per page.
