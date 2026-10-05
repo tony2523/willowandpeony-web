@@ -764,9 +764,12 @@ async function handleEstimate(request, env) {
 const worker = {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
-    // One canonical host: www (attached as a custom domain) 301s to the apex.
-    if (url.hostname === "www.willowandpeony.co.nz") {
-      url.hostname = "willowandpeony.co.nz";
+    // One canonical address: https on the apex. www and plain http each 301
+    // there in a single hop (the zone's "Always Use HTTPS" is off).
+    const isWww = url.hostname === "www.willowandpeony.co.nz";
+    if (isWww || (url.protocol === "http:" && !url.hostname.endsWith(".workers.dev") && url.hostname !== "localhost")) {
+      if (isWww) url.hostname = "willowandpeony.co.nz";
+      url.protocol = "https:";
       return Response.redirect(url.toString(), 301);
     }
     if (url.pathname === "/api/enquiry") {
