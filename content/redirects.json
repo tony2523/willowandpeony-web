@@ -57,7 +57,7 @@
   "/pages/events": "/event-flowers-auckland/",
   "/pages/faq": "/faq/",
   "/pages/our-story": "/about/",
-  "/pages/refund-policy": "/",
+  "/pages/refund-policy": "/terms-of-service/",
   "/pages/thank-you": "/thank-you/",
   "/pages/wedding-flower-calendar": "/wedding-flower-calendar/",
   "/pages/wedding-flower-calendar-download": "/wedding-flower-calendar/download/",
@@ -65,9 +65,10 @@
   "/pages/weddings": "/wedding-flowers-auckland/",
   "/pages/weddings-events": "/wedding-flowers-auckland/",
   "/policies/privacy-policy": "/privacy-policy/",
-  "/policies/refund-policy": "/",
+  "/policies/refund-policy": "/terms-of-service/",
   "/policies/shipping-policy": "/",
   "/policies/terms-of-service": "/terms-of-service/",
-  "/refund-policy": "/",
-  "/wedding-flower-packages": "/wedding-flower-calculator/"
+  "/refund-policy": "/terms-of-service/",
+  "/wedding-flower-packages": "/wedding-flower-calculator/",
+  "/pages/about-us": "/about/"
 }

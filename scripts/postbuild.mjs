@@ -64,6 +64,15 @@ const redirectLines = Object.entries(redirects)
 const catchAll = [
   "/agents.md /llms.txt 301",
   "/policies/contact-information /contact/ 301",
+  // Bare section roots (no trailing segment) aren't matched by "/x/*".
+  "/products / 301",
+  "/collections / 301",
+  "/blogs /work/ 301",
+  "/pages / 301",
+  "/policies / 301",
+  "/account / 301",
+  "/checkout / 301",
+  "/checkouts/* / 301",
   "/products/* / 301",
   "/collections/* / 301",
   "/blogs/weddings-events/* /work/ 301",
