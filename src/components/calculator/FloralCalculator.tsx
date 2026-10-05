@@ -558,7 +558,8 @@ export default function FloralCalculator() {
           reviewOpen ? "" : "lg:grid-cols-[minmax(0,1fr)_340px] lg:gap-10 xl:gap-14"
         }`}
       >
-        <ol className="min-w-0 border-b border-hairline">
+        {/* The closing rule only frames a collapsed last step; under the open Review panel it doubled the footer's. */}
+        <ol className={`min-w-0 ${reviewOpen ? "" : "border-b border-hairline"}`}>
           {STEPS.map((st, i) => {
             const open = current === st.id;
             const sum = summary(st.id);
