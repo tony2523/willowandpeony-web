@@ -96,8 +96,9 @@ exclude GST, and display as "from" prices everywhere.
   "Not required" and a single "Signature" option. Choosing an option adds
   one and only then shows the quantity row at the foot of the card; stepping down past 1 (or
   clearing the box) returns the piece to Not required. Cards are one
-  per row: photo left and options right from sm up, stacked with a 4:3 photo
-  on phones, so a whole card fits on one screen (Tony, 5 Oct 2026). No separate tier explainer and
+  per row: photo left and options right from sm up, stacked with a square photo
+  on phones (Tony, 6 Oct 2026: show more of the flowers; the options then run below the
+  fold on phones, which he accepted over the earlier one-screen fit). No separate tier explainer and
   no tier comparison at Review (Tony, 5 Oct 2026: each piece carries its
   own tier). Each step ends with one "Next" button (no skip link: Next
   already moves on). Finished steps collapse to "N pieces · from $X", or

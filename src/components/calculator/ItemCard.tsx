@@ -26,7 +26,7 @@ function Slides({ name, list, tier, priority = false }: { name: string; list: st
 
   return (
     <div
-      className="group/ph relative h-[clamp(6.5rem,100svh-30.25rem,66vw)] w-full shrink-0 overflow-hidden bg-paper sm:aspect-[4/5] sm:h-auto sm:w-[40%] sm:max-w-[20rem]"
+      className="group/ph relative aspect-square w-full shrink-0 overflow-hidden bg-paper sm:aspect-[4/5] sm:w-[40%] sm:max-w-[20rem]"
       onTouchStart={(e) => (touchX.current = e.touches[0].clientX)}
       onTouchEnd={(e) => {
         if (touchX.current == null || n < 2) return;
