@@ -10,6 +10,8 @@ export type GalleryItem = {
   h: number;
   alt: string;
   cat: "weddings" | "events";
+  /** The wedding or event it belongs to, shown above its group. */
+  group: string;
 };
 
 /** Turn a manifest slug into readable alt text. */
@@ -24,31 +26,23 @@ function altFromName(name: string): string {
   return words.charAt(0).toUpperCase() + words.slice(1);
 }
 
-function item(name: string, alt: string, cat: GalleryItem["cat"]): GalleryItem | null {
+function item(name: string, alt: string, cat: GalleryItem["cat"], group: string): GalleryItem | null {
   const entry = getImage(name);
   if (!entry) return null;
-  return { name, src: imageSrc(name, 480), srcSet: imageSrcSet(name), w: entry.w, h: entry.h, alt, cat };
-}
-
-/** First of each group, then the second of each, and so on, so the top shows the range of work. */
-function interleave(groups: GalleryItem[][]): GalleryItem[] {
-  const out: GalleryItem[] = [];
-  for (let i = 0; groups.some((g) => i < g.length); i++) {
-    for (const g of groups) if (i < g.length) out.push(g[i]);
-  }
-  return out;
+  return { name, src: imageSrc(name, 480), srcSet: imageSrcSet(name), w: entry.w, h: entry.h, alt, cat, group };
 }
 
 /**
- * The gallery portfolio. Weddings: the curated photos in content/gallery.ts,
- * interleaved across weddings. Events: every inline image from the event
- * stories (covers excluded, they already lead the story cards), interleaved
- * across events, newest first.
+ * The gallery portfolio, grouped: each wedding's or event's photos stay
+ * together (Tony, 6 Oct 2026). Weddings: the curated photos in
+ * content/gallery.ts, in its order. Events: every inline image from the
+ * event stories (covers excluded, they already lead the story cards),
+ * newest story first.
  */
 export function getGalleryItems(): GalleryItem[] {
   const weddings = WEDDING_GALLERY.map((g) =>
     imageNames(`gallery-${g.slug}-`)
-      .map((name) => item(name, g.alt, "weddings"))
+      .map((name) => item(name, g.alt, "weddings", g.label))
       .filter((x): x is GalleryItem => x !== null),
   );
 
@@ -62,9 +56,9 @@ export function getGalleryItems(): GalleryItem[] {
           seen.add(name);
           return true;
         })
-        .map((name) => item(name, altFromName(name), "events"))
+        .map((name) => item(name, altFromName(name), "events", post.title))
         .filter((x): x is GalleryItem => x !== null),
     );
 
-  return [...interleave(weddings), ...interleave(events)];
+  return [...weddings.flat(), ...events.flat()];
 }

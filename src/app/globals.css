@@ -25,10 +25,11 @@
    raising the root size scales the whole design in proportion: type,
    spacing, the 80rem content column and images. Up to 1760px wide (13" and
    15" laptops) the root stays at the browser default and nothing changes.
-   1760px → 16px, 1920px → 17.5px, 2240px → 20.4px, 2560px and up → 22px. */
+   Tuned back (Tony, 6 Oct 2026): 1760px → 16px, 1920px → 16.6px,
+   2240px → 17.9px, 2560px and up → 19.2px (120%). */
 @media (min-width: 1760px) {
   html {
-    font-size: clamp(100%, 0.909vw, 137.5%);
+    font-size: clamp(100%, calc(0.4vw + 0.56rem), 120%);
   }
 }
 
