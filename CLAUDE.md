@@ -94,7 +94,7 @@ exclude GST, and display as "from" prices everywhere.
   default), then Essential / Signature / Luxe, each with its tier note and
   price ("Not offered" when a tier isn't available). Untiered pieces show
   "Not required" and a single "Signature" option. Choosing an option adds
-  one and only then shows the quantity box; stepping down past 1 (or
+  one and only then shows the quantity row at the foot of the card; stepping down past 1 (or
   clearing the box) returns the piece to Not required. Cards are one
   per row: photo left and options right from sm up, stacked with a 4:3 photo
   on phones, so a whole card fits on one screen (Tony, 5 Oct 2026). No separate tier explainer and

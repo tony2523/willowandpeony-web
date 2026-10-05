@@ -26,7 +26,7 @@ function Slides({ name, list, tier }: { name: string; list: string[]; tier: numb
 
   return (
     <div
-      className="group/ph relative h-[clamp(8rem,100svh-28rem,66vw)] w-full shrink-0 overflow-hidden bg-paper sm:aspect-[4/5] sm:h-auto sm:w-[40%] sm:max-w-[20rem]"
+      className="group/ph relative h-[clamp(6.5rem,100svh-30.25rem,66vw)] w-full shrink-0 overflow-hidden bg-paper sm:aspect-[4/5] sm:h-auto sm:w-[40%] sm:max-w-[20rem]"
       onTouchStart={(e) => (touchX.current = e.touches[0].clientX)}
       onTouchEnd={(e) => {
         if (touchX.current == null || n < 2) return;
@@ -212,15 +212,11 @@ export default function ItemCard({
     >
       {photos && <Slides key={photos.list.join(",")} name={it.name} list={photos.list} tier={photos.tier} />}
       <div className="flex min-w-0 flex-1 flex-col gap-3 p-4 sm:gap-4 sm:p-5 lg:p-6 [@media(max-height:600px)]:p-3">
-        {/* The quantity sits beside the name once a piece is chosen, so a whole card fits on one screen. */}
-        <div className="flex min-h-10 items-center justify-between gap-3">
-          <div className="min-w-0">
-            <h3 className="font-serif text-[1.125rem] leading-[1.25] font-normal tracking-[-0.01em] text-ink sm:text-[1.25rem]">
-              {it.name}
-            </h3>
-            {it.note && <p className="mt-1 text-[0.78125rem] leading-snug text-muted">{it.note}</p>}
-          </div>
-          {chosen && <Stepper name={it.name} qty={qty} onChange={onQty} onStep={onStep} />}
+        <div>
+          <h3 className="font-serif text-[1.125rem] leading-[1.25] font-normal tracking-[-0.01em] text-ink sm:text-[1.25rem]">
+            {it.name}
+          </h3>
+          {it.note && <p className="mt-1 text-[0.78125rem] leading-snug text-muted">{it.note}</p>}
         </div>
 
         <div role="group" aria-label={`Options for ${it.name}`} className="flex flex-col gap-1 sm:gap-1.5">
@@ -247,6 +243,16 @@ export default function ItemCard({
             />
           )}
         </div>
+
+        {/* Quantity at the foot of the card (Tony, 6 Oct 2026), shown once a piece is chosen. */}
+        {chosen && (
+          <div className="mt-auto flex items-center justify-between gap-3">
+            <span className="text-[0.71875rem] tracking-[0.14em] text-muted uppercase">
+              {it.unit === "metre" ? "Metres" : "Quantity"}
+            </span>
+            <Stepper name={it.name} qty={qty} onChange={onQty} onStep={onStep} />
+          </div>
+        )}
 
       </div>
     </article>
