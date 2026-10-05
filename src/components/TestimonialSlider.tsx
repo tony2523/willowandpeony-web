@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { googleRating, sliderReviews } from "../../content/reviews";
+import ArrowButton from "./ArrowButton";
 
 /**
  * Testimonial slider — fades through the studio's Google reviews.
@@ -72,14 +73,7 @@ export default function TestimonialSlider({ kind }: { kind?: "wedding" | "event"
       </div>
 
       <div className="mt-8 flex items-center justify-center gap-4">
-        <button
-          type="button"
-          onClick={prev}
-          aria-label="Previous review"
-          className="flex h-9 w-9 items-center justify-center border border-hairline text-ink-soft transition-colors hover:border-ink hover:text-ink"
-        >
-          <span aria-hidden>←</span>
-        </button>
+        <ArrowButton dir="prev" label="Previous review" onClick={prev} />
         <p className="min-w-[3.5rem] text-center text-[12px] tracking-[0.14em] text-muted sm:hidden">
           {index + 1} / {items.length}
         </p>
@@ -102,14 +96,7 @@ export default function TestimonialSlider({ kind }: { kind?: "wedding" | "event"
             </button>
           ))}
         </div>
-        <button
-          type="button"
-          onClick={next}
-          aria-label="Next review"
-          className="flex h-9 w-9 items-center justify-center border border-hairline text-ink-soft transition-colors hover:border-ink hover:text-ink"
-        >
-          <span aria-hidden>→</span>
-        </button>
+        <ArrowButton dir="next" label="Next review" onClick={next} />
       </div>
 
       <p className="mt-6 text-[12.5px] text-muted">

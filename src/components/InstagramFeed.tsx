@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { getImage, imageSrc, imageSrcSet } from "@/lib/images";
 import { site } from "../../content/site";
+import { CloseIcon, iconButton } from "./ArrowButton";
 
 type FeedItem = {
   id: string;
@@ -153,9 +154,9 @@ export default function InstagramFeed() {
               type="button"
               onClick={() => setOpen(null)}
               aria-label="Close preview"
-              className="absolute right-2 top-2 z-10 flex h-9 w-9 items-center justify-center bg-white/90 text-2xl font-light text-ink"
+              className={`absolute right-2 top-2 z-10 ${iconButton("photo")}`}
             >
-              <span aria-hidden>×</span>
+              <CloseIcon />
             </button>
             <TileImage item={open} sizes="480px" />
             <div className="flex items-center justify-between gap-4 p-4">

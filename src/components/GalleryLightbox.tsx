@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import type { GalleryItem } from "@/lib/gallery";
+import ArrowButton, { CloseIcon, iconButton } from "./ArrowButton";
 
 type Filter = "all" | "weddings" | "events";
 
@@ -119,21 +120,20 @@ export default function GalleryLightbox({ items }: { items: GalleryItem[] }) {
             type="button"
             onClick={close}
             aria-label="Close viewer"
-            className="absolute top-4 right-5 z-10 flex h-11 w-11 items-center justify-center text-3xl font-light text-white/90 hover:text-white"
+            className={`absolute top-4 right-4 z-10 sm:right-5 ${iconButton("dark")}`}
           >
-            <span aria-hidden>×</span>
+            <CloseIcon />
           </button>
-          <button
-            type="button"
+          <ArrowButton
+            dir="prev"
+            tone="dark"
+            label="Previous image"
             onClick={(e) => {
               e.stopPropagation();
               step(-1);
             }}
-            aria-label="Previous image"
-            className="absolute left-2 z-10 flex h-12 w-12 items-center justify-center text-2xl text-white/80 hover:text-white sm:left-5"
-          >
-            <span aria-hidden>←</span>
-          </button>
+            className="absolute left-3 z-10 sm:left-5"
+          />
           <img
             key={filtered[open].name}
             src={filtered[open].src}
@@ -143,17 +143,16 @@ export default function GalleryLightbox({ items }: { items: GalleryItem[] }) {
             className="max-h-[92vh] max-w-[94vw] object-contain"
             onClick={(e) => e.stopPropagation()}
           />
-          <button
-            type="button"
+          <ArrowButton
+            dir="next"
+            tone="dark"
+            label="Next image"
             onClick={(e) => {
               e.stopPropagation();
               step(1);
             }}
-            aria-label="Next image"
-            className="absolute right-2 z-10 flex h-12 w-12 items-center justify-center text-2xl text-white/80 hover:text-white sm:right-5"
-          >
-            <span aria-hidden>→</span>
-          </button>
+            className="absolute right-3 z-10 sm:right-5"
+          />
           <p className="absolute bottom-5 left-1/2 -translate-x-1/2 text-[12px] tracking-[0.14em] text-white/70">
             {open + 1} / {filtered.length}
           </p>

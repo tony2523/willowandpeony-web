@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react";
 import { imageSrc, imageSrcSet } from "@/lib/images";
+import ArrowButton from "../ArrowButton";
 import {
   TIERS,
   money,
@@ -51,17 +52,16 @@ function Slides({ name, list, tier }: { name: string; list: string[]; tier: numb
       {n > 1 && (
         <>
           {[-1, 1].map((dir) => (
-            <button
+            <ArrowButton
               key={dir}
-              type="button"
+              dir={dir < 0 ? "prev" : "next"}
+              tone="photo"
+              label={`${dir < 0 ? "Previous" : "Next"} photo of ${name}`}
               onClick={() => go(i + dir)}
-              aria-label={`${dir < 0 ? "Previous" : "Next"} photo of ${name}`}
-              className={`absolute top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center border border-ink/10 bg-white/90 pb-0.5 font-serif text-[22px] leading-none text-ink transition-opacity hover:bg-white [@media(hover:hover)]:opacity-70 [@media(hover:hover)]:group-hover/ph:opacity-100 ${
+              className={`absolute top-1/2 -translate-y-1/2 transition-opacity [@media(hover:hover)]:opacity-70 [@media(hover:hover)]:group-hover/ph:opacity-100 ${
                 dir < 0 ? "left-2" : "right-2"
               }`}
-            >
-              <span aria-hidden>{dir < 0 ? "‹" : "›"}</span>
-            </button>
+            />
           ))}
           <div className="absolute inset-x-0 bottom-2 flex justify-center">
             {list.map((_, d) => (
