@@ -108,7 +108,12 @@ exclude GST, and display as "from" prices everywhere.
 - `?e=<code>` reopens an estimate at Review & send (used by the emailed link).
 - Worker `POST /api/estimate`: `email` sends the couple their estimate from
   hello@ with ivy@ BCC'd; `enquire` sends Ivy the estimate plus the couple's
-  details, reply-to the couple. Totals are recomputed server-side from the
+  details, reply-to the couple, then sends the couple a confirmation from
+  "Ivy" with the Calendly booking button and their estimate (a failure of
+  that second email is logged, not reported, since Ivy has the lead).
+- "Ready to talk it through?" is two steps (Tony, 5 Oct 2026): 01 send your
+  details to Ivy, 02 book your consultation. No booking link before sending;
+  on success only that box swaps to the thank-you with the booking button. Totals are recomputed server-side from the
   share code, so the form can't relay arbitrary content.
 - Ivy's answers (5 Oct 2026): vase and plinth hire is included; full-service
   wedding design "starts from $2,500" (`FULL_SERVICE_FROM`, stated in the

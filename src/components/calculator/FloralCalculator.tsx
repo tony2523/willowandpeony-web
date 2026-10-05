@@ -157,6 +157,17 @@ export default function FloralCalculator() {
   /* ---------- Enquiry ---------- */
   const [enqState, setEnqState] = useState<"idle" | "sending" | "sent">("idle");
   const [enqErr, setEnqErr] = useState("");
+  const [enqTo, setEnqTo] = useState("");
+  const enqBox = useRef<HTMLDivElement>(null);
+  const enqDone = useRef<HTMLParagraphElement>(null);
+
+  // Sent: only the enquiry box changes. Bring it into view and move focus to the thank-you.
+  useEffect(() => {
+    if (enqState !== "sent") return;
+    const box = enqBox.current;
+    if (box && box.getBoundingClientRect().top < 80) box.scrollIntoView({ block: "start", behavior: "smooth" });
+    enqDone.current?.focus({ preventScroll: true });
+  }, [enqState]);
 
   function estimateText() {
     return [
@@ -184,6 +195,7 @@ export default function FloralCalculator() {
         body: JSON.stringify({ ...fields, action: "enquire", estimate: encodeSelection(sel) }),
       });
       if (!res.ok) throw new Error(String(res.status));
+      setEnqTo(fields.email.trim());
       setEnqState("sent");
     } catch {
       // Never lose a lead: fall back to a pre-filled email draft.
@@ -448,30 +460,50 @@ export default function FloralCalculator() {
             )}
           </div>
 
-          <div id="enquire" className="mt-6 scroll-mt-24 border border-hairline bg-paper p-6">
+          <div id="enquire" ref={enqBox} className="mt-6 scroll-mt-24 border border-hairline bg-paper p-6">
             <h3 className="font-serif text-[22px] font-light text-ink">
               Ready to talk it <em>through?</em>
             </h3>
             {enqState === "sent" ? (
-              <>
-                <p className="mt-3 text-[14px] leading-[1.7] text-ink-soft">
-                  Thank you. Your estimate is with Ivy, who will be in touch personally within 1–2
-                  business days.
+              <div aria-live="polite">
+                <p ref={enqDone} tabIndex={-1} className="mt-4 flex items-center gap-3 font-serif text-[19px] leading-snug text-ink outline-none">
+                  <span aria-hidden className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-ink text-[12px] text-white">
+                    ✓
+                  </span>
+                  Thank you, your details have been sent to Ivy.
                 </p>
-                <a href={site.consultationUrl} target="_blank" rel="noopener" className="btn-outline mt-6">
-                  Book your free consultation
-                </a>
-              </>
-            ) : (
-              <>
-                <p className="mt-3 text-[14px] leading-[1.7] text-ink-soft">
-                  Send your estimate to Ivy with a few details; your selections are attached. Every
-                  enquiring couple is offered a complimentary 30-minute video chat, with no
-                  obligation.{" "}
-                  <a href={site.consultationUrl} target="_blank" rel="noopener" className="text-ink underline underline-offset-2">
+                <div className="mt-6 border-t border-hairline pt-6">
+                  <p className="eyebrow text-muted">Next step</p>
+                  <p className="mt-2 font-serif text-[22px] font-light text-ink">Book your consultation</p>
+                  <p className="mt-2 max-w-[520px] text-[14px] leading-[1.7] text-ink-soft">
+                    Choose a time for your complimentary 30-minute video chat with Ivy. There&rsquo;s no
+                    obligation.
+                  </p>
+                  <a href={site.consultationUrl} target="_blank" rel="noopener" className="btn-solid mt-5">
                     Book your consultation
                   </a>
-                </p>
+                  <p className="mt-4 text-[12.5px] leading-relaxed text-muted">
+                    We&rsquo;ve emailed this link to {enqTo || "you"} too, so you can book later. Ivy
+                    will be in touch personally within 1–2 business days.
+                  </p>
+                </div>
+              </div>
+            ) : (
+              <>
+                <ol className="mt-4 grid gap-3 text-[14px] leading-snug sm:grid-cols-2">
+                  {[
+                    ["Send your details to Ivy", "Your estimate is attached automatically."],
+                    ["Book your consultation", "Once it’s sent, pick a time for a free 30-minute video chat."],
+                  ].map(([title, sub], i) => (
+                    <li key={title} className="flex gap-3">
+                      <span className="font-serif text-[15px] text-muted tabular-nums">0{i + 1}</span>
+                      <span>
+                        <span className="block text-ink">{title}</span>
+                        <span className="block text-[12.5px] text-muted">{sub}</span>
+                      </span>
+                    </li>
+                  ))}
+                </ol>
                 <form onSubmit={sendEnquiry} noValidate className="mt-6 grid gap-5 sm:grid-cols-2">
                   <input type="text" name="_gotcha" tabIndex={-1} autoComplete="off" aria-hidden className="hidden" />
                   <Field label="Your names" required>

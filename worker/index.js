@@ -529,6 +529,68 @@ ${p('With love,<br><span style="font-style:italic;color:#1a1815">Ivy</span>')}
   return { subject, text, html };
 }
 
+/** The couple's confirmation after a calculator enquiry: it's with Ivy, plus the booking link and their estimate. */
+function enquiryConfirmEmail(est, origin, names) {
+  const e = escapeHtml;
+  const blocks = est ? estimateBlocks(est) : null;
+  const subject = "Thank you, your enquiry is with Ivy";
+  const who = names.length <= 40 ? names : "";
+  const p = (body) =>
+    `<p style="margin:0 0 16px;font-family:Georgia,'Times New Roman',serif;font-size:16px;line-height:1.7;color:#57524b">${body}</p>`;
+  const intro = "Your details and floral estimate are with me, and I’ll be in touch personally within 1–2 business days.";
+  const book =
+    "If you haven’t booked already, choose a time for your complimentary 30-minute video chat. There’s no obligation, and it’s the easiest way to talk through your ideas together.";
+  const text = [
+    `Hello${who ? ` ${who}` : ""},`,
+    "",
+    `Thank you for your enquiry. ${intro}`,
+    "",
+    book,
+    `Book your consultation: ${site.consultationUrl}`,
+    ...(blocks ? ["", "YOUR ESTIMATE", blocks.text, "", `Open your estimate: ${est.link}`] : []),
+    "",
+    ...ESTIMATE_FINE_PRINT.map((l) => `* ${l}`),
+    "",
+    "With love,",
+    "Ivy",
+    "Willow & Peony · Auckland",
+    `${origin}/`,
+  ].join("\n");
+  const html = `<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${e(subject)}</title></head>
+<body style="margin:0;padding:0;background:#f7f5f0">
+<div style="display:none;max-height:0;overflow:hidden">${e("Book your complimentary consultation with Ivy")}</div>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f7f5f0"><tr><td align="center" style="padding:32px 16px">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:600px;background:#ffffff;border:1px solid #e6e2da">
+<tr><td align="center" style="padding:36px 32px 8px"><img src="${origin}/brand/willow-and-peony-logo.png" width="200" alt="Willow &amp; Peony" style="display:block;width:200px;height:auto;border:0"></td></tr>
+<tr><td style="padding:28px 40px 0">
+<p style="margin:0 0 10px;font-family:Arial,sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#756f66">Enquiry received</p>
+<h1 style="margin:0 0 22px;font-family:Georgia,'Times New Roman',serif;font-weight:normal;font-size:28px;line-height:1.25;color:#1a1815">Thank you${who ? `, ${e(who)}` : ""}</h1>
+${p(e(intro))}
+${p(e(book))}
+</td></tr>
+<tr><td align="center" style="padding:10px 40px 30px"><a href="${e(site.consultationUrl)}" style="display:inline-block;background:#1a1815;color:#ffffff;text-decoration:none;font-family:Arial,sans-serif;font-size:12px;letter-spacing:2px;text-transform:uppercase;padding:16px 28px">Book your consultation</a></td></tr>
+${
+  blocks
+    ? `<tr><td style="padding:0 40px 0">
+<p style="margin:0 0 10px;font-family:Arial,sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#756f66">Your estimate</p>
+${blocks.html}
+<p style="margin:16px 0 0;font-family:Arial,sans-serif;font-size:13px"><a href="${e(est.link)}" style="color:#1a1815">Open and adjust your estimate</a></p>
+</td></tr>`
+    : ""
+}
+<tr><td style="padding:26px 40px 4px">
+<ul style="margin:0 0 22px;padding-left:18px;font-family:Arial,sans-serif;font-size:12px;line-height:1.7;color:#756f66">${ESTIMATE_FINE_PRINT.map((l) => `<li>${e(l)}</li>`).join("")}</ul>
+${p('With love,<br><span style="font-style:italic;color:#1a1815">Ivy</span>')}
+</td></tr>
+<tr><td style="padding:20px 40px 32px;border-top:1px solid #e6e2da">
+<p style="margin:0;font-family:Arial,sans-serif;font-size:12px;line-height:1.7;color:#756f66">Willow &amp; Peony · Wedding &amp; event florist, Auckland<br><a href="${origin}/" style="color:#756f66">willowandpeony.co.nz</a> · <a href="https://www.instagram.com/willowandpeony.nz" style="color:#756f66">Instagram</a><br>You&rsquo;re receiving this one-off email because you sent an enquiry on our website.</p>
+</td></tr>
+</table></td></tr></table>
+</body></html>`;
+  return { subject, text, html };
+}
+
 /** Ivy's copy of a calculator enquiry: labelled contact details, the estimate, reply-to the couple. */
 function estimateEnquiryEmail(data, { names, email }, est) {
   const e = escapeHtml;
@@ -654,6 +716,23 @@ async function handleEstimate(request, env) {
     }
   } catch (e) {
     return json({ error: `send failed: ${e.message}` }, 502);
+  }
+  if (action === "enquire") {
+    // The couple's confirmation with the booking link. Ivy already has the
+    // enquiry, so a failure here is logged rather than reported as a failed send.
+    try {
+      const { subject, text, html } = enquiryConfirmEmail(est, origin, names);
+      await sendEmail(env, {
+        from: `Ivy at Willow & Peony <${env.EMAIL_FROM}>`,
+        to: [email],
+        reply_to: env.EMAIL_FROM,
+        subject,
+        text,
+        html,
+      });
+    } catch (e) {
+      console.error("enquiry confirmation failed", e.message);
+    }
   }
   return json({ ok: true });
 }

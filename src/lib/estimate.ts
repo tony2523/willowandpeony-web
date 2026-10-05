@@ -158,11 +158,10 @@ export function commonTier(sel: Selection): number | null {
   return chosen.size === 1 ? [...chosen][0] : null;
 }
 
-/** "Signature tier", "Mixed tiers", or "" when no tiered piece is chosen. */
+/** "Signature tier" when every tiered piece shares one tier, else "" (each line names its own tier). */
 export function tierSummary(sel: Selection): string {
-  if (!anyTiered(sel)) return "";
   const t = commonTier(sel);
-  return t == null ? "Mixed tiers" : `${TIERS[t].name} tier`;
+  return t == null ? "" : `${TIERS[t].name} tier`;
 }
 
 /** "+ aisle petals & travel quoted" suffix, or "". */
