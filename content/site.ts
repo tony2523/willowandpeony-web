@@ -79,9 +79,7 @@ export const drawerNav = [
   { label: "Our Work", href: "/work/" },
   { label: "Venue Guides", href: "/venues/" },
   { label: "Our Story", href: "/about/" },
-  { label: "Journal", href: "/journal/" },
-  { label: "FAQ", href: "/faq/" },
-] as const;
+] as const; // Journal and FAQ live in the footer (Tony, 6 Oct 2026)
 
 export type Faq = { q: string; a: string };
 

@@ -11,6 +11,7 @@ const cols = [
       { label: "Flower Calculator", href: "/wedding-flower-calculator/" },
       { label: "Event Flowers", href: "/event-flowers-auckland/" },
       { label: "Gallery", href: "/gallery/" },
+      { label: "Flower Calendar", href: "/wedding-flower-calendar/" },
     ],
   },
   {
