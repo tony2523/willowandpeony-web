@@ -41,9 +41,10 @@ export default function AboutPage() {
         ])}
       />
 
-      {/* Hero split: the founding story beside Ivy's portrait (per design) */}
-      <section className="mx-auto grid max-w-[90rem] md:grid-cols-2 md:pt-20 xl:grid-cols-[minmax(0,1fr)_minmax(0,38.75rem)]">
-        <div className="flex flex-col justify-center px-5 pt-14 pb-12 sm:px-10 md:py-24 lg:px-16 xl:px-[5.625rem]">
+      {/* Hero split: the founding story beside Ivy's portrait, inside the site
+          column at every width; the portrait stays portrait (see CLAUDE.md). */}
+      <section className="mx-auto grid max-w-(--site-column) items-center gap-10 px-5 pt-14 sm:px-6 md:grid-cols-2 md:gap-12 md:pt-20 lg:gap-16 xl:grid-cols-[minmax(0,1fr)_minmax(0,38.75rem)]">
+        <div className="flex flex-col justify-center">
           <p className="eyebrow text-muted">Our story</p>
           <h1 className="display-1 mt-5 max-w-[35rem] text-ink">
             It began with a single rose called <em>Blue Moon</em>
@@ -62,13 +63,15 @@ export default function AboutPage() {
           </div>
         </div>
         {/* Portrait: face sits just above centre, so anchor the crop there */}
-        <Pic
-          name="willow-and-peony-bouquet-ivy-willow-peony-copy-a677a82d-5fc6-4fcd-b72d-c0884402c2e5"
-          alt="Ivy Diao, founder of Willow & Peony, boutique florist in Auckland"
-          sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 620px"
-          priority
-          className="aspect-[4/5] h-auto w-full object-cover object-[60%_25%] md:aspect-auto md:h-[42.5rem] lg:h-[48.75rem] max-md:mx-auto max-md:w-[calc(100%-2.5rem)] sm:max-md:w-[calc(100%-5rem)]"
-        />
+        <div className="@container">
+          <Pic
+            name="willow-and-peony-bouquet-ivy-willow-peony-copy-a677a82d-5fc6-4fcd-b72d-c0884402c2e5"
+            alt="Ivy Diao, founder of Willow & Peony, boutique florist in Auckland"
+            sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 620px"
+            priority
+            className="h-[clamp(110cqw,calc(100svh-8rem),125cqw)] w-full object-cover object-[60%_25%]"
+          />
+        </div>
       </section>
 
       {/* Founder quote — paper band */}

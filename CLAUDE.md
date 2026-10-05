@@ -271,5 +271,15 @@ is retired. The system:
   last partial block as justified rows. Teaser photos open the shared `Lightbox`
   (also used by the gallery page) instead of linking away; only the heading link goes to
   the gallery (Tony, 6 Oct 2026).
-- Phones: an image that sits inside the column on large desktops must not go edge to
-  edge on phones (pad it like the text). Full-bleed heroes and strips stay full width.
+- Insets (Tony, 6 Oct 2026): an image that has padding beside it on large screens keeps
+  it at every width, phones to laptops (sit it inside `max-w-(--site-column) px-5 sm:px-6`).
+  Only full-bleed heroes, strips and gallery mosaics run edge to edge, and they do so at
+  every width. `scripts`-style check: no image may touch a screen edge at 768-1920px
+  while being inset at 2560px.
+- Split-section photos stay portrait at every width: wrap in `@container` and use
+  `h-[clamp(110cqw,calc(100svh-8rem),125cqw)] w-full object-cover`, i.e. 4:5 when there
+  is room, trimmed top and bottom to fit one screen, never squarer than 10:11.
+- Banners: object-cover fills a fixed-height box, so `sizes` must give the drawn width
+  (home: `(max-aspect-ratio: 3/2) 150vh, 100vw`; Hero computes it). Banner photos are
+  in the pipeline's HERO list (quality 86, full-width size). They are 2000px wide, so
+  retina Macs show them at 2x; only a larger original makes them sharper there.

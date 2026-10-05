@@ -157,14 +157,17 @@ export default function WeddingsPage() {
 
       {/* Fully bespoke — split */}
       <section className="mt-24 md:mt-[8.75rem]">
-        <div className="grid md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] 2xl:mx-auto 2xl:max-w-(--site-column) 2xl:items-center 2xl:gap-16 2xl:px-6">
+        {/* Inside the site column at every width; the photo stays portrait (see CLAUDE.md). */}
+        <div className="mx-auto grid max-w-(--site-column) items-center gap-10 px-5 sm:px-6 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:gap-12 lg:gap-16">
+          <div className="@container">
           <Pic
             name="gallery-claire-dan-allely-estate-01"
             alt="Bespoke ceremony installation of anthuriums, gerberas, delphiniums and grasses at Allely Estate by Willow & Peony"
             sizes="(max-width: 768px) 100vw, 50vw"
-            className="h-full max-h-[43.75rem] w-full object-cover object-[50%_62%] max-md:aspect-[4/5] max-md:h-auto max-md:mx-auto max-md:w-[calc(100%-2.5rem)] sm:max-md:w-[calc(100%-5rem)]"
+            className="h-[clamp(110cqw,calc(100svh-8rem),125cqw)] w-full object-cover object-[50%_62%]"
           />
-          <div className="flex flex-col justify-center px-5 py-14 sm:px-10 md:px-16 md:py-20 2xl:px-0">
+          </div>
+          <div className="flex flex-col justify-center">
             <p className="eyebrow text-muted">Fully bespoke</p>
             <h2 className="display-3 mt-3 text-ink">Designed entirely around you</h2>
             <p className="mt-5 max-w-[30rem] text-[0.9375rem] leading-[1.7] font-light text-ink-soft">
