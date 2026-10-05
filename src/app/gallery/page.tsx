@@ -35,7 +35,7 @@ export default function GalleryPage() {
         ]}
       />
 
-      <section className="mx-auto mt-16 max-w-[80rem] px-5 sm:px-6 md:mt-24">
+      <section className="mx-auto mt-16 max-w-(--site-column) px-5 sm:px-6 md:mt-24">
         <p className="eyebrow text-muted">Gallery</p>
         <h1 className="display-1 mt-3 text-ink">
           A portfolio of <em>love and light</em>

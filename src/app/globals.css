@@ -25,12 +25,20 @@
    raising the root size scales the whole design in proportion: type,
    spacing, the 80rem content column and images. Up to 1760px wide (13" and
    15" laptops) the root stays at the browser default and nothing changes.
-   Tuned back (Tony, 6 Oct 2026): 1760px → 16px, 1920px → 16.5px,
-   2240px → 17.4px, 2560px and up → 18.4px (115%). */
+   Tuned (Tony, 6 Oct 2026): 1760px → 16px, 1920px → 16.5px, and from the
+   24" iMac (2240px) up it stays at 17.44px (109%): bigger screens keep the
+   24" type and element sizes and only get a wider content column. */
 @media (min-width: 1760px) {
   html {
-    font-size: clamp(100%, calc(0.3vw + 0.67rem), 115%);
+    font-size: clamp(100%, calc(0.3vw + 0.67rem), 109%);
   }
+}
+
+/* The site's content column: 80rem, and above 2240px it keeps the share of
+   the screen it has at 2240 (62.3%), so 27" screens get a wider column with
+   24"-sized type. 62.3vw stays below 80rem on every smaller screen. */
+:root {
+  --site-column: max(80rem, 62.3vw);
 }
 
 /* Base type: Chivo 300, 15px, warm ink. */

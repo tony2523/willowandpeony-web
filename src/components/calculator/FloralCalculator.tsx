@@ -535,7 +535,7 @@ export default function FloralCalculator() {
   return (
     <div>
       {/* Intro */}
-      <section className="mx-auto max-w-[80rem] px-5 pt-16 sm:px-6 md:pt-24">
+      <section className="mx-auto max-w-(--site-column) px-5 pt-16 sm:px-6 md:pt-24">
         <p className="eyebrow text-muted">Wedding flower calculator</p>
         <h1 className="display-1 mt-3 text-ink">
           Build your <em>floral estimate</em>
@@ -549,7 +549,7 @@ export default function FloralCalculator() {
 
       {/* Steps + running estimate */}
       <div
-        className={`mx-auto mt-12 grid max-w-[80rem] gap-14 px-5 sm:px-6 md:mt-16 lg:items-start ${
+        className={`mx-auto mt-12 grid max-w-(--site-column) gap-14 px-5 sm:px-6 md:mt-16 lg:items-start ${
           reviewOpen ? "" : "lg:grid-cols-[minmax(0,1fr)_21.25rem] lg:gap-10 xl:gap-14"
         }`}
       >

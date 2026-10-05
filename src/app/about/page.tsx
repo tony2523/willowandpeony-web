@@ -86,7 +86,7 @@ export default function AboutPage() {
       </section>
 
       {/* How we work */}
-      <section className="mx-auto mt-24 max-w-[80rem] px-5 sm:px-6 md:mt-[8.75rem]">
+      <section className="mx-auto mt-24 max-w-(--site-column) px-5 sm:px-6 md:mt-[8.75rem]">
         <p className="eyebrow text-muted">How we work</p>
         <div className="mt-10 grid gap-x-12 gap-y-10 md:grid-cols-3">
           {values.map((v) => (

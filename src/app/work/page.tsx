@@ -53,14 +53,14 @@ export default function WorkPage() {
         ]}
       />
 
-      <section className="mx-auto mt-16 max-w-[80rem] px-5 sm:px-6 md:mt-24">
+      <section className="mx-auto mt-16 max-w-(--site-column) px-5 sm:px-6 md:mt-24">
         <p className="eyebrow text-muted">Our work</p>
         <h1 className="display-1 mt-3 text-ink">
           Every story, in <em>bloom</em>
         </h1>
       </section>
 
-      <section className="mx-auto mt-10 max-w-[80rem] px-5 sm:px-6 md:mt-14">
+      <section className="mx-auto mt-10 max-w-(--site-column) px-5 sm:px-6 md:mt-14">
         <WorkGrid items={items} />
       </section>
 

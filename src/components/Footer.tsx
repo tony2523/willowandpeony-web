@@ -37,7 +37,7 @@ const cols = [
 export default function Footer() {
   return (
     <footer className="border-t border-hairline bg-white">
-      <div className="mx-auto grid max-w-[80rem] gap-12 px-5 pt-16 pb-4 sm:px-6 md:grid-cols-[1.5fr_1fr_1fr_1fr] lg:gap-14">
+      <div className="mx-auto grid max-w-(--site-column) gap-12 px-5 pt-16 pb-4 sm:px-6 md:grid-cols-[1.5fr_1fr_1fr_1fr] lg:gap-14">
         <div>
           <img
             src={withBase("/brand/willow-and-peony-logo.png")}
@@ -92,7 +92,7 @@ export default function Footer() {
         ))}
       </div>
 
-      <div className="mx-auto max-w-[80rem] px-5 sm:px-6">
+      <div className="mx-auto max-w-(--site-column) px-5 sm:px-6">
         <div className="mt-12 flex flex-col gap-2 border-t border-hairline py-5 text-[0.71875rem] text-muted sm:flex-row sm:items-center sm:justify-between">
           <p>
             © {new Date().getFullYear()} {site.name} · Auckland, New Zealand

@@ -62,7 +62,7 @@ export default function HomePage() {
           className="absolute inset-0 bg-gradient-to-t from-[rgba(20,18,16,0.72)] via-[rgba(20,18,16,0.3)] to-[rgba(20,18,16,0.15)] md:from-[rgba(20,18,16,0.55)] md:via-[rgba(20,18,16,0.05)]"
         />
         <div className="absolute inset-x-0 bottom-0">
-          <div className="mx-auto max-w-[80rem] px-5 pb-16 sm:px-6 md:pb-24">
+          <div className="mx-auto max-w-(--site-column) px-5 pb-16 sm:px-6 md:pb-24">
             <p className="eyebrow text-white/85">Boutique florist · Auckland</p>
             <h1 className="display-hero mt-4 max-w-[56.25rem] text-white">
               Artful florals for <em>beautifully considered</em> events
@@ -88,7 +88,7 @@ export default function HomePage() {
         aria-label="Highlights"
         className="border-b border-hairline bg-white px-5 py-6 sm:px-6"
       >
-        <ul className="mx-auto flex max-w-[80rem] flex-wrap items-center justify-center gap-x-10 gap-y-2 text-center text-[0.6875rem] tracking-[0.16em] text-ink-soft uppercase">
+        <ul className="mx-auto flex max-w-(--site-column) flex-wrap items-center justify-center gap-x-10 gap-y-2 text-center text-[0.6875rem] tracking-[0.16em] text-ink-soft uppercase">
           <li>Weddings across Auckland &amp; beyond</li>
           <li className="hidden sm:block" aria-hidden>
             ·
@@ -111,7 +111,7 @@ export default function HomePage() {
       </section>
 
       {/* Intro */}
-      <section className="mx-auto mt-20 grid max-w-[80rem] gap-10 px-5 sm:px-6 md:mt-28 md:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] md:gap-20">
+      <section className="mx-auto mt-20 grid max-w-(--site-column) gap-10 px-5 sm:px-6 md:mt-28 md:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] md:gap-20">
         <h2 className="display-2 text-ink">
           Romantic, sculptural and <em>artful</em> — designed to complement your venue and
           elevate the atmosphere.
@@ -131,7 +131,7 @@ export default function HomePage() {
       {/* Three ways we work */}
       <section
         aria-labelledby="services-heading"
-        className="mx-auto mt-24 max-w-[80rem] px-5 sm:px-6 md:mt-[8.75rem]"
+        className="mx-auto mt-24 max-w-(--site-column) px-5 sm:px-6 md:mt-[8.75rem]"
       >
         <p className="eyebrow text-muted">What we do</p>
         <h2 id="services-heading" className="display-2 mt-3 text-ink">
@@ -189,7 +189,7 @@ export default function HomePage() {
       />
 
       {/* Meet your florist */}
-      <section className="mx-auto mt-24 grid max-w-[80rem] gap-12 px-5 sm:px-6 md:mt-[8.75rem] md:grid-cols-[minmax(0,1fr)_25rem] md:gap-24">
+      <section className="mx-auto mt-24 grid max-w-(--site-column) gap-12 px-5 sm:px-6 md:mt-[8.75rem] md:grid-cols-[minmax(0,1fr)_25rem] md:gap-24">
         <div>
           <p className="eyebrow text-muted">Meet your florist</p>
           <h2 className="display-2 mt-3 text-ink">Ivy, founder of Willow &amp; Peony</h2>

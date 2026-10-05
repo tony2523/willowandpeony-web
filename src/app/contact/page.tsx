@@ -23,7 +23,7 @@ export default function ContactPage() {
         ])}
       />
 
-      <section className="mx-auto max-w-[80rem] px-5 pt-16 sm:px-6 md:pt-24">
+      <section className="mx-auto max-w-(--site-column) px-5 pt-16 sm:px-6 md:pt-24">
         <div className="grid gap-14 md:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] md:gap-20">
           {/* Form column */}
           <div>

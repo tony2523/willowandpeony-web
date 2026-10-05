@@ -37,7 +37,7 @@ export default function VenuesPage() {
         ]}
       />
 
-      <section className="mx-auto mt-16 max-w-[80rem] px-5 sm:px-6 md:mt-24">
+      <section className="mx-auto mt-16 max-w-(--site-column) px-5 sm:px-6 md:mt-24">
         <p className="eyebrow text-muted">Venue guides</p>
         <h1 className="display-1 mt-3 text-ink">
           Wedding flowers, <em>venue by venue</em>
@@ -48,7 +48,7 @@ export default function VenuesPage() {
         </p>
       </section>
 
-      <section className="mx-auto mt-14 max-w-[80rem] px-5 sm:px-6 md:mt-20">
+      <section className="mx-auto mt-14 max-w-(--site-column) px-5 sm:px-6 md:mt-20">
         <div className="grid gap-x-6 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
           {venues.map((v) => (
             <Link key={v.slug} href={`/venues/${v.slug}/`} className="group block">

@@ -65,7 +65,7 @@ export default function CalendarPage() {
       />
 
       {/* Hero: copy + form beside the calendar cover */}
-      <section id="get-calendar" className="mx-auto max-w-[80rem] scroll-mt-24 px-5 pt-14 sm:px-6 md:pt-20">
+      <section id="get-calendar" className="mx-auto max-w-(--site-column) scroll-mt-24 px-5 pt-14 sm:px-6 md:pt-20">
         <div className="grid items-center gap-12 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:gap-20">
           <div>
             <p className="eyebrow text-muted">Free download · 17 pages</p>
@@ -101,7 +101,7 @@ export default function CalendarPage() {
       </section>
 
       {/* Inside the calendar */}
-      <section className="mx-auto mt-24 max-w-[80rem] px-5 sm:px-6 md:mt-[8.75rem]">
+      <section className="mx-auto mt-24 max-w-(--site-column) px-5 sm:px-6 md:mt-[8.75rem]">
         <p className="eyebrow text-muted">Inside the calendar</p>
         <h2 className="display-2 mt-3 text-ink">
           A year of flowers, <em>month by month</em>
@@ -128,7 +128,7 @@ export default function CalendarPage() {
 
       {/* Why it helps */}
       <section className="mt-24 border-t border-hairline bg-paper md:mt-[8.75rem]">
-        <div className="mx-auto max-w-[80rem] px-5 py-16 sm:px-6 md:py-24">
+        <div className="mx-auto max-w-(--site-column) px-5 py-16 sm:px-6 md:py-24">
           <div className="grid gap-x-10 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
             {perks.map((p) => (
               <div key={p.title}>

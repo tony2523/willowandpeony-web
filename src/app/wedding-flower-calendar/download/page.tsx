@@ -34,7 +34,7 @@ const next = [
 export default function CalendarDownloadPage() {
   return (
     <>
-      <section className="mx-auto max-w-[80rem] px-5 pt-14 sm:px-6 md:pt-20">
+      <section className="mx-auto max-w-(--site-column) px-5 pt-14 sm:px-6 md:pt-20">
         <div className="grid items-center gap-12 md:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] md:gap-20">
           <div>
             <p className="eyebrow text-muted">Thank you</p>
@@ -74,7 +74,7 @@ export default function CalendarDownloadPage() {
       </section>
 
       {/* What next */}
-      <section className="mx-auto mt-24 max-w-[80rem] px-5 sm:px-6 md:mt-[8.75rem]">
+      <section className="mx-auto mt-24 max-w-(--site-column) px-5 sm:px-6 md:mt-[8.75rem]">
         <p className="eyebrow text-muted">What next</p>
         <h2 className="display-2 mt-3 text-ink">
           A little inspiration <em>for your day</em>

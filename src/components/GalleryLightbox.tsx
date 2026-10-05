@@ -68,7 +68,7 @@ export default function GalleryLightbox({ items }: { items: GalleryItem[] }) {
   return (
     <div>
       {/* Filters line up with the heading's column, not the wider grid. */}
-      <div className="mx-auto flex max-w-[77rem] flex-wrap gap-2.5 px-3 sm:px-2 lg:px-0" role="group" aria-label="Filter gallery">
+      <div className="mx-auto flex max-w-[calc(var(--site-column)-3rem)] flex-wrap gap-2.5 px-3 sm:px-2 lg:px-0" role="group" aria-label="Filter gallery">
         {FILTERS.map((f) => (
           <button
             key={f.value}

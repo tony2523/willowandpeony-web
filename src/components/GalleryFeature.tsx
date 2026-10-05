@@ -34,7 +34,7 @@ export default function GalleryFeature({
 }) {
   return (
     <section aria-label={eyebrow} className="mt-24 md:mt-[8.75rem]">
-      <div className="mx-auto flex max-w-[80rem] flex-wrap items-end justify-between gap-x-10 gap-y-5 px-5 sm:px-6">
+      <div className="mx-auto flex max-w-(--site-column) flex-wrap items-end justify-between gap-x-10 gap-y-5 px-5 sm:px-6">
         <div>
           <p className="eyebrow text-muted">{eyebrow}</p>
           <h2 className="display-2 mt-3 text-ink">{title}</h2>

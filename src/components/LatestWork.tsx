@@ -20,7 +20,7 @@ export default function LatestWork({
   href?: string;
 }) {
   return (
-    <section className="mx-auto max-w-[80rem] px-5 sm:px-6">
+    <section className="mx-auto max-w-(--site-column) px-5 sm:px-6">
       <div className="mb-10 flex flex-wrap items-end justify-between gap-4">
         <div>
           <p className="eyebrow text-muted">{eyebrow}</p>

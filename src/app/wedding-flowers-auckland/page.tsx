@@ -71,7 +71,7 @@ export default function WeddingsPage() {
       />
 
       {/* Intro */}
-      <section className="mx-auto mt-20 grid max-w-[80rem] gap-10 px-5 sm:px-6 md:mt-28 md:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] md:gap-20">
+      <section className="mx-auto mt-20 grid max-w-(--site-column) gap-10 px-5 sm:px-6 md:mt-28 md:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] md:gap-20">
         <h2 className="display-2 text-ink">
           Weddings are deeply personal — <em>your flowers should be too.</em>
         </h2>
@@ -102,13 +102,13 @@ export default function WeddingsPage() {
       />
 
       {/* The process — moved up, starts with the calculator */}
-      <section className="mx-auto mt-24 max-w-[80rem] px-5 sm:px-6 md:mt-[8.75rem]">
+      <section className="mx-auto mt-24 max-w-(--site-column) px-5 sm:px-6 md:mt-[8.75rem]">
         <ProcessSteps />
       </section>
 
       {/* Wedding flower calculator — paper split (replaces the packages split) */}
       <section className="mt-24 bg-paper md:mt-[8.75rem]">
-        <div className="grid md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] 2xl:mx-auto 2xl:max-w-[80rem] 2xl:gap-16 2xl:px-6">
+        <div className="grid md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] 2xl:mx-auto 2xl:max-w-(--site-column) 2xl:gap-16 2xl:px-6">
           <div className="order-2 flex flex-col justify-center px-5 py-14 sm:px-10 md:order-1 md:px-16 md:py-20 2xl:px-0">
             <p className="eyebrow text-muted">Wedding flower calculator</p>
             <h2 className="display-3 mt-3 text-ink">
@@ -153,7 +153,7 @@ export default function WeddingsPage() {
 
       {/* Fully bespoke — split */}
       <section className="mt-24 md:mt-[8.75rem]">
-        <div className="grid md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] 2xl:mx-auto 2xl:max-w-[80rem] 2xl:items-center 2xl:gap-16 2xl:px-6">
+        <div className="grid md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] 2xl:mx-auto 2xl:max-w-(--site-column) 2xl:items-center 2xl:gap-16 2xl:px-6">
           <Pic
             name="wedding-flowers-auckland-scarlet-style-shoot4"
             alt="Bespoke crimson and blush bridal bouquet by Willow & Peony"

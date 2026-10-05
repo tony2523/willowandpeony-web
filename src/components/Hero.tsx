@@ -49,7 +49,7 @@ export default function Hero({
         className="absolute inset-0 bg-gradient-to-t from-[rgba(20,18,16,0.6)] via-[rgba(20,18,16,0.12)] to-[rgba(20,18,16,0.25)]"
       />
       <div className="absolute inset-x-0 bottom-0">
-        <div className="mx-auto max-w-[80rem] px-5 pb-14 sm:px-6 md:pb-20">
+        <div className="mx-auto max-w-(--site-column) px-5 pb-14 sm:px-6 md:pb-20">
           <p className="eyebrow text-white/85">{eyebrow}</p>
           <h1 className="display-1 mt-3 max-w-[51.25rem] text-white">{title}</h1>
           {intro && (

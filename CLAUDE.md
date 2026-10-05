@@ -261,3 +261,7 @@ is retired. The system:
   Photos are picked by name in each page; slot shapes are portrait, landscape,
   portrait, landscape, landscape. It replaced the home featured wedding and the
   Weddings photo strip (Tony, 6 Oct 2026).
+- Large screens: all sizes are rem. Above 1760px the root grows to 17.44px (109%) at
+  2240px (24" iMac) and stays there; wider screens only widen the content column,
+  `--site-column: max(80rem, 62.3vw)` in globals.css, used as `max-w-(--site-column)`
+  everywhere the site column was 80rem (Tony, 6 Oct 2026). Nothing changes below 2240px.

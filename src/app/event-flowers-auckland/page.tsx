@@ -77,7 +77,7 @@ export default function EventsPage() {
       />
 
       {/* Trusted by */}
-      <section aria-label="Clients" className="mx-auto mt-16 max-w-[80rem] px-5 text-center sm:px-6 md:mt-20">
+      <section aria-label="Clients" className="mx-auto mt-16 max-w-(--site-column) px-5 text-center sm:px-6 md:mt-20">
         <p className="eyebrow text-muted">Trusted for events by</p>
         <ul className="mt-6 flex flex-wrap items-center justify-center gap-x-12 gap-y-3 font-serif text-[1.0625rem] font-light text-ink-soft sm:text-[1.1875rem]">
           <li>Shopify</li>
@@ -88,7 +88,7 @@ export default function EventsPage() {
       </section>
 
       {/* Intro */}
-      <section className="mx-auto mt-20 grid max-w-[80rem] gap-10 px-5 sm:px-6 md:mt-28 md:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] md:gap-20">
+      <section className="mx-auto mt-20 grid max-w-(--site-column) gap-10 px-5 sm:px-6 md:mt-28 md:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] md:gap-20">
         <h2 className="display-2 text-ink">
           Event flowers that go <em>beyond decoration</em>
         </h2>
@@ -102,7 +102,7 @@ export default function EventsPage() {
 
       {/* What we create — paper band */}
       <section className="mt-24 border-y border-hairline bg-paper md:mt-[8.75rem]">
-        <div className="mx-auto max-w-[80rem] px-5 py-16 sm:px-6 md:py-24">
+        <div className="mx-auto max-w-(--site-column) px-5 py-16 sm:px-6 md:py-24">
           <p className="eyebrow text-muted">What we create</p>
           <div className="mt-10 grid gap-x-12 gap-y-8 sm:grid-cols-2">
             {offers.map((o) => (
@@ -119,7 +119,7 @@ export default function EventsPage() {
       </section>
 
       {/* Case study */}
-      <section className="mx-auto mt-24 max-w-[80rem] px-5 sm:px-6 md:mt-[8.75rem]">
+      <section className="mx-auto mt-24 max-w-(--site-column) px-5 sm:px-6 md:mt-[8.75rem]">
         <div className="grid items-start gap-10 md:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] md:gap-16">
           <div className="md:pt-6">
             <p className="eyebrow text-muted">Case study</p>
