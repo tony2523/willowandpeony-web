@@ -13,7 +13,14 @@
   // Worker stamps it X-Robots-Tag: noindex). wrangler registers the DNS
   // record + certificate on deploy. The *.staging wildcard stays reserved
   // for per-branch preview aliases via the dashboard's Preview domain.
-  "routes": [{ "pattern": "staging.willowandpeony.co.nz", "custom_domain": true }],
+  // Live (go-live, Tony): the apex serves the site, www 301s to it in the
+  // Worker. Cloudflare refuses these until the old Shopify A (apex) and
+  // CNAME (www) records are deleted from the zone.
+  "routes": [
+    { "pattern": "willowandpeony.co.nz", "custom_domain": true },
+    { "pattern": "www.willowandpeony.co.nz", "custom_domain": true },
+    { "pattern": "staging.willowandpeony.co.nz", "custom_domain": true }
+  ],
   "assets": {
     "directory": "./out",
     "binding": "ASSETS",
