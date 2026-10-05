@@ -3850,5 +3850,15 @@
    1600,
    2000
   ]
+ },
+ "private-event-flowers-auckland-dinner-table-centrepiece": {
+  "w": 1333,
+  "h": 2000,
+  "sizes": [
+   480,
+   768,
+   960,
+   1200
+  ]
  }
 }

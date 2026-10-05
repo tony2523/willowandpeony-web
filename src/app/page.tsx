@@ -30,8 +30,8 @@ const services = [
     number: "02",
     label: "Private events",
     href: "/event-flowers-auckland/",
-    image: "elevating-others-dinner-event-by-the-gut-group",
-    alt: "Gala dinner table styled with sculptural florals",
+    image: "private-event-flowers-auckland-dinner-table-centrepiece",
+    alt: "Dinner table centrepiece of white flowers with figs, grapes and limes for a private event in Auckland",
     copy: "Milestones, dinners and celebrations styled with atmosphere and intent.",
   },
   {
