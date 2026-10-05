@@ -31,6 +31,7 @@ const services = [
     label: "Private events",
     href: "/event-flowers-auckland/",
     image: "private-event-flowers-auckland-dinner-table-centrepiece",
+    position: "object-[50%_60%]",
     alt: "Dinner table centrepiece of white flowers with figs, grapes and limes for a private event in Auckland",
     copy: "Milestones, dinners and celebrations styled with atmosphere and intent.",
   },
@@ -39,6 +40,7 @@ const services = [
     label: "Corporate",
     href: "/event-flowers-auckland/",
     image: "corporate-event-flowers-auckland-hydrangea-buffet-runner",
+    position: "object-[50%_60%]",
     alt: "Blue hydrangea, orange orchid and green anthurium runner along a corporate event buffet in Auckland",
     copy: "Launches, galas and conferences with florals that carry your brand.",
   },
@@ -139,20 +141,17 @@ export default function HomePage() {
         <h2 id="services-heading" className="display-2 mt-3 text-ink">
           Three ways we work
         </h2>
-        <div className="mt-12 grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
-          {services.map((s, i) => (
-            <Link
-              key={s.number}
-              href={s.href}
-              className={`group block ${i === 1 ? "lg:mt-14" : ""}`}
-            >
+        {/* Fully aligned (Ivy, 6 Oct 2026): equal cards, tops and captions on one line. */}
+        <div className="mt-12 grid gap-x-4 gap-y-12 sm:grid-cols-3 lg:gap-x-6">
+          {services.map((s) => (
+            <Link key={s.number} href={s.href} className="group block">
               <div className="overflow-hidden bg-paper">
                 <Pic
                   name={s.image}
                   alt={s.alt}
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  sizes="(max-width: 639px) 100vw, 33vw"
                   aspect="4/5"
-                  className="h-auto w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02]"
+                  className={`h-auto w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02] ${s.position ?? ""}`}
                 />
               </div>
               <div className="mt-4 flex items-baseline justify-between">
