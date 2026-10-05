@@ -254,7 +254,9 @@ is retired. The system:
 - Events are every inline image from the event stories in `content/journal`.
 - One continuous gallery per filter (Tony, 6 Oct 2026): each wedding's or event's
   photos sit side by side, no labels or sections; weddings in `content/gallery.ts`
-  order, events newest story first. Justified rows sized to each photo's shape; 48 per page.
+  order, events newest story first. Justified rows sized to each photo's shape. No pagination on the gallery page (Tony,
+  6 Oct 2026): all photos render, native lazy loading plus an observer that starts each
+  image two screens ahead. Our Work still loads 48 at a time.
 - Gallery teasers (`GalleryFeature`): an editorial nine-photo mosaic (six on phones), almost
   edge to edge, sized so heading and photos fit one screen, on the home page
   and the Weddings page (wedding photos, link to `/gallery/`) and the Events page

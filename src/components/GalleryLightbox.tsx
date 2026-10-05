@@ -1,14 +1,18 @@
 "use client";
 
-import { useCallback, useMemo, useState, useSyncExternalStore } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import type { GalleryItem } from "@/lib/gallery";
 import Lightbox from "./Lightbox";
 import { MOSAIC, MOSAIC_MIRROR, MOSAIC_SHAPES, MOSAIC_VW } from "./mosaic";
 
 type Filter = "weddings" | "events";
 
-/** Images per page (and per "Load more"). */
-const PAGE = 48;
+/**
+ * No pagination (Tony, 6 Oct 2026): every photo is on the page. Images are
+ * native lazy, and an observer switches each one to eager about two screens
+ * before it scrolls into view, so the next fold is already loaded.
+ */
+const PRELOAD_MARGIN = "0px 0px 200% 0px";
 
 const FILTERS: { value: Filter; label: string }[] = [
   { value: "weddings", label: "Weddings" },
@@ -37,13 +41,31 @@ export default function GalleryLightbox({ items }: { items: GalleryItem[] }) {
     window.history.replaceState(null, "", f === "events" ? "?type=events" : window.location.pathname);
   };
   const [open, setOpen] = useState<number | null>(null);
-  const [shown, setShown] = useState(PAGE);
+  const grid = useRef<HTMLDivElement>(null);
 
   const filtered = useMemo(
     () => items.filter((i) => i.cat === filter),
     [items, filter],
   );
-  const visible = filtered.slice(0, shown);
+  const visible = filtered;
+
+  // Preload the next fold: start loading images two screens ahead of the viewport.
+  useEffect(() => {
+    const root = grid.current;
+    if (!root || !("IntersectionObserver" in window)) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (!e.isIntersecting) continue;
+          (e.target as HTMLImageElement).loading = "eager";
+          io.unobserve(e.target);
+        }
+      },
+      { rootMargin: PRELOAD_MARGIN },
+    );
+    root.querySelectorAll("img[loading=lazy]").forEach((img) => io.observe(img));
+    return () => io.disconnect();
+  }, [filtered]);
 
   // Blocks of nine in the editorial mosaic, alternate blocks mirrored. Within
   // a block portrait photos take the portrait slots and landscape photos the
@@ -78,10 +100,7 @@ export default function GalleryLightbox({ items }: { items: GalleryItem[] }) {
           <button
             key={f.value}
             type="button"
-            onClick={() => {
-              setFilter(f.value);
-              setShown(PAGE);
-            }}
+            onClick={() => setFilter(f.value)}
             aria-pressed={filter === f.value}
             className={`px-4 py-2.5 text-[0.6875rem] tracking-[0.14em] uppercase transition-colors ${
               filter === f.value
@@ -94,7 +113,7 @@ export default function GalleryLightbox({ items }: { items: GalleryItem[] }) {
         ))}
       </div>
 
-      <div className="mt-10 flex flex-col gap-1.5 sm:gap-3">
+      <div ref={grid} className="mt-10 flex flex-col gap-1.5 sm:gap-3">
         {blocks.map((block, b) =>
           block.full ? (
             // Phones: three columns, the lead photo two by two (on the right in
@@ -163,17 +182,6 @@ export default function GalleryLightbox({ items }: { items: GalleryItem[] }) {
           ),
         )}
       </div>
-
-      {shown < filtered.length && (
-        <div className="mt-12 text-center">
-          <button type="button" onClick={() => setShown((s) => s + PAGE)} className="btn-outline">
-            Load more
-          </button>
-          <p className="mt-3.5 text-[0.75rem] text-muted">
-            Showing {visible.length} of {filtered.length} images
-          </p>
-        </div>
-      )}
 
       <Lightbox images={filtered} index={open} onClose={close} onIndex={setOpen} />
     </div>
