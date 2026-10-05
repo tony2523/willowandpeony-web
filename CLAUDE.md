@@ -290,3 +290,8 @@ is retired. The system:
   The field holds "Saturday 14 March 2027" under its `name`, so FormData, emails and
   `required` work; typing is blocked; past dates disabled; keyboard: Enter/arrows/PageUp/
   PageDown/Escape. Tests pick a date by clicking a day, not by typing.
+- Emails per form: Contact/Weddings/Events enquiries go to Ivy (reply-to the person);
+  wedding enquiries (Contact Wedding + Weddings page) also send the person "Thank you,
+  your enquiry is with Ivy" with the Calendly button (Tony, 6 Oct 2026). Calculator
+  "Send to Ivy" sends the same thank-you plus their estimate; "Email me my estimate" and
+  the Flower Calendar go to the person with Ivy BCC'd. Event/general send the person nothing.

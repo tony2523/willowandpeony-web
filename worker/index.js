@@ -139,6 +139,23 @@ async function handleEnquiry(request, env) {
   } catch (e) {
     return json({ error: `send failed: ${e.message}` }, 502);
   }
+  if (kind === "wedding") {
+    // The couple's thank-you with the booking link (Tony, 6 Oct 2026), as the
+    // calculator sends. Ivy already has the enquiry, so a failure is logged only.
+    try {
+      const confirm = enquiryConfirmEmail(null, siteOrigin(request), name);
+      await sendEmail(env, {
+        from: `Ivy at Willow & Peony <${env.EMAIL_FROM}>`,
+        to: [email],
+        reply_to: env.EMAIL_FROM,
+        subject: confirm.subject,
+        text: confirm.text,
+        html: confirm.html,
+      });
+    } catch (e) {
+      console.error("wedding enquiry confirmation failed", e.message);
+    }
+  }
   return json({ ok: true });
 }
 
@@ -531,7 +548,11 @@ ${p('With love,<br><span style="font-style:italic;color:#1a1815">Ivy</span>')}
   return { subject, text, html };
 }
 
-/** The couple's confirmation after a calculator enquiry: it's with Ivy, plus the booking link and their estimate. */
+/**
+ * The couple's thank-you after a wedding enquiry: it's with Ivy, plus the
+ * booking link. From the calculator it also carries their estimate (est);
+ * from the Contact and Weddings forms est is null.
+ */
 function enquiryConfirmEmail(est, origin, names) {
   const e = escapeHtml;
   const blocks = est ? estimateBlocks(est) : null;
@@ -539,7 +560,9 @@ function enquiryConfirmEmail(est, origin, names) {
   const who = names.length <= 40 ? names : "";
   const p = (body) =>
     `<p style="margin:0 0 16px;font-family:Georgia,'Times New Roman',serif;font-size:16px;line-height:1.7;color:#57524b">${body}</p>`;
-  const intro = "Your details and floral estimate are with me, and I’ll be in touch personally within 1–2 business days.";
+  const intro = est
+    ? "Your details and floral estimate are with me, and I’ll be in touch personally within 1–2 business days."
+    : "Your details are with me, and I’ll be in touch personally within 1–2 business days.";
   const book =
     "If you haven’t booked already, choose a time for your complimentary 30-minute video chat. There’s no obligation, and it’s the easiest way to talk through your ideas together.";
   const text = [
@@ -550,8 +573,7 @@ function enquiryConfirmEmail(est, origin, names) {
     book,
     `Book your consultation: ${site.consultationUrl}`,
     ...(blocks ? ["", "YOUR ESTIMATE", blocks.text, "", `Open your estimate: ${est.link}`] : []),
-    "",
-    ...ESTIMATE_FINE_PRINT.map((l) => `* ${l}`),
+    ...(blocks ? ["", ...ESTIMATE_FINE_PRINT.map((l) => `* ${l}`)] : []),
     "",
     "With love,",
     "Ivy",
@@ -582,7 +604,7 @@ ${blocks.html}
     : ""
 }
 <tr><td style="padding:26px 40px 4px">
-<ul style="margin:0 0 22px;padding-left:18px;font-family:Arial,sans-serif;font-size:12px;line-height:1.7;color:#756f66">${ESTIMATE_FINE_PRINT.map((l) => `<li>${e(l)}</li>`).join("")}</ul>
+${blocks ? `<ul style="margin:0 0 22px;padding-left:18px;font-family:Arial,sans-serif;font-size:12px;line-height:1.7;color:#756f66">${ESTIMATE_FINE_PRINT.map((l) => `<li>${e(l)}</li>`).join("")}</ul>` : ""}
 ${p('With love,<br><span style="font-style:italic;color:#1a1815">Ivy</span>')}
 </td></tr>
 <tr><td style="padding:20px 40px 32px;border-top:1px solid #e6e2da">

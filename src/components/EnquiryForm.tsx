@@ -155,9 +155,12 @@ export default function EnquiryForm({ kind = "general", selector = false, compac
           We&rsquo;ll be in touch within 1–2 business days.
         </p>
         {mode === "wedding" && (
-          <a href={site.consultationUrl} target="_blank" rel="noopener" className="btn-outline mt-6">
-            Book your free 30-minute consultation
-          </a>
+          <>
+            <a href={site.consultationUrl} target="_blank" rel="noopener" className="btn-outline mt-6">
+              Book your free 30-minute consultation
+            </a>
+            <p className="mt-4 text-[0.78125rem] text-muted">We&rsquo;ve emailed you this link too, so you can book later.</p>
+          </>
         )}
       </div>
     );
