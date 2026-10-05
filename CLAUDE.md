@@ -299,3 +299,8 @@ is retired. The system:
   "<name>-mobile" crop; `HeroImage` serves it to portrait phones via <picture>. Change a
   banner photo: replace the source, run `npm run images` (the crop regenerates).
 - Gallery preloading starts after window load so the first screen gets bandwidth first.
+- LIVE since 6 Oct 2026, 12:40 NZT: willowandpeony.co.nz and www are Worker custom domains
+  (wrangler.jsonc routes); Shopify's apex A/AAAA and www CNAME were deleted. The Worker
+  301s www and plain http to https on the apex. staging.* still serves the same build with
+  noindex. Keep the zone's MX (Google Workspace), SPF/DMARC/google-site-verification TXT
+  and the send/rsend/resend records (Resend) untouched.
