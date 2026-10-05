@@ -38,11 +38,12 @@ function item(name: string, alt: string, cat: GalleryItem["cat"]): GalleryItem |
  * newest story first.
  */
 export function getGalleryItems(): GalleryItem[] {
-  const weddings = WEDDING_GALLERY.map((g) =>
-    imageNames(`gallery-${g.slug}-`)
-      .map((name) => item(name, g.alt, "weddings"))
-      .filter((x): x is GalleryItem => x !== null),
-  );
+  const weddings = WEDDING_GALLERY.map((g) => {
+    const names = imageNames(`gallery-${g.slug}-`);
+    const lead = g.lead ? `gallery-${g.slug}-${g.lead}` : null;
+    const ordered = lead && names.includes(lead) ? [lead, ...names.filter((n) => n !== lead)] : names;
+    return ordered.map((name) => item(name, g.alt, "weddings")).filter((x): x is GalleryItem => x !== null);
+  });
 
   const seen = new Set<string>();
   const events = getPosts()

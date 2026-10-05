@@ -98,10 +98,11 @@ export default function GalleryLightbox({ items }: { items: GalleryItem[] }) {
         {blocks.map((block, b) =>
           block.full ? (
             // Phones: three columns, the lead photo two by two (on the right in
-            // alternate blocks). Tablets and up: the 12 by 6 mosaic.
+            // alternate blocks; dense flow fills the cell beside it). Tablets
+            // and up: the 12 by 6 mosaic, every slot placed explicitly.
             <div
               key={b}
-              className="grid aspect-[3/4] grid-cols-3 grid-rows-4 gap-1.5 sm:gap-3 md:aspect-[2/1] md:grid-cols-12 md:grid-rows-6"
+              className="grid aspect-[3/4] grid-flow-row-dense grid-cols-3 grid-rows-4 gap-1.5 sm:gap-3 md:aspect-[2/1] md:grid-cols-12 md:grid-rows-6"
             >
               {block.tiles.map(({ item, i }, slot) => (
                 <button
