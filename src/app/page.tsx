@@ -38,8 +38,8 @@ const services = [
     number: "03",
     label: "Corporate",
     href: "/event-flowers-auckland/",
-    image: "event-flowers-auckland-dsc03608-2",
-    alt: "Statement corporate event flowers at an Auckland venue",
+    image: "corporate-event-flowers-auckland-hydrangea-buffet-runner",
+    alt: "Blue hydrangea, orange orchid and green anthurium runner along a corporate event buffet in Auckland",
     copy: "Launches, galas and conferences with florals that carry your brand.",
   },
 ];
