@@ -635,7 +635,7 @@ function estimateEnquiryEmail(data, { names, email }, est) {
   const row = (l, v) =>
     `<tr><td style="padding:10px 16px 10px 0;border-top:1px solid #e6e2da;font-family:Arial,sans-serif;font-size:13px;color:#756f66;white-space:nowrap;vertical-align:top;width:120px">${e(l)}</td><td style="padding:10px 0;border-top:1px solid #e6e2da;font-family:Arial,sans-serif;font-size:14px;color:#1a1815">${v}</td></tr>`;
   const contact = [
-    row("Names", `<strong>${e(names)}</strong>`),
+    row("Name", `<strong>${e(names)}</strong>`),
     row("Email", `<a href="mailto:${e(email)}" style="color:#1a1815">${e(email)}</a>`),
     phone ? row("Phone", `<a href="tel:${e(phone.replace(/[^+\d]/g, ""))}" style="color:#1a1815">${e(phone)}</a>`) : "",
   ].join("");
@@ -650,7 +650,7 @@ function estimateEnquiryEmail(data, { names, email }, est) {
   const text = [
     "NEW CALCULATOR ENQUIRY · via the wedding flower calculator",
     "",
-    `Names:  ${names}`,
+    `Name:   ${names}`,
     `Email:  ${email}`,
     ...(phone ? [`Phone:  ${phone}`] : []),
     ...(date ? [`Wedding date: ${date}`] : []),

@@ -183,7 +183,7 @@ export default function FloralCalculator() {
     const form = e.currentTarget;
     const fields = Object.fromEntries(new FormData(form).entries()) as Record<string, string>;
     if (!fields.names?.trim() || !isEmail(fields.email?.trim() ?? "") || !fields.phone?.trim() || !fields.date?.trim() || !fields.venue?.trim()) {
-      setEnqErr("Please add your names, a valid email, your phone, wedding date and venue.");
+      setEnqErr("Please add your name, a valid email, your phone, wedding date and venue.");
       return;
     }
     setEnqErr("");
@@ -202,7 +202,7 @@ export default function FloralCalculator() {
       const subject = encodeURIComponent(`Calculator enquiry: ${fields.names}`);
       const body = encodeURIComponent(
         [
-          `Names: ${fields.names}`,
+          `Name: ${fields.names}`,
           `Email: ${fields.email}`,
           fields.phone && `Phone: ${fields.phone}`,
           fields.date && `Wedding date: ${formatDate(fields.date)}`,
@@ -493,8 +493,8 @@ export default function FloralCalculator() {
                 </ol>
                 <form onSubmit={sendEnquiry} noValidate className="mt-6 grid gap-5 sm:grid-cols-2">
                   <input type="text" name="_gotcha" tabIndex={-1} autoComplete="off" aria-hidden className="hidden" />
-                  <Field label="Your names" required>
-                    <input name="names" required autoComplete="name" placeholder="Ava & James" className="input-wp" />
+                  <Field label="Your name" required>
+                    <input name="names" required autoComplete="name" className="input-wp" />
                   </Field>
                   <Field label="Email" required>
                     <input name="email" type="email" required autoComplete="email" className="input-wp" />
