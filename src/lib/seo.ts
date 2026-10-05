@@ -64,7 +64,8 @@ export function floristJsonLd() {
     email: site.email,
     telephone: site.phone,
     founder: { "@type": "Person", name: site.founder },
-    sameAs: [site.instagram],
+    sameAs: [site.instagram, site.googleBusiness],
+    hasMap: site.googleBusiness,
     image: imageOgUrl("auckland-bridal-party-blush-bouquets-hero", site.domain),
     priceRange: "$$-$$$",
     address: {

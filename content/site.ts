@@ -36,6 +36,8 @@ export const site = {
   region: "Auckland",
   base: "North Shore, Auckland, New Zealand",
   instagram: "https://www.instagram.com/willowandpeony.nz",
+  /** Google Business Profile (stable CID link; verified 6 Oct 2026). */
+  googleBusiness: "https://www.google.com/maps?cid=16000108084222543691",
   instagramHandle: "willowandpeony.nz",
   // Site-wide announcement bar. Empty string hides it. Update each season.
   announcement: "",
