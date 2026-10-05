@@ -327,19 +327,6 @@ export default function FloralCalculator() {
     const section = VISIBLE_SECTIONS.find((s) => s.id === id)!;
     return (
       <>
-        {id === STEPS[0].id && (
-          <div className="mb-8 max-w-[680px] border-l-2 border-hairline pl-4 text-[13.5px] leading-relaxed text-ink-soft">
-            <p>
-              Everything starts as Not required. Choose a tier for any piece you&rsquo;d like and
-              it&rsquo;s added as one, then set how many.
-            </p>
-            <p className="mt-1.5 text-muted">
-              For scale: a typical Signature wedding, with a bride and three bridesmaids, two
-              ceremony plinths, eight tables with bud vases, a bar arrangement, delivery and
-              pack-down, is from {money(TYPICAL_TOTAL)} excl. GST.
-            </p>
-          </div>
-        )}
         <div className="grid gap-5 sm:grid-cols-2">
           {section.items.map((it) => (
             <ItemCard
@@ -553,10 +540,15 @@ export default function FloralCalculator() {
         <h1 className="display-1 mt-3 text-ink">
           Build your <em>floral estimate</em>
         </h1>
-        <p className="mt-5 max-w-[560px] text-[15px] leading-[1.7] font-light text-ink-soft">
-          Go one category at a time, choose the pieces you&rsquo;d love, and see your estimate as you go.
-          Send me your selections when you&rsquo;re ready, and we&rsquo;ll work through the
-          details together.
+        <p className="mt-5 max-w-[600px] text-[15px] leading-[1.7] font-light text-ink-soft">
+          Go one category at a time: choose a tier for each piece you&rsquo;d love, set how many,
+          and watch your estimate build as you go. Send me your selections when you&rsquo;re ready,
+          and we&rsquo;ll work through the details together.
+        </p>
+        <p className="mt-4 max-w-[600px] text-[13px] leading-relaxed text-muted">
+          For scale, a typical Signature wedding is from {money(TYPICAL_TOTAL)} excl. GST: a bride and
+          three bridesmaids, two ceremony plinths, eight tables with bud vases, a bar arrangement,
+          delivery and pack-down.
         </p>
       </section>
 

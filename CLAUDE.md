@@ -104,7 +104,7 @@ exclude GST, and display as "from" prices everywhere.
   crawlable. Desktop keeps a sticky running estimate; phones a bottom bar.
 - Logic lives in `src/lib/estimate.ts` (pure, relative imports only:
   wrangler bundles it into the Worker). Regression check: Ivy's typical
-  Signature wedding (`exampleSelection()`, shown on step 1 "for scale")
+  Signature wedding (`exampleSelection()`, shown in the intro "for scale")
   totals from $4,680 (florals $4,090 + services $590).
 - `?e=<code>` reopens an estimate at Review & send (used by the emailed link).
 - Worker `POST /api/estimate`: `email` sends the couple their estimate from
