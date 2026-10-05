@@ -182,9 +182,13 @@ export default function HomePage() {
         images={featureImages([
           "gallery-auckland-city-wedding-02",
           "gallery-amanda-bryan-hotel-britomart-05",
-          "gallery-kaelan-tongtong-st-matthew-in-the-city-08",
           "gallery-leah-riley-private-venue-04",
+          "gallery-kaelan-tongtong-st-matthew-in-the-city-08",
+          "gallery-kate-ben-the-officers-mess-04",
+          "gallery-claire-dan-allely-estate-01",
           "gallery-yue-vern-bridgewater-estate-01",
+          "gallery-yue-vern-bridgewater-estate-04",
+          "gallery-leah-riley-private-venue-01",
         ])}
       />
 

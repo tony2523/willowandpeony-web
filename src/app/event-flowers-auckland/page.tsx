@@ -176,9 +176,13 @@ export default function EventsPage() {
         images={featureImages([
           "unified-commerce-assembly-2026-event-flo-uca-2026-by-w-p-3",
           "shopify-leadership-dinner-event-flowers--dsc03581",
-          "elevating-others-gala-dinner-flowers-par-elevating-others-4",
           "elevating-others-gala-dinner-flowers-par-elevating-others-2",
+          "elevating-others-gala-dinner-flowers-par-elevating-others-4",
+          "shopify-leadership-dinner-event-flowers--dsc03511",
+          "unified-commerce-assembly-2026-event-flo-uca-2026-by-w-p-5",
           "elevating-others-gala-dinner-flowers-par-elevating-others-5",
+          "shopify-leadership-dinner-event-flowers--img-2587",
+          "shopify-leadership-dinner-event-flowers--dsc03547",
         ])}
       />
 

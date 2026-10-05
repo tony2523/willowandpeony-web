@@ -95,9 +95,13 @@ export default function WeddingsPage() {
         images={featureImages([
           "gallery-kate-ben-the-officers-mess-01",
           "gallery-amanda-bryan-hotel-britomart-02",
-          "gallery-claire-dan-allely-estate-01",
           "gallery-claire-dan-allely-estate-11",
+          "gallery-claire-dan-allely-estate-09",
+          "gallery-auckland-city-wedding-03",
+          "gallery-kaelan-tongtong-st-matthew-in-the-city-07",
           "gallery-auckland-city-wedding-08",
+          "gallery-leah-riley-private-venue-02",
+          "gallery-amanda-bryan-hotel-britomart-03",
         ])}
       />
 

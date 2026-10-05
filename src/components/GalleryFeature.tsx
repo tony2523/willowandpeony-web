@@ -3,20 +3,27 @@ import Pic from "@/components/Pic";
 import type { FeatureImage } from "@/lib/gallery";
 
 /**
- * Editorial gallery teaser (home, Weddings, Events): five photos in an
+ * Editorial gallery teaser (home, Weddings, Events): nine photos in an
  * asymmetric mosaic, almost edge to edge like the gallery page, linking to
- * the matching gallery filter. Laptops and up: a big portrait on the left,
- * two near-square shots stacked in the middle, a tall portrait over a small
- * landscape on the right. Phones: a big lead photo, then two by two.
- * Pick photos whose shape suits the slot: portrait, landscape, portrait,
- * landscape, landscape.
+ * the matching gallery filter. The mosaic is half as tall as it is wide
+ * (square on phones), capped at the window height less the header and
+ * heading, so the heading and every photo fit in one view.
+ * Laptops and tablets: 12 columns by 6 rows. Phones: three columns, the
+ * lead photo two by two and five square ones (the last three photos are
+ * left out so the section is three rows and fits one phone screen).
+ * Slot shapes, in order: portrait, landscape, landscape, portrait, portrait,
+ * portrait, landscape, portrait, portrait. Pick photos to match.
  */
 const SLOTS = [
-  { cls: "col-span-2 aspect-[4/5] md:aspect-auto md:col-[1/6] md:row-[1/7]", sizes: "(max-width: 767px) 100vw, 42vw" },
-  { cls: "aspect-square md:aspect-auto md:col-[6/10] md:row-[1/4]", sizes: "(max-width: 767px) 50vw, 34vw" },
-  { cls: "aspect-square md:aspect-auto md:col-[10/13] md:row-[1/5]", sizes: "(max-width: 767px) 50vw, 25vw" },
-  { cls: "aspect-square md:aspect-auto md:col-[6/10] md:row-[4/7]", sizes: "(max-width: 767px) 50vw, 34vw" },
-  { cls: "aspect-square md:aspect-auto md:col-[10/13] md:row-[5/7]", sizes: "(max-width: 767px) 50vw, 25vw" },
+  { cls: "col-span-2 row-span-2 md:col-[1/4] md:row-[1/5]", sizes: "(max-width: 767px) 67vw, 25vw" },
+  { cls: "md:col-[1/4] md:row-[5/7]", sizes: "(max-width: 767px) 33vw, 25vw" },
+  { cls: "md:col-[4/8] md:row-[1/4]", sizes: "(max-width: 767px) 33vw, 34vw" },
+  { cls: "md:col-[4/6] md:row-[4/7]", sizes: "(max-width: 767px) 33vw, 17vw" },
+  { cls: "md:col-[6/8] md:row-[4/7]", sizes: "(max-width: 767px) 33vw, 17vw" },
+  { cls: "md:col-[8/11] md:row-[1/5]", sizes: "(max-width: 767px) 33vw, 25vw" },
+  { cls: "max-md:hidden md:col-[8/11] md:row-[5/7]", sizes: "(max-width: 767px) 33vw, 25vw" },
+  { cls: "max-md:hidden md:col-[11/13] md:row-[1/4]", sizes: "(max-width: 767px) 33vw, 17vw" },
+  { cls: "max-md:hidden md:col-[11/13] md:row-[4/7]", sizes: "(max-width: 767px) 33vw, 17vw" },
 ];
 
 export default function GalleryFeature({
@@ -43,8 +50,8 @@ export default function GalleryFeature({
           {linkLabel}
         </Link>
       </div>
-      <div className="mx-auto mt-10 max-w-[120rem] px-2 sm:px-4 md:mt-12 lg:px-6">
-        <div className="grid grid-cols-2 gap-2 sm:gap-3 md:aspect-[3/2] md:grid-cols-12 md:grid-rows-6 lg:aspect-[16/9]">
+      <div className="mx-auto mt-8 max-w-[120rem] px-2 sm:px-4 md:mt-12 lg:px-6">
+        <div className="grid aspect-square max-h-[calc(100svh-16rem)] w-full grid-cols-3 grid-rows-3 gap-1 sm:gap-2 md:aspect-[2/1] md:grid-cols-12 md:grid-rows-6 lg:gap-3">
           {images.slice(0, SLOTS.length).map((img, i) => (
             <Link
               key={img.name}
