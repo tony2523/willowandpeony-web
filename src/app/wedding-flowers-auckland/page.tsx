@@ -93,10 +93,10 @@ export default function WeddingsPage() {
         href="/gallery/"
         linkLabel="View the wedding gallery"
         images={featureImages([
-          "gallery-kate-ben-the-officers-mess-01",
+          "gallery-claire-dan-allely-estate-09",
           "gallery-amanda-bryan-hotel-britomart-02",
           "gallery-claire-dan-allely-estate-11",
-          "gallery-claire-dan-allely-estate-09",
+          "gallery-yue-vern-bridgewater-estate-10",
           "gallery-auckland-city-wedding-03",
           "gallery-kaelan-tongtong-st-matthew-in-the-city-07",
           "gallery-auckland-city-wedding-08",
