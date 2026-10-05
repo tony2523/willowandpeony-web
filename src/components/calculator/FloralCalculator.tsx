@@ -264,13 +264,13 @@ export default function FloralCalculator() {
         )}
       </div>
       <div className="mt-4 space-y-1.5 border-t border-hairline pt-4 text-[13px] tabular-nums">
-        <div className="flex justify-between">
-          <span className="text-ink-soft">Florals</span>
-          <span className="text-ink">{r.florals ? "from " + money(r.florals) : "—"}</span>
+        <div className="flex justify-between gap-3">
+          <span className="text-ink-soft">Florals total</span>
+          <span className="whitespace-nowrap text-ink">{r.florals ? "from " + money(r.florals) : "—"}</span>
         </div>
-        <div className="flex justify-between">
-          <span className="text-ink-soft">Delivery &amp; services</span>
-          <span className="text-ink">{r.services ? from + money(r.services) : "—"}</span>
+        <div className="flex justify-between gap-3">
+          <span className="text-ink-soft">Delivery &amp; services total</span>
+          <span className="whitespace-nowrap text-ink">{r.services ? from + money(r.services) : "—"}</span>
         </div>
       </div>
       <div className="mt-4 border-t border-hairline pt-5" aria-live="polite">

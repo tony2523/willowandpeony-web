@@ -448,8 +448,8 @@ ${r.svcLines.length ? head("Delivery &amp; services") + r.svcLines.map(row).join
 </table>
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:10px;border-top:1px solid #1a1815">
 <tr><td colspan="2" style="height:8px"></td></tr>
-${sum("Florals", r.florals ? "from " + money(r.florals) : "—")}
-${sum("Delivery &amp; services", r.services ? est.from + money(r.services) : "—")}
+${sum("Florals total", r.florals ? "from " + money(r.florals) : "—")}
+${sum("Delivery &amp; services total", r.services ? est.from + money(r.services) : "—")}
 ${sum("<strong>Estimated total</strong> · excl. GST", `<strong>${est.from}${money(r.total)}</strong>`, true)}
 ${sum("Including 15% GST", est.from + money(r.total * (1 + GST)))}
 </table>
@@ -459,8 +459,8 @@ ${est.extras ? `<p style="margin:8px 0 0;font-family:Arial,sans-serif;font-size:
     ...(r.lines.length ? r.lines.map((l) => `- ${l.name} (${l.detail}): ${l.value}`) : ["No pieces selected"]),
     ...(r.svcLines.length ? ["", "Delivery & services:", ...r.svcLines.map((l) => `- ${l.name}: ${l.value}`)] : []),
     "",
-    `Florals: ${r.florals ? "from " + money(r.florals) : "-"}`,
-    `Delivery & services: ${r.services ? est.from + money(r.services) : "-"}`,
+    `Florals total: ${r.florals ? "from " + money(r.florals) : "-"}`,
+    `Delivery & services total: ${r.services ? est.from + money(r.services) : "-"}`,
     `Estimated total (excl. GST): ${est.from}${money(r.total)}${est.extras ? " " + est.extras : ""}`,
     `Including 15% GST: ${est.from}${money(r.total * (1 + GST))}`,
   ].join("\n");
