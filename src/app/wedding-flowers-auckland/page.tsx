@@ -159,10 +159,10 @@ export default function WeddingsPage() {
       <section className="mt-24 md:mt-[8.75rem]">
         <div className="grid md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] 2xl:mx-auto 2xl:max-w-(--site-column) 2xl:items-center 2xl:gap-16 2xl:px-6">
           <Pic
-            name="wedding-flowers-auckland-scarlet-style-shoot4"
-            alt="Bespoke crimson and blush bridal bouquet by Willow & Peony"
+            name="gallery-claire-dan-allely-estate-01"
+            alt="Bespoke ceremony installation of anthuriums, gerberas, delphiniums and grasses at Allely Estate by Willow & Peony"
             sizes="(max-width: 768px) 100vw, 50vw"
-            className="h-full max-h-[43.75rem] w-full object-cover max-md:aspect-[4/5] max-md:h-auto max-md:mx-auto max-md:w-[calc(100%-2.5rem)] sm:max-md:w-[calc(100%-5rem)]"
+            className="h-full max-h-[43.75rem] w-full object-cover object-[50%_62%] max-md:aspect-[4/5] max-md:h-auto max-md:mx-auto max-md:w-[calc(100%-2.5rem)] sm:max-md:w-[calc(100%-5rem)]"
           />
           <div className="flex flex-col justify-center px-5 py-14 sm:px-10 md:px-16 md:py-20 2xl:px-0">
             <p className="eyebrow text-muted">Fully bespoke</p>
