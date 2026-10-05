@@ -285,3 +285,8 @@ is retired. The system:
   (home: `(max-aspect-ratio: 3/2) 150vh, 100vw`; Hero computes it). Banner photos are
   in the pipeline's HERO list (quality 86, full-width size). They are 2000px wide, so
   retina Macs show them at 2x; only a larger original makes them sharper there.
+- Date fields (`DateInput`): the site's own calendar, not the browser's. Clicking anywhere
+  in the box opens it underneath at the box's width (short month names under 260px).
+  The field holds "Saturday 14 March 2027" under its `name`, so FormData, emails and
+  `required` work; typing is blocked; past dates disabled; keyboard: Enter/arrows/PageUp/
+  PageDown/Escape. Tests pick a date by clicking a day, not by typing.

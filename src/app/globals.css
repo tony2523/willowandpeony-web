@@ -452,20 +452,3 @@ summary {
     transition-duration: 0.01ms !important;
   }
 }
-
-/* Date pickers share the field look; Safari otherwise centres the value and
-   collapses an empty iOS picker. */
-input[type="date"].input-wp {
-  -webkit-appearance: none;
-  appearance: none;
-  display: block;
-  width: 100%;
-  min-width: 0;
-}
-input[type="date"].input-wp::-webkit-date-and-time-value {
-  text-align: left;
-}
-input[type="date"].input-wp::-webkit-calendar-picker-indicator {
-  opacity: 0.55;
-  cursor: pointer;
-}
