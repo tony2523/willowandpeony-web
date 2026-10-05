@@ -87,11 +87,19 @@ exclude GST, and display as "from" prices everywhere.
   `npm run images` (calculator photos get no OG card), then list them in
   `PHOTOS`. An item only shows once it has photos; flower girl bouquet,
   flower girl crown, hair flowers and aisle petals are waiting on photos.
+- Guided journey (Tony, 5 Oct 2026): one category at a time as numbered
+  accordion steps (Bridal party, Ceremony, Reception, Details & petals,
+  Delivery & services, Review & send). Starts EMPTY at step 1; every piece
+  defaults to Signature; the floral tier is compared and switched at Review
+  & send, not chosen first. Finished steps collapse to "N pieces · from $X"
+  or "Skipped". Collapsed steps stay in the DOM (hidden) so every price is
+  crawlable. Desktop keeps a sticky running estimate; phones a bottom bar.
 - Logic lives in `src/lib/estimate.ts` (pure, relative imports only:
-  wrangler bundles it into the Worker). Regression check: the first-visit
-  example totals from $4,680 (florals $4,090 + services $590); all Essential
+  wrangler bundles it into the Worker). Regression check: Ivy's typical
+  Signature wedding (`exampleSelection()`, shown on step 1 "for scale")
+  totals from $4,680 (florals $4,090 + services $590); all Essential
   $3,390, all Luxe $6,330.
-- `?e=<code>` reopens an estimate (used by the emailed link).
+- `?e=<code>` reopens an estimate at Review & send (used by the emailed link).
 - Worker `POST /api/estimate`: `email` sends the couple their estimate from
   hello@ with ivy@ BCC'd; `enquire` sends Ivy the estimate plus the couple's
   details, reply-to the couple. Totals are recomputed server-side from the
