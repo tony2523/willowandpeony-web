@@ -3869,5 +3869,27 @@
    1600,
    2000
   ]
+ },
+ "auckland-bridal-party-blush-bouquets-hero-mobile": {
+  "w": 800,
+  "h": 1333,
+  "sizes": [
+   480,
+   768,
+   800
+  ],
+  "srcBytes": 325290,
+  "left": 600
+ },
+ "wedding-flowers-auckland-hero-bouquet-and-rings-mobile": {
+  "w": 800,
+  "h": 1333,
+  "sizes": [
+   480,
+   768,
+   800
+  ],
+  "srcBytes": 347164,
+  "left": 700
  }
 }

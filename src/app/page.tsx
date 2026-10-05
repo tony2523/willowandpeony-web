@@ -9,6 +9,7 @@ import LatestWork from "@/components/LatestWork";
 import { googleRating } from "../../content/reviews";
 import GalleryFeature from "@/components/GalleryFeature";
 import { featureImages } from "@/lib/gallery";
+import HeroImage from "@/components/HeroImage";
 
 export const metadata: Metadata = pageMetadata({
   title: "Wedding & Event Florist Auckland | Willow & Peony",
@@ -52,13 +53,13 @@ export default function HomePage() {
     <>
       {/* Hero — full-viewport image, transparent header floats over it */}
       <section className="relative h-svh min-h-[40rem] w-full overflow-hidden">
-        <Pic
+        <HeroImage
           name="auckland-bridal-party-blush-bouquets-hero"
           alt="Bridal party holding blush and ivory bouquets by Willow & Peony, Auckland"
           // Full-screen cover: on screens taller than 3:2 the photo is drawn
-          // 1.5 x the screen height wide, so phones need the big file.
+          // 1.5 x the screen height wide; phones get the 3:5 portrait crop.
           sizes="(max-aspect-ratio: 3/2) 150vh, 100vw"
-          priority
+          mobileSizes="(max-aspect-ratio: 3/5) 60vh, 100vw"
           className="absolute inset-0 h-full w-full object-cover object-[50%_62%] md:object-center"
         />
         <div

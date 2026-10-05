@@ -49,22 +49,31 @@ export default function GalleryLightbox({ items }: { items: GalleryItem[] }) {
   );
   const visible = filtered;
 
-  // Preload the next fold: start loading images two screens ahead of the viewport.
+  // Preload the next fold: start loading images two screens ahead of the viewport,
+  // once the page has loaded, so the first screen's photos get the bandwidth first.
   useEffect(() => {
     const root = grid.current;
     if (!root || !("IntersectionObserver" in window)) return;
-    const io = new IntersectionObserver(
+    let io: IntersectionObserver | null = null;
+    const start = () => {
+      io = new IntersectionObserver(
       (entries) => {
         for (const e of entries) {
           if (!e.isIntersecting) continue;
           (e.target as HTMLImageElement).loading = "eager";
-          io.unobserve(e.target);
+          io?.unobserve(e.target);
         }
       },
       { rootMargin: PRELOAD_MARGIN },
-    );
-    root.querySelectorAll("img[loading=lazy]").forEach((img) => io.observe(img));
-    return () => io.disconnect();
+      );
+      root.querySelectorAll("img[loading=lazy]").forEach((img) => io!.observe(img));
+    };
+    if (document.readyState === "complete") start();
+    else window.addEventListener("load", start, { once: true });
+    return () => {
+      window.removeEventListener("load", start);
+      io?.disconnect();
+    };
   }, [filtered]);
 
   // Blocks of nine in the editorial mosaic, alternate blocks mirrored. Within

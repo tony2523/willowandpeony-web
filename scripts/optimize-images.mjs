@@ -23,9 +23,16 @@ const MANIFEST = "src/lib/image-manifest.json";
 const WIDTHS = [480, 768, 960, 1200, 1600];
 const QUALITY = { 480: 70, 768: 72, 960: 72, 1200: 73, 1600: 74 };
 // Full-screen banners are enlarged on retina screens, so they get higher
-// quality and an extra size at the photo's full width (up to 2400px).
-const HERO = new Set(["auckland-bridal-party-blush-bouquets-hero", "wedding-flowers-auckland-hero-bouquet-and-rings"]);
+// quality and an extra size at the photo's full width (up to 2400px). Each
+// also gets a portrait "<name>-mobile" crop for phones (3:5, centred on the
+// focal point given here as a fraction of the width): phones only ever show
+// that middle part, so they load a third of the bytes at the same sharpness.
+const HERO = new Map([
+  ["auckland-bridal-party-blush-bouquets-hero", 0.5],
+  ["wedding-flowers-auckland-hero-bouquet-and-rings", 0.55],
+]);
 const HERO_QUALITY = 86;
+const MOBILE_QUALITY = 80; // phone crops: smaller files on mobile data
 
 fs.mkdirSync(OUT, { recursive: true });
 const manifest = fs.existsSync(MANIFEST) ? JSON.parse(fs.readFileSync(MANIFEST, "utf8")) : {};
@@ -97,8 +104,38 @@ const workers = Array.from({ length: 6 }, async () => {
 });
 await Promise.all(workers);
 
-// prune manifest entries whose source no longer exists
+// Portrait phone crops of the banners (regenerated when the source changes).
+for (const [name, focalX] of HERO) {
+  const file = files.find((f) => f.replace(/\.(jpe?g|png|webp)$/i, "") === name);
+  if (!file) continue;
+  const srcPath = path.join(SRC, file);
+  const srcBytes = fs.statSync(srcPath).size;
+  const meta = await sharp(srcPath, { failOn: "none" }).rotate().metadata();
+  const w = meta.width ?? 0;
+  const h = meta.height ?? 0;
+  const cw = Math.min(w, Math.round(h * 0.6));
+  const left = Math.max(0, Math.min(w - cw, Math.round(focalX * w - cw / 2)));
+  const mobile = `${name}-mobile`;
+  const sizes = [...WIDTHS.filter((x) => x < cw && x <= 768), Math.min(cw, 1200)];
+  const prev = manifest[mobile];
+  const stale = !prev || prev.srcBytes !== srcBytes || prev.left !== left || prev.w !== Math.min(cw, 1200);
+  for (const size of sizes) {
+    const out = path.join(OUT, `${mobile}-${size}w.webp`);
+    if (!stale && fs.existsSync(out)) continue;
+    await sharp(srcPath, { failOn: "none" })
+      .rotate()
+      .extract({ left, top: 0, width: cw, height: h })
+      .resize({ width: size, withoutEnlargement: true })
+      .webp({ quality: MOBILE_QUALITY })
+      .toFile(out);
+  }
+  manifest[mobile] = { w: Math.min(cw, 1200), h: Math.round((h * Math.min(cw, 1200)) / cw), sizes, srcBytes, left };
+}
+
+// prune manifest entries whose source no longer exists (phone crops belong to their banner)
 for (const name of Object.keys(manifest)) {
+  const base = name.replace(/-mobile$/, "");
+  if (name !== base && HERO.has(base)) continue;
   if (!files.some((f) => f.replace(/\.(jpe?g|png|webp)$/i, "") === name)) delete manifest[name];
 }
 

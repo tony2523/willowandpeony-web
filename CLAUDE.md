@@ -295,3 +295,7 @@ is retired. The system:
   your enquiry is with Ivy" with the Calendly button (Tony, 6 Oct 2026). Calculator
   "Send to Ivy" sends the same thank-you plus their estimate; "Email me my estimate" and
   the Flower Calendar go to the person with Ivy BCC'd. Event/general send the person nothing.
+- Banner phone crops: the pipeline's HERO map (name -> focal x) also writes a 3:5
+  "<name>-mobile" crop; `HeroImage` serves it to portrait phones via <picture>. Change a
+  banner photo: replace the source, run `npm run images` (the crop regenerates).
+- Gallery preloading starts after window load so the first screen gets bandwidth first.

@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { getImage, imageSrc, imageSrcSet } from "@/lib/images";
+import { getImage } from "@/lib/images";
+import HeroImage from "./HeroImage";
 
 /**
  * Interior page hero — 640px image banner with gradient overlay,
@@ -39,14 +40,13 @@ export default function Hero({
   return (
     <section className={`relative ${compact ? "h-[30rem]" : "h-[35rem] md:h-[40rem]"}`}>
       {entry && (
-        <img
-          src={imageSrc(image, 1600)}
-          srcSet={imageSrcSet(image)}
-          sizes={sizes}
-          width={entry.w}
-          height={entry.h}
+        <HeroImage
+          name={image}
           alt={alt}
-          fetchPriority="high"
+          sizes={sizes}
+          // 3:5 phone crop in a box 560px (480px compact) tall: drawn at the
+          // screen width, or 0.6 x the height on very narrow screens.
+          mobileSizes={`(max-width: ${Math.round((compact ? 480 : 560) * 0.6) - 1}px) ${Math.round((compact ? 480 : 560) * 0.6)}px, 100vw`}
           className={`absolute inset-0 h-full w-full object-cover ${position}`}
         />
       )}

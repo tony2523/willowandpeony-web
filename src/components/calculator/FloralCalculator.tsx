@@ -328,10 +328,11 @@ export default function FloralCalculator() {
     return (
       <>
         <div className="grid gap-4 sm:gap-5">
-          {section.items.map((it) => (
+          {section.items.map((it, n) => (
             <ItemCard
               key={it.id}
               it={it}
+              priority={id === STEPS[0].id && n === 0}
               sel={sel}
               onQty={(q) =>
                 edit((n) => {

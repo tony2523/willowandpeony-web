@@ -16,7 +16,7 @@ import {
 const CARD_SIZES = "(max-width: 639px) 100vw, (min-width: 1760px) 18vw, 320px";
 
 /** 4:5 photo with a "Signature shown" tag, arrows, dots and swipe when there are several. */
-function Slides({ name, list, tier }: { name: string; list: string[]; tier: number | null }) {
+function Slides({ name, list, tier, priority = false }: { name: string; list: string[]; tier: number | null; priority?: boolean }) {
   const [i, setI] = useState(0);
   const touchX = useRef<number | null>(null);
   const n = list.length;
@@ -40,7 +40,8 @@ function Slides({ name, list, tier }: { name: string; list: string[]; tier: numb
         srcSet={imageSrcSet(file)}
         sizes={CARD_SIZES}
         alt={`${name}${label ? `, ${label} tier` : ""}, example ${i + 1} of ${n}`}
-        loading="lazy"
+        loading={priority && i === 0 ? "eager" : "lazy"}
+        fetchPriority={priority && i === 0 ? "high" : "auto"}
         decoding="async"
         className="h-full w-full object-cover"
       />
@@ -71,7 +72,7 @@ function Slides({ name, list, tier }: { name: string; list: string[]; tier: numb
                 onClick={() => go(d)}
                 aria-label={`Photo ${d + 1} of ${n}`}
                 aria-current={d === i}
-                className="grid h-5 w-5 place-items-center"
+                className="grid h-6 w-6 place-items-center"
               >
                 <span
                   aria-hidden
@@ -189,6 +190,7 @@ export default function ItemCard({
   onStep,
   onTier,
   onAdd,
+  priority = false,
 }: {
   it: CalcItem;
   sel: Selection;
@@ -198,6 +200,8 @@ export default function ItemCard({
   onTier: (t: number) => void;
   /** Choose an untiered piece, shown as its single Signature option (adds one). */
   onAdd: () => void;
+  /** The page's first card: its photo is the main image, so load it straight away. */
+  priority?: boolean;
 }) {
   const qty = sel.items[it.id]?.qty ?? 0;
   const chosen = qty > 0;
@@ -210,7 +214,7 @@ export default function ItemCard({
         chosen ? "border-ink" : "border-hairline"
       }`}
     >
-      {photos && <Slides key={photos.list.join(",")} name={it.name} list={photos.list} tier={photos.tier} />}
+      {photos && <Slides key={photos.list.join(",")} name={it.name} list={photos.list} tier={photos.tier} priority={priority} />}
       <div className="flex min-w-0 flex-1 flex-col gap-3 p-4 sm:gap-4 sm:p-5 lg:p-6 [@media(max-height:600px)]:p-3">
         <div>
           <h3 className="font-serif text-[1.125rem] leading-[1.25] font-normal tracking-[-0.01em] text-ink sm:text-[1.25rem]">
