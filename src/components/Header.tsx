@@ -90,21 +90,23 @@ export default function Header() {
           <MobileNav light={transparent} />
         </div>
 
-        {/* Centre: logo — dark/white variants swapped by header state */}
+        {/* Centre: logo, dark/white variants swapped by header state. translate-y-[9%]
+            puts the lettering (not the image box, which includes the y's tail) on the
+            same midline as the burger and Enquire. */}
         <Link href="/" aria-label="Willow & Peony — home" className="block justify-self-center">
           <img
             src={withBase("/brand/willow-and-peony-logo-white.png")}
             alt="Willow & Peony"
             width={250}
             height={30}
-            className={`h-[1.1875rem] w-auto min-[360px]:h-[1.375rem] sm:h-[1.75rem] ${transparent ? "block group-hover:hidden" : "hidden"}`}
+            className={`h-[1.1875rem] w-auto translate-y-[9%] min-[360px]:h-[1.25rem] sm:h-[1.75rem] ${transparent ? "block group-hover:hidden" : "hidden"}`}
           />
           <img
             src={withBase("/brand/willow-and-peony-logo.png")}
             alt="Willow & Peony"
             width={250}
             height={30}
-            className={`h-[1.1875rem] w-auto min-[360px]:h-[1.375rem] sm:h-[1.75rem] ${transparent ? "hidden group-hover:block" : "block"}`}
+            className={`h-[1.1875rem] w-auto translate-y-[9%] min-[360px]:h-[1.25rem] sm:h-[1.75rem] ${transparent ? "hidden group-hover:block" : "block"}`}
           />
         </Link>
 
@@ -112,7 +114,7 @@ export default function Header() {
         <div className="flex items-center justify-end">
           <Link
             href="/contact/"
-            className={`hidden border px-5 py-2.5 text-[0.8125rem] tracking-[0.02em] transition-colors lg:inline-block ${
+            className={`hidden border px-5 pt-[0.6875rem] pb-[0.5625rem] text-[0.8125rem] tracking-[0.02em] transition-colors lg:inline-block ${
               transparent
                 ? "border-white/85 text-white group-hover:border-ink group-hover:text-ink hover:bg-white hover:text-ink"
                 : "border-ink text-ink hover:bg-ink hover:text-white"
@@ -120,7 +122,7 @@ export default function Header() {
           >
             Enquire
           </Link>
-          <Link href="/contact/" className={`${linkCls} lg:hidden`}>
+          <Link href="/contact/" className={`${linkCls} translate-y-[0.03125rem] lg:hidden`}>
             Enquire
           </Link>
         </div>
