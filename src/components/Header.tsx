@@ -97,14 +97,14 @@ export default function Header() {
             alt="Willow & Peony"
             width={250}
             height={30}
-            className={`h-[1.1875rem] w-auto sm:h-[1.75rem] ${transparent ? "block group-hover:hidden" : "hidden"}`}
+            className={`h-[1.1875rem] w-auto min-[360px]:h-[1.375rem] sm:h-[1.75rem] ${transparent ? "block group-hover:hidden" : "hidden"}`}
           />
           <img
             src={withBase("/brand/willow-and-peony-logo.png")}
             alt="Willow & Peony"
             width={250}
             height={30}
-            className={`h-[1.1875rem] w-auto sm:h-[1.75rem] ${transparent ? "hidden group-hover:block" : "block"}`}
+            className={`h-[1.1875rem] w-auto min-[360px]:h-[1.375rem] sm:h-[1.75rem] ${transparent ? "hidden group-hover:block" : "block"}`}
           />
         </Link>
 

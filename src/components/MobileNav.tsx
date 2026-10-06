@@ -83,7 +83,7 @@ export default function MobileNav({ light = false }: { light?: boolean }) {
                     alt="Willow & Peony"
                     width={250}
                     height={30}
-                    className="h-[1.25rem] w-auto"
+                    className="h-[1.25rem] w-auto min-[360px]:h-[1.375rem]"
                   />
                 </Link>
                 <button
