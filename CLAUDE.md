@@ -216,8 +216,8 @@ is retired. The system:
   eases from 1.06 scale) and `hero-in` (text staggers up; the h1 moves but
   never fades, so LCP is untouched). `src/components/Motion.tsx` fades in
   content that starts BELOW the fold as it scrolls into view, fades lazy
-  images in once loaded, fades the page in on client-side navigation and
-  smooth-scrolls same-page # links. Opt an element out with
+  images in once loaded and smooth-scrolls same-page # links. No fade on
+  page changes (it blinks: Tony removed it). Opt an element out with
   `data-no-reveal`; carousels, sideways scrollers, `details`, fixed/sticky
   and the header/footer are skipped already. All of it is off under
   prefers-reduced-motion. Never fade anything above the fold.

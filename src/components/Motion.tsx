@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 
 /**
@@ -10,7 +10,6 @@ import { usePathname } from "next/navigation";
  *    staggered. Anything visible when the page opens is never hidden, so the
  *    first paint (and the speed scores) are untouched.
  *  - Lazy photos below the fold fade in when they arrive instead of popping.
- *  - Moving between pages: the new page fades up softly (not on first load).
  *  - In-page links (#enquire) scroll smoothly.
  * All of it is skipped when the visitor prefers reduced motion. Styles live in
  * globals.css ([data-reveal], img[data-img-loading]).
@@ -20,8 +19,6 @@ const TARGETS = "h2, h3, .eyebrow, p, li, figure, blockquote, article, img, form
 // never cross the screen vertically), fixed bars and the banners (own entrance).
 const SKIP =
   'header, footer, nav, [role=dialog], [hidden], details, .carousel, [class*="overflow-x-auto"], [class*="overflow-x-scroll"], .fixed, .sticky, .hero-in, [data-no-reveal]';
-const ease = "cubic-bezier(0.22, 0.61, 0.36, 1)";
-
 function reducedMotion() {
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
@@ -40,25 +37,14 @@ function fadeWhenLoaded(img: HTMLImageElement) {
 
 export default function Motion() {
   const pathname = usePathname();
-  const first = useRef(true);
 
   useEffect(() => {
     if (reducedMotion()) return;
     const main = document.querySelector("main");
     if (!main) return;
 
-    // Page change: soft fade-up of the new page (never on the first load).
-    if (!first.current) {
-      main.animate(
-        [
-          { opacity: 0, transform: "translateY(0.5rem)" },
-          { opacity: 1, transform: "none" },
-        ],
-        { duration: 550, easing: ease },
-      );
-    }
-    first.current = false;
-
+    // No fade on page changes: it can only start after the new page has
+    // painted once, so it reads as a blink (Tony, 6 Oct 2026).
     const vh = window.innerHeight;
     const candidates = [...main.querySelectorAll<HTMLElement>(TARGETS)].filter((el) => !el.closest(SKIP));
     const set = new Set(candidates);
