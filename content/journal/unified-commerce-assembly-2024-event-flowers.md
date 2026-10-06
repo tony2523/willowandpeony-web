@@ -8,8 +8,8 @@ cover: "unified-commerce-assembly-2024-cover"
 palette: "White · green"
 ---
 
-![Unified Commerce Assembly 2024 — florals by Willow & Peony](/images/unified-commerce-assembly-2024-event-flo-uca-16)
+![White calla lilies, green anthuriums and green hydrangeas arranged for Unified Commerce Assembly 2024 in Auckland](/images/unified-commerce-assembly-2024-event-flo-uca-16)
 
-![Unified Commerce Assembly 2024 — florals by Willow & Peony](/images/unified-commerce-assembly-2024-event-flo-uca-203)
+![Panel discussion on stage at Unified Commerce Assembly 2024 with white and green flowers](/images/unified-commerce-assembly-2024-event-flo-uca-203)
 
-![Unified Commerce Assembly 2024 — florals by Willow & Peony](/images/unified-commerce-assembly-2024-event-flo-uca-18-2)
+![White and green flowers on the Unified Commerce Assembly coffee cart, 2024](/images/unified-commerce-assembly-2024-event-flo-uca-18-2)

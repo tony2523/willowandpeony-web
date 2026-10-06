@@ -305,3 +305,6 @@ is retired. The system:
   301s www and plain http to https on the apex. staging.* still serves the same build with
   noindex. Keep the zone's MX (Google Workspace), SPF/DMARC/google-site-verification TXT
   and the send/rsend/resend records (Resend) untouched.
+- Image alt text for story photos lives in the markdown (`![alt](/images/name)`); the gallery and
+  gallery sections reuse it via `post.imageAlts`. Write specific alts (flowers, setting, event,
+  venue), never the old generic "<title> — florals by Willow & Peony". Event stories done 6 Oct 2026.

@@ -32,7 +32,8 @@ function item(name: string, alt: string, cat: GalleryItem["cat"]): GalleryItem |
 
 /**
  * The gallery portfolio, one continuous gallery with each wedding's or
- * event's photos side by side (Tony, 6 Oct 2026). Weddings: the curated photos in
+ * event's photos side by side (Tony, 6 Oct 2026). Event photos use the alt
+ * text written in their story's markdown. Weddings: the curated photos in
  * content/gallery.ts, in its order. Events: every inline image from the
  * event stories (covers excluded, they already lead the story cards),
  * newest story first.
@@ -55,7 +56,7 @@ export function getGalleryItems(): GalleryItem[] {
           seen.add(name);
           return true;
         })
-        .map((name) => item(name, altFromName(name), "events"))
+        .map((name) => item(name, post.imageAlts[name] || altFromName(name), "events"))
         .filter((x): x is GalleryItem => x !== null),
     );
 
@@ -66,8 +67,9 @@ export type FeatureImage = { name: string; alt: string };
 
 /** Photos for a GalleryFeature, with the same alt text the gallery uses. */
 export function featureImages(names: string[]): FeatureImage[] {
+  const storyAlts: Record<string, string> = Object.assign({}, ...getPosts().map((p) => p.imageAlts));
   return names.map((name) => {
     const wedding = WEDDING_GALLERY.find((g) => name.startsWith(`gallery-${g.slug}-`));
-    return { name, alt: wedding ? wedding.alt : altFromName(name) };
+    return { name, alt: wedding ? wedding.alt : storyAlts[name] || altFromName(name) };
   });
 }

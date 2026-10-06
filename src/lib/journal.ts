@@ -21,6 +21,8 @@ export type Post = {
   photographerUrl?: string;
   cover: string; // image manifest name
   images: string[]; // manifest names of every inline image, in order
+  /** Each inline image's alt text from the markdown, by manifest name. */
+  imageAlts: Record<string, string>;
   html: string;
   plain: string; // plain-text body (for AEO / llms.txt)
 };
@@ -63,9 +65,9 @@ export function getPosts(): Post[] {
     const raw = fs.readFileSync(path.join(JOURNAL_DIR, file), "utf8");
     const { data, content } = matter(raw);
     const html = marked.parse(content, { renderer: renderer(), async: false }) as string;
-    const images = [...content.matchAll(/!\[[^\]]*\]\(\/images\/([^)\s]+)\)/g)]
-      .map((m) => m[1])
-      .filter((name) => getImage(name));
+    const inline = [...content.matchAll(/!\[([^\]]*)\]\(\/images\/([^)\s]+)\)/g)].filter((m) => getImage(m[2]));
+    const images = inline.map((m) => m[2]);
+    const imageAlts = Object.fromEntries(inline.map((m) => [m[2], m[1]]));
     const plain = content
       .replace(/!\[[^\]]*\]\([^)]*\)/g, "")
       .replace(/\[([^\]]*)\]\([^)]*\)/g, "$1")
@@ -86,6 +88,7 @@ export function getPosts(): Post[] {
       photographerUrl: (data.photographerUrl as string) || undefined,
       cover: data.cover as string,
       images,
+      imageAlts,
       html,
       plain,
     };

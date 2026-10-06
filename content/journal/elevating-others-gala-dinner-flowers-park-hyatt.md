@@ -13,7 +13,7 @@ Elevating Others — A night of beauty, purpose, and impact.
 
 Willow & Peony was honoured to provide the florals for Elevating Others, a powerful fundraising event by The Gut Group at the stunning Park Hyatt Auckland Hotel.
 
-![Elevating Others Dinner Event by The Gut Group — florals by Willow & Peony](/images/elevating-others-gala-dinner-flowers-par-elevating-others-4)
+![White orchids, irises, green cymbidium orchids and anthuriums in a tall black vase at Park Hyatt Auckland for the Elevating Others dinner](/images/elevating-others-gala-dinner-flowers-par-elevating-others-4)
 
 This event helps drive pioneering research, share vital education, and open up conversations around something often left too late — bowel cancer and gut disease. A cause that deeply matters, and one we’re proud to support.
 
@@ -21,18 +21,18 @@ Willow & Peony was entrusted with creating floral arrangements that would comple
 
 **A contemporary stage arrangement** placed next to the keynote speakers—sculptural and refined, featuring crisp white orchids, vibrant cymbidiums, green anthuriums, and textural foliage to echo the event's bold and uplifting spirit.
 
-![Elevating Others Dinner Event by The Gut Group — florals by Willow & Peony](/images/elevating-others-gala-dinner-flowers-par-elevating-others-8)
+![Speakers on stage at the Elevating Others fundraising dinner at Park Hyatt Auckland, with white and green florals](/images/elevating-others-gala-dinner-flowers-par-elevating-others-8)
 
-![Elevating Others Dinner Event by The Gut Group — florals by Willow & Peony](/images/elevating-others-gala-dinner-flowers-par-elevating-others-6)
+![Speaker at the lectern beside a white orchid and green cymbidium arrangement, Elevating Others dinner at Park Hyatt Auckland](/images/elevating-others-gala-dinner-flowers-par-elevating-others-6)
 
 **Minimalist centrepieces** for the guest tables—each designed to spark conversation without overwhelming the space, balancing form and freshness in every stem.
 
-![Elevating Others Dinner Event by The Gut Group — florals by Willow & Peony](/images/elevating-others-gala-dinner-flowers-par-elevating-others-2)
+![Green anthuriums and white flowers in a low vase on a black-linen table, Elevating Others dinner at Park Hyatt Auckland](/images/elevating-others-gala-dinner-flowers-par-elevating-others-2)
 
-![Elevating Others Dinner Event by The Gut Group — florals by Willow & Peony](/images/elevating-others-gala-dinner-flowers-par-elevating-others-5)
+![Round table set in black linen with a white and green centrepiece, Elevating Others gala dinner at Park Hyatt Auckland](/images/elevating-others-gala-dinner-flowers-par-elevating-others-5)
 
-![Elevating Others Dinner Event by The Gut Group — florals by Willow & Peony](/images/elevating-others-gala-dinner-flowers-par-elevating-others-7)
+![Guests dining at the Elevating Others fundraising dinner at Park Hyatt Auckland, with green and white table flowers](/images/elevating-others-gala-dinner-flowers-par-elevating-others-7)
 
-![Elevating Others Dinner Event by The Gut Group — florals by Willow & Peony](/images/elevating-others-gala-dinner-flowers-par-elevating-others-3)
+![Ballroom at Park Hyatt Auckland set for the Elevating Others gala dinner with white and green centrepieces](/images/elevating-others-gala-dinner-flowers-par-elevating-others-3)
 
 It was a joy to see our florals adding warmth and energy to such a meaningful night. Thank you to the Gut Foundation for including us in this beautiful cause. 💙
