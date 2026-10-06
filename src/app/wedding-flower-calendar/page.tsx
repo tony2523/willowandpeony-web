@@ -67,7 +67,7 @@ export default function CalendarPage() {
       {/* Hero: copy + form beside the calendar cover */}
       <section id="get-calendar" className="mx-auto max-w-(--site-column) scroll-mt-24 px-5 pt-14 sm:px-6 md:pt-20">
         <div className="grid items-center gap-12 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:gap-20">
-          <div>
+          <div className="hero-in">
             <p className="eyebrow text-muted">Free download · 17 pages</p>
             <h1 className="display-1 mt-4 text-ink">
               The Wedding Flower <em>Calendar</em>

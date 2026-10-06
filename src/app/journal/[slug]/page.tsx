@@ -72,7 +72,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
 
       <article>
         {/* Title block */}
-        <header className="mx-auto max-w-[51.25rem] px-5 pt-16 text-center sm:px-6 md:pt-24">
+        <header className="hero-in mx-auto max-w-[51.25rem] px-5 pt-16 text-center sm:px-6 md:pt-24">
           <p className="eyebrow text-muted">
             The journal · {article.tag}
           </p>

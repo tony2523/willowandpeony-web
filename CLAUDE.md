@@ -214,7 +214,10 @@ is retired. The system:
   `.t-link` redraws its line, footer `.link-sweep` grows one in, nav lines
   go in from the left and out to the right. Heros: `hero-settle` (photo
   eases from 1.06 scale) and `hero-in` (text staggers up; the h1 moves but
-  never fades, so LCP is untouched). `src/components/Motion.tsx` fades in
+  never fades, so LCP is untouched). EVERY page's top copy block (eyebrow,
+  h1, intro) carries `hero-in`, with the h1 as a direct child: Tony wants the
+  same entrance on every page, so give new pages and templates it too, and
+  wrap only the title part when long body text follows (FAQ, LegalPage). `src/components/Motion.tsx` fades in
   content that starts BELOW the fold as it scrolls into view, fades lazy
   images in once loaded and smooth-scrolls same-page # links. No fade on
   page changes (it blinks: Tony removed it). Opt an element out with

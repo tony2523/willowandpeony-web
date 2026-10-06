@@ -37,7 +37,7 @@ export default function VenuesPage() {
         ]}
       />
 
-      <section className="mx-auto mt-16 max-w-(--site-column) px-5 sm:px-6 md:mt-24">
+      <section className="hero-in mx-auto mt-16 max-w-(--site-column) px-5 sm:px-6 md:mt-24">
         <p className="eyebrow text-muted">Venue guides</p>
         <h1 className="display-1 mt-3 text-ink">
           Wedding flowers, <em>venue by venue</em>

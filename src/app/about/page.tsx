@@ -44,7 +44,7 @@ export default function AboutPage() {
       {/* Hero split: the founding story beside Ivy's portrait, inside the site
           column at every width; the portrait stays portrait (see CLAUDE.md). */}
       <section className="mx-auto grid max-w-(--site-column) items-center gap-10 px-5 pt-14 sm:px-6 md:grid-cols-2 md:gap-12 md:pt-20 lg:gap-16 xl:grid-cols-[minmax(0,1fr)_minmax(0,38.75rem)]">
-        <div className="flex flex-col justify-center">
+        <div className="hero-in flex flex-col justify-center">
           <p className="eyebrow text-muted">Our story</p>
           <h1 className="display-1 mt-5 max-w-[35rem] text-ink">
             It began with a single rose called <em>Blue Moon</em>

@@ -12,7 +12,7 @@ export const metadata: Metadata = pageMetadata({
 
 export default function ThankYouPage() {
   return (
-    <section className="mx-auto max-w-2xl px-4 pt-24 pb-10 text-center sm:px-6">
+    <section className="hero-in mx-auto max-w-2xl px-4 pt-24 pb-10 text-center sm:px-6">
       <Eyebrow>Enquiry received</Eyebrow>
       <h1 className="mt-3 font-serif text-4xl text-ink sm:text-5xl">Thank you</h1>
       <p className="mx-auto mt-6 max-w-md leading-relaxed text-ink-soft">

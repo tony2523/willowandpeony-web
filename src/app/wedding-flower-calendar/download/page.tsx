@@ -36,7 +36,7 @@ export default function CalendarDownloadPage() {
     <>
       <section className="mx-auto max-w-(--site-column) px-5 pt-14 sm:px-6 md:pt-20">
         <div className="grid items-center gap-12 md:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] md:gap-20">
-          <div>
+          <div className="hero-in">
             <p className="eyebrow text-muted">Thank you</p>
             <h1 className="display-1 mt-4 text-ink">
               Your calendar is <em>ready</em>

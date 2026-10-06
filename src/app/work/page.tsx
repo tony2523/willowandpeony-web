@@ -53,7 +53,7 @@ export default function WorkPage() {
         ]}
       />
 
-      <section className="mx-auto mt-16 max-w-(--site-column) px-5 sm:px-6 md:mt-24">
+      <section className="hero-in mx-auto mt-16 max-w-(--site-column) px-5 sm:px-6 md:mt-24">
         <p className="eyebrow text-muted">Our work</p>
         <h1 className="display-1 mt-3 text-ink">
           Every story, in <em>bloom</em>

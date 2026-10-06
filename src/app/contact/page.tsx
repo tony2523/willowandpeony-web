@@ -26,7 +26,7 @@ export default function ContactPage() {
       <section className="mx-auto max-w-(--site-column) px-5 pt-16 sm:px-6 md:pt-24">
         <div className="grid gap-14 md:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] md:gap-20">
           {/* Form column */}
-          <div>
+          <div className="hero-in">
             <p className="eyebrow text-muted">Contact</p>
             <h1 className="display-2 mt-3 text-ink">
               We&rsquo;d love to hear about <em>your day</em>

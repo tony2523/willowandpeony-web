@@ -3,7 +3,7 @@ import Eyebrow from "@/components/Eyebrow";
 
 export default function NotFound() {
   return (
-    <section className="mx-auto max-w-2xl px-4 pt-24 pb-10 text-center sm:px-6">
+    <section className="hero-in mx-auto max-w-2xl px-4 pt-24 pb-10 text-center sm:px-6">
       <Eyebrow>404</Eyebrow>
       <h1 className="mt-3 font-serif text-4xl text-ink sm:text-5xl">
         This page has wilted away

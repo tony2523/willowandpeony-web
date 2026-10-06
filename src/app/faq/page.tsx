@@ -24,8 +24,10 @@ export default function FaqPage() {
       />
       {/* Centred title + narrow accordion list, as on the original */}
       <section className="mx-auto max-w-[53.75rem] px-5 pt-16 sm:px-6 md:pt-24">
-        <p className="eyebrow text-muted">Common questions</p>
-        <h1 className="display-1 mt-3 text-ink">FAQ</h1>
+        <div className="hero-in">
+          <p className="eyebrow text-muted">Common questions</p>
+          <h1 className="display-1 mt-3 text-ink">FAQ</h1>
+        </div>
 
         <div className="mt-12 divide-y divide-hairline border-y border-hairline">
           {faqs.map((f) => (

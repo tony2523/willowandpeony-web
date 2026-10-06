@@ -669,9 +669,7 @@ summary {
 .hero-in > :nth-child(1) {
   animation-delay: 0.1s;
 }
-/* The headline is often the page's main element: it rises without fading. */
 .hero-in > :nth-child(2) {
-  animation-name: lift;
   animation-delay: 0.15s;
 }
 .hero-in > :nth-child(3) {
@@ -679,6 +677,13 @@ summary {
 }
 .hero-in > :nth-child(4) {
   animation-delay: 0.42s;
+}
+.hero-in > :nth-child(n + 5) {
+  animation-delay: 0.52s;
+}
+/* The headline is often the page's main element: it rises without fading. */
+.hero-in > h1 {
+  animation-name: lift;
 }
 
 /* Scroll reveal (src/components/Motion.tsx): only items below the fold at

@@ -68,7 +68,7 @@ export default async function WorkStoryPage({ params }: { params: Promise<{ slug
 
       <article>
         {/* Title block */}
-        <header className="mx-auto max-w-[61.25rem] px-5 pt-16 text-center sm:px-6 md:pt-24">
+        <header className="hero-in mx-auto max-w-[61.25rem] px-5 pt-16 text-center sm:px-6 md:pt-24">
           <p className="eyebrow text-muted">
             {isWedding ? "Real wedding" : "Real event"}
             {venueShort ? ` · ${venueShort}` : ""} · {nice}
