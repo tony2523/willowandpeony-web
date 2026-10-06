@@ -34,6 +34,15 @@
   }
 }
 
+/* Motion (Tony, 6 Oct 2026): one soft ease-out curve everywhere, and every
+   sweep travels left to right like the nav underline. Opacity and transform
+   only, so nothing reflows. prefers-reduced-motion switches it all off. */
+:root {
+  --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-soft: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --dur-wipe: 0.55s;
+}
+
 /* The site's content column: 80rem, and above 2240px it keeps the share of
    the screen it has at 2240 (62.3%), so 27" screens get a wider column with
    24"-sized type. 62.3vw stays below 80rem on every smaller screen. */
@@ -131,20 +140,118 @@ h3 {
   line-height: 1.4;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  border-bottom: 1px solid currentColor;
   padding-bottom: 0.1875rem;
   text-decoration: none;
-  transition: opacity 0.2s;
+  background: linear-gradient(currentColor, currentColor) left bottom / 100% 1px no-repeat;
 }
 .t-link:hover,
 .link-text:hover {
-  opacity: 0.65;
+  animation: line-redraw 0.75s var(--ease-out);
+}
+@keyframes line-redraw {
+  0% {
+    background-position: right bottom;
+    background-size: 100% 1px;
+  }
+  45% {
+    background-position: right bottom;
+    background-size: 0% 1px;
+  }
+  46% {
+    background-position: left bottom;
+    background-size: 0% 1px;
+  }
+  100% {
+    background-position: left bottom;
+    background-size: 100% 1px;
+  }
 }
 
-/* Buttons */
+/* Quiet links (footer, small print): an underline draws in from the left. */
+.link-sweep {
+  background: linear-gradient(currentColor, currentColor) left bottom / 0% 1px no-repeat;
+  transition:
+    background-size 0.45s var(--ease-out),
+    color 0.3s var(--ease-soft);
+}
+.link-sweep:hover {
+  background-size: 100% 1px;
+}
+
+/* Buttons. Three background layers, top to bottom: the label (a two-colour
+   gradient clipped to the text), the sweep fill, and the resting base colour.
+   On hover the fill grows from the left while the label gradient slides with
+   it (same duration and curve), so each letter changes colour exactly as the
+   fill edge passes and the label always reads. --wipe is the fill, --wipe-text
+   the label colour on the fill, --wipe-base the resting background; the resting
+   label colour is currentColor. A light press on :active. */
+.btn-solid,
+.btn-white,
+.btn-ghost-white,
+.btn-outline,
+.btn-wp,
+.wipe {
+  cursor: pointer;
+  --wipe-base: transparent;
+  background-image:
+    linear-gradient(to right, var(--wipe-text, #fff) 50%, currentColor 50%),
+    linear-gradient(var(--wipe, var(--color-ink)), var(--wipe, var(--color-ink))),
+    linear-gradient(var(--wipe-base), var(--wipe-base));
+  background-repeat: no-repeat;
+  background-size:
+    200% 100%,
+    0% 100%,
+    100% 100%;
+  background-position:
+    100% 0,
+    0 0,
+    0 0;
+  -webkit-background-clip: text, padding-box, padding-box;
+  background-clip: text, padding-box, padding-box;
+  -webkit-text-fill-color: transparent;
+  transition:
+    background-position var(--dur-wipe) var(--ease-out),
+    background-size var(--dur-wipe) var(--ease-out),
+    border-color var(--dur-wipe) var(--ease-out),
+    transform 0.2s var(--ease-soft);
+}
+.btn-solid:hover,
+.btn-ghost-white:hover,
+.btn-outline:hover,
+.btn-wp:hover,
+.wipe:hover {
+  background-size:
+    200% 100%,
+    100% 100%,
+    100% 100%;
+  background-position:
+    0 0,
+    0 0,
+    0 0;
+}
+.btn-solid:active,
+.btn-white:active,
+.btn-ghost-white:active,
+.btn-outline:active,
+.btn-wp:active,
+.wipe:active {
+  transform: scale(0.985);
+}
+.btn-solid:disabled:hover,
+.btn-outline:disabled:hover {
+  background-size:
+    200% 100%,
+    0% 100%,
+    100% 100%;
+  background-position:
+    100% 0,
+    0 0,
+    0 0;
+}
+
+/* Solid: ink; white sweeps in from the left, label turns ink. */
 .btn-solid {
   display: inline-block;
-  background: var(--color-ink);
   color: #ffffff;
   padding: 1rem 2rem;
   font-family: var(--font-sans);
@@ -152,19 +259,15 @@ h3 {
   font-size: 0.78125rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  cursor: pointer;
   border: 1px solid var(--color-ink);
-  transition:
-    background-color 0.25s,
-    color 0.25s;
+  --wipe-base: var(--color-ink);
+  --wipe: #ffffff;
+  --wipe-text: var(--color-ink);
 }
-.btn-solid:hover {
-  background: transparent;
-  color: var(--color-ink);
-}
+/* White (on photos): starts white; the white sweeps away from the left to
+   reveal the photo, label turns white. */
 .btn-white {
   display: inline-block;
-  background: #ffffff;
   color: var(--color-ink);
   border: 1px solid #ffffff;
   padding: 1rem 2rem;
@@ -173,18 +276,29 @@ h3 {
   font-size: 0.78125rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  cursor: pointer;
-  transition:
-    background-color 0.25s,
-    color 0.25s;
+  --wipe: #ffffff;
+  --wipe-text: #ffffff;
+  background-size:
+    200% 100%,
+    100% 100%,
+    100% 100%;
+  background-position:
+    100% 0,
+    100% 0,
+    0 0;
 }
 .btn-white:hover {
-  background: transparent;
-  color: #ffffff;
+  background-size:
+    200% 100%,
+    0% 100%,
+    100% 100%;
+  background-position:
+    0 0,
+    100% 0,
+    0 0;
 }
 .btn-ghost-white {
   display: inline-block;
-  background: transparent;
   color: #ffffff;
   border: 1px solid rgba(255, 255, 255, 0.85);
   padding: 0.9375rem 1.9375rem;
@@ -193,20 +307,16 @@ h3 {
   font-size: 0.78125rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  cursor: pointer;
-  transition:
-    background-color 0.25s,
-    color 0.25s;
+  --wipe: #ffffff;
+  --wipe-text: var(--color-ink);
 }
 .btn-ghost-white:hover {
-  background: #ffffff;
-  color: var(--color-ink);
+  border-color: #ffffff;
 }
 .btn-outline,
 .btn-wp {
   display: inline-block;
   border: 1px solid var(--color-ink);
-  background: transparent;
   padding: 0.9375rem 1.9375rem;
   font-family: var(--font-sans);
   font-weight: 400;
@@ -214,15 +324,75 @@ h3 {
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--color-ink);
-  cursor: pointer;
-  transition:
-    background-color 0.2s,
-    color 0.2s;
+  --wipe: var(--color-ink);
+  --wipe-text: #ffffff;
 }
-.btn-outline:hover,
-.btn-wp:hover {
-  background: var(--color-ink);
-  color: #fff;
+
+/* Firefox can't combine a text-clipped label with other background layers, so
+   there the fill sweeps on its own and the label colour changes as the fill
+   passes its middle. (-moz-appearance is only recognised by Firefox.) */
+@supports (-moz-appearance: none) {
+  .btn-solid,
+  .btn-white,
+  .btn-ghost-white,
+  .btn-outline,
+  .btn-wp,
+  .wipe {
+    -webkit-text-fill-color: currentColor;
+    background-image:
+      linear-gradient(var(--wipe, var(--color-ink)), var(--wipe, var(--color-ink))),
+      linear-gradient(var(--wipe-base), var(--wipe-base));
+    -webkit-background-clip: padding-box, padding-box;
+    background-clip: padding-box, padding-box;
+    background-size:
+      0% 100%,
+      100% 100%;
+    background-position:
+      0 0,
+      0 0;
+    transition:
+      background-size var(--dur-wipe) var(--ease-out),
+      color 0.18s var(--ease-soft) 0.06s,
+      border-color var(--dur-wipe) var(--ease-out),
+      transform 0.2s var(--ease-soft);
+  }
+  .btn-solid:hover,
+  .btn-ghost-white:hover,
+  .btn-outline:hover,
+  .btn-wp:hover,
+  .wipe:hover {
+    background-size:
+      100% 100%,
+      100% 100%;
+    background-position:
+      0 0,
+      0 0;
+    color: var(--wipe-text);
+  }
+  .btn-white {
+    background-size:
+      100% 100%,
+      100% 100%;
+    background-position:
+      100% 0,
+      0 0;
+  }
+  .btn-white:hover {
+    background-size:
+      0% 100%,
+      100% 100%;
+    background-position:
+      100% 0,
+      0 0;
+    color: var(--wipe-text);
+  }
+  .btn-solid:disabled:hover,
+  .btn-outline:disabled:hover {
+    background-size:
+      0% 100%,
+      100% 100%;
+    color: inherit;
+  }
 }
 
 /* Form controls: hairline borders, generous height. */
@@ -251,9 +421,19 @@ select.input-wp {
 .input-wp::placeholder {
   color: var(--color-muted);
 }
-.input-wp:focus {
-  outline: 1px solid var(--color-ink);
+.input-wp {
+  outline: 1px solid transparent;
   outline-offset: -1px;
+  transition:
+    outline-color 0.3s var(--ease-soft),
+    border-color 0.3s var(--ease-soft);
+}
+.input-wp:hover {
+  border-color: color-mix(in srgb, var(--color-hairline), var(--color-ink) 25%);
+}
+.input-wp:focus {
+  outline-color: var(--color-ink);
+  border-color: var(--color-ink);
 }
 .check-wp {
   appearance: none;
@@ -394,12 +574,13 @@ summary {
   width: 100%;
   background: currentColor;
   transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.25s ease;
+  transform-origin: right;
+  transition: transform 0.4s var(--ease-out);
 }
 .nav-link:hover::after,
 .nav-link[aria-current="page"]::after {
   transform: scaleX(1);
+  transform-origin: left;
 }
 
 /* Horizontal snap carousels. */
@@ -441,6 +622,88 @@ summary {
   to {
     opacity: 1;
   }
+}
+
+/* Entrances. Hero photos settle (scale only, so the main image still counts
+   as painted at once); hero text rises; lower items fade up. */
+@keyframes settle {
+  from {
+    transform: scale(1.06);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(0.75rem);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes lift {
+  from {
+    transform: translateY(0.875rem);
+  }
+  to {
+    transform: none;
+  }
+}
+@keyframes pop {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+.hero-settle {
+  animation: settle 1.8s var(--ease-out) both;
+}
+.hero-in > * {
+  animation: rise 0.9s var(--ease-out) both;
+}
+.hero-in > :nth-child(1) {
+  animation-delay: 0.1s;
+}
+/* The headline is often the page's main element: it rises without fading. */
+.hero-in > :nth-child(2) {
+  animation-name: lift;
+  animation-delay: 0.15s;
+}
+.hero-in > :nth-child(3) {
+  animation-delay: 0.3s;
+}
+.hero-in > :nth-child(4) {
+  animation-delay: 0.42s;
+}
+
+/* Scroll reveal (src/components/Motion.tsx): only items below the fold at
+   load get data-reveal; they fade up once as they come into view. */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(1rem);
+}
+[data-reveal="in"] {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.9s var(--ease-out),
+    transform 0.9s var(--ease-out);
+  transition-delay: var(--reveal-delay, 0s);
+}
+/* Lazy photos fade in when they arrive instead of popping. */
+img[data-img-loading] {
+  opacity: 0;
+}
+img[data-img-loaded] {
+  transition:
+    opacity 0.7s var(--ease-soft),
+    transform 0.9s var(--ease-out);
+  transition-delay: var(--reveal-delay, 0s);
 }
 
 /* Reduced motion */

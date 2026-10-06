@@ -60,14 +60,14 @@ export default function HomePage() {
           // 1.5 x the screen height wide; phones get the 3:5 portrait crop.
           sizes="(max-aspect-ratio: 3/2) 150vh, 100vw"
           mobileSizes="(max-aspect-ratio: 3/5) 60vh, 100vw"
-          className="absolute inset-0 h-full w-full object-cover object-[50%_62%] md:object-center"
+          className="hero-settle absolute inset-0 h-full w-full object-cover object-[50%_62%] md:object-center"
         />
         <div
           aria-hidden
           className="absolute inset-0 bg-gradient-to-t from-[rgba(20,18,16,0.72)] via-[rgba(20,18,16,0.3)] to-[rgba(20,18,16,0.15)] md:from-[rgba(20,18,16,0.55)] md:via-[rgba(20,18,16,0.05)]"
         />
         <div className="absolute inset-x-0 bottom-0">
-          <div className="mx-auto max-w-(--site-column) px-5 pb-16 sm:px-6 md:pb-24">
+          <div className="hero-in mx-auto max-w-(--site-column) px-5 pb-16 sm:px-6 md:pb-24">
             <p className="eyebrow text-white/85">Boutique florist · Auckland</p>
             <h1 className="display-hero mt-4 max-w-[56.25rem] text-white">
               Artful florals for <em>beautifully considered</em> events

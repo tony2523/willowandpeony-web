@@ -206,6 +206,21 @@ is retired. The system:
 - Never redesign the logo (public/brand/ PNGs are the originals — keep as is).
 - Reviews: content/reviews.ts holds the 14 Google reviews verbatim + the
   profile URL. Update by re-reading the Google Business Profile.
+- Motion (6 Oct 2026, keep it subtle): tokens `--ease-out`, `--ease-soft`,
+  `--dur-wipe` in globals.css. Buttons sweep their fill left to right with
+  the label colour split exactly at the fill edge (three background layers,
+  label clipped to text); Firefox gets a plain fill sweep plus a colour
+  change at the midpoint (`@supports (-moz-appearance: none)`). Links:
+  `.t-link` redraws its line, footer `.link-sweep` grows one in, nav lines
+  go in from the left and out to the right. Heros: `hero-settle` (photo
+  eases from 1.06 scale) and `hero-in` (text staggers up; the h1 moves but
+  never fades, so LCP is untouched). `src/components/Motion.tsx` fades in
+  content that starts BELOW the fold as it scrolls into view, fades lazy
+  images in once loaded, fades the page in on client-side navigation and
+  smooth-scrolls same-page # links. Opt an element out with
+  `data-no-reveal`; carousels, sideways scrollers, `details`, fixed/sticky
+  and the header/footer are skipped already. All of it is off under
+  prefers-reduced-motion. Never fade anything above the fold.
 
 ## Constraints
 

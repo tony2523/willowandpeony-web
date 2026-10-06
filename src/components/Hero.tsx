@@ -38,7 +38,7 @@ export default function Hero({
   const coverMd = Math.round((compact ? 480 : 640) * ar);
   const sizes = `(max-width: 767px) ${coverPhone}px, (max-width: ${Math.max(coverMd, 768)}px) ${Math.max(coverMd, 768)}px, 100vw`;
   return (
-    <section className={`relative ${compact ? "h-[30rem]" : "h-[35rem] md:h-[40rem]"}`}>
+    <section className={`relative overflow-hidden ${compact ? "h-[30rem]" : "h-[35rem] md:h-[40rem]"}`}>
       {entry && (
         <HeroImage
           name={image}
@@ -47,7 +47,7 @@ export default function Hero({
           // 3:5 phone crop in a box 560px (480px compact) tall: drawn at the
           // screen width, or 0.6 x the height on very narrow screens.
           mobileSizes={`(max-width: ${Math.round((compact ? 480 : 560) * 0.6) - 1}px) ${Math.round((compact ? 480 : 560) * 0.6)}px, 100vw`}
-          className={`absolute inset-0 h-full w-full object-cover ${position}`}
+          className={`hero-settle absolute inset-0 h-full w-full object-cover ${position}`}
         />
       )}
       <div
@@ -55,7 +55,7 @@ export default function Hero({
         className="absolute inset-0 bg-gradient-to-t from-[rgba(20,18,16,0.6)] via-[rgba(20,18,16,0.12)] to-[rgba(20,18,16,0.25)]"
       />
       <div className="absolute inset-x-0 bottom-0">
-        <div className="mx-auto max-w-(--site-column) px-5 pb-14 sm:px-6 md:pb-20">
+        <div className="hero-in mx-auto max-w-(--site-column) px-5 pb-14 sm:px-6 md:pb-20">
           <p className="eyebrow text-white/85">{eyebrow}</p>
           <h1 className="display-1 mt-3 max-w-[51.25rem] text-white">{title}</h1>
           {intro && (

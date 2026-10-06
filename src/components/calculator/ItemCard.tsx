@@ -154,7 +154,7 @@ function Option({
       aria-pressed={active}
       disabled={disabled}
       onClick={onClick}
-      className={`grid w-full grid-cols-[auto_minmax(0,1fr)_auto] items-baseline gap-x-3 border px-3 py-[0.4375rem] text-left sm:py-2.5 [@media(max-height:600px)]:py-1 transition-colors disabled:cursor-not-allowed disabled:opacity-45 ${
+      className={`grid w-full grid-cols-[auto_minmax(0,1fr)_auto] items-baseline gap-x-3 border px-3 py-[0.4375rem] text-left transition-colors duration-300 sm:py-2.5 [@media(max-height:600px)]:py-1 disabled:cursor-not-allowed disabled:opacity-45 ${
         active ? "border-ink bg-paper" : "border-hairline bg-white enabled:hover:border-ink"
       }`}
     >
@@ -162,7 +162,7 @@ function Option({
         aria-hidden
         className={`grid h-3.5 w-3.5 translate-y-[2px] place-items-center rounded-full border ${active ? "border-ink" : "border-ink/30"}`}
       >
-        {active && <span className="h-[0.4375rem] w-[0.4375rem] rounded-full bg-ink" />}
+        {active && <span className="h-[0.4375rem] w-[0.4375rem] animate-[pop_0.3s_var(--ease-out)] rounded-full bg-ink" />}
       </span>
       <span className="font-serif text-[1.03125rem] leading-snug text-ink">{label}</span>
       {price != null ? (
@@ -250,7 +250,7 @@ export default function ItemCard({
 
         {/* Quantity at the foot of the card (Tony, 6 Oct 2026), shown once a piece is chosen. */}
         {chosen && (
-          <div className="mt-auto flex items-center justify-between gap-3">
+          <div className="mt-auto flex animate-[rise_0.35s_var(--ease-out)] items-center justify-between gap-3">
             <span className="text-[0.71875rem] tracking-[0.14em] text-muted uppercase">
               {it.unit === "metre" ? "Metres" : "Quantity"}
             </span>

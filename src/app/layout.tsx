@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import JsonLd from "@/components/JsonLd";
+import Motion from "@/components/Motion";
 import { floristJsonLd, websiteJsonLd } from "@/lib/seo";
 import { site } from "../../content/site";
 
@@ -42,6 +43,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <Header />
         <main className="site-main flex-1">{children}</main>
         <Footer />
+        <Motion />
       </body>
     </html>
   );

@@ -72,7 +72,7 @@ export default function MobileNav({ light = false }: { light?: boolean }) {
               id="mobile-drawer"
               aria-label="Mobile"
               inert={!open}
-              className={`fixed inset-0 z-[65] flex w-full flex-col bg-white transition-[translate] duration-300 ease-out ${
+              className={`fixed inset-0 z-[65] flex w-full flex-col bg-white transition-[translate] duration-500 ease-[var(--ease-out)] ${
                 open ? "translate-x-0" : "-translate-x-full"
               }`}
             >
@@ -100,13 +100,16 @@ export default function MobileNav({ light = false }: { light?: boolean }) {
                 </button>
               </div>
               <div className="flex-1 overflow-y-auto px-6 py-2 [@media(min-height:700px)]:py-4">
-                {drawerNav.map((item) => (
+                {drawerNav.map((item, i) => (
                   <Link
                     key={item.href}
                     href={item.href}
                     prefetch={false}
                     onClick={() => setOpen(false)}
-                    className="block border-b border-hairline py-3 font-serif text-[1.0625rem] font-light tracking-[-0.01em] text-ink [@media(max-height:600px)]:py-2.5 [@media(min-height:700px)]:py-4"
+                    style={{ transitionDelay: open ? `${120 + i * 45}ms` : "0ms" }}
+                    className={`block border-b border-hairline py-3 font-serif text-[1.0625rem] font-light tracking-[-0.01em] text-ink transition-[opacity,translate] duration-500 ease-[var(--ease-out)] [@media(max-height:600px)]:py-2.5 [@media(min-height:700px)]:py-4 ${
+                      open ? "translate-x-0 opacity-100" : "-translate-x-3 opacity-0"
+                    }`}
                   >
                     {item.label}
                   </Link>

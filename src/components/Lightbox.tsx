@@ -89,7 +89,7 @@ export default function Lightbox({
         srcSet={img.srcSet}
         sizes="100vw"
         alt={img.alt}
-        className="max-h-[92vh] max-w-[94vw] object-contain"
+        className="max-h-[92vh] max-w-[94vw] animate-[fadein_0.45s_var(--ease-soft)] object-contain"
         onClick={(e) => e.stopPropagation()}
       />
       {n > 1 && (

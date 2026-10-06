@@ -52,11 +52,11 @@ export default function Footer() {
             Crafting premium, bespoke floral designs for every special moment.
           </p>
           <p className="mt-5 text-[0.8125rem] leading-relaxed text-ink-soft">
-            <a href={`mailto:${site.email}`} className="hover:underline">
+            <a href={`mailto:${site.email}`} className="link-sweep">
               {site.email}
             </a>
             <br />
-            <a href={`tel:${site.phone.replace(/\s/g, "")}`} className="hover:underline">
+            <a href={`tel:${site.phone.replace(/\s/g, "")}`} className="link-sweep">
               {site.phoneDisplay}
             </a>
           </p>
@@ -72,7 +72,7 @@ export default function Footer() {
                       href={l.href}
                       target="_blank"
                       rel="noopener"
-                      className="text-[0.8125rem] leading-[2.1] text-ink-soft hover:text-ink hover:underline"
+                      className="link-sweep text-[0.8125rem] leading-[2.1] text-ink-soft hover:text-ink"
                     >
                       {l.label}
                     </a>
@@ -81,7 +81,7 @@ export default function Footer() {
                   <li key={l.label}>
                     <Link
                       href={l.href}
-                      className="text-[0.8125rem] leading-[2.1] text-ink-soft hover:text-ink hover:underline"
+                      className="link-sweep text-[0.8125rem] leading-[2.1] text-ink-soft hover:text-ink"
                     >
                       {l.label}
                     </Link>

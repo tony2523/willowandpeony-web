@@ -590,7 +590,7 @@ export default function FloralCalculator() {
                     )}
                   </button>
                 </h2>
-                <div id={`step-panel-${st.id}`} role="region" aria-labelledby={`step-btn-${st.id}`} hidden={!open} className="pb-10">
+                <div id={`step-panel-${st.id}`} role="region" aria-labelledby={`step-btn-${st.id}`} hidden={!open} className={`pb-10 ${openStep !== null ? "animate-[rise_0.45s_var(--ease-out)]" : ""}`}>
                   {stepContent(st.id)}
                   {next && (
                     <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-hairline pt-6">

@@ -55,7 +55,7 @@ export default function Header() {
   const transparent = overlay && scrollState === "top";
 
   const headerCls = overlay
-    ? `group fixed inset-x-0 top-0 z-50 transition-[transform,background-color,border-color] duration-300 ${
+    ? `group fixed inset-x-0 top-0 z-50 transition-[transform,background-color,border-color] duration-500 ease-[var(--ease-soft)] ${
         scrollState === "hidden" ? "-translate-y-full" : "translate-y-0"
       } ${
         transparent
@@ -66,7 +66,7 @@ export default function Header() {
         scrollState === "hidden" ? "-translate-y-full" : "translate-y-0"
       }`;
 
-  const linkCls = `nav-link transition-colors ${
+  const linkCls = `nav-link transition-colors duration-500 ease-[var(--ease-soft)] ${
     transparent ? "text-white group-hover:text-ink" : "text-ink"
   }`;
 
@@ -93,20 +93,22 @@ export default function Header() {
         {/* Centre: logo, dark/white variants swapped by header state. translate-y-[9%]
             puts the lettering (not the image box, which includes the y's tail) on the
             same midline as the burger and Enquire. */}
-        <Link href="/" aria-label="Willow & Peony — home" className="block justify-self-center">
-          <img
-            src={withBase("/brand/willow-and-peony-logo-white.png")}
-            alt="Willow & Peony"
-            width={250}
-            height={30}
-            className={`h-[1.1875rem] w-auto translate-y-[9%] min-[360px]:h-[1.25rem] sm:h-[1.75rem] ${transparent ? "block group-hover:hidden" : "hidden"}`}
-          />
+        <Link href="/" aria-label="Willow & Peony — home" className="relative block justify-self-center">
+          {/* Black logo in flow; the white one sits on top and crossfades with the header. */}
           <img
             src={withBase("/brand/willow-and-peony-logo.png")}
             alt="Willow & Peony"
             width={250}
             height={30}
-            className={`h-[1.1875rem] w-auto translate-y-[9%] min-[360px]:h-[1.25rem] sm:h-[1.75rem] ${transparent ? "hidden group-hover:block" : "block"}`}
+            className={`h-[1.1875rem] w-auto translate-y-[9%] transition-opacity duration-500 ease-[var(--ease-soft)] min-[360px]:h-[1.25rem] sm:h-[1.75rem] ${transparent ? "opacity-0 group-hover:opacity-100" : "opacity-100"}`}
+          />
+          <img
+            src={withBase("/brand/willow-and-peony-logo-white.png")}
+            alt=""
+            aria-hidden
+            width={250}
+            height={30}
+            className={`absolute top-0 left-0 h-[1.1875rem] w-auto translate-y-[9%] transition-opacity duration-500 ease-[var(--ease-soft)] min-[360px]:h-[1.25rem] sm:h-[1.75rem] ${transparent ? "opacity-100 group-hover:opacity-0" : "pointer-events-none opacity-0"}`}
           />
         </Link>
 
@@ -114,10 +116,8 @@ export default function Header() {
         <div className="flex items-center justify-end">
           <Link
             href="/contact/"
-            className={`hidden border px-5 pt-[0.6875rem] pb-[0.5625rem] text-[0.8125rem] tracking-[0.02em] transition-colors lg:inline-block ${
-              transparent
-                ? "border-white/85 text-white group-hover:border-ink group-hover:text-ink hover:bg-white hover:text-ink"
-                : "border-ink text-ink hover:bg-ink hover:text-white"
+            className={`wipe hidden border px-5 pt-[0.6875rem] pb-[0.5625rem] text-[0.8125rem] tracking-[0.02em] [--wipe-text:#fff] [--wipe:var(--color-ink)] lg:inline-block ${
+              transparent ? "border-white/85 text-white group-hover:border-ink group-hover:text-ink" : "border-ink text-ink"
             }`}
           >
             Enquire

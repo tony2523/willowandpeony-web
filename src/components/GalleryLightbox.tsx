@@ -34,9 +34,11 @@ export default function GalleryLightbox({ items }: { items: GalleryItem[] }) {
     () => null,
   );
   const [override, setOverride] = useState<Filter | null>(null);
+  const [switched, setSwitched] = useState(0);
   const filter: Filter = override ?? (urlType === "events" ? "events" : "weddings");
   const setFilter = (f: Filter) => {
     setOverride(f);
+    setSwitched((n) => n + 1);
     // Keep the address in step so a refresh or a shared link shows the same filter.
     window.history.replaceState(null, "", f === "events" ? "?type=events" : window.location.pathname);
   };
@@ -122,7 +124,11 @@ export default function GalleryLightbox({ items }: { items: GalleryItem[] }) {
         ))}
       </div>
 
-      <div ref={grid} className="mt-10 flex flex-col gap-1.5 sm:gap-3">
+      <div
+        ref={grid}
+        key={switched}
+        className={`mt-10 flex flex-col gap-1.5 sm:gap-3 ${switched ? "animate-[fadein_0.6s_var(--ease-soft)]" : ""}`}
+      >
         {blocks.map((block, b) =>
           block.full ? (
             // Phones: three columns, the lead photo two by two (on the right in
