@@ -19,9 +19,9 @@ type FeedItem = {
  * line, a flush grid of square tiles (6 across desktop, 2 across mobile,
  * matching the live site), and a click-to-preview popup with a close button.
  *
- * Tries the site's own Worker (/api/instagram — live feed, cached at the
- * edge) and falls back to the curated tiles below until the Instagram token
- * is configured (see CLAUDE.md).
+ * Tries the site's own Worker (/api/instagram: Ivy's own posts tagged
+ * #willowandpeony, cached at the edge) and falls back to the curated tiles
+ * below until the Instagram token is configured (see CLAUDE.md).
  */
 const curated: FeedItem[] = [
   ["willow-and-peony-bouquet-romantic-grace-09", "Romantic pastel bouquet"],
@@ -81,9 +81,12 @@ export default function InstagramFeed() {
     fetch("/api/instagram")
       .then((r) => (r.ok ? r.json() : null))
       .then((data) => {
-        if (data?.items?.length >= 4) {
+        // Whole rows only (6 or 12 fill 2, 3 and 6 across); fewer than six
+        // #willowandpeony posts keeps the curated tiles.
+        const count = data?.items?.length >= 12 ? 12 : data?.items?.length >= 6 ? 6 : 0;
+        if (count) {
           setItems(
-            data.items.slice(0, 12).map(
+            data.items.slice(0, count).map(
               (m: { id: string; src: string; permalink: string; caption: string }) => ({
                 ...m,
                 local: false,

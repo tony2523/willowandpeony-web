@@ -263,6 +263,25 @@ is retired. The system:
 - `npm run images` — (re)generate image variants after adding photos.
 - `npx serve out -l 4173` — preview the real static output.
 
+## Instagram feed (home page grid)
+
+- The grid shows Ivy's own posts captioned with **#willowandpeony** (exact
+  tag; #willowandpeonynz etc. don't count), newest first, 12 tiles, or 6
+  when only 6–11 are tagged. Fewer than 6 → the curated tiles in
+  `InstagramFeed.tsx`. The Worker (`/api/instagram`) reads up to 200 of her
+  recent posts and filters on the caption, edge-cached 6 hours.
+- Every Instagram API call needs a token; there is no public, tokenless API
+  (unauthenticated oEmbed ended Oct 2020, Basic Display ended Dec 2024).
+  Instagram's own hashtag search is the wrong tool: Meta app review,
+  Facebook-linked account, any account's posts, and only the last 24 hours.
+- Token: "Instagram API with Instagram Login" long-lived user token for
+  @willowandpeony.nz (a professional account), stored as the Worker secret
+  `INSTAGRAM_TOKEN` (Cloudflare dashboard → Workers → willowandpeony-web →
+  Settings → Variables and Secrets). Tony or Ivy sets it; Claude never
+  handles tokens. It expires after 60 days unless refreshed
+  (`graph.instagram.com/refresh_access_token`); when it lapses the grid
+  quietly falls back to the curated tiles.
+
 ## Gallery
 
 - `/gallery/` has two filters, Weddings (default) and Events; no "All" (Tony, 6 Oct 2026).

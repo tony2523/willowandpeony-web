@@ -398,6 +398,14 @@ async function handleCalendar(request, env) {
 // secret (long-lived "Instagram API with Instagram Login" token — see
 // CLAUDE.md). Cached at the edge for 6 hours; returns an empty list until
 // the token is configured, and the page falls back to its curated tiles.
+//
+// Only Ivy's own posts tagged #willowandpeony are shown (Tony, 7 Oct 2026):
+// we read her recent posts and filter on the caption, which needs nothing
+// beyond her token (Instagram's hashtag search needs Meta app review and
+// only returns the last 24 hours). #willowandpeonynz etc. don't count.
+const IG_TAG = /#willowandpeony(?![\p{L}\p{N}_])/iu;
+const IG_PAGES = 4; // up to 200 recent posts scanned for 12 tagged ones
+
 async function handleInstagram(request, env, ctx) {
   const headers = {
     "Content-Type": "application/json",
@@ -413,19 +421,19 @@ async function handleInstagram(request, env, ctx) {
   const hit = await cache.match(cacheKey);
   if (hit) return hit;
   try {
-    const r = await fetch(
-      `https://graph.instagram.com/me/media?fields=id,caption,media_type,media_url,thumbnail_url,permalink&limit=18&access_token=${env.INSTAGRAM_TOKEN}`,
-    );
-    const data = await r.json();
-    const items = (data.data || [])
-      .map((m) => ({
-        id: m.id,
-        src: m.media_type === "VIDEO" ? m.thumbnail_url : m.media_url,
-        permalink: m.permalink,
-        caption: (m.caption || "").slice(0, 300),
-      }))
-      .filter((m) => m.src)
-      .slice(0, 12);
+    const items = [];
+    let url = `https://graph.instagram.com/me/media?fields=id,caption,media_type,media_url,thumbnail_url,permalink&limit=50&access_token=${env.INSTAGRAM_TOKEN}`;
+    for (let page = 0; url && page < IG_PAGES && items.length < 12; page++) {
+      const data = await (await fetch(url)).json();
+      for (const m of data.data || []) {
+        const src = m.media_type === "VIDEO" ? m.thumbnail_url : m.media_url;
+        if (src && IG_TAG.test(m.caption || "")) {
+          items.push({ id: m.id, src, permalink: m.permalink, caption: m.caption.slice(0, 300) });
+        }
+      }
+      url = data.paging?.next;
+    }
+    items.splice(12);
     const res = new Response(JSON.stringify({ items }), { headers });
     ctx.waitUntil(cache.put(cacheKey, res.clone()));
     return res;
